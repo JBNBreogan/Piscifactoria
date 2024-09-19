@@ -1,6 +1,6 @@
 package Comun;
 
-//Patron composite
+//Patron singleton
 
 public class Monedero {
     private static Monedero instance;
