@@ -1,4 +1,4 @@
-package Peces;
+package peces;
 /**Clase padre de los peces*/
 public abstract class Pez {
 
