@@ -72,7 +72,13 @@ public abstract class Pez {
      * Muestra el estado del pez 
      */
     public void showStatus(){
-        //TODO: El estado del pez con el formato requerido
+        System.out.println("---------------" + this.CommonName + "---------------");
+        System.out.println("Edad: " + this.Age + " días");
+        System.out.println("Sexo: " + this.Sex);
+        System.out.println("Vivo: " + (this.Alive ? "Si" : "No"));
+        System.out.println("Alimentado: ");
+        System.out.println("Fértil: ");
+        //TODO Acabar esto
     }
 
     /**
