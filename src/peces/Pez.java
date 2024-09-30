@@ -1,39 +1,71 @@
 package peces;
 /**Clase padre de los peces*/
+
+import propiedades.CriaTipo;
+import propiedades.PecesProps;
+import propiedades.PecesTipo;
+
 public abstract class Pez {
 
     /**Nombre común del pez*/
-    protected String CommonName;
+    protected String Nombre;
 
     /**Nombre científico del pez*/
-    protected String ScientificName;
+    protected String Cientifico;
+
+    /**Numero de dias tras los que puede volver a reproducirse */
+    protected int Ciclo;
+
+    /**Precio de compra del pez */
+    protected int Coste;
+
+    /**Cantidad de huevos que pone */
+    protected int Huevos;
+
+    /**Tiempo que tarda en llegar a edad adulta */
+    protected int Madurez;
+
+    /**Cantidad de monedas que da al venderlo */
+    protected int Monedas;
+
+    /**Numero de dias que tarda en venderse */
+    protected int Optimo;
+
+    /**Tipo de piscifactoría en la que puede criarse */
+    protected CriaTipo Piscifactoria;
+
+    /**Propiedades del pez */
+    protected PecesProps[] Propiedadas;
+
+    /**Tipo de pez */
+    protected PecesTipo Tipo;
 
     /**Edad del pez*/
-    protected int Age;
+    protected int Edad;
 
     /**Sexo del pez*/
-    protected char Sex;
+    protected char Sexo;
 
     /**Fertilidad del pez*/
-    protected boolean Fertile;
+    protected boolean Fertil;
 
     /**Estado del pez*/
-    protected boolean Alive;
+    protected boolean Vivo;
 
     /**
      * Devuelve el nombre comun del pez
      * @return El nombre comun
      */
-    public String getCommonName() {
-        return CommonName;
+    public String getName() {
+        return Nombre;
     }
 
     /**
      * Devuleve el nombre cientifico del pez
      * @return El nombre cientifico
      */
-    public String getScientificName() {
-        return ScientificName;
+    public String getCientifico() {
+        return Cientifico;
     }
 
     /**
@@ -41,7 +73,7 @@ public abstract class Pez {
      * @return La edad en días
      */
     public int getAge() {
-        return Age;
+        return Edad;
     }
 
     /**
@@ -49,7 +81,7 @@ public abstract class Pez {
      * @return El sexo como caracter (H o M)
      */
     public char getSex() {
-        return Sex;
+        return Sexo;
     }
 
     /**
@@ -57,7 +89,7 @@ public abstract class Pez {
      * @return Si está vivo o no
      */
     public boolean isAlive() {
-        return Alive;
+        return Vivo;
     }
 
     /**
@@ -65,17 +97,17 @@ public abstract class Pez {
      * @return Si es fertil o no
      */
     public boolean isFertile() {
-        return Fertile;
+        return Fertil;
     }
 
     /**
      * Muestra el estado del pez 
      */
     public void showStatus(){
-        System.out.println("---------------" + this.CommonName + "---------------");
-        System.out.println("Edad: " + this.Age + " días");
-        System.out.println("Sexo: " + this.Sex);
-        System.out.println("Vivo: " + (this.Alive ? "Si" : "No"));
+        System.out.println("---------------" + this.Nombre + "---------------");
+        System.out.println("Edad: " + this.Edad + " días");
+        System.out.println("Sexo: " + this.Sexo);
+        System.out.println("Vivo: " + (this.Vivo ? "Si" : "No"));
         System.out.println("Alimentado: ");
         System.out.println("Fértil: ");
         //TODO Acabar esto
