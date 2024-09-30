@@ -2,7 +2,7 @@ package peces;
 /**Clase padre de los peces*/
 
 import propiedades.CriaTipo;
-import propiedades.PecesProps;
+import propiedades.PecesDatos;
 import propiedades.PecesTipo;
 
 public abstract class Pez {
@@ -34,8 +34,6 @@ public abstract class Pez {
     /**Tipo de piscifactoría en la que puede criarse */
     protected CriaTipo Piscifactoria;
 
-    /**Propiedades del pez */
-    protected PecesProps[] Propiedadas;
 
     /**Tipo de pez */
     protected PecesTipo Tipo;
@@ -46,11 +44,30 @@ public abstract class Pez {
     /**Sexo del pez*/
     protected char Sexo;
 
+    /**Si el pez ha comido en el dia actual */
+    protected boolean Comido;
+
     /**Fertilidad del pez*/
     protected boolean Fertil;
 
     /**Estado del pez*/
     protected boolean Vivo;
+
+    protected Pez (PecesDatos data){
+        this.Nombre = data.getNombre();
+        this.Cientifico = data.getCientifico();
+        this.Ciclo = data.getCiclo();
+        this.Coste = data.getCoste();
+        this.Huevos = data.getHuevos();
+        this.Madurez = data.getMadurez();
+        this.Monedas = data.getMonedas();
+        this.Optimo = data.getOptimo();
+        this.Piscifactoria = data.getPiscifactoria();
+        this.Tipo = data.getTipo();
+        this.Fertil = false;
+        this.Vivo = true;
+        this.Edad = 0;
+    }
 
     /**
      * Devuelve el nombre comun del pez
@@ -108,9 +125,8 @@ public abstract class Pez {
         System.out.println("Edad: " + this.Edad + " días");
         System.out.println("Sexo: " + this.Sexo);
         System.out.println("Vivo: " + (this.Vivo ? "Si" : "No"));
-        System.out.println("Alimentado: ");
-        System.out.println("Fértil: ");
-        //TODO Acabar esto
+        System.out.println("Alimentado: " + (this.Comido ? "Si" : "No")) ;
+        System.out.println("Fértil: " + (this.Fertil ? "Si" : "No"));
     }
 
     /**
@@ -120,8 +136,15 @@ public abstract class Pez {
         //TODO: Lógica de crecimiento del pez, si ha comido, edad, fertilidad...
     }
 
+    /**
+     * Resetea todo el pez, pero dejando los valores
+     * característicos igual
+     */
     public void reset(){
-        //TODO: Lógica para resetear el pez
+        this.Edad = 0;
+        this.Vivo = true;
+        this.Fertil = false;
+        this.Comido = false;
     }
 
 }
