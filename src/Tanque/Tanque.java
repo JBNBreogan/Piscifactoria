@@ -1,13 +1,16 @@
 package Tanque;
 
 import java.util.ArrayList;
+import peces.Pez;
+import propiedades.PecesDatos;
 
 public class Tanque {
 
     private int numTanque;
     private ArrayList<Pez> peces;
     private int maxPeces;
-    
+    private PecesDatos tipoPez;
+
     public Tanque(int maxPeces) {
         this.maxPeces = maxPeces;
     }
@@ -15,44 +18,44 @@ public class Tanque {
     public void showStatus(){
         System.out.println("============Tanque "+ numTanque + "============");
         System.out.println("Ocupación: " + pecesEnTanque() +" / "+ maxPeces + " (" + porcentajeOcupacion + "%)");
-        System.out.println("Peces vivos: " + pecesVivos(peces) +" / "+pecesEnTanque() + " (" + porcentajeVivos + "%)" );
-        System.out.println("Peces alimentados: " + pecesAlimentados(peces) +" / "+ pecesVivos(peces) + " (" + porcentajeAlimentados + "%)");
-        System.out.println("Peces adultos: " + pecesAdultos(peces) +" / "+ pecesVivos(peces) + " (" + porcentajeAlimentados + "%)");
-        System.out.println(pecesHembra(peces)+" / "+pecesMacho(peces) + "H/M");
-        System.out.println("Fértiles: " + pecesFertiles(peces)+" / "+pecesVivos(peces));
+        System.out.println("Peces vivos: " + pecesVivos() +" / "+pecesEnTanque() + " (" + porcentajeVivos + "%)" );
+        System.out.println("Peces alimentados: " + pecesAlimentados() +" / "+ pecesVivos() + " (" + porcentajeAlimentados + "%)");
+        System.out.println("Peces adultos: " + pecesAdultos() +" / "+ pecesVivos() + " (" + porcentajeAlimentados + "%)");
+        System.out.println(pecesHembra()+" / "+pecesMacho() + "H/M");
+        System.out.println("Fértiles: " + pecesFertiles()+" / "+pecesVivos());
     }
-    
-    public void showFishStatus(ArrayList<Pez> peces){
+
+    public void showFishStatus(){
         for (Pez pez : peces) {
             pez.showStatus();
         }
     }
 
-    public void showCapacity(Piscifactoria piscifactoria){
-        System.out.println("Tanque " + numTanque +" de la piscifactoria "+ piscifactoria.getNum() + "al " + porcentajeOcupacion + "% de capacidad [" + pecesEnTanque +"/"+ maxPeces + "].");
+    public void showCapacity(){
+        System.out.println("Tanque " + numTanque +"al "+ porcentajeOcupacion + "% de capacidad [" + pecesEnTanque +"/"+ maxPeces + "].");
     }
 
-    public void nextDay(ArrayList<Pez> peces){
+    public void nextDay(){
         for (Pez pez : peces) {
             pez.nextDay();
         }
     }
 
-    public static int pecesEnTanque(){
-        peces.lenght();
+    public int pecesEnTanque(){
+        return peces.size();
     }
 
-    public static int pecesVivos(ArrayList<Pez> peces){
+    public  int pecesVivos(){
         int contadorPecesVivos=0;
         for (Pez pez : peces) {
-            if(pez.isVivo()){
+            if(pez.isAlive()){
                 contadorPecesVivos+=1;
             }
         }
         return contadorPecesVivos;
     }
 
-    public static int pecesAlimentados(ArrayList<Pez> peces){
+    public  int pecesAlimentados(){
         int contadorPecesAlimentados=0;
         for (Pez pez : peces) {
             if(pez.isAlimentado()){
@@ -62,7 +65,7 @@ public class Tanque {
         return contadorPecesAlimentados;
     }
 
-    public static int pecesAdultos(ArrayList<Pez> peces){
+    public  int pecesAdultos(){
         int contadorPecesAdultos=0;
         for (Pez pez : peces) {
             if(pez.isAdulto()){
@@ -72,33 +75,65 @@ public class Tanque {
         return contadorPecesAdultos;
     }
 
-    public static int pecesHembra(ArrayList<Pez> peces){
+    public  int pecesHembra(){
         int contadorPecesHembra=0;
         for (Pez pez : peces) {
-            if(pez.isHembra()){
+            if(pez.getSex()=='H'){
                 contadorPecesHembra+=1;
             }
         }
         return contadorPecesHembra;
     }
 
-    public static int pecesMacho(ArrayList<Pez> peces){
+    public  int pecesMacho(){
         int contadorPecesMacho=0;
         for (Pez pez : peces) {
-            if(!pez.isHembra()){
+            if(pez.getSex()=='M'){
                 contadorPecesMacho+=1;
             }
         }
         return contadorPecesMacho;
     }
 
-    public static int pecesFertiles(ArrayList<Pez> peces){
+    public int pecesFertiles(){
         int contadorPecesFertiles=0;
         for (Pez pez : peces) {
-            if(pez.isFertil()){
+            if(pez.isFertile()){
                 contadorPecesFertiles+=1;
             }
         }
         return contadorPecesFertiles;
+    }
+
+    public int getNumTanque() {
+        return numTanque;
+    }
+
+    public void setNumTanque(int numTanque) {
+        this.numTanque = numTanque;
+    }
+
+    public ArrayList<Pez> getPeces() {
+        return peces;
+    }
+
+    public void setPeces(ArrayList<Pez> peces) {
+        this.peces = peces;
+    }
+
+    public int getMaxPeces() {
+        return maxPeces;
+    }
+
+    public void setMaxPeces(int maxPeces) {
+        this.maxPeces = maxPeces;
+    }
+
+    public PecesDatos getTipoPez() {
+        return tipoPez;
+    }
+
+    public void setTipoPez(PecesDatos tipoPez) {
+        this.tipoPez = tipoPez;
     }
 }
