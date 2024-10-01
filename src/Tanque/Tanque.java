@@ -8,6 +8,10 @@ public class Tanque {
     private ArrayList<Pez> peces;
     private int maxPeces;
     
+    public Tanque(int maxPeces) {
+        this.maxPeces = maxPeces;
+    }
+
     public void showStatus(){
         System.out.println("============Tanque "+ numTanque + "============");
         System.out.println("Ocupación: " + pecesEnTanque() +" / "+ maxPeces + " (" + porcentajeOcupacion + "%)");
