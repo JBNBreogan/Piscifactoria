@@ -34,7 +34,6 @@ public abstract class Pez {
     /**Tipo de piscifactoría en la que puede criarse */
     protected CriaTipo Piscifactoria;
 
-
     /**Tipo de pez */
     protected PecesTipo Tipo;
 
@@ -135,6 +134,11 @@ public abstract class Pez {
     public void grow(){
         //TODO: Lógica de crecimiento del pez, si ha comido, edad, fertilidad...
     }
+
+    /**
+     * Hace comer al pez
+     */
+    public abstract void comer(int cantidad);
 
     /**
      * Resetea todo el pez, pero dejando los valores
