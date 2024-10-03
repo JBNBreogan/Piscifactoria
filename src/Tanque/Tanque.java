@@ -57,8 +57,8 @@ public class Tanque {
 
         /*
          * Si hay alguna hembra y macho fertil cada una de las
-         * hembras fertiles pone la cantidad de huevos
-         * 
+         * hembras fertiles pone la cantidad de huevos de su
+         * tipo de pez.
          */
 
         if(pecesHembraFertiles>=1 && pecesMachoFertiles>=1){
@@ -68,13 +68,17 @@ public class Tanque {
                         if(i%2==0){
                             pez.reproducirse(true);
                         }else{
-                            pez.reproducrise(false);
+                            pez.reproducirse(false);
                         }
-                        
                     }
                 }
             }
         }
+
+        /*
+         * Recorre la lista de peces y vende los que esten
+         * en su esdad optima.
+         */
 
         for (Pez pez : peces) {
             if(pez.getAge()==pez.getOptimo()){
