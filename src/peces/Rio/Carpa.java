@@ -6,9 +6,20 @@ import propiedades.AlmacenPropiedades;
 
 public class Carpa extends Pez{
 
-    public Carpa(char Sexo){
+    public Carpa(boolean hembra){
         super(AlmacenPropiedades.CARPA);
-        this.Sexo = Sexo;
+        this.Sexo = hembra;
     }
     //TODO Grow
+
+    @Override
+    public Pez reproducirse(boolean hembra) {
+        return new Carpa(hembra);
+    }
+
+    @Override
+    public void comer(int cantidad) {
+        // TODO Auto-generated method stub
+        
+    }
 }

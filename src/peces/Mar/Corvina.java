@@ -5,9 +5,20 @@ import propiedades.AlmacenPropiedades;
 
 public class Corvina extends Pez{
 
-    public Corvina(char Sexo){
+    public Corvina(boolean hembra){
         super(AlmacenPropiedades.CORVINA);
-        this.Sexo = Sexo;
+        this.Sexo = hembra;
+    }
+
+    @Override
+    public Pez reproducirse(boolean hembra) {
+        return new Corvina(hembra);
+    }
+
+    @Override
+    public void comer(int cantidad) {
+        // TODO Auto-generated method stub
+        
     }
     //TODO Grow
 }
