@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import peces.Pez;
 import propiedades.PecesDatos;
 import helpers.PorcentajeHelper;
+import Comun.Monedero;
 
 public class Tanque {
 
@@ -11,6 +12,7 @@ public class Tanque {
     private ArrayList<Pez> peces;
     private int maxPeces;
     private PecesDatos tipoPez;
+    private Monedero monedero=Monedero.getInstance();
 
     public Tanque(int maxPeces) {
         this.maxPeces = maxPeces;
@@ -37,8 +39,48 @@ public class Tanque {
     }
 
     public void nextDay(){
+        int pecesHembraFertiles=0;
+        int pecesMachoFertiles=0;
+
+        /*
+         * Recorro la lista de peces y 
+         * compruebo si hay peces hembra y macho fertiles.
+         */
         for (Pez pez : peces) {
-            pez.nextDay();
+            pez.grow();
+            if (pez.isFemale() && pez.isFertile()) {
+                pecesHembraFertiles+=1;
+            }else if(!pez.isFemale() && pez.isFertile()){
+                pecesMachoFertiles+=1;
+            }
+        }
+
+        /*
+         * Si hay alguna hembra y macho fertil cada una de las
+         * hembras fertiles pone la cantidad de huevos
+         * 
+         */
+
+        if(pecesHembraFertiles>=1 && pecesMachoFertiles>=1){
+            for (Pez pez : peces) {
+                if(pez.isFemale() && pez.isFertile()){
+                    for (int i = 0; i < pez.getHuevos(); i++) {
+                        if(i%2==0){
+                            pez.reproducirse(true);
+                        }else{
+                            pez.reproducrise(false);
+                        }
+                        
+                    }
+                }
+            }
+        }
+
+        for (Pez pez : peces) {
+            if(pez.getAge()==pez.getOptimo()){
+                monedero.setMonedas(monedero.getMonedas()+pez.getMonedas());
+                peces.remove(pez);
+            }
         }
     }
 
@@ -79,7 +121,7 @@ public class Tanque {
     public  int pecesHembra(){
         int contadorPecesHembra=0;
         for (Pez pez : peces) {
-            if(pez.getSex()=='H'){
+            if(pez.isFemale()){
                 contadorPecesHembra+=1;
             }
         }
@@ -89,7 +131,7 @@ public class Tanque {
     public  int pecesMacho(){
         int contadorPecesMacho=0;
         for (Pez pez : peces) {
-            if(pez.getSex()=='M'){
+            if(!pez.isFemale()){
                 contadorPecesMacho+=1;
             }
         }
