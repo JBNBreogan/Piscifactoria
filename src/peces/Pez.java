@@ -40,8 +40,8 @@ public abstract class Pez {
     /**Edad del pez*/
     protected int Edad;
 
-    /**Sexo del pez*/
-    protected char Sexo;
+    /**Sexo del pez, true si es hembra*/
+    protected boolean Sexo;
 
     /**Si el pez ha comido en el dia actual */
     protected boolean Comido;
@@ -51,6 +51,9 @@ public abstract class Pez {
 
     /**Estado del pez*/
     protected boolean Vivo;
+
+    /**Si el pez esta alimentado */
+    protected boolean Alimentado;
 
     protected Pez (PecesDatos data){
         this.Nombre = data.getNombre();
@@ -66,6 +69,7 @@ public abstract class Pez {
         this.Fertil = false;
         this.Vivo = true;
         this.Edad = 0;
+        this.Alimentado = false;
     }
 
     /**
@@ -93,10 +97,10 @@ public abstract class Pez {
     }
 
     /**
-     * Devuelve el sexo del pez
-     * @return El sexo como caracter (H o M)
+     * Devuelve si el pez es hembra
+     * @return True si es hembra, false si es macho
      */
-    public char getSex() {
+    public boolean isFemale() {
         return Sexo;
     }
 
@@ -117,23 +121,82 @@ public abstract class Pez {
     }
 
     /**
+     * Devuelve si el pez es maduro
+     * @return Si es maduro o no
+     */
+    public boolean isAdulto() {
+        if (this.Edad >= this.Madurez){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Devuelve la cantidad de huevos que pone
+     * @return Los huevos
+     */
+    public int getHuevos() {
+        return Huevos;
+    }
+    
+    /**
+     * Devuelve el coste de compra del pez
+     * @return El coste de compra
+     */
+    public int getCoste() {
+        return Coste;
+    }
+
+    /**
+     * Devuelve cuantas monedas te da al vender el pez
+     * @return El valor de venta
+     */
+    public int getMonedas() {
+        return Monedas;
+    }
+
+    /**
+     * El tipo de piscifactoría a la que pertenece
+     * @return Si es de mar, de rio o doble
+     */
+    public CriaTipo getPiscifactoria() {
+        return Piscifactoria;
+    }
+
+    /**
+     * Devuelve si el pez esta alimentado
+     * @return Si esta alimentado o no
+     */
+    public boolean isAlimentado() {
+        return Alimentado;
+    }
+
+    /**
      * Muestra el estado del pez 
      */
     public void showStatus(){
         System.out.println("---------------" + this.Nombre + "---------------");
         System.out.println("Edad: " + this.Edad + " días");
-        System.out.println("Sexo: " + this.Sexo);
+        System.out.println("Sexo: " + (isFemale() ? "H" : "M"));
         System.out.println("Vivo: " + (this.Vivo ? "Si" : "No"));
         System.out.println("Alimentado: " + (this.Comido ? "Si" : "No")) ;
         System.out.println("Fértil: " + (this.Fertil ? "Si" : "No"));
     }
 
     /**
-     * Hace crecer el pez un día, teniendo en cuenta todos los factores
+     * Hace crecer el pez un día, teniendo en cuenta todos los factores.
      */
     public void grow(){
         //TODO: Lógica de crecimiento del pez, si ha comido, edad, fertilidad...
     }
+
+    /**
+     * Devuelve una cría del pez
+     * @param hembra Si el pez es hembra
+     * @return Una cria del pez
+     */
+    public abstract Pez reproducirse(boolean hembra);
 
     /**
      * Hace comer al pez

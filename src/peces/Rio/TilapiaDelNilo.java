@@ -5,9 +5,21 @@ import propiedades.AlmacenPropiedades;
 
 public class TilapiaDelNilo extends Pez{
 
-    public TilapiaDelNilo(char Sexo){
+    public TilapiaDelNilo(boolean hembra){
         super(AlmacenPropiedades.TILAPIA_NILO);
-        this.Sexo = Sexo;
+        this.Sexo = hembra;
     }
+
     //TODO Grow
+
+    @Override
+    public Pez reproducirse(boolean hembra) {
+        return new TilapiaDelNilo(hembra);
+    }
+
+
+    @Override
+    public void comer(int cantidad) {
+        // TODO comer
+    }
 }

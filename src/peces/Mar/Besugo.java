@@ -5,9 +5,19 @@ import propiedades.AlmacenPropiedades;
 
 public class Besugo extends Pez{
 
-    public Besugo(char Sexo){
+    public Besugo(boolean hembra){
         super(AlmacenPropiedades.BESUGO);
-        this.Sexo = Sexo;
+        this.Sexo = hembra;
     }
-    //TODO Grow
+
+    @Override
+    public Pez reproducirse(boolean hembra) {
+        return new Besugo(hembra);
+    }
+
+    @Override
+    public void comer(int cantidad) {
+        // TODO Auto-generated method stub
+        
+    }
 }
