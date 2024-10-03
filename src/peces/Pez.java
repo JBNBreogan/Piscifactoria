@@ -173,6 +173,14 @@ public abstract class Pez {
     }
 
     /**
+     * Devuelve la edad optima para vender el pez
+     * @return La edad optima de venta
+     */
+    public int getOptimo() {
+        return Optimo;
+    }
+
+    /**
      * Muestra el estado del pez 
      */
     public void showStatus(){
