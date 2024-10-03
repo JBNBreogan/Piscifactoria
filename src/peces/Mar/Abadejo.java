@@ -5,9 +5,20 @@ import propiedades.AlmacenPropiedades;
 
 public class Abadejo extends Pez{
     
-    public Abadejo(char Sexo){
+    public Abadejo(boolean hembra){
         super(AlmacenPropiedades.ABADEJO);
-        this.Sexo = Sexo;
+        this.Sexo = hembra;
+    }
+
+    @Override
+    public Pez reproducirse(boolean hembra) {
+        return new Abadejo(hembra);
+    }
+    
+    @Override
+    public void comer(int cantidad) {
+        // TODO Auto-generated method stub
+        
     }
     //TODO Grow
 }

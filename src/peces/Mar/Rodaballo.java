@@ -5,9 +5,19 @@ import propiedades.AlmacenPropiedades;
 
 public class Rodaballo extends Pez{
 
-    public Rodaballo(char Sexo){
+    public Rodaballo(boolean hembra){
         super(AlmacenPropiedades.RODABALLO);
-        this.Sexo = Sexo;
+        this.Sexo = hembra;
     }
-    //TODO grow
+    
+    @Override
+    public Pez reproducirse(boolean hembra) {
+        return new Rodaballo(hembra);
+    }
+
+    @Override
+    public void comer(int cantidad) {
+        // TODO Auto-generated method stub
+        
+    }
 }
