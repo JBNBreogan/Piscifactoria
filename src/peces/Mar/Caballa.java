@@ -5,9 +5,19 @@ import propiedades.AlmacenPropiedades;
 
 public class Caballa extends Pez{
 
-    public Caballa(char Sexo){
+    public Caballa(boolean hembra){
         super(AlmacenPropiedades.CABALLA);
-        this.Sexo = Sexo;
+        this.Sexo = hembra;
     }
-    //TODO Grow
+
+    @Override
+    public Pez reproducirse(boolean hembra) {
+        return new Caballa(hembra);
+    }
+
+    @Override
+    public void comer(int cantidad) {
+        // TODO Auto-generated method stub
+        
+    }
 }

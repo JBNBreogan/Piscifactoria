@@ -5,9 +5,19 @@ import propiedades.AlmacenPropiedades;
 
 public class Sargo extends Pez{
 
-    public Sargo(char Sexo){
+    public Sargo(boolean hembra){
         super(AlmacenPropiedades.SARGO);
-        this.Sexo = Sexo;
+        this.Sexo = hembra;
     }
-    //TODO grow
+
+    @Override
+    public Pez reproducirse(boolean hembra) {
+        return new Sargo(hembra);
+    }
+
+    @Override
+    public void comer(int cantidad) {
+        // TODO Auto-generated method stub
+        
+    }
 }
