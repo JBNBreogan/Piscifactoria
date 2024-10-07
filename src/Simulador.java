@@ -60,6 +60,7 @@ public class Simulador {
         }
     }
 
+    
     public static int selectTank(){
         try {
             Piscifactoria pisc = piscifactorias.get(selectPisc());
@@ -74,12 +75,49 @@ public class Simulador {
     }
 
     public static void showGeneralStatus(){
-        
+        //Falta implementar almacen central
+
+        for (Piscifactoria pisc : piscifactorias) {
+            pisc.showStatus();
+        }
     }
 
+    public static void showSpecificStatus(){
+        Piscifactoria pisc = piscifactorias.get(selectPisc());
+        
+        pisc.showTankStatus();
+    }
 
+    public static void showTankStatus(){
+        Piscifactoria pisc = piscifactorias.get(selectPisc());
 
+        Tanque tank = pisc.getTanques().get(selectTank());
 
+        tank.showFishStatus();
+    }
+
+    public static void showStats(){
+
+    }
+
+    public static void showIctio(){
+
+    }
+
+    public static void nextDay(){
+        for (Piscifactoria piscifactoria : piscifactorias) {
+            piscifactoria.nextDay();
+        }
+
+        int pecesVendidos=0;
+        int monedasObtenidas=0;
+        for (Piscifactoria piscifactoria : piscifactorias) {
+            System.out.println("Piscifactoria "+ piscifactoria.getNombre()+": "+piscifactoria.pecesVendidos()+" peces vendidos por "+piscifactoria.monedasObtenidas()+" monedas");
+            pecesVendidos+=piscifactoria.pecesVendidos();
+            monedasObtenidas+=piscifactoria.monedasObtenidas();
+        }
+        System.out.println(pecesVendidos + " peces vendidos por un total de "+monedasObtenidas+ " monedas");
+    }
 
 
 

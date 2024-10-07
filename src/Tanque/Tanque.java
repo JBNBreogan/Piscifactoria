@@ -92,17 +92,7 @@ public class Tanque {
             }
         }
 
-        /*
-         * Recorre la lista de peces y vende los que esten
-         * en su esdad optima.
-         */
-
-        for (Pez pez : peces) {
-            if(pez.getAge()==pez.getOptimo()){
-                monedero.setMonedas(monedero.getMonedas()+pez.getMonedas());
-                peces.remove(pez);
-            }
-        }
+        ventaPecesOptimos();
     }
 
     public int pecesEnTanque(){
@@ -167,6 +157,19 @@ public class Tanque {
             }
         }
         return contadorPecesFertiles;
+    }
+
+    public void ventaPecesOptimos(){
+        /*
+        * Recorre la lista de peces y vende los que esten
+        * en su edad optima.
+        */
+        for (Pez pez : peces) {
+            if(pez.getAge()==pez.getOptimo()){
+                monedero.setMonedas(monedero.getMonedas()+pez.getMonedas());
+                peces.remove(pez);
+            }
+        }
     }
 
     public int getNumTanque() {
