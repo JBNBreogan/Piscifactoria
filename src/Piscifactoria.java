@@ -5,6 +5,7 @@ import Comun.Monedero;
 import Tanque.Tanque;
 import peces.Pez;
 import propiedades.CriaTipo;
+import helpers.*;
 
 public class Piscifactoria {
     
@@ -30,6 +31,17 @@ public class Piscifactoria {
             this.maxComidaAnimal = 100;
         }
     }
+
+    public void showStatus(){
+        System.out.println("=============== "+getNombre()+" ===============");
+        System.out.println("Tanques: "+tanques.size());
+        System.out.println("Ocupación: "+pecesEnPiscifactoria()+"/"+pecesMaxPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesEnPiscifactoria(), pecesMaxPiscifactoria())+")");
+        System.out.println("Peces vivos: "+pecesVivosPiscifactoria()+"/"+pecesEnPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesVivosPiscifactoria(), pecesEnPiscifactoria())+")");
+        System.out.println("Peces alimentados: "+pecesAlimentadosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesAlimentadosPiscifactoria(), pecesVivosPiscifactoria())+")");
+        System.out.println("Peces adultos: "+pecesAdultosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesAdultosPiscifactoria(), pecesVivosPiscifactoria())+")");
+        System.out.println("Hembras/Machos: "+pecesMachoPiscifactoria()+"/"+pecesHembraPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesEnPiscifactoria(), pecesMaxPiscifactoria())+")");
+        System.out.println("Fértiles: "+pecesFertilesPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesEnPiscifactoria(), pecesMaxPiscifactoria())+")");
+    }0
 
     public int selectTank(){
         for (Tanque tanque : tanques) {
@@ -82,6 +94,70 @@ public class Piscifactoria {
             this.maxComidaVegetal=+100;
         }
         System.out.println("Almacén de comida de la piscifactoría"+this.nombre+" mejorado. Su capacidad ha aumentado en"+ ((tipo == CriaTipo.RIO) ? "25" : "100") +"hasta un total de "+maxComidaAnimal);
+    }
+
+    public int pecesEnPiscifactoria(){
+        int pecestotales = 0;
+        for (Tanque tanque : tanques) {
+            pecestotales += tanque.getPeces().size();
+        }
+        return pecestotales;
+    }
+
+    public int pecesMaxPiscifactoria(){
+        int pecesmaxtotales = 0;
+        for (Tanque tanque : tanques) {
+            pecesmaxtotales += tanque.getMaxPeces();
+        }
+        return pecesmaxtotales;
+    }
+
+    public int pecesVivosPiscifactoria(){
+        int pecesvivos = 0;
+        for (Tanque tanque : tanques) {
+            pecesvivos += tanque.pecesVivos();
+        }
+        return pecesvivos;
+    }
+
+    public int pecesAlimentadosPiscifactoria(){
+        int pecesalimentadostotales = 0;
+        for (Tanque tanque : tanques) {
+            pecesalimentadostotales += tanque.pecesAlimentados();
+        }
+        return pecesalimentadostotales;
+    }
+
+    public int pecesAdultosPiscifactoria(){
+        int pecesadultostotales = 0;
+        for (Tanque tanque : tanques) {
+            pecesadultostotales += tanque.pecesAdultos();
+        }
+        return pecesadultostotales;
+    }
+
+    public int pecesMachoPiscifactoria(){
+        int pecesmachototales = 0;
+        for (Tanque tanque : tanques) {
+            pecesmachototales += tanque.pecesMacho();
+        }
+        return pecesmachototales;
+    }
+
+    public int pecesHembraPiscifactoria(){
+        int peceshembratotales = 0;
+        for (Tanque tanque : tanques) {
+            peceshembratotales += tanque.pecesHembra();
+        }
+        return peceshembratotales;
+    }
+
+    public int pecesFertilesPiscifactoria(){
+        int pecesfertilestotales = 0;
+        for (Tanque tanque : tanques) {
+            pecesfertilestotales += tanque.pecesFertiles();
+        }
+        return pecesfertilestotales;
     }
 
     public String getNombre() {
