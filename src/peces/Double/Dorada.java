@@ -1,9 +1,10 @@
 package peces.Double;
 
 import peces.Pez;
+import peces.Propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class Dorada extends Pez{
+public class Dorada extends Pez implements Omnivoro{
 
     public Dorada(boolean hembra){
         super(AlmacenPropiedades.DORADA);

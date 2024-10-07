@@ -1,9 +1,10 @@
 package peces.Rio;
 
 import peces.Pez;
+import peces.Propiedades.Filtrador;
 import propiedades.AlmacenPropiedades;
 
-public class TilapiaDelNilo extends Pez{
+public class TilapiaDelNilo extends Pez implements Filtrador{
 
     public TilapiaDelNilo(boolean hembra){
         super(AlmacenPropiedades.TILAPIA_NILO);

@@ -1,9 +1,11 @@
 package peces.Rio;
 
 import peces.Pez;
+import peces.Propiedades.Comedido;
+import peces.Propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class CarpinDeTresEspinas extends Pez{
+public class CarpinDeTresEspinas extends Pez implements Omnivoro,Comedido{
 
     public CarpinDeTresEspinas(boolean hembra){
         super(AlmacenPropiedades.CARPIN_TRES_ESPINAS);

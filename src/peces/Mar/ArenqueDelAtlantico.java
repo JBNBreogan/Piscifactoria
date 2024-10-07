@@ -1,9 +1,10 @@
 package peces.Mar;
 
 import peces.Pez;
+import peces.Propiedades.Filtrador;
 import propiedades.AlmacenPropiedades;
 
-public class ArenqueDelAtlantico extends Pez{
+public class ArenqueDelAtlantico extends Pez implements Filtrador{
 
     public ArenqueDelAtlantico(boolean hembra){
         super(AlmacenPropiedades.ARENQUE_ATLANTICO);

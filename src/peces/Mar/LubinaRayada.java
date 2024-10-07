@@ -1,9 +1,10 @@
 package peces.Mar;
 
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class LubinaRayada extends Pez{
+public class LubinaRayada extends Pez implements Carnivoro{
 
     public LubinaRayada(boolean hembra){
         super(AlmacenPropiedades.LUBINA_RAYADA);

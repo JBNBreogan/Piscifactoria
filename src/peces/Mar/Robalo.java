@@ -1,9 +1,10 @@
 package peces.Mar;
 
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class Robalo extends Pez{
+public class Robalo extends Pez implements Carnivoro{
 
     public Robalo(boolean hembra){
         super(AlmacenPropiedades.ROBALO);

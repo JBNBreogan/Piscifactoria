@@ -1,9 +1,10 @@
 package peces.Rio;
 
 import peces.Pez;
+import peces.Propiedades.Filtrador;
 import propiedades.AlmacenPropiedades;
 
-public class CarpaPlateada extends Pez{
+public class CarpaPlateada extends Pez implements Filtrador{
 
     public CarpaPlateada(boolean hembra){
         super(AlmacenPropiedades.CARPA_PLATEADA);

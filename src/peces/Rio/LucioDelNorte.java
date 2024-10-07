@@ -1,9 +1,11 @@
 package peces.Rio;
 
 import peces.Pez;
+import peces.Propiedades.Activo;
+import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class LucioDelNorte extends Pez{
+public class LucioDelNorte extends Pez implements Carnivoro,Activo{
 
     public LucioDelNorte(boolean hembra){
         super(AlmacenPropiedades.LUCIO_NORTE);

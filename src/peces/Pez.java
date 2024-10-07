@@ -52,9 +52,6 @@ public abstract class Pez {
     /**Estado del pez*/
     protected boolean Vivo;
 
-    /**Si el pez esta alimentado */
-    protected boolean Alimentado;
-
     protected Pez (PecesDatos data){
         this.Nombre = data.getNombre();
         this.Cientifico = data.getCientifico();
@@ -69,7 +66,7 @@ public abstract class Pez {
         this.Fertil = false;
         this.Vivo = true;
         this.Edad = 0;
-        this.Alimentado = false;
+        this.Comido = false;
     }
 
     /**
@@ -169,7 +166,7 @@ public abstract class Pez {
      * @return Si esta alimentado o no
      */
     public boolean isAlimentado() {
-        return Alimentado;
+        return Comido;
     }
 
     /**
@@ -196,6 +193,8 @@ public abstract class Pez {
      * Hace crecer el pez un día, teniendo en cuenta todos los factores.
      */
     public void grow(){
+        this.Edad++;
+
         //TODO: Lógica de crecimiento del pez, si ha comido, edad, fertilidad...
     }
 

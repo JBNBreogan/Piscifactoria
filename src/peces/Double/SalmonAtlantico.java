@@ -1,9 +1,10 @@
 package peces.Double;
 
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class SalmonAtlantico extends Pez{
+public class SalmonAtlantico extends Pez implements Carnivoro{
 
     public SalmonAtlantico(boolean hembra){
         super(AlmacenPropiedades.SALMON_ATLANTICO);

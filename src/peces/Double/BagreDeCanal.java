@@ -1,9 +1,11 @@
 package peces.Double;
 
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
+import peces.Propiedades.Voraz;
 import propiedades.AlmacenPropiedades;
 
-public class BagreDeCanal extends Pez{
+public class BagreDeCanal extends Pez implements Carnivoro,Voraz{
     
     public BagreDeCanal(boolean hembra){
         super(AlmacenPropiedades.BAGRE_CANAL);

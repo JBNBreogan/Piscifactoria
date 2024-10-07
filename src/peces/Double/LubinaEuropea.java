@@ -1,9 +1,10 @@
 package peces.Double;
 
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class LubinaEuropea extends Pez{
+public class LubinaEuropea extends Pez implements Carnivoro{
 
     public LubinaEuropea(boolean hembra){
         super(AlmacenPropiedades.LUBINA_EUROPEA);

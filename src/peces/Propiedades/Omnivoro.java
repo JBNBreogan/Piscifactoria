@@ -1,5 +1,5 @@
 package peces.Propiedades;
 
-public interface Omnívoro {
+public interface Omnivoro {
     
 }

@@ -1,9 +1,10 @@
 package peces.Rio;
 
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class SalmonChinook extends Pez{
+public class SalmonChinook extends Pez implements Carnivoro{
 
     public SalmonChinook(boolean hembra){
         super(AlmacenPropiedades.SALMON_CHINOOK);

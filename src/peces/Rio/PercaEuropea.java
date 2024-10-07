@@ -1,9 +1,11 @@
 package peces.Rio;
 
 import peces.Pez;
+import peces.Propiedades.Activo;
+import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class PercaEuropea extends Pez{
+public class PercaEuropea extends Pez implements Carnivoro,Activo{
 
     public PercaEuropea(boolean hembra){
         super(AlmacenPropiedades.PERCA_EUROPEA);

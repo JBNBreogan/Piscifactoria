@@ -1,10 +1,12 @@
 package peces.Rio;
 
 import peces.Pez;
+import peces.Propiedades.Omnivoro;
+import peces.Propiedades.Voraz;
 import propiedades.AlmacenPropiedades;
 
 
-public class Carpa extends Pez{
+public class Carpa extends Pez implements Omnivoro,Voraz{
 
     public Carpa(boolean hembra){
         super(AlmacenPropiedades.CARPA);

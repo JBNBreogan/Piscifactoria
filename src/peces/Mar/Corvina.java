@@ -1,9 +1,11 @@
 package peces.Mar;
 
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
+import peces.Propiedades.Voraz;
 import propiedades.AlmacenPropiedades;
 
-public class Corvina extends Pez{
+public class Corvina extends Pez implements Carnivoro,Voraz{
 
     public Corvina(boolean hembra){
         super(AlmacenPropiedades.CORVINA);
