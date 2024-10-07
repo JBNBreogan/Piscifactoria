@@ -61,14 +61,31 @@ public class Tanque {
          * tipo de pez.
          */
 
-        if(pecesHembraFertiles>=1 && pecesMachoFertiles>=1){
-            for (Pez pez : peces) {
-                if(pez.isFemale() && pez.isFertile()){
-                    for (int i = 0; i < pez.getHuevos(); i++) {
-                        if(i%2==0){
-                            pez.reproducirse(true);
-                        }else{
-                            pez.reproducirse(false);
+        
+        if(pecesHembra() > pecesMacho()){
+            if(pecesHembraFertiles>=1 && pecesMachoFertiles>=1){
+                for (Pez pez : peces) {
+                    if(pez.isFemale() && pez.isFertile()){
+                        for (int i = 0; i < pez.getHuevos(); i++) {
+                            if(i%2==0){
+                                pez.reproducirse(false);
+                            }else{
+                                pez.reproducirse(true);
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            if(pecesHembraFertiles>=1 && pecesMachoFertiles>=1){
+                for (Pez pez : peces) {
+                    if(pez.isFemale() && pez.isFertile()){
+                        for (int i = 0; i < pez.getHuevos(); i++) {
+                            if(i%2==0){
+                                pez.reproducirse(true);
+                            }else{
+                                pez.reproducirse(false);
+                            }
                         }
                     }
                 }
