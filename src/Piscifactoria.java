@@ -41,7 +41,7 @@ public class Piscifactoria {
         System.out.println("Peces adultos: "+pecesAdultosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesAdultosPiscifactoria(), pecesVivosPiscifactoria())+")");
         System.out.println("Hembras/Machos: "+pecesMachoPiscifactoria()+"/"+pecesHembraPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesEnPiscifactoria(), pecesMaxPiscifactoria())+")");
         System.out.println("Fértiles: "+pecesFertilesPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesEnPiscifactoria(), pecesMaxPiscifactoria())+")");
-    }0
+    }
 
     public int selectTank(){
         for (Tanque tanque : tanques) {
