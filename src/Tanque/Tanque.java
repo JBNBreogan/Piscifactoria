@@ -69,6 +69,8 @@ public class Tanque {
                         for (int i = 0; i < pez.getHuevos(); i++) {
                             if(i%2==0){
                                 pez.reproducirse(false);
+                                //poner que no es fertil
+                                //llamar a resetPuesta
                             }else{
                                 pez.reproducirse(true);
                             }

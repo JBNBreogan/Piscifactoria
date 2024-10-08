@@ -5,6 +5,7 @@ import java.util.Scanner;
 import Comun.Monedero;
 import Tanque.Tanque;
 import helpers.MenuHelper;
+import helpers.PorcentajeHelper;
 import propiedades.CriaTipo;
 
 public class Simulador {
@@ -12,6 +13,7 @@ public class Simulador {
     private static String nombreempresa;
     static Scanner sc = new Scanner(System.in);
     private static ArrayList<Piscifactoria> piscifactorias = new ArrayList<>();
+    private Monedero monedero=Monedero.getInstance();
 
     public static void init(){
         System.out.println("Nombre de la empresa:");
@@ -122,7 +124,7 @@ public class Simulador {
         System.out.println(pecesVendidos + " peces vendidos por un total de "+monedasObtenidas+ " monedas");
     }
 
-    public static void addFood(){
+    public void addFood(){
         Piscifactoria pisc = piscifactorias.get(selectPisc());
         //Falta implementar almacen central
         int opcion;
@@ -141,7 +143,7 @@ public class Simulador {
                     tipoComidaEleg="Vegetal";
                     break;
                 default:
-                    System.out.println("Esa opcion no esta disponible, eliga entre 1 o 2");
+                    System.out.println("Esa opcion no esta disponible, eliga entre las opciones disponibles");
                     break;
             }
         } while (opcion!= 1 || opcion!=2);
@@ -159,41 +161,37 @@ public class Simulador {
             switch (opCant) {
                 case 1:
                     if (tipoComidaEleg=="Animal") {
-                        //Falta settter para poder añadir comida en todas las opciones
+                        añadirComida(5,tipoComidaEleg,pisc);
                     }else if (tipoComidaEleg=="Vegetal") {
-                        
+                        añadirComida(5, tipoComidaEleg,pisc);
                     }
                     break;
                 case 2:
-                if (tipoComidaEleg=="Animal") {
-                    //Falta settter para poder añadir comida en todas las opciones
-                }else if (tipoComidaEleg=="Vegetal") {
-                    
-                }
+                    if (tipoComidaEleg=="Animal") {
+                        añadirComida(10, tipoComidaEleg,pisc);
+                    }else if (tipoComidaEleg=="Vegetal") {
+                        añadirComida(10, tipoComidaEleg,pisc);
+                    }
                     break;
                 case 3:
-                if (tipoComidaEleg=="Animal") {
-                    //Falta settter para poder añadir comida en todas las opciones
-                }else if (tipoComidaEleg=="Vegetal") {
-                    
-                }
+                    if (tipoComidaEleg=="Animal") {
+                        añadirComida(25, tipoComidaEleg,pisc);
+                    }else if (tipoComidaEleg=="Vegetal") {
+                        añadirComida(25, tipoComidaEleg,pisc);
+                    }
                     break;
                 case 4:
-                if (tipoComidaEleg=="Animal") {
-                    //Falta settter para poder añadir comida en todas las opciones
-                }else if (tipoComidaEleg=="Vegetal") {
-                    
-                }
+                    if (tipoComidaEleg=="Animal") {
+                        añadirComida(pisc.getMaxComidaAnimal()-pisc.getComidaAnimal(), tipoComidaEleg,pisc);
+                    }else if (tipoComidaEleg=="Vegetal") {
+                        añadirComida(pisc.getMaxComidaVegetal()-pisc.getComidaVegetal(), tipoComidaEleg,pisc);
+                    }
                     break;
                 default:
+                    System.out.println("Esa opcion no esta disponible, eliga entre las opciones disponibles");
                     break;
             }
         } while (opCant!=1 || opCant!=2 || opCant!=3 || opCant!=4);
-
-        
-
-        
-
     }
 
 
@@ -234,8 +232,24 @@ public class Simulador {
         return espacioTotal;
     }
 
-    public static void añadirComidaVegetal(){
-
+    public void añadirComida(int cant,String tipo,Piscifactoria pisc){
+        //Falta settter para poder añadir comida 
+        //Falta lo de la cantidad de comida mayor al maximo de comida
+        //Si la cantidad se comida introducida en mayor al maximo - el actual, lo que que falta para llenarse, solo se cobra la cantidad que falta
+        if(cant<25){
+            monedero.setMonedas(monedero.getMonedas()-cant);
+            System.out.println("cantidad de comida añadida: ");
+            System.out.println("Añadida "+cant+" de comida "+tipo);
+            if(tipo=="Vegetal"){
+                System.out.println("Deposito de comida X del la piscifactoria "+pisc.getNombre()+" al"+PorcentajeHelper.hacerProcentaje(cant, pisc.getMaxComidaVegetal())
+                +"% de su capacidad. [ "+pisc.getComidaVegetal()+"/"+pisc.getMaxComidaVegetal()+"]");
+            }else if (tipo=="Animal") {
+                System.out.println("Deposito de comida X del la piscifactoria "+pisc.getNombre()+" al"+PorcentajeHelper.hacerProcentaje(cant, pisc.getMaxComidaAnimal())
+                +"% de su capacidad. [ "+pisc.getComidaAnimal()+"/"+pisc.getMaxComidaAnimal()+"]");
+            }
+        }else if(cant==25 || cant%25==0){
+            monedero.setMonedas(monedero.getMonedas()-(cant-5));
+        }
     }
 
 
