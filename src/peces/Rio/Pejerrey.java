@@ -4,6 +4,10 @@ import peces.Pez;
 import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa al Pejerrey
+ * @author Breogan
+ */
 public class Pejerrey extends Pez implements Carnivoro{
 
     public Pejerrey(boolean hembra){

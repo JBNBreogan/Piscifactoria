@@ -5,6 +5,10 @@ import peces.Propiedades.Activo;
 import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa a la Perca Europea
+ * @author Breogan
+ */
 public class PercaEuropea extends Pez implements Carnivoro,Activo{
 
     public PercaEuropea(boolean hembra){

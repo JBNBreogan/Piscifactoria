@@ -6,6 +6,10 @@ import peces.Propiedades.Longevo;
 import peces.Propiedades.Voraz;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa al Siluro Europeo
+ * @author Breogan
+ */
 public class SiluroEuropeo extends Pez implements Carnivoro,Longevo,Voraz{
 
     public SiluroEuropeo(boolean hembra){

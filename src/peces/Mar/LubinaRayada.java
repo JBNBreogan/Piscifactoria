@@ -4,6 +4,10 @@ import peces.Pez;
 import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa a la Lubina Rayada
+ * @author Breogan
+ */
 public class LubinaRayada extends Pez implements Carnivoro{
 
     public LubinaRayada(boolean hembra){

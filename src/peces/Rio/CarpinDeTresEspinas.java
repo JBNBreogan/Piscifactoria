@@ -5,6 +5,10 @@ import peces.Propiedades.Comedido;
 import peces.Propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa al Carpin de tres espinas
+ * @author Breogan
+ */
 public class CarpinDeTresEspinas extends Pez implements Omnivoro,Comedido{
 
     public CarpinDeTresEspinas(boolean hembra){

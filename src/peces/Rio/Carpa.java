@@ -5,7 +5,10 @@ import peces.Propiedades.Omnivoro;
 import peces.Propiedades.Voraz;
 import propiedades.AlmacenPropiedades;
 
-
+/**
+ * Clase que representa a la Carpa comun
+ * @author Breogan
+ */
 public class Carpa extends Pez implements Omnivoro,Voraz{
 
     public Carpa(boolean hembra){

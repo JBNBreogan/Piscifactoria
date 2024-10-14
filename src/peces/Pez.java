@@ -1,10 +1,15 @@
 package peces;
-/**Clase padre de los peces*/
+
+import java.util.Random;
 
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import propiedades.PecesTipo;
 
+/**
+ * Clase padre de los peces
+ * @author Breogan
+ */
 public abstract class Pez {
 
     /**Nombre común del pez*/
@@ -52,6 +57,9 @@ public abstract class Pez {
     /**Estado del pez*/
     protected boolean Vivo;
 
+    /**Ultimo ciclo de puesta (Empieza en el máximo para que la primera vez sea fertil) */
+    protected int UltimaPuesta;
+
     protected Pez (PecesDatos data){
         this.Nombre = data.getNombre();
         this.Cientifico = data.getCientifico();
@@ -67,6 +75,7 @@ public abstract class Pez {
         this.Vivo = true;
         this.Edad = 0;
         this.Comido = false;
+        this.UltimaPuesta = data.getCiclo();
     }
 
     /**
@@ -178,6 +187,20 @@ public abstract class Pez {
     }
 
     /**
+     * Hace que el pez deje de ser fertil
+     */
+    public void notFertil(){
+        this.Fertil = false;
+    }
+
+    /**
+     * Hace que se resetee la puesta
+     */
+    public void resetPuesta(){
+        this.UltimaPuesta = 0;
+    }
+
+    /**
      * Muestra el estado del pez 
      */
     public void showStatus(){
@@ -192,11 +215,31 @@ public abstract class Pez {
     /**
      * Hace crecer el pez un día, teniendo en cuenta todos los factores.
      */
-    public void grow(){
-        this.Edad++;
-
-        //TODO: Lógica de crecimiento del pez, si ha comido, edad, fertilidad...
+    public void grow(int comida){
+        Random morir = new Random();
+        if (isAlive()){
+            comer(comida); 
+            if (this.Comido){
+                this.Edad++;
+                this.UltimaPuesta++;
+                if (isAdulto() && this.UltimaPuesta >= this.Ciclo){
+                    this.Fertil = true;
+                }
+                this.Comido = false;
+            } else {
+                if (morir.nextInt(2) == 0){
+                    this.Vivo = false;
+                } else {
+                    this.Edad++;
+                    this.UltimaPuesta++;
+                    if (isAdulto() && this.UltimaPuesta >= this.Ciclo){
+                        this.Fertil = true;
+                    }
+                }
+            }
+        }
     }
+
 
     /**
      * Devuelve una cría del pez

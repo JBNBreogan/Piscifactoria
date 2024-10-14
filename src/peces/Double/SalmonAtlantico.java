@@ -4,6 +4,10 @@ import peces.Pez;
 import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa al Salmon Atlántico
+ * @author Breogan
+ */
 public class SalmonAtlantico extends Pez implements Carnivoro{
 
     public SalmonAtlantico(boolean hembra){

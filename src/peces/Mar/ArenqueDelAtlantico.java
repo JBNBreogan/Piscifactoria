@@ -4,6 +4,10 @@ import peces.Pez;
 import peces.Propiedades.Filtrador;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa al Arenque del Atlantico
+ * @author Breogan
+ */
 public class ArenqueDelAtlantico extends Pez implements Filtrador{
 
     public ArenqueDelAtlantico(boolean hembra){

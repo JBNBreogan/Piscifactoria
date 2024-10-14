@@ -5,6 +5,10 @@ import peces.Propiedades.Carnivoro;
 import peces.Propiedades.Voraz;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa al Rodaballo
+ * @author Breogan
+ */
 public class Rodaballo extends Pez implements Carnivoro,Voraz{
 
     public Rodaballo(boolean hembra){

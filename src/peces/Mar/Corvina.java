@@ -5,6 +5,10 @@ import peces.Propiedades.Carnivoro;
 import peces.Propiedades.Voraz;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa a la Corvina
+ * @author Breogan
+ */
 public class Corvina extends Pez implements Carnivoro,Voraz{
 
     public Corvina(boolean hembra){

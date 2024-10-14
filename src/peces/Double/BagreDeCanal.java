@@ -5,6 +5,10 @@ import peces.Propiedades.Carnivoro;
 import peces.Propiedades.Voraz;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa al Bagre de Canal
+ * @author Breogan
+ */
 public class BagreDeCanal extends Pez implements Carnivoro,Voraz{
     
     public BagreDeCanal(boolean hembra){

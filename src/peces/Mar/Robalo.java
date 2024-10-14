@@ -4,6 +4,10 @@ import peces.Pez;
 import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa al Róbalo
+ * @author Breogan
+ */
 public class Robalo extends Pez implements Carnivoro{
 
     public Robalo(boolean hembra){

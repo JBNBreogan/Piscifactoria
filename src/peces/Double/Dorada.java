@@ -4,6 +4,10 @@ import peces.Pez;
 import peces.Propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa a la Dorada
+ * @author Breogan
+ */
 public class Dorada extends Pez implements Omnivoro{
 
     public Dorada(boolean hembra){

@@ -4,6 +4,10 @@ import peces.Pez;
 import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa al Besugo
+ * @author Breogan
+ */
 public class Besugo extends Pez implements Carnivoro{
 
     public Besugo(boolean hembra){

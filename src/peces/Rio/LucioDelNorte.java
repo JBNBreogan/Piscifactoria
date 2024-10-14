@@ -5,6 +5,10 @@ import peces.Propiedades.Activo;
 import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa al Lucio del Norte
+ * @author Breogan
+ */
 public class LucioDelNorte extends Pez implements Carnivoro,Activo{
 
     public LucioDelNorte(boolean hembra){

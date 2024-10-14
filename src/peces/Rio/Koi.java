@@ -5,6 +5,10 @@ import peces.Propiedades.Longevo;
 import peces.Propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa a la Carpa Koi
+ * @author Breogan
+ */
 public class Koi extends Pez implements Omnivoro,Longevo{
 
     public Koi(boolean hembra){

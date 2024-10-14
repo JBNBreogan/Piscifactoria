@@ -5,6 +5,10 @@ import peces.Propiedades.Carnivoro;
 import peces.Propiedades.Comedido;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa al Abadejo
+ * @author Breogan
+ */
 public class Abadejo extends Pez implements Carnivoro,Comedido{
     
     public Abadejo(boolean hembra){

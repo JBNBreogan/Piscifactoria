@@ -4,6 +4,10 @@ import peces.Pez;
 import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa al Lenguado Europeo
+ * @author Breogan
+ */
 public class LenguadoEuropeo extends Pez implements Carnivoro{
 
     public LenguadoEuropeo(boolean hembra){

@@ -4,6 +4,10 @@ import peces.Pez;
 import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa a la Lubina Europea
+ * @author Breogan
+ */
 public class LubinaEuropea extends Pez implements Carnivoro{
 
     public LubinaEuropea(boolean hembra){

@@ -6,6 +6,10 @@ import peces.Propiedades.Comedido;
 import peces.Propiedades.Voraz;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa a la Cobia
+ * @author Breogan
+ */
 public class Cobia extends Pez implements Carnivoro,Voraz,Comedido{
 
     public Cobia(boolean hembra){

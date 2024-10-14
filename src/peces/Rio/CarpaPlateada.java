@@ -4,6 +4,10 @@ import peces.Pez;
 import peces.Propiedades.Filtrador;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa a una Carpa Plateada
+ * @author Breogan
+ */
 public class CarpaPlateada extends Pez implements Filtrador{
 
     public CarpaPlateada(boolean hembra){

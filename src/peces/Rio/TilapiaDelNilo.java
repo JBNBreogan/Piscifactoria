@@ -4,6 +4,10 @@ import peces.Pez;
 import peces.Propiedades.Filtrador;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa a la Tilapia del Nilo
+ * @author Breogan
+ */
 public class TilapiaDelNilo extends Pez implements Filtrador{
 
     public TilapiaDelNilo(boolean hembra){

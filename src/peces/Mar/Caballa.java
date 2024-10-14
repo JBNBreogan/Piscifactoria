@@ -4,6 +4,10 @@ import peces.Pez;
 import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase que representa a la Caballa
+ * @author Breogan
+ */
 public class Caballa extends Pez implements Carnivoro{
 
     public Caballa(boolean hembra){
