@@ -160,6 +160,15 @@ public class Piscifactoria {
         return pecesfertilestotales;
     }
 
+    public void addFood(int cantidad, String tipo){
+        if(tipo == "Animal"){
+            comidaAnimal+=cantidad;
+        } else if (tipo == "Vegetal"){
+            comidaVegetal+=cantidad;
+        }
+    }  
+
+
     public String getNombre() {
         return nombre;
     }
