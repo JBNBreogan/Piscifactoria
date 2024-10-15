@@ -235,15 +235,17 @@ public class Simulador {
     public void añadirComida(int cant,String tipo,Piscifactoria pisc){
         //Falta settter para poder añadir comida 
         //Falta lo de la cantidad de comida mayor al maximo de comida
-        //Si la cantidad se comida introducida en mayor al maximo - el actual, lo que que falta para llenarse, solo se cobra la cantidad que falta
+        //Si la cantidad se comida introducida es mayor al maximo - el actual, lo que que falta para llenarse, solo se cobra la cantidad que falta
         if(cant<25){
             monedero.setMonedas(monedero.getMonedas()-cant);
             System.out.println("cantidad de comida añadida: ");
             System.out.println("Añadida "+cant+" de comida "+tipo);
             if(tipo=="Vegetal"){
+                //pisc.setComidaVegetal(getComidaVegetal+cant);
                 System.out.println("Deposito de comida X del la piscifactoria "+pisc.getNombre()+" al"+PorcentajeHelper.hacerProcentaje(cant, pisc.getMaxComidaVegetal())
                 +"% de su capacidad. [ "+pisc.getComidaVegetal()+"/"+pisc.getMaxComidaVegetal()+"]");
             }else if (tipo=="Animal") {
+                //pisc.setComidaAnimal(getComidaAnimal+cant);
                 System.out.println("Deposito de comida X del la piscifactoria "+pisc.getNombre()+" al"+PorcentajeHelper.hacerProcentaje(cant, pisc.getMaxComidaAnimal())
                 +"% de su capacidad. [ "+pisc.getComidaAnimal()+"/"+pisc.getMaxComidaAnimal()+"]");
             }
