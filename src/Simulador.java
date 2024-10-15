@@ -160,31 +160,47 @@ public class Simulador {
             opCant=sc.nextInt();
             switch (opCant) {
                 case 1:
-                    if (tipoComidaEleg=="Animal") {
-                        añadirComida(5,tipoComidaEleg,pisc);
-                    }else if (tipoComidaEleg=="Vegetal") {
-                        añadirComida(5, tipoComidaEleg,pisc);
+                    if(monedero.getMonedas()>5){
+                        if (tipoComidaEleg=="Animal") {
+                            añadirComida(5,tipoComidaEleg,pisc);
+                        }else if (tipoComidaEleg=="Vegetal") {
+                            añadirComida(5, tipoComidaEleg,pisc);
+                        }
+                    }else{
+                        System.out.println("Monedas insuficientes, eliga otra opcion");
                     }
                     break;
                 case 2:
-                    if (tipoComidaEleg=="Animal") {
-                        añadirComida(10, tipoComidaEleg,pisc);
-                    }else if (tipoComidaEleg=="Vegetal") {
-                        añadirComida(10, tipoComidaEleg,pisc);
+                    if(monedero.getMonedas()>10){
+                        if (tipoComidaEleg=="Animal") {
+                            añadirComida(10, tipoComidaEleg,pisc);
+                        }else if (tipoComidaEleg=="Vegetal") {
+                            añadirComida(10, tipoComidaEleg,pisc);
+                        }
+                    }else{
+                        System.out.println("Monedas insuficientes, eliga otra opcion");
                     }
                     break;
                 case 3:
-                    if (tipoComidaEleg=="Animal") {
-                        añadirComida(25, tipoComidaEleg,pisc);
-                    }else if (tipoComidaEleg=="Vegetal") {
-                        añadirComida(25, tipoComidaEleg,pisc);
+                    if(monedero.getMonedas()>25){
+                        if (tipoComidaEleg=="Animal") {
+                            añadirComida(25, tipoComidaEleg,pisc);
+                        }else if (tipoComidaEleg=="Vegetal") {
+                            añadirComida(25, tipoComidaEleg,pisc);
+                        }
+                    }else{
+                        System.out.println("Monedas insuficientes, eliga otra opcion");
                     }
                     break;
                 case 4:
-                    if (tipoComidaEleg=="Animal") {
-                        añadirComida(pisc.getMaxComidaAnimal()-pisc.getComidaAnimal(), tipoComidaEleg,pisc);
-                    }else if (tipoComidaEleg=="Vegetal") {
-                        añadirComida(pisc.getMaxComidaVegetal()-pisc.getComidaVegetal(), tipoComidaEleg,pisc);
+                    if (monedero.getMonedas()>pisc.getMaxComidaAnimal()-pisc.getComidaAnimal()) {
+                        if (tipoComidaEleg=="Animal") {
+                            añadirComida(pisc.getMaxComidaAnimal()-pisc.getComidaAnimal(), tipoComidaEleg,pisc);
+                        }else if (tipoComidaEleg=="Vegetal") {
+                            añadirComida(pisc.getMaxComidaVegetal()-pisc.getComidaVegetal(), tipoComidaEleg,pisc);
+                        }
+                    } else {
+                        System.out.println("Monedas insuficientes. eliga otra opcion");
                     }
                     break;
                 default:
@@ -233,7 +249,6 @@ public class Simulador {
     }
 
     public void añadirComida(int cant,String tipo,Piscifactoria pisc){
-        //Falta settter para poder añadir comida 
         //Falta lo de la cantidad de comida mayor al maximo de comida
         //Si la cantidad se comida introducida es mayor al maximo - el actual, lo que que falta para llenarse, solo se cobra la cantidad que falta
         if(cant<25){
@@ -241,11 +256,11 @@ public class Simulador {
             System.out.println("cantidad de comida añadida: ");
             System.out.println("Añadida "+cant+" de comida "+tipo);
             if(tipo=="Vegetal"){
-                //pisc.setComidaVegetal(getComidaVegetal+cant);
+                pisc.addFood(cant,tipo);
                 System.out.println("Deposito de comida X del la piscifactoria "+pisc.getNombre()+" al"+PorcentajeHelper.hacerProcentaje(cant, pisc.getMaxComidaVegetal())
                 +"% de su capacidad. [ "+pisc.getComidaVegetal()+"/"+pisc.getMaxComidaVegetal()+"]");
             }else if (tipo=="Animal") {
-                //pisc.setComidaAnimal(getComidaAnimal+cant);
+                pisc.addFood(cant,tipo);
                 System.out.println("Deposito de comida X del la piscifactoria "+pisc.getNombre()+" al"+PorcentajeHelper.hacerProcentaje(cant, pisc.getMaxComidaAnimal())
                 +"% de su capacidad. [ "+pisc.getComidaAnimal()+"/"+pisc.getMaxComidaAnimal()+"]");
             }
