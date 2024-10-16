@@ -159,39 +159,45 @@ public class Simulador {
                                                 false);
 
             opCant=sc.nextInt();
+            int cantComida=0;
             switch (opCant) {
                 case 1:
-                    if(MonederoHelper.monedasSuficientes(5)){
+                    cantComida=5;
+                    if(MonederoHelper.monedasSuficientes(cantComida)){
                         if (tipoComidaEleg=="Animal") {
-                            añadirComida(5,tipoComidaEleg,pisc);
+                            añadirComida(cantComida,tipoComidaEleg,pisc);
                         }else if (tipoComidaEleg=="Vegetal") {
-                            añadirComida(5, tipoComidaEleg,pisc);
+                            añadirComida(cantComida, tipoComidaEleg,pisc);
                         }
                     }
                     break;
                 case 2:
-                    if(MonederoHelper.monedasSuficientes(10)){
+                    cantComida=10;
+                    if(MonederoHelper.monedasSuficientes(cantComida)){
                         if (tipoComidaEleg=="Animal") {
-                            añadirComida(10, tipoComidaEleg,pisc);
+                            añadirComida(cantComida, tipoComidaEleg,pisc);
                         }else if (tipoComidaEleg=="Vegetal") {
-                            añadirComida(10, tipoComidaEleg,pisc);
+                            añadirComida(cantComida, tipoComidaEleg,pisc);
                         }
                     }
                     break;
                 case 3:
-                    if(MonederoHelper.monedasSuficientes(25)){
+                    cantComida=25;
+                    if(MonederoHelper.monedasSuficientes(cantComida)){
                         if (tipoComidaEleg=="Animal") {
-                            añadirComida(25, tipoComidaEleg,pisc);
+                            añadirComida(cantComida, tipoComidaEleg,pisc);
                         }else if (tipoComidaEleg=="Vegetal") {
-                            añadirComida(25, tipoComidaEleg,pisc);
+                            añadirComida(cantComida, tipoComidaEleg,pisc);
                         }
                     }
                     break;
                 case 4:
-                    if (MonederoHelper.monedasSuficientes(pisc.getMaxComidaAnimal()-pisc.getComidaAnimal()) && tipoComidaEleg=="Animal") {
-                        añadirComida(pisc.getMaxComidaAnimal()-pisc.getComidaAnimal(), tipoComidaEleg,pisc);
-                    }else if (MonederoHelper.monedasSuficientes(pisc.getMaxComidaVegetal()-pisc.getComidaVegetal()) && tipoComidaEleg=="Vegetal") {
-                        añadirComida(pisc.getMaxComidaVegetal()-pisc.getComidaVegetal(), tipoComidaEleg,pisc);
+                    if (tipoComidaEleg=="Animal" && MonederoHelper.monedasSuficientes(pisc.getMaxComidaAnimal()-pisc.getComidaAnimal())) {
+                        cantComida=pisc.getMaxComidaAnimal()-pisc.getComidaAnimal();
+                        añadirComida(cantComida, tipoComidaEleg,pisc);
+                    }else if (tipoComidaEleg=="Vegetal" && MonederoHelper.monedasSuficientes(pisc.getMaxComidaVegetal()-pisc.getComidaVegetal())) {
+                        cantComida=pisc.getMaxComidaVegetal()-pisc.getComidaVegetal();
+                        añadirComida(cantComida, tipoComidaEleg,pisc);
                     }
                     break;
                 default:
@@ -240,13 +246,16 @@ public class Simulador {
     }
 
     public void añadirComida(int cant,String tipo,Piscifactoria pisc){
-        //Falta lo de la cantidad de comida mayor al maximo de comida
-        //Si la cantidad se comida introducida es mayor al maximo - el actual, lo que que falta para llenarse, solo se cobra la cantidad que falta
-
         
+        if(tipo=="Animal" && cant>pisc.getMaxComidaAnimal()-pisc.getComidaAnimal()){
+            cant-=pisc.getMaxComidaAnimal()-pisc.getComidaAnimal();
+        }else if (tipo=="Vegetal" && cant>pisc.getMaxComidaVegetal()-pisc.getComidaVegetal()) {
+            cant-=pisc.getMaxComidaVegetal()-pisc.getComidaVegetal();
+        }
+
         int precioComida=MonederoHelper.calcularDescuento(cant);
 
-        monedero.setMonedas(monedero.getMonedas()-cant);
+        monedero.setMonedas(monedero.getMonedas()-precioComida);
         System.out.println("Cantidad de comida añadida: ");
         System.out.println("Añadida "+cant+" de comida "+tipo);
         if(tipo=="Vegetal"){
