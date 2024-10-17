@@ -166,7 +166,20 @@ public class Piscifactoria {
         } else if (tipo == "Vegetal"){
             comidaVegetal+=cantidad;
         }
-    }  
+    }
+    
+    public int[] venta(){
+        int totalpeces = 0;
+        int totalmonedastanques = 0;
+        for (Tanque tanque : tanques) {
+            int[] currTankValues = ventaPecesOptimos();
+            totalmonedastanques += currTankValues[0];
+            totalpeces += currTankValues[1];
+        }
+        System.out.println("Piscifactoria "+getNombre()+": "+totalpeces+" peces vendidos por "+totalmonedastanques+" monedas");
+        int[] retorno = {totalmonedastanques,totalpeces};
+        return retorno;
+    }
 
 
     public String getNombre() {
