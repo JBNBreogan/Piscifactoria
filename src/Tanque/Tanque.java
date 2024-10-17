@@ -61,31 +61,40 @@ public class Tanque {
          * tipo de pez.
          */
 
-        if(pecesHembraFertiles>=1 && pecesMachoFertiles>=1){
-            for (Pez pez : peces) {
-                if(pez.isFemale() && pez.isFertile()){
-                    for (int i = 0; i < pez.getHuevos(); i++) {
-                        if(i%2==0){
-                            pez.reproducirse(true);
-                        }else{
-                            pez.reproducirse(false);
+        
+        if(pecesHembra() > pecesMacho()){
+            if(pecesHembraFertiles>=1 && pecesMachoFertiles>=1){
+                for (Pez pez : peces) {
+                    if(pez.isFemale() && pez.isFertile()){
+                        for (int i = 0; i < pez.getHuevos(); i++) {
+                            if(i%2==0){
+                                pez.reproducirse(false);
+                                //poner que no es fertil
+                                //llamar a resetPuesta
+                            }else{
+                                pez.reproducirse(true);
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            if(pecesHembraFertiles>=1 && pecesMachoFertiles>=1){
+                for (Pez pez : peces) {
+                    if(pez.isFemale() && pez.isFertile()){
+                        for (int i = 0; i < pez.getHuevos(); i++) {
+                            if(i%2==0){
+                                pez.reproducirse(true);
+                            }else{
+                                pez.reproducirse(false);
+                            }
                         }
                     }
                 }
             }
         }
 
-        /*
-         * Recorre la lista de peces y vende los que esten
-         * en su esdad optima.
-         */
-
-        for (Pez pez : peces) {
-            if(pez.getAge()==pez.getOptimo()){
-                monedero.setMonedas(monedero.getMonedas()+pez.getMonedas());
-                peces.remove(pez);
-            }
-        }
+        ventaPecesOptimos();
     }
 
     public int pecesEnTanque(){
@@ -150,6 +159,28 @@ public class Tanque {
             }
         }
         return contadorPecesFertiles;
+    }
+
+    public int[] ventaPecesOptimos(){
+        /*
+        * Recorre la lista de peces y vende los que esten
+        * en su edad optima.
+        */
+        int[]valores=new int[2];
+        
+        int monedasObtenidas=0;
+        int pecesVendidos=0;
+        for (Pez pez : peces) {
+            if(pez.getAge()==pez.getOptimo()){
+                monedasObtenidas+=pez.getMonedas();
+                peces.remove(pez);
+                pecesVendidos++;
+            }
+        }
+        monedero.setMonedas(monedero.getMonedas()+monedasObtenidas);
+        valores[0]=monedasObtenidas;
+        valores[1]=pecesVendidos;
+        return valores;
     }
 
     public int getNumTanque() {
