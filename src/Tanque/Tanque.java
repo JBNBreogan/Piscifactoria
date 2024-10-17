@@ -161,17 +161,26 @@ public class Tanque {
         return contadorPecesFertiles;
     }
 
-    public void ventaPecesOptimos(){
+    public int[] ventaPecesOptimos(){
         /*
         * Recorre la lista de peces y vende los que esten
         * en su edad optima.
         */
+        int[]valores=new int[2];
+        
+        int monedasObtenidas=0;
+        int pecesVendidos=0;
         for (Pez pez : peces) {
             if(pez.getAge()==pez.getOptimo()){
-                monedero.setMonedas(monedero.getMonedas()+pez.getMonedas());
+                monedasObtenidas+=pez.getMonedas();
                 peces.remove(pez);
+                pecesVendidos++;
             }
         }
+        monedero.setMonedas(monedero.getMonedas()+monedasObtenidas);
+        valores[0]=monedasObtenidas;
+        valores[1]=pecesVendidos;
+        return valores;
     }
 
     public int getNumTanque() {

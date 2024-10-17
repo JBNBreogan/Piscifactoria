@@ -7,7 +7,11 @@ import Tanque.Tanque;
 import helpers.MenuHelper;
 import helpers.MonederoHelper;
 import helpers.PorcentajeHelper;
+import peces.Pez;
 import propiedades.CriaTipo;
+import propiedades.PecesDatos;
+import propiedades.PecesProps;
+import propiedades.PecesTipo;
 
 public class Simulador {
     private static int dias = 0;
@@ -50,7 +54,7 @@ public class Simulador {
       
         for (Piscifactoria piscifactoria : piscifactorias) {
             i+=1;
-            System.out.println(i + ".- " + piscifactoria.getNombre() + " [ " + pecesVivosEnSist() + "/" + pecesTotalesEnPisc() + "/" + espacioTotalPisci());
+            System.out.println(i + ".- " + piscifactoria.getNombre() + " [ " + pecesVivosEnSist() + "/" + pecesTotalesEnSist() + "/" + espacioTotalSist());
         }
         
     }     
@@ -107,10 +111,11 @@ public class Simulador {
     }
 
     public static void showIctio(){
-
+        
     }
 
     public static void nextDay(){
+        dias++;
         for (Piscifactoria piscifactoria : piscifactorias) {
             piscifactoria.nextDay();
         }
@@ -118,9 +123,9 @@ public class Simulador {
         int pecesVendidos=0;
         int monedasObtenidas=0;
         for (Piscifactoria piscifactoria : piscifactorias) {
-            System.out.println("Piscifactoria "+ piscifactoria.getNombre()+": "+piscifactoria.pecesVendidos()+" peces vendidos por "+piscifactoria.monedasObtenidas()+" monedas");
-            pecesVendidos+=piscifactoria.pecesVendidos();
-            monedasObtenidas+=piscifactoria.monedasObtenidas();
+            int[] currPiscValues=piscifactoria.venta();
+            pecesVendidos+=currPiscValues[0];
+            monedasObtenidas+=currPiscValues[1];
         }
         System.out.println(pecesVendidos + " peces vendidos por un total de "+monedasObtenidas+ " monedas");
     }
@@ -207,12 +212,34 @@ public class Simulador {
         } while (opCant!=1 || opCant!=2 || opCant!=3 || opCant!=4);
     }
 
+    public void addFish(Pez pezEleg){
+        //Escoger pez
 
+        Piscifactoria pisc = piscifactorias.get(selectPisc());
 
+        if(pisc.pecesEnPiscifactoria()<pisc.pecesMaxPiscifactoria()){
+            
+        }else{
+            System.out.println("Esta piscifactoria esta llena, eliga otra");
+        }
 
+    } 
 
+    public void sell(){
 
+    }
 
+    public void cleanTank(){
+
+    }
+
+    public void emptyTank(){
+
+    }
+
+    public void upgrade(){
+
+    }
 
 
 
@@ -229,7 +256,7 @@ public class Simulador {
         return pecesEnSist;
     }
 
-    public static int pecesTotalesEnPisc(){
+    public static int pecesTotalesEnSist(){
         int pecesTotal=0;
         for (Piscifactoria piscifactoria : piscifactorias) {
             pecesTotal += piscifactoria.pecesEnPiscifactoria();
@@ -237,7 +264,7 @@ public class Simulador {
         return pecesTotal;
     }
 
-    public static int espacioTotalPisci(){
+    public static int espacioTotalSist(){
         int espacioTotal=0;
         for (Piscifactoria piscifactoria : piscifactorias) {
             espacioTotal += piscifactoria.pecesMaxPiscifactoria();
