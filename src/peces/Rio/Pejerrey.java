@@ -1,9 +1,14 @@
 package peces.Rio;
 
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class Pejerrey extends Pez{
+/**
+ * Clase que representa al Pejerrey
+ * @author Breogan
+ */
+public class Pejerrey extends Pez implements Carnivoro{
 
     public Pejerrey(boolean hembra){
         super(AlmacenPropiedades.PEJERREY);

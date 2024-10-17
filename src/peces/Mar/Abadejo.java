@@ -1,9 +1,15 @@
 package peces.Mar;
 
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
+import peces.Propiedades.Comedido;
 import propiedades.AlmacenPropiedades;
 
-public class Abadejo extends Pez{
+/**
+ * Clase que representa al Abadejo
+ * @author Breogan
+ */
+public class Abadejo extends Pez implements Carnivoro,Comedido{
     
     public Abadejo(boolean hembra){
         super(AlmacenPropiedades.ABADEJO);

@@ -1,9 +1,14 @@
 package peces.Rio;
 
 import peces.Pez;
+import peces.Propiedades.Filtrador;
 import propiedades.AlmacenPropiedades;
 
-public class CarpaPlateada extends Pez{
+/**
+ * Clase que representa a una Carpa Plateada
+ * @author Breogan
+ */
+public class CarpaPlateada extends Pez implements Filtrador{
 
     public CarpaPlateada(boolean hembra){
         super(AlmacenPropiedades.CARPA_PLATEADA);

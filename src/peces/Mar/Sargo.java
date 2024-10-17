@@ -1,9 +1,14 @@
 package peces.Mar;
 
 import peces.Pez;
+import peces.Propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class Sargo extends Pez{
+/**
+ * Clase que representa al Sargo
+ * @author Breogan
+ */
+public class Sargo extends Pez implements Omnivoro{
 
     public Sargo(boolean hembra){
         super(AlmacenPropiedades.SARGO);

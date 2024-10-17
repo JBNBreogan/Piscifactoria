@@ -1,9 +1,14 @@
 package peces.Mar;
 
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class Besugo extends Pez{
+/**
+ * Clase que representa al Besugo
+ * @author Breogan
+ */
+public class Besugo extends Pez implements Carnivoro{
 
     public Besugo(boolean hembra){
         super(AlmacenPropiedades.BESUGO);

@@ -1,9 +1,14 @@
 package peces.Double;
 
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class TruchaArcoiris extends Pez{
+/**
+ * Clase que representa a la Trucha Arcoíris
+ * @author Breogan
+ */
+public class TruchaArcoiris extends Pez implements Carnivoro{
 
     public TruchaArcoiris(boolean hembra){
         super(AlmacenPropiedades.TRUCHA_ARCOIRIS);
