@@ -38,7 +38,7 @@ public class Tanque {
         System.out.println("Tanque " + numTanque +"al "+ PorcentajeHelper.hacerProcentaje(pecesEnTanque(), maxPeces) + "% de capacidad [" + pecesEnTanque() +"/"+ maxPeces + "].");
     }
 
-    public void nextDay(){
+    public void nextDay(int comida){
         int pecesHembraFertiles=0;
         int pecesMachoFertiles=0;
 
@@ -47,7 +47,7 @@ public class Tanque {
          * compruebo si hay peces hembra y macho fertiles.
          */
         for (Pez pez : peces) {
-            pez.grow();
+            pez.grow(comida);
             if (pez.isFemale() && pez.isFertile()) {
                 pecesHembraFertiles+=1;
             }else if(!pez.isFemale() && pez.isFertile()){

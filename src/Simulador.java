@@ -8,6 +8,7 @@ import helpers.MenuHelper;
 import helpers.MonederoHelper;
 import helpers.PorcentajeHelper;
 import peces.Pez;
+import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import propiedades.PecesProps;
@@ -107,11 +108,24 @@ public class Simulador {
     }
 
     public static void showStats(){
-
+        
     }
 
     public static void showIctio(){
-        
+        MenuHelper.mostrarMenu(new String[]{"Lucio del norte",
+                                          "Carpa plateada",
+                                          "Carpa",
+                                          "Tilapia del norte",
+                                          "Pejerrey",
+                                          "Rodaballo",
+                                          "Caballa",
+                                          "Besugo",
+                                          "Abadejo",
+                                          "Sargo",
+                                          "Trucha arcoiris",
+                                          "Dorada",
+                                          "Salir."},
+                                           false);
     }
 
     public static void nextDay(){
