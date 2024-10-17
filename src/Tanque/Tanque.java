@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import peces.Pez;
 import propiedades.PecesDatos;
 import helpers.PorcentajeHelper;
+import Comun.Monedero;
 
 public class Tanque {
 
@@ -11,6 +12,7 @@ public class Tanque {
     private ArrayList<Pez> peces;
     private int maxPeces;
     private PecesDatos tipoPez;
+    private Monedero monedero=Monedero.getInstance();
 
     public Tanque(int maxPeces) {
         this.maxPeces = maxPeces;
@@ -37,9 +39,62 @@ public class Tanque {
     }
 
     public void nextDay(){
+        int pecesHembraFertiles=0;
+        int pecesMachoFertiles=0;
+
+        /*
+         * Recorro la lista de peces y 
+         * compruebo si hay peces hembra y macho fertiles.
+         */
         for (Pez pez : peces) {
-            pez.nextDay();
+            pez.grow();
+            if (pez.isFemale() && pez.isFertile()) {
+                pecesHembraFertiles+=1;
+            }else if(!pez.isFemale() && pez.isFertile()){
+                pecesMachoFertiles+=1;
+            }
         }
+
+        /*
+         * Si hay alguna hembra y macho fertil cada una de las
+         * hembras fertiles pone la cantidad de huevos de su
+         * tipo de pez.
+         */
+
+        
+        if(pecesHembra() > pecesMacho()){
+            if(pecesHembraFertiles>=1 && pecesMachoFertiles>=1){
+                for (Pez pez : peces) {
+                    if(pez.isFemale() && pez.isFertile()){
+                        for (int i = 0; i < pez.getHuevos(); i++) {
+                            if(i%2==0){
+                                pez.reproducirse(false);
+                                //poner que no es fertil
+                                //llamar a resetPuesta
+                            }else{
+                                pez.reproducirse(true);
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            if(pecesHembraFertiles>=1 && pecesMachoFertiles>=1){
+                for (Pez pez : peces) {
+                    if(pez.isFemale() && pez.isFertile()){
+                        for (int i = 0; i < pez.getHuevos(); i++) {
+                            if(i%2==0){
+                                pez.reproducirse(true);
+                            }else{
+                                pez.reproducirse(false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        ventaPecesOptimos();
     }
 
     public int pecesEnTanque(){
@@ -79,7 +134,7 @@ public class Tanque {
     public  int pecesHembra(){
         int contadorPecesHembra=0;
         for (Pez pez : peces) {
-            if(pez.getSex()=='H'){
+            if(pez.isFemale()){
                 contadorPecesHembra+=1;
             }
         }
@@ -89,7 +144,7 @@ public class Tanque {
     public  int pecesMacho(){
         int contadorPecesMacho=0;
         for (Pez pez : peces) {
-            if(pez.getSex()=='M'){
+            if(!pez.isFemale()){
                 contadorPecesMacho+=1;
             }
         }
@@ -104,6 +159,28 @@ public class Tanque {
             }
         }
         return contadorPecesFertiles;
+    }
+
+    public int[] ventaPecesOptimos(){
+        /*
+        * Recorre la lista de peces y vende los que esten
+        * en su edad optima.
+        */
+        int[]valores=new int[2];
+        
+        int monedasObtenidas=0;
+        int pecesVendidos=0;
+        for (Pez pez : peces) {
+            if(pez.getAge()==pez.getOptimo()){
+                monedasObtenidas+=pez.getMonedas();
+                peces.remove(pez);
+                pecesVendidos++;
+            }
+        }
+        monedero.setMonedas(monedero.getMonedas()+monedasObtenidas);
+        valores[0]=monedasObtenidas;
+        valores[1]=pecesVendidos;
+        return valores;
     }
 
     public int getNumTanque() {
