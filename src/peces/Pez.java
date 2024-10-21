@@ -216,6 +216,7 @@ public abstract class Pez {
      * Hace crecer el pez un día, teniendo en cuenta todos los factores.
      */
     public void grow(int comida){
+        //TODO devolver si el pez ha comido o no para restar la comida
         Random morir = new Random();
         if (isAlive()){
             comer(comida); 
@@ -241,7 +242,6 @@ public abstract class Pez {
         }
     }
 
-
     /**
      * Devuelve una cría del pez
      * @param hembra Si el pez es hembra
@@ -264,4 +264,6 @@ public abstract class Pez {
         this.Fertil = false;
         this.Comido = false;
     }
+
+    
 }

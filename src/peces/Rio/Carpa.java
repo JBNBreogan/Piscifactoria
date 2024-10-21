@@ -1,21 +1,21 @@
 package peces.Rio;
 
+import java.util.Random;
+
 import peces.Pez;
 import peces.Propiedades.Omnivoro;
-import peces.Propiedades.Voraz;
 import propiedades.AlmacenPropiedades;
 
 /**
  * Clase que representa a la Carpa comun
  * @author Breogan
  */
-public class Carpa extends Pez implements Omnivoro,Voraz{
+public class Carpa extends Omnivoro{
 
     public Carpa(boolean hembra){
         super(AlmacenPropiedades.CARPA);
         this.Sexo = hembra;
     }
-    //TODO Grow
 
     @Override
     public Pez reproducirse(boolean hembra) {
@@ -24,7 +24,11 @@ public class Carpa extends Pez implements Omnivoro,Voraz{
 
     @Override
     public void comer(int cantidad) {
-        // TODO Auto-generated method stub
-        
+        Random comer = new Random();
+        if (comer.nextInt(4) != 0){
+            if (cantidad >= 2){
+                this.Comido = true;
+            }
+        }
     }
 }

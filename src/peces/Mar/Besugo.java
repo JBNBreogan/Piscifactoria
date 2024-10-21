@@ -8,7 +8,7 @@ import propiedades.AlmacenPropiedades;
  * Clase que representa al Besugo
  * @author Breogan
  */
-public class Besugo extends Pez implements Carnivoro{
+public class Besugo extends Carnivoro{
 
     public Besugo(boolean hembra){
         super(AlmacenPropiedades.BESUGO);
@@ -18,11 +18,5 @@ public class Besugo extends Pez implements Carnivoro{
     @Override
     public Pez reproducirse(boolean hembra) {
         return new Besugo(hembra);
-    }
-
-    @Override
-    public void comer(int cantidad) {
-        // TODO Auto-generated method stub
-        
     }
 }
