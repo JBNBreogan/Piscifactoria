@@ -380,9 +380,10 @@ public class Simulador {
         String op2="";
         String op3="";
         do {
-            System.out.println("1. Comprar edificios.");
-            System.out.println("2. Mejorar edificios.");
-            System.out.println("3. Cancelar.");
+            MenuHelper.mostrarMenu(new String[]{"Comprar edificios.",
+                                                "Mejorar edificios.",
+                                                "Cancelar."},
+                                                 false);
             op=sc.nextInt();
 
             switch (op) {
