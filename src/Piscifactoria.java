@@ -25,10 +25,12 @@ public class Piscifactoria {
     public Piscifactoria(String nombre, CriaTipo tipo) {
         this.nombre = nombre;
         if(tipo == CriaTipo.RIO ){
+            tanques = new ArrayList<>();
             tanques.add(new Tanque(25));
             this.maxComidaVegetal = 25;
             this.maxComidaAnimal = 25;
         } else if(tipo == CriaTipo.MAR){
+            tanques = new ArrayList<>();
             tanques.add(new Tanque(100));
             this.maxComidaVegetal = 100;
             this.maxComidaAnimal = 100;
