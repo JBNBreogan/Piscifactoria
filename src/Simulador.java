@@ -17,6 +17,7 @@ import propiedades.PecesTipo;
 public class Simulador {
     private static int dias = 0;
     private static String nombreempresa;
+    private AlmacenCentral almacenCentral=null;
     static Scanner sc = new Scanner(System.in);
     private static ArrayList<Piscifactoria> piscifactorias = new ArrayList<>();
     private Monedero monedero=Monedero.getInstance();
@@ -112,10 +113,12 @@ public class Simulador {
     }
 
     public static void showIctio(){
-        MenuHelper.mostrarMenu(new String[]{"Lucio del norte",
+        int opcion;
+        do {
+            MenuHelper.mostrarMenu(new String[]{"Lucio del norte",
                                           "Carpa plateada",
                                           "Carpa",
-                                          "Tilapia del norte",
+                                          "Tilapia del nilo",
                                           "Pejerrey",
                                           "Rodaballo",
                                           "Caballa",
@@ -126,6 +129,52 @@ public class Simulador {
                                           "Dorada",
                                           "Salir."},
                                            false);
+
+            switch (opcion) {
+                case 1:
+                    infoLib("Lucio del norte");
+                    break;
+                case 2:
+                    infoLib("Carpa plateada");
+                    break;
+                case 3:
+                    infoLib("Carpa");
+                    break;
+                case 4:
+                    infoLib("Tilapia del nilo");
+                    break;
+                case 5:
+                    infoLib("Pejerrey");
+                    break;
+                case 6:
+                    infoLib("Rodaballo");
+                    break;
+                case 7:
+                    infoLib("Caballa");
+                    break;
+                case 8:
+                    infoLib("Besugo");
+                    break;
+                case 9:
+                    infoLib("Abadejo");
+                    break;
+                case 10:
+                    infoLib("Sargo");
+                    break;
+                case 11:
+                    infoLib("Trucha arcoiris");
+                    break;
+                case 12:
+                    infoLib("Dorada");
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Esta opcion no es correcta, eliga una opcion valida");
+                    break;
+            }
+        } while (opcion!=0);
+        
     }
 
     public static void nextDay(){
@@ -261,6 +310,17 @@ public class Simulador {
 
 
 
+    public static void infoLib(String tipoPez){
+
+        System.out.println("Nombre : "+AlmacenPropiedades.getPropByName(tipoPez).getNombre());
+        System.out.println("Nombre cientifico : "+AlmacenPropiedades.getPropByName(tipoPez).getCientifico());
+        System.out.println("Coste : "+AlmacenPropiedades.getPropByName(tipoPez).getCoste());
+        System.out.println("Ciclo : "+AlmacenPropiedades.getPropByName(tipoPez).getCiclo());
+        System.out.println("Monedas al vender : "+AlmacenPropiedades.getPropByName(tipoPez).getMonedas());
+        System.out.println("Huevos : "+AlmacenPropiedades.getPropByName(tipoPez).getHuevos());
+        System.out.println("Madurez : "+AlmacenPropiedades.getPropByName(tipoPez).getMadurez());
+        System.out.println("Edad optima : "+AlmacenPropiedades.getPropByName(tipoPez).getOptimo());
+    }
 
     public static int pecesVivosEnSist(){
         int pecesEnSist=0;
