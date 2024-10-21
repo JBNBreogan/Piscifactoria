@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import Comun.Monedero;
@@ -30,11 +31,11 @@ public class Simulador {
     private static int dias = 0;
     private static String nombreempresa;
     private AlmacenCentral almacenCentral=null;
-    static Scanner sc = new Scanner(System.in);
     private static ArrayList<Piscifactoria> piscifactorias = new ArrayList<>();
     private Monedero monedero=Monedero.getInstance();
 
-    public static void init(){
+    public void init(){
+        Scanner sc=new Scanner(System.in);
         System.out.println("Nombre de la empresa:");
         nombreempresa = sc.nextLine();
         System.out.println("Nombre de la piscifactoria");
@@ -43,7 +44,7 @@ public class Simulador {
         Monedero.getInstance().setMonedas(100);
     }
 
-    public static void menu(){
+    public void menu(){
         MenuHelper.mostrarMenu(new String[] {"Estado general.", 
                                             "Estado piscifactoría.", 
                                             "Estado tanques.", 
@@ -60,7 +61,7 @@ public class Simulador {
                                              false);
     }
 
-    public static void menuPisc(){
+    public void menuPisc(){
         int i=0;
         System.out.println("Selecciones una opcione:");
         System.out.println("--------------------------- Piscifactorías ---------------------------");
@@ -73,7 +74,8 @@ public class Simulador {
         
     }     
 
-    public static int selectPisc(){
+    public int selectPisc(){
+        Scanner sc=new Scanner(System.in);
         try {
             menuPisc();
             int opcion = sc.nextInt();
@@ -83,22 +85,13 @@ public class Simulador {
             return 0;
         }
     }
-
     
-    public static int selectTank(){
-        try {
-            Piscifactoria pisc = piscifactorias.get(selectPisc());
-            //TODO showstatus de los tanques de una pisc
-            //pisc.showTankStatus();
-            int opcion = sc.nextInt();
-            return opcion-1;
-        } catch (Exception e) {
-            System.out.println("Introduce un valor correcto");
-            return 0;
-        }
+    public int selectTank(){
+        Piscifactoria pisc = piscifactorias.get(selectPisc());
+        return pisc.selectTank()-1;
     }
 
-    public static void showGeneralStatus(){
+    public void showGeneralStatus(){
         //Falta implementar almacen central
 
         for (Piscifactoria pisc : piscifactorias) {
@@ -106,13 +99,13 @@ public class Simulador {
         }
     }
 
-    public static void showSpecificStatus(){
+    public void showSpecificStatus(){
         Piscifactoria pisc = piscifactorias.get(selectPisc());
         
         pisc.showTankStatus();
     }
 
-    public static void showTankStatus(){
+    public void showTankStatus(){
         Piscifactoria pisc = piscifactorias.get(selectPisc());
 
         Tanque tank = pisc.getTanques().get(selectTank());
@@ -120,7 +113,7 @@ public class Simulador {
         tank.showFishStatus();
     }
 
-    public static void showStats(){
+    public void showStats(){
         //Necesito por parametros,peces comprados, peces nacidos, peces vendidos, monedas obtenidas
         int pecesComp=0;
         int pecesNac=0;
@@ -137,8 +130,9 @@ public class Simulador {
         System.out.println("Se han comprado "+pecesComp+" han nacido "+pecesNac+" se han vendido "+pecesVend+" y se han obtenido"+monedasOb);
     }
 
-    public static Pez showIctio(){
+    public Pez showIctio(){
         int opcion;
+        Scanner sc=new Scanner(System.in);
         do {
             MenuHelper.mostrarMenu(new String[]{"Lucio del norte",
                                           "Carpa plateada",
@@ -154,67 +148,55 @@ public class Simulador {
                                           "Dorada",
                                           "Salir."},
                                            false);
-
+            opcion=sc.nextInt();
             switch (opcion) {
                 case 1:
                     infoLib("Lucio del norte");
                     return new LucioDelNorte(false);
-                    break;
                 case 2:
                     infoLib("Carpa plateada");
                     return new CarpaPlateada(false);
-                    break;
                 case 3:
                     infoLib("Carpa");
                     return new Carpa(false);
-                    break;
                 case 4:
                     infoLib("Tilapia del nilo");
                     return new TilapiaDelNilo(false);
-                    break;
                 case 5:
                     infoLib("Pejerrey");
                     return new Pejerrey(false);
-                    break;
                 case 6:
                     infoLib("Rodaballo");
                     return new Rodaballo(false);
-                    break;
                 case 7:
                     infoLib("Caballa");
                     return new Caballa(false);
-                    break;
                 case 8:
                     infoLib("Besugo");
                     return new Besugo(false);
-                    break;
                 case 9:
                     infoLib("Abadejo");
                     return new Abadejo(false);
-                    break;
                 case 10:
                     infoLib("Sargo");
                     return new Sargo(false);
-                    break;
                 case 11:
                     infoLib("Trucha arcoiris");
                     return new TruchaArcoiris(false);
-                    break;
                 case 12:
                     infoLib("Dorada");
                     return new Dorada(false);
-                    break;
                 case 0:
-                    break;
+                    return null;
                 default:
                     System.out.println("Esta opcion no es correcta, eliga una opcion valida");
-                    break;
+                    return null;
             }
         } while (opcion!=0);
         
     }
 
-    public static void nextDay(){
+    public void nextDay(){
         dias++;
         for (Piscifactoria piscifactoria : piscifactorias) {
             piscifactoria.nextDay();
@@ -231,6 +213,7 @@ public class Simulador {
     }
 
     public void addFood(){
+        Scanner sc=new Scanner(System.in);
         Piscifactoria pisc = piscifactorias.get(selectPisc());
         //Falta implementar almacen central
         int opcion;
@@ -322,7 +305,7 @@ public class Simulador {
             if(pisc.pecesEnPiscifactoria()<pisc.pecesMaxPiscifactoria()){
                 for (Tanque tanque : pisc.getTanques()) {
                     if(tanque.getPeces().size()<tanque.getMaxPeces()){
-                        //Falta le del sexo
+                        //Falta lo del sexo
                         tanque.getPeces().add(pezEleg);
                         tanque.showStatus();
                     }
@@ -465,7 +448,7 @@ public class Simulador {
 
 
 
-    public static void infoLib(String tipoPez){
+    public void infoLib(String tipoPez){
 
         System.out.println("Nombre : "+AlmacenPropiedades.getPropByName(tipoPez).getNombre());
         System.out.println("Nombre cientifico : "+AlmacenPropiedades.getPropByName(tipoPez).getCientifico());
@@ -477,7 +460,7 @@ public class Simulador {
         System.out.println("Edad optima : "+AlmacenPropiedades.getPropByName(tipoPez).getOptimo());
     }
 
-    public static int pecesVivosEnSist(){
+    public int pecesVivosEnSist(){
         int pecesEnSist=0;
         for (Piscifactoria piscifactoria : piscifactorias) {
             pecesEnSist += piscifactoria.pecesVivosPiscifactoria();
@@ -485,7 +468,7 @@ public class Simulador {
         return pecesEnSist;
     }
 
-    public static int pecesTotalesEnSist(){
+    public int pecesTotalesEnSist(){
         int pecesTotal=0;
         for (Piscifactoria piscifactoria : piscifactorias) {
             pecesTotal += piscifactoria.pecesEnPiscifactoria();
@@ -493,7 +476,7 @@ public class Simulador {
         return pecesTotal;
     }
 
-    public static int espacioTotalSist(){
+    public int espacioTotalSist(){
         int espacioTotal=0;
         for (Piscifactoria piscifactoria : piscifactorias) {
             espacioTotal += piscifactoria.pecesMaxPiscifactoria();
@@ -541,8 +524,70 @@ public class Simulador {
 
 
     public static void main(String[] args) {
-        menu();
-        init();
+        Scanner sc=new Scanner(System.in);
+        Simulador sim=new Simulador();
+        sim.init();
+        int opcion;
+        do {
+            sim.menu();
+            opcion=sc.nextInt();
+            try {
+                switch (opcion) {
+                    case 1:
+                        sim.showGeneralStatus();
+                        break;
+                    case 2:
+                        sim.showSpecificStatus();
+                        break;
+                    case 3:
+                        sim.showTankStatus();
+                        break;
+                    case 4:
+                        sim.showStats();
+                        break;
+                    case 5:
+                        sim.showIctio();
+                        break;
+                    case 6:
+                        sim.nextDay();
+                        break;
+                    case 7:
+                        sim.addFood();
+                        break;
+                    case 8:
+                        sim.addFish();
+                        break;
+                    case 9:
+                        sim.sell();
+                        break;
+                    case 10:
+                        sim.cleanTank();
+                        break;
+                    case 11:
+                        sim.emptyTank();
+                        break;
+                    case 12:
+                        sim.upgrade();
+                        break;
+                    case 13:
+                        //Pasar varios dias
+                        break;
+                    case 98:
+                    //Añade cuatro peces al azar en una piscifactoria seleccionada
+                        break;
+                    case 99:
+                    //Añade 1000 monedas
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        System.out.println("Esta opción no es válida");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Has introducido un tipo de dato incorrecto, introduce un número");
+            }
+        } while (opcion!=0);
     }
 }
 
