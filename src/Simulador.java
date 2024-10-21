@@ -335,19 +335,127 @@ public class Simulador {
     } 
 
     public void sell(){
+        Piscifactoria pisc = piscifactorias.get(selectPisc());
 
+        int monedasOb=0;
+        int pecesVend=0;
+
+        for (Tanque tanque : pisc.getTanques()) {
+            for (Pez pez : tanque.getPeces()) {
+                if(pez.isAlive() && pez.isAdulto()){
+                    tanque.getPeces().remove(pez);
+                    pecesVend++;
+                    monedasOb+=(pez.getMonedas()/2);
+                }
+            }
+        }
+        System.out.println("Piscifactoría "+pisc.getNombre()+": "+pecesVend+" peces vendidos por "+monedasOb+" monedas");
     }
 
     public void cleanTank(){
+        Piscifactoria pisc = piscifactorias.get(selectPisc());
 
+        for (Tanque tanque : pisc.getTanques()) {
+            for (Pez pez : tanque.getPeces()) {
+                if(!pez.isAlive()){
+                    tanque.getPeces().remove(pez);
+                }
+            }
+        }
     }
 
     public void emptyTank(){
+        Piscifactoria pisc = piscifactorias.get(selectPisc());
+        Tanque tank=pisc.getTanques().get(selectTank());
 
+        tank.getPeces().removeAll(tank.getPeces());
     }
 
     public void upgrade(){
+        Scanner sc=new Scanner(System.in);
+        Scanner sc2=new Scanner(System.in);
+        Scanner sc3=new Scanner(System.in);
 
+        int op=0;
+        String op2="";
+        String op3="";
+        do {
+            System.out.println("1. Comprar edificios.");
+            System.out.println("2. Mejorar edificios.");
+            System.out.println("3. Cancelar.");
+            op=sc.nextInt();
+
+            switch (op) {
+                case 1:
+                    System.out.println("a. Piscifactoría.");
+                    System.out.println("b. Almacén central.");
+                    op2=sc.next();
+                    switch (op2) {
+                        case "a":
+                            //Crear piscifactoria
+                            break;
+                        case "b":
+                            //Crear almacen central 
+                            break;
+                        default:
+                            System.out.println("Esa opción no es válida.");
+                            op=0;
+                            op2="";
+                            break;    
+                    }
+                    break;
+                case 2:
+                    System.out.println("a. Piscifactoria.");
+                    if(almacenCentral!=null){
+                        System.out.println("b. Almacén central.");
+                    }
+                    op2=sc.next();
+                    switch (op2) {
+                        case "a":
+                            System.out.println("i.  Comprar tanque.");
+                            System.out.println("ii. Aumentar almacén comida.");
+                            op3=sc.next();
+                            switch (op3) {
+                                case "i":
+                                    //Añadir un tanque
+                                    break;
+                                case "ii":
+                                    //Aumentar almacén de comida
+                                    break;
+                                default:
+                                    System.out.println("Esa opción no es válida.");
+                                    op=0;
+                                    op2="c";
+                                    op3="";
+                                    break;
+                            }
+                            break;
+                        case "b":
+                            System.out.println("i. Aumentar capacidad");
+                            op3=sc.next();
+                            switch (op3) {
+                                case "i":
+                                    //Aumentar capacidad del almacen central
+                                    break;
+                                default:
+                                    System.out.println("Esa opción no es válida.");
+                                    op=0;
+                                    op2="c";
+                                    op3="";
+                                    break;
+                            }
+                            break;
+                        default:
+                            System.out.println("Esa opción no es válida.");
+                            op=0;
+                            op2="";
+                            break;
+                    }
+                    break;
+                case 3:
+                    break;
+            }
+        } while (op!=1 || op!=2 || op!=3);
     }
 
 
