@@ -8,6 +8,18 @@ import helpers.MenuHelper;
 import helpers.MonederoHelper;
 import helpers.PorcentajeHelper;
 import peces.Pez;
+import peces.Double.Dorada;
+import peces.Double.TruchaArcoiris;
+import peces.Mar.Abadejo;
+import peces.Mar.Besugo;
+import peces.Mar.Caballa;
+import peces.Mar.Rodaballo;
+import peces.Mar.Sargo;
+import peces.Rio.Carpa;
+import peces.Rio.CarpaPlateada;
+import peces.Rio.LucioDelNorte;
+import peces.Rio.Pejerrey;
+import peces.Rio.TilapiaDelNilo;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
@@ -109,10 +121,23 @@ public class Simulador {
     }
 
     public static void showStats(){
-        
+        //Necesito por parametros,peces comprados, peces nacidos, peces vendidos, monedas obtenidas
+        int pecesComp=0;
+        int pecesNac=0;
+        int pecesVend=0;
+        int monedasOb=0;
+        for (Piscifactoria piscifactoria : piscifactorias) {
+            piscifactoria.showFishStatus();
+            pecesComp+=pecesComp;;
+            pecesNac+=pecesNac;
+            pecesVend+=pecesVend;
+            monedasOb+=monedasOb;
+        }
+
+        System.out.println("Se han comprado "+pecesComp+" han nacido "+pecesNac+" se han vendido "+pecesVend+" y se han obtenido"+monedasOb);
     }
 
-    public static void showIctio(){
+    public static Pez showIctio(){
         int opcion;
         do {
             MenuHelper.mostrarMenu(new String[]{"Lucio del norte",
@@ -133,39 +158,51 @@ public class Simulador {
             switch (opcion) {
                 case 1:
                     infoLib("Lucio del norte");
+                    return new LucioDelNorte(false);
                     break;
                 case 2:
                     infoLib("Carpa plateada");
+                    return new CarpaPlateada(false);
                     break;
                 case 3:
                     infoLib("Carpa");
+                    return new Carpa(false);
                     break;
                 case 4:
                     infoLib("Tilapia del nilo");
+                    return new TilapiaDelNilo(false);
                     break;
                 case 5:
                     infoLib("Pejerrey");
+                    return new Pejerrey(false);
                     break;
                 case 6:
                     infoLib("Rodaballo");
+                    return new Rodaballo(false);
                     break;
                 case 7:
                     infoLib("Caballa");
+                    return new Caballa(false);
                     break;
                 case 8:
                     infoLib("Besugo");
+                    return new Besugo(false);
                     break;
                 case 9:
                     infoLib("Abadejo");
+                    return new Abadejo(false);
                     break;
                 case 10:
                     infoLib("Sargo");
+                    return new Sargo(false);
                     break;
                 case 11:
                     infoLib("Trucha arcoiris");
+                    return new TruchaArcoiris(false);
                     break;
                 case 12:
                     infoLib("Dorada");
+                    return new Dorada(false);
                     break;
                 case 0:
                     break;
@@ -275,17 +312,26 @@ public class Simulador {
         } while (opCant!=1 || opCant!=2 || opCant!=3 || opCant!=4);
     }
 
-    public void addFish(Pez pezEleg){
-        //Escoger pez
+    public void addFish(){
+        Pez pezEleg=showIctio();
+        boolean llena=false;
 
-        Piscifactoria pisc = piscifactorias.get(selectPisc());
+        do {
+            Piscifactoria pisc = piscifactorias.get(selectPisc());
 
-        if(pisc.pecesEnPiscifactoria()<pisc.pecesMaxPiscifactoria()){
-            
-        }else{
-            System.out.println("Esta piscifactoria esta llena, eliga otra");
-        }
-
+            if(pisc.pecesEnPiscifactoria()<pisc.pecesMaxPiscifactoria()){
+                for (Tanque tanque : pisc.getTanques()) {
+                    if(tanque.getPeces().size()<tanque.getMaxPeces()){
+                        //Falta le del sexo
+                        tanque.getPeces().add(pezEleg);
+                        tanque.showStatus();
+                    }
+                }
+            }else{
+                llena=true;
+                System.out.println("Esta piscifactoria esta llena, eliga otra");
+            }
+        } while (llena);
     } 
 
     public void sell(){
