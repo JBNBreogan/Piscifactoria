@@ -4,6 +4,9 @@ import java.util.Scanner;
 import Comun.Monedero;
 import Tanque.Tanque;
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
+import peces.Propiedades.Filtrador;
+import peces.Propiedades.Omnivoro;
 import propiedades.CriaTipo;
 import helpers.*;
 
@@ -70,7 +73,21 @@ public class Piscifactoria {
     
     public void nextDay(){
         for (Tanque tanque : tanques) {
-            tanque.nextDay();
+            for (Pez pez : tanque.getPeces()) {
+                if(pez instanceof Carnivoro){
+                    tanque.nextDay(comidaAnimal);
+                }
+                if(pez instanceof Filtrador){
+                    tanque.nextDay(comidaVegetal);
+                }
+                if(pez instanceof Omnivoro){
+                    if(comidaAnimal>=comidaVegetal){
+                        tanque.nextDay(comidaAnimal);
+                    } else {
+                        tanque.nextDay(comidaVegetal);
+                    }
+                }
+            }
         }
     }
 
@@ -172,7 +189,7 @@ public class Piscifactoria {
         int totalpeces = 0;
         int totalmonedastanques = 0;
         for (Tanque tanque : tanques) {
-            int[] currTankValues = ventaPecesOptimos();
+            int[] currTankValues = tanque.ventaPecesOptimos();
             totalmonedastanques += currTankValues[0];
             totalpeces += currTankValues[1];
         }
@@ -181,6 +198,21 @@ public class Piscifactoria {
         return retorno;
     }
 
+    public boolean comidaAnimalLlena(){
+        if(comidaAnimal<maxComidaAnimal){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean comidaVegetalLlena(){
+        if(comidaVegetal<maxComidaVegetal){
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public String getNombre() {
         return nombre;
