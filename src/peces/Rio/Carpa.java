@@ -23,12 +23,14 @@ public class Carpa extends Omnivoro{
     }
 
     @Override
-    public void comer(int cantidad) {
+    public int comer(int cantidad) {
         Random comer = new Random();
         if (comer.nextInt(4) != 0){
             if (cantidad >= 2){
                 this.Comido = true;
+                return 2;
             }
         }
+        return 0;
     }
 }

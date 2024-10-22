@@ -16,13 +16,16 @@ public abstract class Omnivoro extends Pez{
     }
 
     @Override
-    public void comer(int cantidad) {
+    public int comer(int cantidad) {
         Random comer = new Random();
         if (comer.nextInt(4) != 0){
             this.Comido = true;
+            return 0;
         } else if (cantidad >= 1){
             this.Comido = true;
+            return 1;
         }
+        return 0;
     }
     
 }

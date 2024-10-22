@@ -21,10 +21,11 @@ public class Rodaballo extends Carnivoro{
     }
 
     @Override
-    public void comer(int cantidad) {
+    public int comer(int cantidad) {
         if (cantidad >= 2){
             this.Comido = true;
+            return 2;
         }
-        
+        return 0;
     }
 }

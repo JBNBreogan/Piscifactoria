@@ -14,10 +14,12 @@ public abstract class Carnivoro extends Pez{
     }
 
     @Override
-    public void comer(int cantidad) {
+    public int comer(int cantidad) {
         if (cantidad >= 1){
             this.Comido = true;
+            return 1;
         }
+        return 0;
     }
     
 }
