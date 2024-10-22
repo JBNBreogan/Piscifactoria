@@ -2,6 +2,7 @@ package Piscifactoria;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Comun.AlmacenCentral;
 import Comun.Monedero;
 import Tanque.Tanque;
 import peces.Pez;
@@ -22,6 +23,8 @@ public class Piscifactoria {
     private int maxComidaAnimal;
     private int maxComidaVegetal;
     private Monedero monedero=Monedero.getInstance();
+    private AlmacenCentral almacenCentral=AlmacenCentral.getInstance();
+
 
     public Piscifactoria(String nombre, CriaTipo tipo, boolean primera) {
         this.nombre = nombre;
@@ -48,6 +51,42 @@ public class Piscifactoria {
             this.maxComidaVegetal = 100;
             this.maxComidaAnimal = 100;
         }
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public CriaTipo getTipo() {
+        return tipo;
+    }
+
+    public ArrayList<Tanque> getTanques() {
+        return tanques;
+    }
+
+    public Scanner getSc() {
+        return sc;
+    }
+
+    public int getComidaVegetal() {
+        return comidaVegetal;
+    }
+
+    public int getComidaAnimal() {
+        return comidaAnimal;
+    }
+
+    public int getMaxComidaAnimal() {
+        return maxComidaAnimal;
+    }
+
+    public int getMaxComidaVegetal() {
+        return maxComidaVegetal;
+    }
+
+    public Monedero getMonedero() {
+        return monedero;
     }
 
     public void showStatus(){
@@ -103,7 +142,7 @@ public class Piscifactoria {
                     }
                 }
             }*/
-            
+            tanque.nextDay(this);
         }
     }
 
@@ -202,7 +241,11 @@ public class Piscifactoria {
     }
 
     public void restFood(int cantidad, String tipo){
-
+        if(tipo == "Animal"){
+            comidaAnimal-=cantidad;
+        } else if (tipo == "Vegetal"){
+            comidaVegetal-=cantidad;
+        }
     }
     
     public int[] venta(){
@@ -234,39 +277,19 @@ public class Piscifactoria {
         }
     }
 
-    public String getNombre() {
-        return nombre;
+    public boolean comidaAnimalVacia(){
+        if(comidaAnimal==0){
+            return true;
+        }
+        return false;
     }
 
-    public CriaTipo getTipo() {
-        return tipo;
+    public boolean comidaVegetalVacia(){
+        if(comidaVegetal==0){
+            return true;
+        }
+        return false;
     }
 
-    public ArrayList<Tanque> getTanques() {
-        return tanques;
-    }
-
-    public Scanner getSc() {
-        return sc;
-    }
-
-    public int getComidaVegetal() {
-        return comidaVegetal;
-    }
-
-    public int getComidaAnimal() {
-        return comidaAnimal;
-    }
-
-    public int getMaxComidaAnimal() {
-        return maxComidaAnimal;
-    }
-
-    public int getMaxComidaVegetal() {
-        return maxComidaVegetal;
-    }
-
-    public Monedero getMonedero() {
-        return monedero;
-    }
+    
 }
