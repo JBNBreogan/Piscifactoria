@@ -1,3 +1,4 @@
+package Piscifactoria;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,6 +23,18 @@ public class Piscifactoria {
     private int maxComidaVegetal;
     private Monedero monedero=Monedero.getInstance();
 
+    public Piscifactoria(String nombre, CriaTipo tipo, boolean primera) {
+        this.nombre = nombre;
+        if(tipo == CriaTipo.RIO ){
+            tanques = new ArrayList<>();
+            tanques.add(new Tanque(25));
+            this.comidaAnimal = 25;
+            this.comidaVegetal = 25; 
+            this.maxComidaVegetal = 25;
+            this.maxComidaAnimal = 25;
+        } 
+    }
+   
     public Piscifactoria(String nombre, CriaTipo tipo) {
         this.nombre = nombre;
         if(tipo == CriaTipo.RIO ){
@@ -75,7 +88,7 @@ public class Piscifactoria {
     
     public void nextDay(){
         for (Tanque tanque : tanques) {
-            for (Pez pez : tanque.getPeces()) {
+            /*for (Pez pez : tanque.getPeces()) {
                 if(pez instanceof Carnivoro){
                     tanque.nextDay(comidaAnimal);
                 }
@@ -89,7 +102,8 @@ public class Piscifactoria {
                         tanque.nextDay(comidaVegetal);
                     }
                 }
-            }
+            }*/
+            
         }
     }
 
@@ -185,6 +199,10 @@ public class Piscifactoria {
         } else if (tipo == "Vegetal"){
             comidaVegetal+=cantidad;
         }
+    }
+
+    public void restFood(int cantidad, String tipo){
+
     }
     
     public int[] venta(){
