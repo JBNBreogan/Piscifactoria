@@ -6,6 +6,10 @@ import propiedades.PecesDatos;
 import helpers.PorcentajeHelper;
 import Comun.Monedero;
 
+/**
+ * Clase tanque 
+ * @author Cristian
+ */
 public class Tanque {
 
     //**Número del tanque en la piscifactoria **/
