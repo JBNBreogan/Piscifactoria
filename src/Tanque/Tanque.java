@@ -8,16 +8,28 @@ import Comun.Monedero;
 
 public class Tanque {
 
+    //**Número del tanque en la piscifactoria **/
     private int numTanque;
+    //**Lista de peces en el tanque **/
     private ArrayList<Pez> peces;
+    //**Número máximo de peces que puede haber en el tanque **/
     private int maxPeces;
+    //**Tipo de pez existente en el tanque **/
     private PecesDatos tipoPez;
+    //**Monedero **/
     private Monedero monedero=Monedero.getInstance();
 
+    /**
+     * Constructor de tanque
+     * @param maxPeces
+     */
     public Tanque(int maxPeces) {
         this.maxPeces = maxPeces;
     }
 
+    /**
+     * Metodo que muestra las estadisiticas del tanque 
+     */
     public void showStatus(){
         System.out.println("============Tanque "+ numTanque + "============");
         System.out.println("Ocupación: " + pecesEnTanque() +" / "+ maxPeces + " (" + PorcentajeHelper.hacerProcentaje(pecesEnTanque(), maxPeces) + "%)");
@@ -28,16 +40,26 @@ public class Tanque {
         System.out.println("Fértiles: " + pecesFertiles()+" / "+pecesVivos());
     }
 
+    /**
+     * Método que muestra las estadisticas de todos los peces del tanque
+     */
     public void showFishStatus(){
         for (Pez pez : peces) {
             pez.showStatus();
         }
     }
 
+    /**
+     * Metodo que muestra informacion de la capacidad del tanque 
+     */
     public void showCapacity(){
         System.out.println("Tanque " + numTanque +"al "+ PorcentajeHelper.hacerProcentaje(pecesEnTanque(), maxPeces) + "% de capacidad [" + pecesEnTanque() +"/"+ maxPeces + "].");
     }
 
+    /**
+     * Método que avanza un día, alimenta los peces del tanque, reproduce los peces y vende los peces que esten en su estado optimo.
+     * @param comida Cantidad de comida disponible en la piscifactoria
+     */
     public void nextDay(int comida){
         int pecesHembraFertiles=0;
         int pecesMachoFertiles=0;
@@ -60,8 +82,6 @@ public class Tanque {
          * hembras fertiles pone la cantidad de huevos de su
          * tipo de pez.
          */
-
-        
         if(pecesHembra() > pecesMacho()){
             if(pecesHembraFertiles>=1 && pecesMachoFertiles>=1){
                 for (Pez pez : peces) {
@@ -69,8 +89,8 @@ public class Tanque {
                         for (int i = 0; i < pez.getHuevos(); i++) {
                             if(i%2==0){
                                 pez.reproducirse(false);
-                                //poner que no es fertil
-                                //llamar a resetPuesta
+                                pez.notFertil();
+                                pez.resetPuesta();
                             }else{
                                 pez.reproducirse(true);
                             }
@@ -97,10 +117,18 @@ public class Tanque {
         ventaPecesOptimos();
     }
 
+    /**
+     * Método que devuelve la cantidad de peces que hay en el tanque
+     * @return Número de peces
+     */
     public int pecesEnTanque(){
         return peces.size();
     }
 
+    /**
+     * Método que devuelve la cantidad de peces vivos en el tanque
+     * @return Número de peces vivos
+     */
     public  int pecesVivos(){
         int contadorPecesVivos=0;
         for (Pez pez : peces) {
@@ -111,6 +139,10 @@ public class Tanque {
         return contadorPecesVivos;
     }
 
+    /**
+     * Método que devuelve la cantidad de peces alimentados en el tanque 
+     * @return Número de peces alimentados
+     */
     public  int pecesAlimentados(){
         int contadorPecesAlimentados=0;
         for (Pez pez : peces) {
@@ -121,6 +153,10 @@ public class Tanque {
         return contadorPecesAlimentados;
     }
 
+    /**
+     * Método que devuelve la cantidad de peces adultos en el tanque 
+     * @return Número de peces adultos
+     */
     public  int pecesAdultos(){
         int contadorPecesAdultos=0;
         for (Pez pez : peces) {
@@ -131,6 +167,10 @@ public class Tanque {
         return contadorPecesAdultos;
     }
 
+    /**
+     * Método que devuelve la cantidad de peces hembra en el tanque 
+     * @return Número de peces hembra
+     */
     public  int pecesHembra(){
         int contadorPecesHembra=0;
         for (Pez pez : peces) {
@@ -141,6 +181,10 @@ public class Tanque {
         return contadorPecesHembra;
     }
 
+    /**
+     * Método que devuelve la cantidad de peces macho en el tanque 
+     * @return Número de peces macho
+     */
     public  int pecesMacho(){
         int contadorPecesMacho=0;
         for (Pez pez : peces) {
@@ -151,6 +195,10 @@ public class Tanque {
         return contadorPecesMacho;
     }
 
+    /**
+     * Método que devuelve la cantidad de peces fértiles en el tanque 
+     * @return Número de peces fértiles
+     */
     public int pecesFertiles(){
         int contadorPecesFertiles=0;
         for (Pez pez : peces) {
@@ -161,11 +209,11 @@ public class Tanque {
         return contadorPecesFertiles;
     }
 
+    /**
+     * Método que vende todos los peces optimos del tanque 
+     * @return Valores de monedas obtenidas con la venta y númerod de peces vendidos
+     */
     public int[] ventaPecesOptimos(){
-        /*
-        * Recorre la lista de peces y vende los que esten
-        * en su edad optima.
-        */
         int[]valores=new int[2];
         
         int monedasObtenidas=0;
@@ -183,35 +231,21 @@ public class Tanque {
         return valores;
     }
 
+    //Getters
+
     public int getNumTanque() {
         return numTanque;
-    }
-
-    public void setNumTanque(int numTanque) {
-        this.numTanque = numTanque;
     }
 
     public ArrayList<Pez> getPeces() {
         return peces;
     }
 
-    public void setPeces(ArrayList<Pez> peces) {
-        this.peces = peces;
-    }
-
     public int getMaxPeces() {
         return maxPeces;
     }
 
-    public void setMaxPeces(int maxPeces) {
-        this.maxPeces = maxPeces;
-    }
-
     public PecesDatos getTipoPez() {
         return tipoPez;
-    }
-
-    public void setTipoPez(PecesDatos tipoPez) {
-        this.tipoPez = tipoPez;
     }
 }
