@@ -2,6 +2,7 @@ package Tanque;
 
 import java.util.ArrayList;
 import peces.Pez;
+import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import helpers.PorcentajeHelper;
 import Comun.Monedero;
@@ -14,7 +15,7 @@ public class Tanque {
     private PecesDatos tipoPez;
     private Monedero monedero=Monedero.getInstance();
 
-    public Tanque(int maxPeces) {
+    public Tanque(int maxPeces,CriaTipo tipoTanque) {
         this.maxPeces = maxPeces;
     }
 

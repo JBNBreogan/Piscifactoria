@@ -307,7 +307,7 @@ public class Simulador {
                     if(tanque.getPeces().size()<tanque.getMaxPeces()){
                         //Falta lo del sexo
                         tanque.getPeces().add(pezEleg);
-                        tanque.showStatus();
+                        tanque.showCapacity();
                     }
                 }
             }else{
@@ -442,12 +442,6 @@ public class Simulador {
         } while (op!=1 || op!=2 || op!=3);
     }
 
-
-
-
-
-
-
     public void infoLib(String tipoPez){
 
         System.out.println("Nombre : "+AlmacenPropiedades.getPropByName(tipoPez).getNombre());
@@ -524,6 +518,7 @@ public class Simulador {
 
 
     public static void main(String[] args) {
+        Monedero monedero=Monedero.getInstance();
         Scanner sc=new Scanner(System.in);
         Simulador sim=new Simulador();
         sim.init();
@@ -576,7 +571,7 @@ public class Simulador {
                     //Añade cuatro peces al azar en una piscifactoria seleccionada
                         break;
                     case 99:
-                    //Añade 1000 monedas
+                        monedero.setMonedas(1000);
                         break;
                     case 0:
                         break;
