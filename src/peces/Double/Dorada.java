@@ -8,7 +8,7 @@ import propiedades.AlmacenPropiedades;
  * Clase que representa a la Dorada
  * @author Breogan
  */
-public class Dorada extends Pez implements Omnivoro{
+public class Dorada extends Omnivoro{
 
     public Dorada(boolean hembra){
         super(AlmacenPropiedades.DORADA);
@@ -19,11 +19,4 @@ public class Dorada extends Pez implements Omnivoro{
     public Pez reproducirse(boolean hembra) {
         return new Dorada(hembra);
     }
-
-    @Override
-    public void comer(int cantidad) {
-        // TODO Auto-generated method stub
-        
-    }
-    //TODO grow
 }

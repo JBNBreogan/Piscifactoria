@@ -8,7 +8,7 @@ import propiedades.AlmacenPropiedades;
  * Clase que representa a la Caballa
  * @author Breogan
  */
-public class Caballa extends Pez implements Carnivoro{
+public class Caballa extends Carnivoro{
 
     public Caballa(boolean hembra){
         super(AlmacenPropiedades.CABALLA);
@@ -18,11 +18,5 @@ public class Caballa extends Pez implements Carnivoro{
     @Override
     public Pez reproducirse(boolean hembra) {
         return new Caballa(hembra);
-    }
-
-    @Override
-    public void comer(int cantidad) {
-        // TODO Auto-generated method stub
-        
     }
 }

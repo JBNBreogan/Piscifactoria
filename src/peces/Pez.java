@@ -215,10 +215,12 @@ public abstract class Pez {
     /**
      * Hace crecer el pez un día, teniendo en cuenta todos los factores.
      */
-    public void grow(int comida){
+    public int grow(int comida){
+        //TODO devolver si el pez ha comido o no para restar la comida
         Random morir = new Random();
+        int comidaConsumida = 0;
         if (isAlive()){
-            comer(comida); 
+            comidaConsumida = comer(comida); 
             if (this.Comido){
                 this.Edad++;
                 this.UltimaPuesta++;
@@ -237,10 +239,9 @@ public abstract class Pez {
                     }
                 }
             }
-            
         }
+        return comidaConsumida;
     }
-
 
     /**
      * Devuelve una cría del pez
@@ -252,7 +253,7 @@ public abstract class Pez {
     /**
      * Hace comer al pez
      */
-    public abstract void comer(int cantidad);
+    public abstract int comer(int cantidad);
 
     /**
      * Resetea todo el pez, pero dejando los valores
@@ -264,4 +265,6 @@ public abstract class Pez {
         this.Fertil = false;
         this.Comido = false;
     }
+
+    
 }
