@@ -8,8 +8,9 @@ import peces.Propiedades.Omnivoro;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import helpers.PorcentajeHelper;
+import Comun.AlmacenCentral;
 import Comun.Monedero;
-import piscifactoria.Piscifactoria;
+import Piscifactoria.Piscifactoria;
 
 /**
  * Clase tanque 
@@ -27,6 +28,8 @@ public class Tanque {
     private PecesDatos tipoPez;
     //**Monedero **/
     private Monedero monedero=Monedero.getInstance();
+
+    private AlmacenCentral almacenCentral=AlmacenCentral.getInstance();
 
     public Tanque(int maxPeces) {
         this.maxPeces = maxPeces;
@@ -69,17 +72,17 @@ public class Tanque {
         int pecesHembraFertiles=0;
         int pecesMachoFertiles=0;
 
-            int comida=0;
+        boolean vegetal=true;
             if(this.peces.get(0) instanceof Carnivoro){
-                comida=pisci.getComidaAnimal();
+                vegetal=false;
             }else if(this.peces.get(0) instanceof Filtrador){
-                comida=pisci.getComidaVegetal();
+                vegetal=true;
             }else if(this.peces.get(0) instanceof Omnivoro){
-                if(pisci.getComidaAnimal>=pisci.getComidaVegetal){
-                        comida=pisci.getComidaAnimal();
-                    } else {
-                        comida=pisci.getComidaVegetal();
-                    }
+                if(pisci.getComidaAnimal()>=pisci.getComidaVegetal()){
+                    vegetal=false;
+                } else {
+                    vegetal=true;
+                }
             }
 
         /*
@@ -87,7 +90,14 @@ public class Tanque {
          * compruebo si hay peces hembra y macho fertiles.
          */
         for (Pez pez : peces) {
-            pez.grow(pisci,comida);
+            int comidaCons = pez.grow(vegetal ? pisci.getComidaVegetal() : pisci.getComidaAnimal());
+            pisci.restFood(comidaCons, vegetal ? "Vegetal" : "Animal");
+            if(vegetal && pisci.comidaVegetalVacia()){
+                pisci.addFood(almacenCentral.cogerComidaVegetal(2), "Vegetal");
+            }else if(!vegetal && pisci.comidaAnimalVacia()){
+                pisci.addFood(almacenCentral.cogerComidaAnimal(2), "Animal");
+           }
+
             if (pez.isFemale() && pez.isFertile()) {
                 pecesHembraFertiles+=1;
             }else if(!pez.isFemale() && pez.isFertile()){

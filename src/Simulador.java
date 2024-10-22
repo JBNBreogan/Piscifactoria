@@ -6,27 +6,17 @@ import java.util.Scanner;
 import Comun.Monedero;
 import Piscifactoria.Piscifactoria;
 import Tanque.Tanque;
-import helpers.MenuHelper;
-import helpers.MonederoHelper;
-import helpers.PorcentajeHelper;
+import helpers.*;
+import peces.Double.*;
+import peces.Mar.*;
 import peces.Pez;
-import peces.Double.Dorada;
-import peces.Double.TruchaArcoiris;
-import peces.Mar.Abadejo;
-import peces.Mar.Besugo;
-import peces.Mar.Caballa;
-import peces.Mar.Rodaballo;
-import peces.Mar.Sargo;
-import peces.Rio.Carpa;
-import peces.Rio.CarpaPlateada;
-import peces.Rio.LucioDelNorte;
-import peces.Rio.Pejerrey;
-import peces.Rio.TilapiaDelNilo;
+import peces.Rio.*;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import propiedades.PecesProps;
 import propiedades.PecesTipo;
+import Comun.AlmacenCentral;
 
 /**
  * Clase simulador
@@ -38,11 +28,12 @@ public class Simulador {
     /**Nombre del sistema */
     private static String nombreempresa;
     /**Almacen central */
-    private AlmacenCentral almacenCentral=null;
+    private AlmacenCentral almacenCentral=AlmacenCentral.getInstance();
     /**Lista de las piscifactorias del sistema */
     private static ArrayList<Piscifactoria> piscifactorias = new ArrayList<>();
     /**Monedero */
     private Monedero monedero=Monedero.getInstance();
+    
 
     /**
      * Método que inicializa el sistema, asignando el nombre del sistema y creando una piscifactoria.
@@ -246,6 +237,7 @@ public class Simulador {
      */
     public void nextDay(){
         dias++;
+        almacenCentral.repartir(piscifactorias);
         for (Piscifactoria piscifactoria : piscifactorias) {
             piscifactoria.nextDay();
         }
