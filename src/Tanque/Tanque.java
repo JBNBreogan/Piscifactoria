@@ -2,10 +2,14 @@ package Tanque;
 
 import java.util.ArrayList;
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
+import peces.Propiedades.Filtrador;
+import peces.Propiedades.Omnivoro;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import helpers.PorcentajeHelper;
 import Comun.Monedero;
+import piscifactoria.Piscifactoria;
 
 /**
  * Clase tanque 
@@ -24,15 +28,7 @@ public class Tanque {
     //**Monedero **/
     private Monedero monedero=Monedero.getInstance();
 
-<<<<<<< HEAD
-    public Tanque(int maxPeces,CriaTipo tipoTanque) {
-=======
-    /**
-     * Constructor de tanque
-     * @param maxPeces
-     */
     public Tanque(int maxPeces) {
->>>>>>> eac39fe2c74e9a8ebd2ae01109e6a8cfaf7a98f3
         this.maxPeces = maxPeces;
     }
 
@@ -69,23 +65,36 @@ public class Tanque {
      * Método que avanza un día, alimenta los peces del tanque, reproduce los peces y vende los peces que esten en su estado optimo.
      * @param comida Cantidad de comida disponible en la piscifactoria
      */
-    public void nextDay(Piscifactoria pisci,int comida){
+    public void nextDay(Piscifactoria pisci){
         int pecesHembraFertiles=0;
         int pecesMachoFertiles=0;
+
+            int comida=0;
+            if(this.peces.get(0) instanceof Carnivoro){
+                comida=pisci.getComidaAnimal();
+            }else if(this.peces.get(0) instanceof Filtrador){
+                comida=pisci.getComidaVegetal();
+            }else if(this.peces.get(0) instanceof Omnivoro){
+                if(pisci.getComidaAnimal>=pisci.getComidaVegetal){
+                        comida=pisci.getComidaAnimal();
+                    } else {
+                        comida=pisci.getComidaVegetal();
+                    }
+            }
 
         /*
          * Recorro la lista de peces y 
          * compruebo si hay peces hembra y macho fertiles.
          */
         for (Pez pez : peces) {
-            pez.grow(comida);
+            pez.grow(pisci,comida);
             if (pez.isFemale() && pez.isFertile()) {
                 pecesHembraFertiles+=1;
             }else if(!pez.isFemale() && pez.isFertile()){
                 pecesMachoFertiles+=1;
             }
         }
-
+        
         /*
          * Si hay alguna hembra y macho fertil cada una de las
          * hembras fertiles pone la cantidad de huevos de su

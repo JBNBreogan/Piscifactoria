@@ -508,13 +508,6 @@ public class Simulador {
         } while (op!=1 || op!=2 || op!=3);
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * Método que muesta toda la información de un tipo de pez pasado por parametro
-     * @param tipoPez Nómbre del pez
-     */
->>>>>>> eac39fe2c74e9a8ebd2ae01109e6a8cfaf7a98f3
     public void infoLib(String tipoPez){
 
         System.out.println("Nombre : "+AlmacenPropiedades.getPropByName(tipoPez).getNombre());
