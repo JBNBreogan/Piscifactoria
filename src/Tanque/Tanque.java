@@ -85,10 +85,6 @@ public class Tanque {
                 }
             }
 
-        /*
-         * Recorro la lista de peces y 
-         * compruebo si hay peces hembra y macho fertiles.
-         */
         for (Pez pez : peces) {
             int comidaCons = pez.grow(vegetal ? pisci.getComidaVegetal() : pisci.getComidaAnimal());
             pisci.restFood(comidaCons, vegetal ? "Vegetal" : "Animal");
@@ -105,11 +101,6 @@ public class Tanque {
             }
         }
         
-        /*
-         * Si hay alguna hembra y macho fertil cada una de las
-         * hembras fertiles pone la cantidad de huevos de su
-         * tipo de pez.
-         */
         if(pecesHembra() > pecesMacho()){
             if(pecesHembraFertiles>=1 && pecesMachoFertiles>=1){
                 for (Pez pez : peces) {

@@ -351,10 +351,15 @@ public class Simulador {
 
             if(pisc.pecesEnPiscifactoria()<pisc.pecesMaxPiscifactoria()){
                 for (Tanque tanque : pisc.getTanques()) {
-                    if(tanque.getPeces().size()<tanque.getMaxPeces()){
-                        //Falta lo del sexo
-                        tanque.getPeces().add(pezEleg);
-                        tanque.showCapacity();
+                    if(tanque.getPeces().get(0).getName()==pezEleg.getName()){
+                        if(tanque.getPeces().size()<tanque.getMaxPeces()){
+                            //Falta lo del sexo
+                            tanque.getPeces().add(pezEleg);
+                            tanque.showCapacity();
+                        }
+                    }else{
+                        System.out.println("Este pez no es válido para este tanque, introduce un pez válido");
+                        break;
                     }
                 }
             }else{
@@ -417,6 +422,7 @@ public class Simulador {
         Scanner sc=new Scanner(System.in);
         Scanner sc2=new Scanner(System.in);
         Scanner sc3=new Scanner(System.in);
+        Scanner sc4=new Scanner(System.in);
 
         int op=0;
         String op2="";
@@ -435,10 +441,34 @@ public class Simulador {
                     op2=sc.next();
                     switch (op2) {
                         case "a":
-                            //Crear piscifactoria
+                            System.out.println("Nombre de la piscifactoria: ");
+                            String nombrePisc=sc4.next();
+                            System.out.println("Tipo de la piscifactoria: (RIO, MAR o DOBLE)");
+                            String tipoPisc=sc4.next();
+                            boolean opcionValida=false;
+                            do {
+                                if(tipoPisc.equals("RIO")){
+                                    if(MonederoHelper.monedasSuficientes(500*piscifactorias.size())){
+                                        opcionValida=true;
+                                        new Piscifactoria(nombrePisc, CriaTipo.RIO);
+                                        System.out.println("Piscifactoria añadida");
+                                    }
+                                }else if (tipoPisc.equals("MAR")) {
+                                    if (MonederoHelper.monedasSuficientes(2000*piscifactorias.size())) {
+                                        opcionValida=true;
+                                        new Piscifactoria(nombrePisc, CriaTipo.MAR);
+                                        System.out.println("Piscifactoria añadida");
+                                    }
+                                }else{
+                                    System.out.println("Ese tipo de piscifactoria no es válido, escoga uno válido");
+                                }
+                            } while (!opcionValida);
                             break;
                         case "b":
-                            //Crear almacen central 
+                            if(MonederoHelper.monedasSuficientes(2000)){
+                                //Cambiar almacen central, no puede ser singleton
+                                //new AlmacenCentral(); 
+                            }
                             break;
                         default:
                             System.out.println("Esa opción no es válida.");
@@ -460,10 +490,27 @@ public class Simulador {
                             op3=sc.next();
                             switch (op3) {
                                 case "i":
-                                    //Añadir un tanque
+                                    System.out.println("Elige la piscifactoria a la que le quieres añadir un tanque");
+                                    Piscifactoria pisc =piscifactorias.get(selectPisc());
+                                    if(pisc.getTipo()==CriaTipo.RIO){
+                                        if (MonederoHelper.monedasSuficientes(150) && pisc.getTanques().size()<10) {
+                                            pisc.getTanques().add(new Tanque(25));
+                                            System.out.println("Tanque añadido");
+                                        }
+                                    }else if (pisc.getTipo()==CriaTipo.MAR) {
+                                        if (MonederoHelper.monedasSuficientes(600) && pisc.getTanques().size()<10) {
+                                            pisc.getTanques().add(new Tanque(100));
+                                            System.out.println("Tanque añadido");
+                                        }
+                                    }
                                     break;
                                 case "ii":
-                                    //Aumentar almacén de comida
+                                    System.out.println("Elige la piscifactoria a la que le quieres aumentar el almacen de comida");
+                                    Piscifactoria pisc2 =piscifactorias.get(selectPisc());
+                                    if(MonederoHelper.monedasSuficientes(50)){
+                                        pisc2.addFood(25, "Vegetal");
+                                        pisc2.addFood(25, "Animal");
+                                    }
                                     break;
                                 default:
                                     System.out.println("Esa opción no es válida.");
@@ -478,7 +525,9 @@ public class Simulador {
                             op3=sc.next();
                             switch (op3) {
                                 case "i":
-                                    //Aumentar capacidad del almacen central
+                                    if(MonederoHelper.monedasSuficientes(200)){
+                                        almacenCentral.aumentarCapacidad(50);
+                                    }
                                     break;
                                 default:
                                     System.out.println("Esa opción no es válida.");
