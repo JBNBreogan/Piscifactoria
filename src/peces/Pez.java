@@ -1,10 +1,15 @@
 package peces;
-/**Clase padre de los peces*/
+
+import java.util.Random;
 
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import propiedades.PecesTipo;
 
+/**
+ * Clase padre de los peces
+ * @author Breogan
+ */
 public abstract class Pez {
 
     /**Nombre común del pez*/
@@ -52,8 +57,8 @@ public abstract class Pez {
     /**Estado del pez*/
     protected boolean Vivo;
 
-    /**Si el pez esta alimentado */
-    protected boolean Alimentado;
+    /**Ultimo ciclo de puesta (Empieza en el máximo para que la primera vez sea fertil) */
+    protected int UltimaPuesta;
 
     protected Pez (PecesDatos data){
         this.Nombre = data.getNombre();
@@ -69,7 +74,8 @@ public abstract class Pez {
         this.Fertil = false;
         this.Vivo = true;
         this.Edad = 0;
-        this.Alimentado = false;
+        this.Comido = false;
+        this.UltimaPuesta = data.getCiclo();
     }
 
     /**
@@ -169,7 +175,7 @@ public abstract class Pez {
      * @return Si esta alimentado o no
      */
     public boolean isAlimentado() {
-        return Alimentado;
+        return Comido;
     }
 
     /**
@@ -178,6 +184,20 @@ public abstract class Pez {
      */
     public int getOptimo() {
         return Optimo;
+    }
+
+    /**
+     * Hace que el pez deje de ser fertil
+     */
+    public void notFertil(){
+        this.Fertil = false;
+    }
+
+    /**
+     * Hace que se resetee la puesta
+     */
+    public void resetPuesta(){
+        this.UltimaPuesta = 0;
     }
 
     /**
@@ -195,8 +215,32 @@ public abstract class Pez {
     /**
      * Hace crecer el pez un día, teniendo en cuenta todos los factores.
      */
-    public void grow(){
-        //TODO: Lógica de crecimiento del pez, si ha comido, edad, fertilidad...
+    public int grow(int comida){
+        //TODO devolver si el pez ha comido o no para restar la comida
+        Random morir = new Random();
+        int comidaConsumida = 0;
+        if (isAlive()){
+            comidaConsumida = comer(comida); 
+            if (this.Comido){
+                this.Edad++;
+                this.UltimaPuesta++;
+                if (isAdulto() && this.UltimaPuesta >= this.Ciclo){
+                    this.Fertil = true;
+                }
+                this.Comido = false;
+            } else {
+                if (morir.nextInt(2) == 0){
+                    this.Vivo = false;
+                } else {
+                    this.Edad++;
+                    this.UltimaPuesta++;
+                    if (isAdulto() && this.UltimaPuesta >= this.Ciclo){
+                        this.Fertil = true;
+                    }
+                }
+            }
+        }
+        return comidaConsumida;
     }
 
     /**
@@ -209,7 +253,7 @@ public abstract class Pez {
     /**
      * Hace comer al pez
      */
-    public abstract void comer(int cantidad);
+    public abstract int comer(int cantidad);
 
     /**
      * Resetea todo el pez, pero dejando los valores
@@ -221,4 +265,6 @@ public abstract class Pez {
         this.Fertil = false;
         this.Comido = false;
     }
+
+    
 }

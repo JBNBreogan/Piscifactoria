@@ -1,9 +1,14 @@
 package peces.Mar;
 
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
-public class Rodaballo extends Pez{
+/**
+ * Clase que representa al Rodaballo
+ * @author Breogan
+ */
+public class Rodaballo extends Carnivoro{
 
     public Rodaballo(boolean hembra){
         super(AlmacenPropiedades.RODABALLO);
@@ -16,8 +21,11 @@ public class Rodaballo extends Pez{
     }
 
     @Override
-    public void comer(int cantidad) {
-        // TODO Auto-generated method stub
-        
+    public int comer(int cantidad) {
+        if (cantidad >= 2){
+            this.Comido = true;
+            return 2;
+        }
+        return 0;
     }
 }

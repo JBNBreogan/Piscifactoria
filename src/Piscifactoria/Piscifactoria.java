@@ -1,9 +1,14 @@
+package Piscifactoria;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Comun.AlmacenCentral;
 import Comun.Monedero;
 import Tanque.Tanque;
 import peces.Pez;
+import peces.Propiedades.Carnivoro;
+import peces.Propiedades.Filtrador;
+import peces.Propiedades.Omnivoro;
 import propiedades.CriaTipo;
 import helpers.*;
 
@@ -18,18 +23,70 @@ public class Piscifactoria {
     private int maxComidaAnimal;
     private int maxComidaVegetal;
     private Monedero monedero=Monedero.getInstance();
+    private AlmacenCentral almacenCentral=AlmacenCentral.getInstance();
 
+
+    public Piscifactoria(String nombre, CriaTipo tipo, boolean primera) {
+        this.nombre = nombre;
+        if(tipo == CriaTipo.RIO ){
+            tanques = new ArrayList<>();
+            tanques.add(new Tanque(25));
+            this.comidaAnimal = 25;
+            this.comidaVegetal = 25; 
+            this.maxComidaVegetal = 25;
+            this.maxComidaAnimal = 25;
+        } 
+    }
+   
     public Piscifactoria(String nombre, CriaTipo tipo) {
         this.nombre = nombre;
         if(tipo == CriaTipo.RIO ){
+            tanques = new ArrayList<>();
             tanques.add(new Tanque(25));
             this.maxComidaVegetal = 25;
             this.maxComidaAnimal = 25;
         } else if(tipo == CriaTipo.MAR){
+            tanques = new ArrayList<>();
             tanques.add(new Tanque(100));
             this.maxComidaVegetal = 100;
             this.maxComidaAnimal = 100;
         }
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public CriaTipo getTipo() {
+        return tipo;
+    }
+
+    public ArrayList<Tanque> getTanques() {
+        return tanques;
+    }
+
+    public Scanner getSc() {
+        return sc;
+    }
+
+    public int getComidaVegetal() {
+        return comidaVegetal;
+    }
+
+    public int getComidaAnimal() {
+        return comidaAnimal;
+    }
+
+    public int getMaxComidaAnimal() {
+        return maxComidaAnimal;
+    }
+
+    public int getMaxComidaVegetal() {
+        return maxComidaVegetal;
+    }
+
+    public Monedero getMonedero() {
+        return monedero;
     }
 
     public void showStatus(){
@@ -70,7 +127,22 @@ public class Piscifactoria {
     
     public void nextDay(){
         for (Tanque tanque : tanques) {
-            tanque.nextDay();
+            /*for (Pez pez : tanque.getPeces()) {
+                if(pez instanceof Carnivoro){
+                    tanque.nextDay(comidaAnimal);
+                }
+                if(pez instanceof Filtrador){
+                    tanque.nextDay(comidaVegetal);
+                }
+                if(pez instanceof Omnivoro){
+                    if(comidaAnimal>=comidaVegetal){
+                        tanque.nextDay(comidaAnimal);
+                    } else {
+                        tanque.nextDay(comidaVegetal);
+                    }
+                }
+            }*/
+            tanque.nextDay(this);
         }
     }
 
@@ -167,12 +239,20 @@ public class Piscifactoria {
             comidaVegetal+=cantidad;
         }
     }
+
+    public void restFood(int cantidad, String tipo){
+        if(tipo == "Animal"){
+            comidaAnimal-=cantidad;
+        } else if (tipo == "Vegetal"){
+            comidaVegetal-=cantidad;
+        }
+    }
     
     public int[] venta(){
         int totalpeces = 0;
         int totalmonedastanques = 0;
         for (Tanque tanque : tanques) {
-            int[] currTankValues = ventaPecesOptimos();
+            int[] currTankValues = tanque.ventaPecesOptimos();
             totalmonedastanques += currTankValues[0];
             totalpeces += currTankValues[1];
         }
@@ -181,40 +261,35 @@ public class Piscifactoria {
         return retorno;
     }
 
-
-    public String getNombre() {
-        return nombre;
+    public boolean comidaAnimalLlena(){
+        if(comidaAnimal<maxComidaAnimal){
+            return false;
+        } else {
+            return true;
+        }
     }
 
-    public CriaTipo getTipo() {
-        return tipo;
+    public boolean comidaVegetalLlena(){
+        if(comidaVegetal<maxComidaVegetal){
+            return false;
+        } else {
+            return true;
+        }
     }
 
-    public ArrayList<Tanque> getTanques() {
-        return tanques;
+    public boolean comidaAnimalVacia(){
+        if(comidaAnimal==0){
+            return true;
+        }
+        return false;
     }
 
-    public Scanner getSc() {
-        return sc;
+    public boolean comidaVegetalVacia(){
+        if(comidaVegetal==0){
+            return true;
+        }
+        return false;
     }
 
-    public int getComidaVegetal() {
-        return comidaVegetal;
-    }
-
-    public int getComidaAnimal() {
-        return comidaAnimal;
-    }
-
-    public int getMaxComidaAnimal() {
-        return maxComidaAnimal;
-    }
-
-    public int getMaxComidaVegetal() {
-        return maxComidaVegetal;
-    }
-
-    public Monedero getMonedero() {
-        return monedero;
-    }
+    
 }
