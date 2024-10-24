@@ -28,11 +28,16 @@ public class Simulador {
     /**Nombre del sistema */
     private static String nombreempresa;
     /**Almacen central */
-    private AlmacenCentral almacenCentral=AlmacenCentral.getInstance();
+    private AlmacenCentral almacenCentral=null;
     /**Lista de las piscifactorias del sistema */
     private static ArrayList<Piscifactoria> piscifactorias = new ArrayList<>();
     /**Monedero */
     private Monedero monedero=Monedero.getInstance();
+
+    private int pecesComp=0;
+    private int pecesNac=0;
+    private int pecesVend=0;
+    private int monedasOb=0;
     
 
     /**
@@ -137,11 +142,11 @@ public class Simulador {
 
         Tanque tank = pisc.getTanques().get(selectTank());
 
-        tank.showFishStatus();
+        tank.showStatus();
     }
 
     /**
-     * Método que muestra el estado de todos los tipos de pez del sistema, indicando el número de ellos comprados, el número de ellos nacidos, el número de vendidos 
+     * Método que muestra el estado de todos los pez del sistema, indicando el número de ellos comprados, el número de ellos nacidos, el número de vendidos 
      * y las monedas obtenidas con esto, y por último un mensaje del total de estos datos en toda la piscifactoria.
      */
     public void showStats(){
@@ -257,10 +262,10 @@ public class Simulador {
      */
     public void addFood(){
         if(almacenCentral!=null){
-            elegirComidaAlmCen(almacenCentral);
+            añadirComidaAlm();
         }else{
             Piscifactoria pisc = piscifactorias.get(selectPisc());
-            elegirComidaPisc(pisc);
+            añadirComidaPisc(pisc);
         }
     }
 
@@ -394,8 +399,7 @@ public class Simulador {
                             break;
                         case "b":
                             if(MonederoHelper.monedasSuficientes(2000)){
-                                //Cambiar almacen central, no puede ser singleton
-                                //new AlmacenCentral(); 
+                                almacenCentral=AlmacenCentral.getInstance();
                             }
                             break;
                         default:
@@ -407,7 +411,7 @@ public class Simulador {
                     break;
                 case 2:
                     System.out.println("a. Piscifactoria.");
-                    if(almacenCentral!=null){
+                    if(almacenCentral==null){
                         System.out.println("b. Almacén central.");
                     }
                     op2=sc.next();
@@ -615,14 +619,112 @@ public class Simulador {
         } while (opCant!=1 || opCant!=2 || opCant!=3 || opCant!=4);
     }
 
+    public int[] elegirComida(){
+        /*
+         * Scanner instancia
+         * int opciontipo = 0
+         * int opcionCantidad = 0
+         * int cantidad = 0
+         * int tipo = 0
+         * 
+         * souts
+         * 
+         * switch opciontipo
+         *      case 1:
+         *          tipo = 1
+         *      case 2:
+         *          tipo = 0
+         * 
+         * souts
+         * 
+         * switch opcionCantidad
+         *      case 1:
+         *          cantidad X
+         *      cases...
+         * 
+         * return int[] = {cantidad, tipo} 
+         */
+        Scanner sc=new Scanner(System.in);
+        int opciontipo;
+        int opCant;
+        int tipo;
+        int cantComida;
+        String tipoComidaEleg="";
+        do {
+            System.out.println("Que tipo de comida quieres añadir?");
+            MenuHelper.mostrarMenu(new String[]{"Animal",
+                                                "Vegetal"},
+                                                false);
+            opciontipo=sc.nextInt();
+            switch (opciontipo) {
+                case 1:
+                    tipo=0;
+                    break;
+                case 2:
+                    tipo=1;
+                    break;
+                default:
+                    System.out.println("Esa opcion no esta disponible, eliga entre las opciones disponibles");
+                    break;
+            }
+        } while (opciontipo!= 1 || opciontipo!=2);
+        
+        do {
+            System.out.println("Cuanta comida quieres añadir?");
+            MenuHelper.mostrarMenu(new String[]{"5",
+                                                "10",
+                                                "25",
+                                                "llenar"},
+                                                false);
+
+            opCant=sc.nextInt();
+            
+            switch (opCant) {
+                case 1:
+                    cantComida=5;
+                    if(MonederoHelper.monedasSuficientes(cantComida)){
+                        return new int[]{cantComida,tipo};
+                    }
+                    break;
+                case 2:
+                    cantComida=10;
+                    if(MonederoHelper.monedasSuficientes(cantComida)){
+                        return new int[]{cantComida,tipo};
+                    }
+                    break;
+                case 3:
+                    cantComida=25;
+                    if(MonederoHelper.monedasSuficientes(cantComida)){
+                        return new int[]{cantComida,tipo};
+                    }
+                    break;
+                case 4:
+                    if (tipoComidaEleg=="Animal" && MonederoHelper.monedasSuficientes(pisc.getMaxComidaAnimal()-pisc.getComidaAnimal())) {
+                        cantComida=pisc.getMaxComidaAnimal()-pisc.getComidaAnimal();
+                        return new int[]{cantComida,tipo};
+                    }else if (tipoComidaEleg=="Vegetal" && MonederoHelper.monedasSuficientes(pisc.getMaxComidaVegetal()-pisc.getComidaVegetal())) {
+                        cantComida=pisc.getMaxComidaVegetal()-pisc.getComidaVegetal();
+                        return new int[]{cantComida,tipo};
+                    }
+                    break;
+                default:
+                    System.out.println("Esa opcion no esta disponible, eliga entre las opciones disponibles");
+                    break;
+            }
+        } while (opCant!=1 || opCant!=2 || opCant!=3 || opCant!=4);
+    }
+
     /**
      * Método que añade a una piscifactoria la cantidad del tipo de comida pasado por parámetro
      * @param cant Número de comida a añadir
      * @param tipo Tipo de comida a añadir
      * @param pisc Piscifactoia en la que añadir la comida
      */
-    public void añadirComidaPisc(int cant,String tipo,Piscifactoria pisc){
-        
+    public void añadirComidaPisc(Piscifactoria pisc){
+        int[] cantTipo = elegirComida();
+
+        int cant = cantTipo[0];
+        String tipo = ((cantTipo[1] == 0) ? "Animal" : "Vegetal");
         if(tipo=="Animal" && cant>pisc.getMaxComidaAnimal()-pisc.getComidaAnimal()){
             cant-=pisc.getMaxComidaAnimal()-pisc.getComidaAnimal();
         }else if (tipo=="Vegetal" && cant>pisc.getMaxComidaVegetal()-pisc.getComidaVegetal()) {
@@ -647,97 +749,17 @@ public class Simulador {
     }
 
     /**
-     * Método que permite elegir el tipo y la cantidad de comida que se va a añadir al almacen central
-     * @param almacenCentral 
-     */
-    private void elegirComidaAlmCen(AlmacenCentral almacenCentral) {
-        Scanner sc=new Scanner(System.in);
-        int opcion;
-        String tipoComidaEleg="";
-        do {
-            System.out.println("Que tipo de comida quieres añadir?");
-            MenuHelper.mostrarMenu(new String[]{"Animal",
-                                                "Vegetal"},
-                                                false);
-            opcion=sc.nextInt();
-            switch (opcion) {
-                case 1:
-                    tipoComidaEleg="Animal";
-                    break;
-                case 2:
-                    tipoComidaEleg="Vegetal";
-                    break;
-                default:
-                    System.out.println("Esa opcion no esta disponible, eliga entre las opciones disponibles");
-                    break;
-            }
-        } while (opcion!= 1 || opcion!=2);
-        
-        int opCant;
-        do {
-            System.out.println("Cuanta comida quieres añadir?");
-            MenuHelper.mostrarMenu(new String[]{"5",
-                                                "10",
-                                                "25",
-                                                "llenar"},
-                                                false);
-
-            opCant=sc.nextInt();
-            int cantComida=0;
-            switch (opCant) {
-                case 1:
-                    cantComida=5;
-                    if(MonederoHelper.monedasSuficientes(cantComida)){
-                        if (tipoComidaEleg=="Animal") {
-                            añadirComidaAlm(cantComida,tipoComidaEleg,almacenCentral);
-                        }else if (tipoComidaEleg=="Vegetal") {
-                            añadirComidaAlm(cantComida, tipoComidaEleg,almacenCentral);
-                        }
-                    }
-                    break;
-                case 2:
-                    cantComida=10;
-                    if(MonederoHelper.monedasSuficientes(cantComida)){
-                        if (tipoComidaEleg=="Animal") {
-                            añadirComidaAlm(cantComida, tipoComidaEleg,almacenCentral);
-                        }else if (tipoComidaEleg=="Vegetal") {
-                            añadirComidaAlm(cantComida, tipoComidaEleg,almacenCentral);
-                        }
-                    }
-                    break;
-                case 3:
-                    cantComida=25;
-                    if(MonederoHelper.monedasSuficientes(cantComida)){
-                        if (tipoComidaEleg=="Animal") {
-                            añadirComidaAlm(cantComida, tipoComidaEleg,almacenCentral);
-                        }else if (tipoComidaEleg=="Vegetal") {
-                            añadirComidaAlm(cantComida, tipoComidaEleg,almacenCentral);
-                        }
-                    }
-                    break;
-                case 4:
-                    if (tipoComidaEleg=="Animal" && MonederoHelper.monedasSuficientes(almacenCentral.getCapacidadcomidaanimal()-almacenCentral.getComidaanimal())) {
-                        cantComida=almacenCentral.getCapacidadcomidaanimal()-almacenCentral.getComidaanimal();
-                        añadirComidaAlm(cantComida, tipoComidaEleg,almacenCentral);
-                    }else if (tipoComidaEleg=="Vegetal" && MonederoHelper.monedasSuficientes(almacenCentral.getCapacidadcomidavegetal()-almacenCentral.getComidavegetal())) {
-                        cantComida=almacenCentral.getCapacidadcomidavegetal()-almacenCentral.getComidavegetal();
-                        añadirComidaAlm(cantComida, tipoComidaEleg,almacenCentral);
-                    }
-                    break;
-                default:
-                    System.out.println("Esa opcion no esta disponible, eliga entre las opciones disponibles");
-                    break;
-            }
-        } while (opCant!=1 || opCant!=2 || opCant!=3 || opCant!=4);
-    }
-
-    /**
      * Método que añade al almacen central la cantidad del tipo de comida pasado por parámetro
      * @param cant Número de comida a añadir
      * @param tipo Tipo de comida a añadir
      * @param almacenCentral 
      */
-    private void añadirComidaAlm(int cant, String tipo, AlmacenCentral almacenCentral) {
+    private void añadirComidaAlm() {
+        int[] cantTipo = elegirComida();
+
+        int cant = cantTipo[0];
+        String tipo = ((cantTipo[1] == 0) ? "Animal" : "Vegetal");
+
         if(tipo=="Animal" && cant>almacenCentral.getCapacidadcomidaanimal()-almacenCentral.getComidaanimal()){
             cant-=almacenCentral.getCapacidadcomidaanimal()-almacenCentral.getComidaanimal();
         }else if (tipo=="Vegetal" && cant>almacenCentral.getCapacidadcomidavegetal()-almacenCentral.getComidavegetal()) {
@@ -760,6 +782,9 @@ public class Simulador {
         }
     }
 
+    /**
+     * Método que añade cuatro peces aleatorios a una pisicfactoria seleccionada
+     */
     public void truco98(){
         Piscifactoria pisc=piscifactorias.get(selectPisc());
         Random random=new Random();
@@ -808,23 +833,23 @@ public class Simulador {
                         }
                     break;
                     case 9:
-                        if(tanque.getTipoPez().getNombre()=="Lucio del norte" && tanque.getMaxPeces()<tanque.getPeces().size()){
-                            tanque.getPeces().add(new LucioDelNorte(false));
+                        if(tanque.getTipoPez().getNombre()=="Abadejo" && tanque.getMaxPeces()<tanque.getPeces().size()){
+                            tanque.getPeces().add(new Abadejo(false));
                         }
                     break;   
                     case 10:
-                        if(tanque.getTipoPez().getNombre()=="Lucio del norte" && tanque.getMaxPeces()<tanque.getPeces().size()){
-                            tanque.getPeces().add(new LucioDelNorte(false));
+                        if(tanque.getTipoPez().getNombre()=="Sargo" && tanque.getMaxPeces()<tanque.getPeces().size()){
+                            tanque.getPeces().add(new Sargo(false));
                         }
                     break;
                     case 11:
-                        if(tanque.getTipoPez().getNombre()=="Lucio del norte" && tanque.getMaxPeces()<tanque.getPeces().size()){
-                            tanque.getPeces().add(new LucioDelNorte(false));
+                        if(tanque.getTipoPez().getNombre()=="Trucha arcoiris" && tanque.getMaxPeces()<tanque.getPeces().size()){
+                            tanque.getPeces().add(new TruchaArcoiris(false));
                         }
                     break;
                     case 12:
-                        if(tanque.getTipoPez().getNombre()=="Lucio del norte" && tanque.getMaxPeces()<tanque.getPeces().size()){
-                            tanque.getPeces().add(new LucioDelNorte(false));
+                        if(tanque.getTipoPez().getNombre()=="Dorada" && tanque.getMaxPeces()<tanque.getPeces().size()){
+                            tanque.getPeces().add(new Dorada(false));
                         }
                     break;
                 }
@@ -883,11 +908,10 @@ public class Simulador {
                         for (int i = 0; i < 4; i++) {
                             sim.nextDay();
                         }
-                        //Pasar varios dias
+                        //Falta saber el numero de dias
                         break;
                     case 98:
                         sim.truco98();
-                    //Añade cuatro peces al azar en una piscifactoria seleccionada
                         break;
                     case 99:
                         monedero.setMonedas(1000);
