@@ -16,7 +16,7 @@ public class MonederoHelper {
         if(monedero.getMonedas()>cant){
             return true;
         }else{
-            System.out.println("Monedas insuficientes, eliga otra opcion");
+            System.out.println("Monedas insuficientes");
             return false;
         }
     }
