@@ -5,43 +5,37 @@ import Piscifactoria.Piscifactoria;
 
 public class AlmacenCentral {
 
-    private static AlmacenCentral instance;
-    private int comidaanimal = 0;
-    private int comidavegetal = 0;
+    private int comidaAnimal = 0;
+    private int comidaVegetal = 0;
 
-    private int capacidadcomidaanimal = 200;
-    private int capacidadcomidavegetal = 200;
+    private int capacidadcomidaanimal;
+    private int capacidadcomidavegetal;
 
     private AlmacenCentral(){
-
+        this.capacidadcomidaanimal = 200;
+        this.capacidadcomidavegetal = 200;
     }
 
-    public static AlmacenCentral getInstance() {
-        if (instance == null) {
-            instance = new AlmacenCentral();
-        }
-        return instance;
+    
+    public int getComidaAnimal() {
+        return comidaAnimal;
     }
 
-    public int getComidaanimal() {
-        return comidaanimal;
+    public int getComidaVegetal() {
+        return comidaVegetal;
     }
 
-    public int getComidavegetal() {
-        return comidavegetal;
-    }
-
-    public int getCapacidadcomidaanimal() {
+    public int getCapacidadComidaAnimal() {
         return capacidadcomidaanimal;
     }
 
-    public int getCapacidadcomidavegetal() {
+    public int getCapacidadComidaVegetal() {
         return capacidadcomidavegetal;
     }
 
     public int cogerComidaAnimal(int cantidad) {
-        if(comidaanimal>=cantidad){
-            comidaanimal-=cantidad;
+        if(comidaAnimal>=cantidad){
+            comidaAnimal-=cantidad;
             return cantidad;
         }
             return 0;
@@ -49,23 +43,36 @@ public class AlmacenCentral {
     
    
     public int cogerComidaVegetal(int cantidad) {
-        if(comidavegetal>=cantidad){
-            comidavegetal-=cantidad;
+        if(comidaVegetal>=cantidad){
+            comidaVegetal-=cantidad;
             return cantidad;
         }
             return 0;
     }
 
+    public void addFood(int cantidad, String tipo){
+        if(tipo == "Animal"){
+            comidaAnimal+=cantidad;
+        } else if (tipo == "Vegetal"){
+            comidaVegetal+=cantidad;
+        }
+    }
+
 
     public void repartir(ArrayList<Piscifactoria> piscifactorias){
         
-        int comidaanimalarepartir=comidaanimal/piscifactorias.size();
-        int comidavegetalarepartir=comidavegetal/piscifactorias.size();
+        int comidaanimalarepartir=comidaAnimal/piscifactorias.size();
+        int comidavegetalarepartir=comidaVegetal/piscifactorias.size();
       
         for (Piscifactoria piscifactoria : piscifactorias) {
             piscifactoria.addFood(comidaanimalarepartir, "Animal");
             piscifactoria.addFood(comidavegetalarepartir, "Vegetal");
         }
+    }
+    
+    public void aumentarCapacidad(int capacidad){
+        this.capacidadcomidaanimal+=capacidad;
+        this.capacidadcomidavegetal+=capacidad;
     }
 
     
