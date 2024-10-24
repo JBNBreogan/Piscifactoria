@@ -11,6 +11,10 @@ import propiedades.PecesDatos;
  */
 public abstract class Omnivoro extends Pez{
 
+    /**
+     * Constructor parametrizado
+     * @param data Datos del pez
+     */
     protected Omnivoro(PecesDatos data) {
         super(data);
     }

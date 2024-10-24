@@ -10,6 +10,10 @@ import propiedades.AlmacenPropiedades;
  */
 public class Rodaballo extends Carnivoro{
 
+    /**
+     * Constructor parametrizado
+     * @param hembra Si es hembra
+     */
     public Rodaballo(boolean hembra){
         super(AlmacenPropiedades.RODABALLO);
         this.Sexo = hembra;

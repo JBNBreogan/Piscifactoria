@@ -10,6 +10,10 @@ import propiedades.AlmacenPropiedades;
  */
 public class CarpaPlateada extends Filtrador{
 
+    /**
+     * Constructor parametrizado
+     * @param hembra Si es hembra
+     */
     public CarpaPlateada(boolean hembra){
         super(AlmacenPropiedades.CARPA_PLATEADA);
         this.Sexo = hembra;

@@ -11,6 +11,10 @@ import propiedades.PecesDatos;
  */
 public abstract class Filtrador extends Pez{
     
+    /**
+     * Cosntructor paraetrizado
+     * @param data datos del pez
+     */
     public Filtrador(PecesDatos data){
         super(data);
     }

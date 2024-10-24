@@ -4,11 +4,15 @@ import peces.Pez;
 import propiedades.PecesDatos;
 
 /**
- * clase para peces carnívoros
+ * Clase para peces carnívoros
  * @author Breogan
  */
 public abstract class Carnivoro extends Pez{
 
+    /**
+     * Constructor parametrizado
+     * @param data Datos del Pez
+     */
     protected Carnivoro(PecesDatos data) {
         super(data);
     }
