@@ -10,6 +10,10 @@ import propiedades.AlmacenPropiedades;
  */
 public class TilapiaDelNilo extends Filtrador{
 
+    /**
+     * Constructor parametrizado
+     * @param hembra Si es hembra
+     */
     public TilapiaDelNilo(boolean hembra){
         super(AlmacenPropiedades.TILAPIA_NILO);
         this.Sexo = hembra;
