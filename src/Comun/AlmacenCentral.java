@@ -5,18 +5,24 @@ import Piscifactoria.Piscifactoria;
 
 public class AlmacenCentral {
 
+    private static AlmacenCentral instance;
     private int comidaAnimal = 0;
     private int comidaVegetal = 0;
 
-    private int capacidadcomidaanimal;
-    private int capacidadcomidavegetal;
+    private int capacidadcomidaanimal = 200;
+    private int capacidadcomidavegetal = 200;
 
     private AlmacenCentral(){
-        this.capacidadcomidaanimal = 200;
-        this.capacidadcomidavegetal = 200;
+
     }
 
-    
+    public static AlmacenCentral getInstance() {
+        if (instance == null) {
+            instance = new AlmacenCentral();
+        }
+        return instance;
+    }
+
     public int getComidaAnimal() {
         return comidaAnimal;
     }
