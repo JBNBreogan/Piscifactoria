@@ -262,10 +262,10 @@ public class Simulador {
      */
     public void addFood(){
         if(almacenCentral!=null){
-            añadirComidaAlm();
+            anadirComidaAlm();
         }else{
             Piscifactoria pisc = piscifactorias.get(selectPisc());
-            añadirComidaPisc(pisc);
+            anadirComidaPisc(pisc);
         }
     }
 
@@ -534,92 +534,7 @@ public class Simulador {
         return espacioTotal;
     }
 
-    /**
-     * Método que permite elegir el tipo y la cantidad de comida que se va a añadir en la piscifactoria
-     * @param pisc La piscifactoria en la que se va a meter la comida
-     */
-    public void elegirComidaPisc(Piscifactoria pisc){
-        Scanner sc=new Scanner(System.in);
-        int opcion;
-        String tipoComidaEleg="";
-        do {
-            System.out.println("Que tipo de comida quieres añadir?");
-            MenuHelper.mostrarMenu(new String[]{"Animal",
-                                                "Vegetal"},
-                                                false);
-            opcion=sc.nextInt();
-            switch (opcion) {
-                case 1:
-                    tipoComidaEleg="Animal";
-                    break;
-                case 2:
-                    tipoComidaEleg="Vegetal";
-                    break;
-                default:
-                    System.out.println("Esa opcion no esta disponible, eliga entre las opciones disponibles");
-                    break;
-            }
-        } while (opcion!= 1 || opcion!=2);
-        
-        int opCant;
-        do {
-            System.out.println("Cuanta comida quieres añadir?");
-            MenuHelper.mostrarMenu(new String[]{"5",
-                                                "10",
-                                                "25",
-                                                "llenar"},
-                                                false);
-
-            opCant=sc.nextInt();
-            int cantComida=0;
-            switch (opCant) {
-                case 1:
-                    cantComida=5;
-                    if(MonederoHelper.monedasSuficientes(cantComida)){
-                        if (tipoComidaEleg=="Animal") {
-                            añadirComidaPisc(cantComida,tipoComidaEleg,pisc);
-                        }else if (tipoComidaEleg=="Vegetal") {
-                            añadirComidaPisc(cantComida, tipoComidaEleg,pisc);
-                        }
-                    }
-                    break;
-                case 2:
-                    cantComida=10;
-                    if(MonederoHelper.monedasSuficientes(cantComida)){
-                        if (tipoComidaEleg=="Animal") {
-                            añadirComidaPisc(cantComida, tipoComidaEleg,pisc);
-                        }else if (tipoComidaEleg=="Vegetal") {
-                            añadirComidaPisc(cantComida, tipoComidaEleg,pisc);
-                        }
-                    }
-                    break;
-                case 3:
-                    cantComida=25;
-                    if(MonederoHelper.monedasSuficientes(cantComida)){
-                        if (tipoComidaEleg=="Animal") {
-                            añadirComidaPisc(cantComida, tipoComidaEleg,pisc);
-                        }else if (tipoComidaEleg=="Vegetal") {
-                            añadirComidaPisc(cantComida, tipoComidaEleg,pisc);
-                        }
-                    }
-                    break;
-                case 4:
-                    if (tipoComidaEleg=="Animal" && MonederoHelper.monedasSuficientes(pisc.getMaxComidaAnimal()-pisc.getComidaAnimal())) {
-                        cantComida=pisc.getMaxComidaAnimal()-pisc.getComidaAnimal();
-                        añadirComidaPisc(cantComida, tipoComidaEleg,pisc);
-                    }else if (tipoComidaEleg=="Vegetal" && MonederoHelper.monedasSuficientes(pisc.getMaxComidaVegetal()-pisc.getComidaVegetal())) {
-                        cantComida=pisc.getMaxComidaVegetal()-pisc.getComidaVegetal();
-                        añadirComidaPisc(cantComida, tipoComidaEleg,pisc);
-                    }
-                    break;
-                default:
-                    System.out.println("Esa opcion no esta disponible, eliga entre las opciones disponibles");
-                    break;
-            }
-        } while (opCant!=1 || opCant!=2 || opCant!=3 || opCant!=4);
-    }
-
-    public int[] elegirComida(){
+    public int[] elegirComida(Piscifactoria pisc){
         /*
          * Scanner instancia
          * int opciontipo = 0
@@ -647,8 +562,8 @@ public class Simulador {
         Scanner sc=new Scanner(System.in);
         int opciontipo;
         int opCant;
-        int tipo;
-        int cantComida;
+        int tipo=0;
+        int cantComida=0;
         String tipoComidaEleg="";
         do {
             System.out.println("Que tipo de comida quieres añadir?");
@@ -699,12 +614,22 @@ public class Simulador {
                     }
                     break;
                 case 4:
-                    if (tipoComidaEleg=="Animal" && MonederoHelper.monedasSuficientes(pisc.getMaxComidaAnimal()-pisc.getComidaAnimal())) {
-                        cantComida=pisc.getMaxComidaAnimal()-pisc.getComidaAnimal();
-                        return new int[]{cantComida,tipo};
-                    }else if (tipoComidaEleg=="Vegetal" && MonederoHelper.monedasSuficientes(pisc.getMaxComidaVegetal()-pisc.getComidaVegetal())) {
-                        cantComida=pisc.getMaxComidaVegetal()-pisc.getComidaVegetal();
-                        return new int[]{cantComida,tipo};
+                    if(pisc!=null){
+                        if (tipoComidaEleg=="Animal" && MonederoHelper.monedasSuficientes(pisc.getMaxComidaAnimal()-pisc.getComidaAnimal())) {
+                            cantComida=pisc.getMaxComidaAnimal()-pisc.getComidaAnimal();
+                            return new int[]{cantComida,tipo};
+                        }else if (tipoComidaEleg=="Vegetal" && MonederoHelper.monedasSuficientes(pisc.getMaxComidaVegetal()-pisc.getComidaVegetal())) {
+                            cantComida=pisc.getMaxComidaVegetal()-pisc.getComidaVegetal();
+                            return new int[]{cantComida,tipo};
+                        }
+                    }else if (pisc==null) {
+                        if (tipoComidaEleg=="Animal" && MonederoHelper.monedasSuficientes(almacenCentral.getCapacidadcomidaanimal()-almacenCentral.getComidaanimal())) {
+                            cantComida=almacenCentral.getCapacidadcomidaanimal()-almacenCentral.getComidaanimal();
+                            return new int[]{cantComida,tipo};
+                        }else if (tipoComidaEleg=="Vegetal" && MonederoHelper.monedasSuficientes(almacenCentral.getCapacidadcomidavegetal()-almacenCentral.getComidavegetal())) {
+                            cantComida=almacenCentral.getCapacidadcomidavegetal()-almacenCentral.getComidavegetal();
+                            return new int[]{cantComida,tipo};
+                        }
                     }
                     break;
                 default:
@@ -712,6 +637,7 @@ public class Simulador {
                     break;
             }
         } while (opCant!=1 || opCant!=2 || opCant!=3 || opCant!=4);
+        return null;
     }
 
     /**
@@ -720,8 +646,9 @@ public class Simulador {
      * @param tipo Tipo de comida a añadir
      * @param pisc Piscifactoia en la que añadir la comida
      */
-    public void añadirComidaPisc(Piscifactoria pisc){
-        int[] cantTipo = elegirComida();
+    public void anadirComidaPisc(Piscifactoria pisc){
+
+        int[] cantTipo = elegirComida(pisc);
 
         int cant = cantTipo[0];
         String tipo = ((cantTipo[1] == 0) ? "Animal" : "Vegetal");
@@ -754,8 +681,8 @@ public class Simulador {
      * @param tipo Tipo de comida a añadir
      * @param almacenCentral 
      */
-    private void añadirComidaAlm() {
-        int[] cantTipo = elegirComida();
+    private void anadirComidaAlm() {
+        int[] cantTipo = elegirComida(null);
 
         int cant = cantTipo[0];
         String tipo = ((cantTipo[1] == 0) ? "Animal" : "Vegetal");
