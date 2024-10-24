@@ -2,13 +2,12 @@ package Piscifactoria;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Comun.AlmacenCentral;
-import Comun.Monedero;
+import Comun.*;
 import Tanque.Tanque;
 import peces.Pez;
-import peces.Propiedades.Carnivoro;
-import peces.Propiedades.Filtrador;
-import peces.Propiedades.Omnivoro;
+import peces.*;
+//import peces.Propiedades.Filtrador;
+//import peces.Propiedades.Omnivoro;
 import propiedades.CriaTipo;
 import helpers.*;
 
@@ -29,7 +28,7 @@ public class Piscifactoria {
     private int maxComidaAnimal;
     private int maxComidaVegetal;
     private Monedero monedero=Monedero.getInstance();
-    private AlmacenCentral almacenCentral=AlmacenCentral.getInstance();
+
 
     /**
      * Constructor para una piscifactoría de tipo RIO con cantidades iniciales
@@ -369,7 +368,7 @@ public class Piscifactoria {
     /**
      * Vende los peces más óptimos (adultos y vivos) y devuelve el número total de peces vendidos
      * y la cantidad de monedas obtenidas.
-     * @return Un arreglo de dos enteros: la cantidad de monedas y el número de peces vendidos.
+     * @return Un array de dos enteros: la cantidad de monedas y el número de peces vendidos.
      */
     public int[] venta(){
         int totalpeces = 0;
