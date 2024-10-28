@@ -10,6 +10,10 @@ import propiedades.AlmacenPropiedades;
  */
 public class TruchaArcoiris extends Carnivoro{
 
+    /**
+     * Constructor parametrizado
+     * @param hembra Si es hembra
+     */
     public TruchaArcoiris(boolean hembra){
         super(AlmacenPropiedades.TRUCHA_ARCOIRIS);
         this.Sexo = hembra;

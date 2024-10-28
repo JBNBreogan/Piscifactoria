@@ -2,15 +2,20 @@ package Piscifactoria;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Comun.AlmacenCentral;
-import Comun.Monedero;
+import Comun.*;
 import Tanque.Tanque;
 import peces.Pez;
-import peces.Propiedades.Carnivoro;
-import peces.Propiedades.Filtrador;
-import peces.Propiedades.Omnivoro;
+import peces.*;
+//import peces.Propiedades.Filtrador;
+//import peces.Propiedades.Omnivoro;
 import propiedades.CriaTipo;
 import helpers.*;
+
+/**
+ * Clase que representa una piscifactoría, contiene uno o varios tanques de peces, donde se gestiona todas las operaciones relacionados con ellos.
+ * 
+ * @author Nicolás
+ */
 
 public class Piscifactoria {
     
@@ -23,9 +28,16 @@ public class Piscifactoria {
     private int maxComidaAnimal;
     private int maxComidaVegetal;
     private Monedero monedero=Monedero.getInstance();
-    private AlmacenCentral almacenCentral=AlmacenCentral.getInstance();
 
 
+    /**
+     * Constructor para una piscifactoría de tipo RIO con cantidades iniciales
+     * de alimento si es la primera vez que se crea.
+     * 
+     * @param nombre El nombre de la piscifactoría.
+     * @param tipo El tipo de cría, puede ser de río o de mar.
+     * @param primera Si es la primera vez que se crea la piscifactoría.
+     */
     public Piscifactoria(String nombre, CriaTipo tipo, boolean primera) {
         this.nombre = nombre;
         if(tipo == CriaTipo.RIO ){
@@ -38,6 +50,13 @@ public class Piscifactoria {
         } 
     }
    
+    /**
+     * Constructor para crear una piscifactoría de tipo específico, sin cantidades
+     * iniciales de comida.
+     * 
+     * @param nombre El nombre de la piscifactoría.
+     * @param tipo El tipo de cría: puede ser RIO o MAR.
+     */
     public Piscifactoria(String nombre, CriaTipo tipo) {
         this.nombre = nombre;
         if(tipo == CriaTipo.RIO ){
@@ -53,42 +72,75 @@ public class Piscifactoria {
         }
     }
 
+     /**
+     * Devuelve el nombre de la piscifactoría.
+     * @return El nombre de la piscifactoría.
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * Devuelve el tipo de cría de la piscifactoría. 
+     * @return El tipo de cría.
+     */
     public CriaTipo getTipo() {
         return tipo;
     }
-
+    
+    /**
+     * Devuelve la lista de tanques en la piscifactoría.
+     * @return Lista de tanques.
+     */
     public ArrayList<Tanque> getTanques() {
         return tanques;
     }
 
-    public Scanner getSc() {
-        return sc;
-    }
-
+    /**
+     * Devuelve la cantidad de comida vegetal disponible.
+     * @return La cantidad de comida vegetal.
+     */
     public int getComidaVegetal() {
         return comidaVegetal;
     }
 
+    /**
+     * Devuelve la cantidad de comida animal disponible.
+     * @return La cantidad de comida animal.
+     */
     public int getComidaAnimal() {
         return comidaAnimal;
     }
 
+    /**
+     * Devuelve la capacidad máxima de comida animal. 
+     * @return La capacidad máxima de comida animal.
+     */
     public int getMaxComidaAnimal() {
         return maxComidaAnimal;
     }
 
+    /**
+     * Devuelve la capacidad máxima de comida vegetal.
+     * @return La capacidad máxima de comida vegetal.
+     */
     public int getMaxComidaVegetal() {
         return maxComidaVegetal;
     }
 
+     /**
+     * Devuelve el monedero asociado a la piscifactoría.
+     * @return El monedero.
+     */
     public Monedero getMonedero() {
         return monedero;
     }
 
+
+    /**
+     * Muestra el estado general de la piscifactoría, incluyendo el número de peces
+     * totales, alimentados, adultos y fértiles.
+     */
     public void showStatus(){
         System.out.println("=============== "+getNombre()+" ===============");
         System.out.println("Tanques: "+tanques.size());
@@ -100,6 +152,10 @@ public class Piscifactoria {
         System.out.println("Fértiles: "+pecesFertilesPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesEnPiscifactoria(), pecesMaxPiscifactoria())+")");
     }
 
+    /**
+     * Permite al usuario seleccionar un tanque de la piscifactoría. 
+     * @return El índice del tanque seleccionado.
+     */
     public int selectTank(){
         for (Tanque tanque : tanques) {
             System.out.println(tanque.getNumTanque()+": "+tanque.getTipoPez().getNombre());
@@ -108,23 +164,35 @@ public class Piscifactoria {
         return opcion-1;
     }
 
+    /**
+     * Muestra el estado de cada tanque de la piscifactoría.
+     */
     public void showTankStatus(){
         for (Tanque tanque : tanques) {
             tanque.showStatus();
         }
     }
 
+    /**
+     * Muestra el estado de los peces en cada tanque.
+     */
     public void showFishStatus(){
         for (Tanque tanque : tanques) {
             tanque.showFishStatus();
         }
     }
 
+     /**
+     * Muestra la capacidad del tanque seleccionado por el usuario.
+     */
     public void showCapacity(){
         Tanque t = tanques.get(selectTank());
         t.showCapacity();
     }
     
+    /**
+    * Avanza un día en la piscifactoría, actualizando los tanques y el estado de los peces.
+    */
     public void nextDay(){
         for (Tanque tanque : tanques) {
             /*for (Pez pez : tanque.getPeces()) {
@@ -146,6 +214,9 @@ public class Piscifactoria {
         }
     }
 
+     /**
+     * Vende los peces adultos y vivos de la piscifactoría, actualizando las monedas.
+     */
     public void sellFish(){
         for (Tanque tanque : tanques) {
             for (Pez pez : tanque.getPeces()) {
@@ -157,6 +228,9 @@ public class Piscifactoria {
         }
     }
 
+    /**
+     * Mejora la capacidad de almacenamiento de comida de la piscifactoría.
+     */
     public void upgradeFood(){
         if(tipo == CriaTipo.RIO){
             this.maxComidaAnimal=+25;
@@ -168,6 +242,10 @@ public class Piscifactoria {
         System.out.println("Almacén de comida de la piscifactoría"+this.nombre+" mejorado. Su capacidad ha aumentado en"+ ((tipo == CriaTipo.RIO) ? "25" : "100") +"hasta un total de "+maxComidaAnimal);
     }
 
+    /**
+     * Calcula el número total de peces en la piscifactoría.
+     * @return El número total de peces.
+     */
     public int pecesEnPiscifactoria(){
         int pecestotales = 0;
         for (Tanque tanque : tanques) {
@@ -176,6 +254,10 @@ public class Piscifactoria {
         return pecestotales;
     }
 
+     /**
+     * Calcula el número máximo de peces que pueden vivir en la piscifactoría.
+     * @return El número máximo de peces.
+     */
     public int pecesMaxPiscifactoria(){
         int pecesmaxtotales = 0;
         for (Tanque tanque : tanques) {
@@ -184,6 +266,10 @@ public class Piscifactoria {
         return pecesmaxtotales;
     }
 
+    /**
+     * Calcula el número de peces vivos en la piscifactoría.
+     * @return El número de peces vivos.
+     */
     public int pecesVivosPiscifactoria(){
         int pecesvivos = 0;
         for (Tanque tanque : tanques) {
@@ -192,6 +278,10 @@ public class Piscifactoria {
         return pecesvivos;
     }
 
+      /**
+     * Calcula el número de peces alimentados en la piscifactoría.
+     * @return El número de peces alimentados.
+     */
     public int pecesAlimentadosPiscifactoria(){
         int pecesalimentadostotales = 0;
         for (Tanque tanque : tanques) {
@@ -200,6 +290,10 @@ public class Piscifactoria {
         return pecesalimentadostotales;
     }
 
+    /**
+     * Calcula el número de peces adultos en la piscifactoría.
+     * @return El número de peces adultos.
+     */
     public int pecesAdultosPiscifactoria(){
         int pecesadultostotales = 0;
         for (Tanque tanque : tanques) {
@@ -208,6 +302,10 @@ public class Piscifactoria {
         return pecesadultostotales;
     }
 
+    /**
+     * Calcula el número de peces machos en la piscifactoría.
+     * @return El número de peces machos.
+     */
     public int pecesMachoPiscifactoria(){
         int pecesmachototales = 0;
         for (Tanque tanque : tanques) {
@@ -216,6 +314,10 @@ public class Piscifactoria {
         return pecesmachototales;
     }
 
+    /**
+     * Calcula el número de peces hembras en la piscifactoría.
+     * @return El número de peces hembras.
+     */
     public int pecesHembraPiscifactoria(){
         int peceshembratotales = 0;
         for (Tanque tanque : tanques) {
@@ -224,6 +326,10 @@ public class Piscifactoria {
         return peceshembratotales;
     }
 
+    /**
+     * Calcula el número de peces fértiles en la piscifactoría. 
+     * @return El número de peces fértiles.
+     */
     public int pecesFertilesPiscifactoria(){
         int pecesfertilestotales = 0;
         for (Tanque tanque : tanques) {
@@ -232,6 +338,12 @@ public class Piscifactoria {
         return pecesfertilestotales;
     }
 
+
+    /**
+     * Añade una cantidad de comida a la piscifactoría.
+     * @param cantidad La cantidad de comida a añadir.
+     * @param tipo El tipo de comida (Animal o Vegetal).
+     */
     public void addFood(int cantidad, String tipo){
         if(tipo == "Animal"){
             comidaAnimal+=cantidad;
@@ -240,6 +352,11 @@ public class Piscifactoria {
         }
     }
 
+     /**
+     * Reduce la cantidad de comida en la piscifactoría.
+     * @param cantidad La cantidad de comida a reducir.
+     * @param tipo El tipo de comida (Animal o Vegetal).
+     */
     public void restFood(int cantidad, String tipo){
         if(tipo == "Animal"){
             comidaAnimal-=cantidad;
@@ -247,7 +364,12 @@ public class Piscifactoria {
             comidaVegetal-=cantidad;
         }
     }
-    
+
+    /**
+     * Vende los peces más óptimos (adultos y vivos) y devuelve el número total de peces vendidos
+     * y la cantidad de monedas obtenidas.
+     * @return Un array de dos enteros: la cantidad de monedas y el número de peces vendidos.
+     */
     public int[] venta(){
         int totalpeces = 0;
         int totalmonedastanques = 0;
@@ -261,6 +383,10 @@ public class Piscifactoria {
         return retorno;
     }
 
+    /**
+     * Verifica si la capacidad de comida animal ha alcanzado su límite.
+     * @return True si la capacidad está llena, de lo contrario False.
+     */
     public boolean comidaAnimalLlena(){
         if(comidaAnimal<maxComidaAnimal){
             return false;
@@ -269,6 +395,10 @@ public class Piscifactoria {
         }
     }
 
+     /**
+     * Verifica si la capacidad de comida vegetal ha alcanzado su límite.
+     * @return True si la capacidad está llena, de lo contrario False.
+     */
     public boolean comidaVegetalLlena(){
         if(comidaVegetal<maxComidaVegetal){
             return false;
@@ -277,6 +407,11 @@ public class Piscifactoria {
         }
     }
 
+
+    /**
+     * Verifica si la comida animal se ha agotado. 
+     * @return True si no queda comida animal, de lo contrario False.
+     */
     public boolean comidaAnimalVacia(){
         if(comidaAnimal==0){
             return true;
@@ -284,6 +419,10 @@ public class Piscifactoria {
         return false;
     }
 
+     /**
+     * Verifica si la comida vegetal se ha agotado. 
+     * @return True si no queda comida vegetal, de lo contrario False.
+     */
     public boolean comidaVegetalVacia(){
         if(comidaVegetal==0){
             return true;

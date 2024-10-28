@@ -12,6 +12,10 @@ import propiedades.AlmacenPropiedades;
  */
 public class Abadejo extends Carnivoro{
     
+    /**
+     * Constructor parametrizado
+     * @param hembra Si es hembra
+     */
     public Abadejo(boolean hembra){
         super(AlmacenPropiedades.ABADEJO);
         this.Sexo = hembra;
@@ -23,13 +27,15 @@ public class Abadejo extends Carnivoro{
     }
     
     @Override
-    public void comer(int cantidad) {
+    public int comer(int cantidad) {
         Random rnd = new Random();
         if(rnd.nextInt(4) <= 2){
             this.Comido = true;
+            return 2;
         } else if (cantidad >= 1){
             this.Comido = true;
+            return 1;
         }
-        
+        return 0;
     }
 }

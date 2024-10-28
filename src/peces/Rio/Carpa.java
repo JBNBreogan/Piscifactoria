@@ -12,6 +12,10 @@ import propiedades.AlmacenPropiedades;
  */
 public class Carpa extends Omnivoro{
 
+    /**
+     * Constructor parametrizado
+     * @param hembra Si es hembra
+     */
     public Carpa(boolean hembra){
         super(AlmacenPropiedades.CARPA);
         this.Sexo = hembra;

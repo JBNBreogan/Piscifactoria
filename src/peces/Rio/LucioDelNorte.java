@@ -12,6 +12,10 @@ import propiedades.AlmacenPropiedades;
  */
 public class LucioDelNorte extends Carnivoro{
 
+    /**
+     * Constructor parametrizado
+     * @param hembra Si es hembra
+     */
     public LucioDelNorte(boolean hembra){
         super(AlmacenPropiedades.LUCIO_NORTE);
         this.Sexo = hembra;

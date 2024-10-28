@@ -10,6 +10,10 @@ import propiedades.AlmacenPropiedades;
  */
 public class Sargo extends Omnivoro{
 
+    /**
+     * Constructor parametrizado
+     * @param hembra Si es hembra
+     */
     public Sargo(boolean hembra){
         super(AlmacenPropiedades.SARGO);
         this.Sexo = hembra;

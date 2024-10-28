@@ -10,6 +10,10 @@ import propiedades.AlmacenPropiedades;
  */
 public class Pejerrey extends Carnivoro{
 
+    /**
+     * Constructor parametrizado
+     * @param hembra Si es hembra
+     */
     public Pejerrey(boolean hembra){
         super(AlmacenPropiedades.PEJERREY);
         this.Sexo = hembra;

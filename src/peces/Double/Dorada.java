@@ -10,6 +10,10 @@ import propiedades.AlmacenPropiedades;
  */
 public class Dorada extends Omnivoro{
 
+    /**
+     * Constructor parametrizado
+     * @param hembra Si es hembra
+     */
     public Dorada(boolean hembra){
         super(AlmacenPropiedades.DORADA);
         this.Sexo = hembra;

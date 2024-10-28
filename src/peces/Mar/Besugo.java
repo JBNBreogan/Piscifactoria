@@ -10,6 +10,10 @@ import propiedades.AlmacenPropiedades;
  */
 public class Besugo extends Carnivoro{
 
+    /**
+     * Constructor parametrizado
+     * @param hembra Si es hembra
+     */
     public Besugo(boolean hembra){
         super(AlmacenPropiedades.BESUGO);
         this.Sexo = hembra;

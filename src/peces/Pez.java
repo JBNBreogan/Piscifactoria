@@ -60,6 +60,10 @@ public abstract class Pez {
     /**Ultimo ciclo de puesta (Empieza en el máximo para que la primera vez sea fertil) */
     protected int UltimaPuesta;
 
+    /**
+     * Constructor parametrizado
+     * @param data Datos del pez
+     */
     protected Pez (PecesDatos data){
         this.Nombre = data.getNombre();
         this.Cientifico = data.getCientifico();
@@ -213,10 +217,11 @@ public abstract class Pez {
     }
 
     /**
-     * Hace crecer el pez un día, teniendo en cuenta todos los factores.
+     * Hace crecer el pez un día, teniendo en cuenta todos los factores, y devolviendo la cantidad de comida que consume
+     * @param comida Comida de la que dispone la piscifactoría
+     * @return Comida consumida
      */
     public int grow(int comida){
-        //TODO devolver si el pez ha comido o no para restar la comida
         Random morir = new Random();
         int comidaConsumida = 0;
         if (isAlive()){
@@ -244,14 +249,17 @@ public abstract class Pez {
     }
 
     /**
-     * Devuelve una cría del pez
-     * @param hembra Si el pez es hembra
-     * @return Una cria del pez
+     * Devuelve una cría del pez.
+     * @param hembra Si el pez es hembra.
+     * @return Una cria del pez.
      */
     public abstract Pez reproducirse(boolean hembra);
 
+    
     /**
-     * Hace comer al pez
+     * Hace comer al pez si hay comida suficiente, y devuelve la cantidad que consume.
+     * @param cantidad Cantidad de comida disponible.
+     * @return Cantidad de comida consumida.
      */
     public abstract int comer(int cantidad);
 

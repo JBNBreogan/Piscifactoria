@@ -10,6 +10,10 @@ import propiedades.AlmacenPropiedades;
  */
 public class Caballa extends Carnivoro{
 
+    /**
+     * Constructor parametrizado
+     * @param hembra Si es hembra
+     */
     public Caballa(boolean hembra){
         super(AlmacenPropiedades.CABALLA);
         this.Sexo = hembra;
