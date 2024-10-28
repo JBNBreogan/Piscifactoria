@@ -22,7 +22,6 @@ public class Piscifactoria {
     private String nombre;
     private CriaTipo tipo;
     private ArrayList<Tanque> tanques;
-    private Scanner sc;
     private int comidaVegetal = 0;
     private int comidaAnimal = 0;
     private int maxComidaAnimal;
@@ -59,6 +58,7 @@ public class Piscifactoria {
      */
     public Piscifactoria(String nombre, CriaTipo tipo) {
         this.nombre = nombre;
+        this.tipo = tipo;
         if(tipo == CriaTipo.RIO ){
             tanques = new ArrayList<>();
             tanques.add(new Tanque(25));
@@ -150,6 +150,8 @@ public class Piscifactoria {
         System.out.println("Peces adultos: "+pecesAdultosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesAdultosPiscifactoria(), pecesVivosPiscifactoria())+")");
         System.out.println("Hembras/Machos: "+pecesMachoPiscifactoria()+"/"+pecesHembraPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesEnPiscifactoria(), pecesMaxPiscifactoria())+")");
         System.out.println("Fértiles: "+pecesFertilesPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesEnPiscifactoria(), pecesMaxPiscifactoria())+")");
+        System.out.println("Almacén de comida animal: "+ this.comidaAnimal+"/"+this.maxComidaAnimal+"("+PorcentajeHelper.hacerProcentaje(this.comidaAnimal, this.maxComidaAnimal)+")");
+        System.out.println("Almacén de comida vegetal: "+ this.comidaVegetal+"/"+this.maxComidaVegetal+"("+PorcentajeHelper.hacerProcentaje(this.comidaVegetal, this.maxComidaVegetal)+")");
     }
 
     /**
@@ -157,8 +159,9 @@ public class Piscifactoria {
      * @return El índice del tanque seleccionado.
      */
     public int selectTank(){
+        Scanner sc=new Scanner(System.in);
         for (Tanque tanque : tanques) {
-            System.out.println(tanque.getNumTanque()+": "+tanque.getTipoPez().getNombre());
+            System.out.println("Tanque "+(tanque.getNumTanque()+1)+": "+tipo);
         }
         int opcion = sc.nextInt();
         return opcion-1;
@@ -239,7 +242,7 @@ public class Piscifactoria {
             this.maxComidaAnimal=+100;
             this.maxComidaVegetal=+100;
         }
-        System.out.println("Almacén de comida de la piscifactoría"+this.nombre+" mejorado. Su capacidad ha aumentado en"+ ((tipo == CriaTipo.RIO) ? "25" : "100") +"hasta un total de "+maxComidaAnimal);
+        System.out.println("Almacén de comida de la piscifactoría "+this.nombre+" mejorado. Su capacidad ha aumentado en "+ ((tipo == CriaTipo.RIO) ? "25" : "100") +" hasta un total de "+maxComidaAnimal);
     }
 
     /**

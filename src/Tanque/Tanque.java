@@ -32,6 +32,7 @@ public class Tanque {
     private AlmacenCentral almacenCentral=AlmacenCentral.getInstance();
 
     public Tanque(int maxPeces) {
+        peces=new ArrayList<>();
         this.maxPeces = maxPeces;
     }
 
@@ -39,13 +40,13 @@ public class Tanque {
      * Metodo que muestra las estadisiticas del tanque 
      */
     public void showStatus(){
-        System.out.println("============Tanque "+ numTanque + "============");
-        System.out.println("Ocupación: " + pecesEnTanque() +" / "+ maxPeces + " (" + PorcentajeHelper.hacerProcentaje(pecesEnTanque(), maxPeces) + "%)");
-        System.out.println("Peces vivos: " + pecesVivos() +" / "+pecesEnTanque() + " (" + PorcentajeHelper.hacerProcentaje(pecesVivos(), pecesEnTanque()) + "%)" );
-        System.out.println("Peces alimentados: " + pecesAlimentados() +" / "+ pecesVivos() + " (" + PorcentajeHelper.hacerProcentaje(pecesAlimentados(), pecesVivos()) + "%)");
-        System.out.println("Peces adultos: " + pecesAdultos() +" / "+ pecesVivos() + " (" + PorcentajeHelper.hacerProcentaje(pecesAdultos(), pecesVivos()) + "%)");
-        System.out.println(pecesHembra()+" / "+pecesMacho() + "H/M");
-        System.out.println("Fértiles: " + pecesFertiles()+" / "+pecesVivos());
+        System.out.println("============Tanque "+ (numTanque+1) + "============");
+        System.out.println("Ocupación: " + pecesEnTanque() +"/"+ maxPeces + " (" + PorcentajeHelper.hacerProcentaje(pecesEnTanque(), maxPeces) + "%)");
+        System.out.println("Peces vivos: " + pecesVivos() +"/"+pecesEnTanque() + " (" + PorcentajeHelper.hacerProcentaje(pecesVivos(), pecesEnTanque()) + "%)" );
+        System.out.println("Peces alimentados: " + pecesAlimentados() +"/"+ pecesVivos() + " (" + PorcentajeHelper.hacerProcentaje(pecesAlimentados(), pecesVivos()) + "%)");
+        System.out.println("Peces adultos: " + pecesAdultos() +"/"+ pecesVivos() + " (" + PorcentajeHelper.hacerProcentaje(pecesAdultos(), pecesVivos()) + "%)");
+        System.out.println(pecesHembra()+"/"+pecesMacho() + " H/M");
+        System.out.println("Fértiles: " + pecesFertiles()+"/"+pecesVivos());
     }
 
     /**
@@ -61,7 +62,7 @@ public class Tanque {
      * Metodo que muestra informacion de la capacidad del tanque 
      */
     public void showCapacity(){
-        System.out.println("Tanque " + numTanque +"al "+ PorcentajeHelper.hacerProcentaje(pecesEnTanque(), maxPeces) + "% de capacidad [" + pecesEnTanque() +"/"+ maxPeces + "].");
+        System.out.println("Tanque " + numTanque +" al "+ PorcentajeHelper.hacerProcentaje(pecesEnTanque(), maxPeces) + "% de capacidad [" + pecesEnTanque() +"/"+ maxPeces + "].");
     }
 
     /**
@@ -73,6 +74,7 @@ public class Tanque {
         int pecesMachoFertiles=0;
 
         boolean vegetal=true;
+        if(this.peces.size()!=0){
             if(this.peces.get(0) instanceof Carnivoro){
                 vegetal=false;
             }else if(this.peces.get(0) instanceof Filtrador){
@@ -84,6 +86,7 @@ public class Tanque {
                     vegetal=true;
                 }
             }
+        }
 
         for (Pez pez : peces) {
             int comidaCons = pez.grow(vegetal ? pisci.getComidaVegetal() : pisci.getComidaAnimal());
