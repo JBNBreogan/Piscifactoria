@@ -534,31 +534,12 @@ public class Simulador {
         return espacioTotal;
     }
 
+    /**
+     * Mçetodo que permite elegir el tipo de comida y la cantidad que quieres añadir
+     * @param pisc 
+     * @return cantidad y tipo de comida
+     */
     public int[] elegirComida(Piscifactoria pisc){
-        /*
-         * Scanner instancia
-         * int opciontipo = 0
-         * int opcionCantidad = 0
-         * int cantidad = 0
-         * int tipo = 0
-         * 
-         * souts
-         * 
-         * switch opciontipo
-         *      case 1:
-         *          tipo = 1
-         *      case 2:
-         *          tipo = 0
-         * 
-         * souts
-         * 
-         * switch opcionCantidad
-         *      case 1:
-         *          cantidad X
-         *      cases...
-         * 
-         * return int[] = {cantidad, tipo} 
-         */
         Scanner sc=new Scanner(System.in);
         int opciontipo;
         int opCant;
