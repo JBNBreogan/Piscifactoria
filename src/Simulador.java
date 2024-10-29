@@ -294,11 +294,15 @@ public class Simulador {
      * y permite seleccionar en la que se quiere añadir el pez y se añade.
      */
     public void addFish(){
-        Pez pezEleg=showIctio();
         boolean llena=false;
 
         do {
-            Piscifactoria pisc = piscifactorias.get(selectPisc());
+            Piscifactoria pisc= piscifactorias.get(selectPisc());
+
+            Tanque tank =pisc.getTanques().get(pisc.selectTank());
+
+            Pez pezEleg=tank.showCompatible();
+
             if(pezEleg.getCoste()>monedero.getMonedas()){
                 System.out.println("Monedas insuficientes");
             }else{
@@ -312,7 +316,6 @@ public class Simulador {
                         }else{
                             if(tanque.getPeces().get(0).getName()==pezEleg.getName()){
                                 if(tanque.getPeces().size()<tanque.getMaxPeces()){
-                                    //Falta lo del sexo
                                     tanque.getPeces().add(pezEleg);
                                     monedero.setMonedas(monedero.getMonedas()-pezEleg.getCoste());
                                     stats.registrarNacimiento(pezEleg.getName());
@@ -421,7 +424,7 @@ public class Simulador {
                                     if(tipoPisc.equals("RIO")){
                                         if(MonederoHelper.monedasSuficientes(500*piscifactorias.size())){
                                             opcionValida=true;
-                                            new Piscifactoria(nombrePisc, CriaTipo.RIO);
+                                            piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.RIO));
                                             System.out.println("Piscifactoria añadida");
                                         }else{
                                             break;
@@ -429,7 +432,7 @@ public class Simulador {
                                     }else if (tipoPisc.equals("MAR")) {
                                         if (MonederoHelper.monedasSuficientes(2000*piscifactorias.size())) {
                                             opcionValida=true;
-                                            new Piscifactoria(nombrePisc, CriaTipo.MAR);
+                                            piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.MAR));
                                             System.out.println("Piscifactoria añadida");
                                         }else{
                                             break;
@@ -470,12 +473,12 @@ public class Simulador {
                                         Piscifactoria pisc =piscifactorias.get(selectPisc());
                                         if(pisc.getTipo()==CriaTipo.RIO){
                                             if (MonederoHelper.monedasSuficientes(150) && pisc.getTanques().size()<10) {
-                                                pisc.getTanques().add(new Tanque(25));
+                                                pisc.getTanques().add(new Tanque(25,pisc.getTipo()));
                                                 System.out.println("Tanque añadido");
                                             }
                                         }else if (pisc.getTipo()==CriaTipo.MAR) {
                                             if (MonederoHelper.monedasSuficientes(600) && pisc.getTanques().size()<10) {
-                                                pisc.getTanques().add(new Tanque(100));
+                                                pisc.getTanques().add(new Tanque(100,pisc.getTipo()));
                                                 System.out.println("Tanque añadido");
                                             }
                                         }
@@ -831,6 +834,10 @@ public class Simulador {
         }
     }
 
+    /**
+     * Ejecuta toda la lógica del programa
+     * @param args
+     */
     public static void main(String[] args) {
         Monedero monedero=Monedero.getInstance();
         Scanner sc=new Scanner(System.in);

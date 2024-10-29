@@ -1,12 +1,28 @@
 package Tanque;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import peces.Pez;
+import peces.Double.Dorada;
+import peces.Double.TruchaArcoiris;
+import peces.Mar.Abadejo;
+import peces.Mar.Besugo;
+import peces.Mar.Caballa;
+import peces.Mar.Rodaballo;
+import peces.Mar.Sargo;
 import peces.Propiedades.Carnivoro;
 import peces.Propiedades.Filtrador;
 import peces.Propiedades.Omnivoro;
+import peces.Rio.Carpa;
+import peces.Rio.CarpaPlateada;
+import peces.Rio.LucioDelNorte;
+import peces.Rio.Pejerrey;
+import peces.Rio.TilapiaDelNilo;
+import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
+import helpers.MenuHelper;
 import helpers.PorcentajeHelper;
 import Comun.AlmacenCentral;
 import Comun.Monedero;
@@ -29,11 +45,14 @@ public class Tanque {
     //**Monedero **/
     private Monedero monedero=Monedero.getInstance();
 
+    private CriaTipo tipoT;
+
     private AlmacenCentral almacenCentral=AlmacenCentral.getInstance();
 
-    public Tanque(int maxPeces) {
+    public Tanque(int maxPeces,CriaTipo tipoT) {
         peces=new ArrayList<>();
         this.maxPeces = maxPeces;
+        this.tipoT=tipoT;
     }
 
     /**
@@ -252,6 +271,157 @@ public class Tanque {
         valores[1]=pecesVendidos;
         return valores;
     }
+
+    public Pez showCompatible(){
+        Scanner sc=new Scanner(System.in);
+        int op=0;
+
+        do {
+            try {
+                switch (this.peces.size()) {
+                    case 0:
+                        switch (tipoT) {
+                            case RIO:
+                                MenuHelper.mostrarMenu(new String[]{"Lucio del norte"+ "("+AlmacenPropiedades.LUCIO_NORTE.getCoste()+")",
+                                                                "Carpa plateada"+ "("+AlmacenPropiedades.CARPA_PLATEADA.getCoste()+")",
+                                                                "Carpa"+ "("+AlmacenPropiedades.CARPA.getCoste()+")",
+                                                                "Tilapia del nilo"+ "("+AlmacenPropiedades.TILAPIA_NILO.getCoste()+")",
+                                                                "Pejerrey"+ "("+AlmacenPropiedades.PEJERREY.getCoste()+")",
+                                                                "Dorada"+ "("+AlmacenPropiedades.DORADA.getCoste()+")",
+                                                                "Trucha arcoiris"+ "("+AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste()+")"},
+                                                                 false);
+                                op=sc.nextInt();
+                                switch (op) {
+                                    case 1:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new LucioDelNorte(true);
+                                        }else{
+                                            return new LucioDelNorte(false);
+                                        }
+                                    case 2:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new CarpaPlateada(true);
+                                        }else{
+                                            return new CarpaPlateada(false);
+                                        }
+                                    case 3:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new Carpa(true);
+                                        }else{
+                                            return new Carpa(false);
+                                        }
+                                    case 4:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new TilapiaDelNilo(true);
+                                        }else{
+                                            return new TilapiaDelNilo(false);
+                                        }
+                                    case 5:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new Pejerrey(true);
+                                        }else{
+                                            return new Pejerrey(false);
+                                        }
+                                    case 6:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new Dorada(true);
+                                        }else{
+                                            return new Dorada(false);
+                                        }
+                                    case 7:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new TruchaArcoiris(true);
+                                        }else{
+                                            return new TruchaArcoiris(false);
+                                        }
+                                    default:
+                                        System.out.println("Escoge un número válido");
+                                        break;
+                                }
+                            case MAR:
+                                MenuHelper.mostrarMenu(new String[]{"Abadejo"+ "("+AlmacenPropiedades.ABADEJO.getCoste()+")",
+                                                                "Besugo"+ "("+AlmacenPropiedades.BESUGO.getCoste()+")",
+                                                                "Caballa"+ "("+AlmacenPropiedades.CABALLA.getCoste()+")",
+                                                                "Rodaballo"+ "("+AlmacenPropiedades.RODABALLO.getCoste()+")",
+                                                                "Sargo"+ "("+AlmacenPropiedades.SARGO.getCoste()+")",
+                                                                "Dorada"+ "("+AlmacenPropiedades.DORADA.getCoste()+")",
+                                                                "Trucha arcoiris"+ "("+AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste()+")"},
+                                                                 false);
+                                op=sc.nextInt();
+                                switch (op) {
+                                    case 1:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new Abadejo(true);
+                                        }else{
+                                            return new Abadejo(false);
+                                        }
+                                    case 2:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new Besugo(true);
+                                        }else{
+                                            return new Besugo(false);
+                                        }
+                                    case 3:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new Caballa(true);
+                                        }else{
+                                            return new Caballa(false);
+                                        }
+                                    case 4:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new Rodaballo(true);
+                                        }else{
+                                            return new Rodaballo(false);
+                                        }
+                                    case 5:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new Sargo(true);
+                                        }else{
+                                            return new Sargo(false);
+                                        }
+                                    case 6:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new Dorada(true);
+                                        }else{
+                                            return new Dorada(false);
+                                        }
+                                    case 7:
+                                        if(this.pecesHembra()<=this.pecesMacho()){
+                                            return new TruchaArcoiris(true);
+                                        }else{
+                                            return new TruchaArcoiris(false);
+                                        }
+                                    default:
+                                        return null;
+                        }  
+                    }
+                case this.maxPeces:  
+                    System.out.println("Este tanque esta lleno");
+                    return null;
+                default:
+                    System.out.println("1. " + this.peces.get(0).getName());
+                    System.out.println("0. Salir");
+                    op=sc.nextInt();
+                    if(op==1){
+                        if(this.pecesHembra()<=this.pecesMacho()){
+                            return peces.get(0).reproducirse(true);
+                        }else{
+                            return peces.get(0).reproducirse(false);
+                        }
+                    }else if(op==0){
+                        return null;
+                    }else{
+                        System.out.println("Escribe un dato correcto");
+                        return null;
+                    }
+            }
+            } catch (InputMismatchException e) {
+                System.out.println("Escribe un número");
+                return null;
+            }
+        }while (op==0);
+    }
+
 
     //Getters
 
