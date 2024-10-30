@@ -1,3 +1,4 @@
+package Simulador;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -27,13 +28,13 @@ import java.util.Random;
 public class Simulador {
     //**Días avanzados en el sistema */
     private static int dias = 1;
-    /**Nombre del sistema */
-    private static String nombreempresa;
-    /**Almacen central */
+    /**Nombre con el que se inicia el sistema */
+    private static String nombreEmpresa;
+    /**Objeto AlmacenCentral que representa el almacén compartido de comida y se utiliza para el manejo de inventario de alimentos en la piscifactoría. */
     private AlmacenCentral almacenCentral=null;
     /**Lista de las piscifactorias del sistema */
     private static ArrayList<Piscifactoria> piscifactorias = new ArrayList<>();
-    /**Monedero */
+    /**Objeto Monedero que se encarga de gestionar las monedas generadas por la piscifactoría.*/
     private Monedero monedero=Monedero.getInstance();
     /**Objeto de estadisticas de los peces seleccionados */
     private estadisticas.Estadisticas stats=new Estadisticas(new String[]{
@@ -52,12 +53,18 @@ public class Simulador {
     });
 
     /**
-     * Método que inicializa el sistema, asignando el nombre del sistema y creando una piscifactoria.
+     * Constructor vacío de la clase simulador.
+     */
+    public Simulador() {
+    }
+
+    /**
+     * Método que inicializa el sistema, asignando el nombre del sistema, creando una piscifactoria y añadiendo 100 monedas.
      */
     public void init(){
         Scanner sc=new Scanner(System.in);
         System.out.println("Nombre de la empresa:");
-        nombreempresa = sc.nextLine();
+        nombreEmpresa = sc.nextLine();
         System.out.println("Nombre de la piscifactoria");
         String npisc= sc.nextLine();
         piscifactorias.add(new Piscifactoria(npisc,CriaTipo.RIO));
@@ -86,7 +93,7 @@ public class Simulador {
     }
 
     /**
-     * Método que muestra la lista de pisicfactorias actuales en forma de menú, más una opción 0 para salir.
+     * Método que muestra la lista de piscifactorías actuales en forma de menú, más una opción 0 para salir.
      */
     public void menuPisc(){
         int i=0;
@@ -120,7 +127,7 @@ public class Simulador {
     }
     
     /**
-     * Método que permite seleccionar un tanque, mostrando un menú de los disponibles.
+     * Método que muestra el menú de tanques y permite seleccionar un tanque, mostrando un menú de los disponibles.
      * @return El número que ocupa en la lista de tanques de una pisicfactoria el tanque seleccionado
      */
     public Tanque selectTank(){
@@ -130,10 +137,10 @@ public class Simulador {
     }
 
     /**
-     * Método que muestra el estado de todas las piscifactorias del sistema y en caso de tener la mejora del almacen central, muestra el estado de este también.
+     * Método que muestra el día actual, las monedas del sistema, el estado de todas las piscifactorías del sistema y en caso de tener 
+     * la mejora del almacén central, muestra el estado de este también.
      */
     public void showGeneralStatus(){
-        //Falta implementar almacen central
 
         System.out.println("Día: "+this.dias);
         System.out.println("Monedas disponibles: "+monedero.getMonedas());
@@ -169,15 +176,15 @@ public class Simulador {
     }
 
     /**
-     * Método que muestra el estado de todos los pez del sistema, indicando el número de ellos comprados, el número de ellos nacidos, el número de vendidos 
-     * y las monedas obtenidas con esto, y por último un mensaje del total de estos datos en toda la piscifactoria.
+     * Método que muestra el estado de todos los peces del sistema el número de ellos nacidos, el número de vendidos y las monedas obtenidas con esto, 
+     * y por último un mensaje del total de estos datos en toda la piscifactoria.
      */
     public void showStats(){
         stats.mostrar();
     }
 
     /**
-     * Método que muesta una lista de los peces disponibles en el sistema y permite elegir uno.
+     * Método que muestra una lista de los peces disponibles en el sistema y permite elegir uno.
      * @return El tipo de pez elegido
      */
     public Pez showIctio(){
@@ -287,18 +294,20 @@ public class Simulador {
         }
     }
 
-    
-
     /**
-     * Método que muestra el menú de peces disponibles en el sistema, permite seleccionar uno y después muesta un menú de las piscifactoias 
-     * y permite seleccionar en la que se quiere añadir el pez y se añade.
+     * Método que muestra las piscifactorias del sistema permite elegir una, despues muestra los tanques del sistema y permite elegir uno y después muestra
+     * los posibles peces a añadir en ese tranque, permite elegir uno y lo añade.
      */
     public void addFish(){
-        Pez pezEleg=showIctio();
         boolean llena=false;
 
         do {
-            Piscifactoria pisc = piscifactorias.get(selectPisc());
+            Piscifactoria pisc= piscifactorias.get(selectPisc());
+
+            Tanque tank =pisc.getTanques().get(pisc.selectTank());
+
+            Pez pezEleg=tank.showCompatible();
+
             if(pezEleg.getCoste()>monedero.getMonedas()){
                 System.out.println("Monedas insuficientes");
             }else{
@@ -312,7 +321,6 @@ public class Simulador {
                         }else{
                             if(tanque.getPeces().get(0).getName()==pezEleg.getName()){
                                 if(tanque.getPeces().size()<tanque.getMaxPeces()){
-                                    //Falta lo del sexo
                                     tanque.getPeces().add(pezEleg);
                                     monedero.setMonedas(monedero.getMonedas()-pezEleg.getCoste());
                                     stats.registrarNacimiento(pezEleg.getName());
@@ -333,7 +341,7 @@ public class Simulador {
     } 
 
     /**
-     * Método que vende todos los peces adultos del sistema, mostando al final un mensaje de los peces vendidos y la monedas obtenidas con ello.
+     * Método que permite seleccionar una piscifactoría y vende todos los peces adultos de esta, mostrando al final un mensaje de los peces vendidos y las monedas obtenidas con ello.
      */
     public void sell(){
         Piscifactoria pisc = piscifactorias.get(selectPisc());
@@ -382,7 +390,7 @@ public class Simulador {
         Piscifactoria pisc = piscifactorias.get(selectPisc());
         Tanque tank=pisc.getTanques().get(pisc.selectTank());
 
-        tank.getPeces().removeAll(tank.getPeces());
+        tank.getPeces().clear();
     }
 
     /**
@@ -421,7 +429,7 @@ public class Simulador {
                                     if(tipoPisc.equals("RIO")){
                                         if(MonederoHelper.monedasSuficientes(500*piscifactorias.size())){
                                             opcionValida=true;
-                                            new Piscifactoria(nombrePisc, CriaTipo.RIO);
+                                            piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.RIO));
                                             System.out.println("Piscifactoria añadida");
                                         }else{
                                             break;
@@ -429,7 +437,7 @@ public class Simulador {
                                     }else if (tipoPisc.equals("MAR")) {
                                         if (MonederoHelper.monedasSuficientes(2000*piscifactorias.size())) {
                                             opcionValida=true;
-                                            new Piscifactoria(nombrePisc, CriaTipo.MAR);
+                                            piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.MAR));
                                             System.out.println("Piscifactoria añadida");
                                         }else{
                                             break;
@@ -470,12 +478,12 @@ public class Simulador {
                                         Piscifactoria pisc =piscifactorias.get(selectPisc());
                                         if(pisc.getTipo()==CriaTipo.RIO){
                                             if (MonederoHelper.monedasSuficientes(150) && pisc.getTanques().size()<10) {
-                                                pisc.getTanques().add(new Tanque(25));
+                                                pisc.getTanques().add(new Tanque(25,pisc.getTipo()));
                                                 System.out.println("Tanque añadido");
                                             }
                                         }else if (pisc.getTipo()==CriaTipo.MAR) {
                                             if (MonederoHelper.monedasSuficientes(600) && pisc.getTanques().size()<10) {
-                                                pisc.getTanques().add(new Tanque(100));
+                                                pisc.getTanques().add(new Tanque(100,pisc.getTipo()));
                                                 System.out.println("Tanque añadido");
                                             }
                                         }
@@ -531,7 +539,7 @@ public class Simulador {
     }
 
     /**
-     * Método que devuelve la informacion de la libreria de un tipo de pez especifico
+     * Método que devuelve la información de la librería de un tipo de pez específico, pasado por parámetro.
      * @param tipoPez El tipo de pez del que queremos la información
      */
     public void infoLib(String tipoPez){
@@ -547,7 +555,7 @@ public class Simulador {
     }
 
     /**
-     * Método que devuelve el número de peces vivos en el sistema
+     * Método que devuelve el número de peces vivos en el sistema.
      * @return Número de peces vivos en el sistema
      */
     public int pecesVivosEnSist(){
@@ -559,7 +567,7 @@ public class Simulador {
     }
 
     /**
-     * Método que devuelve el número de peces en el sistema
+     * Método que devuelve el número de peces en el sistema.
      * @return Número de peces en el sistema
      */
     public int pecesTotalesEnSist(){
@@ -571,7 +579,7 @@ public class Simulador {
     }
 
     /**
-     * Método que devuelve el número de espacios diponibles en el sistema
+     * Método que devuelve el número de espacios disponibles en el sistema.
      * @return Número de espacios disponibles en el sistema
      */
     public int espacioTotalSist(){
@@ -583,7 +591,7 @@ public class Simulador {
     }
 
     /**
-     * Mçetodo que permite elegir el tipo de comida y la cantidad que quieres añadir
+     * Mçetodo que permite elegir el tipo de comida y la cantidad que quieres añadir.
      * @param pisc 
      * @return cantidad y tipo de comida
      */
@@ -689,7 +697,7 @@ public class Simulador {
     }
 
     /**
-     * Método que añade a una piscifactoria la cantidad del tipo de comida pasado por parámetro
+     * Método que añade a una piscifactoría la cantidad del tipo de comida pasado por parámetro
      * @param cant Número de comida a añadir
      * @param tipo Tipo de comida a añadir
      * @param pisc Piscifactoia en la que añadir la comida
@@ -723,7 +731,7 @@ public class Simulador {
     }
 
     /**
-     * Método que añade al almacen central la cantidad del tipo de comida pasado por parámetro
+     * Método que añade al almacén central la cantidad del tipo de comida pasado por parámetro.
      * @param cant Número de comida a añadir
      * @param tipo Tipo de comida a añadir
      * @param almacenCentral 
@@ -757,7 +765,7 @@ public class Simulador {
     }
 
     /**
-     * Método que añade cuatro peces aleatorios a una pisicfactoria seleccionada
+     * Método que añade cuatro peces aleatorios a una piscifactoria seleccionada.
      */
     public void truco98(){
         Piscifactoria pisc=piscifactorias.get(selectPisc());
@@ -831,6 +839,10 @@ public class Simulador {
         }
     }
 
+    /**
+     * Ejecuta toda la lógica del programa.
+     * @param args
+     */
     public static void main(String[] args) {
         Monedero monedero=Monedero.getInstance();
         Scanner sc=new Scanner(System.in);

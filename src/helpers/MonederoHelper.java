@@ -5,7 +5,7 @@ import Comun.Monedero;
 public class MonederoHelper {
 
     /**
-     * Verifica si hay monedas suficientes en el monedero
+     * Verifica si hay monedas suficientes en el monedero.
      * @param cant
      * @return true o false dependiendo de si hay monedas suficientes o no
      */
@@ -22,7 +22,7 @@ public class MonederoHelper {
     }
 
     /**
-     * Calcula el descunto aplicable para la compra de comida
+     * Calcula el descuento aplicable para la compra de comida.
      * @param precio
      * @return el precio despues de aplicarle el descuento
      */
