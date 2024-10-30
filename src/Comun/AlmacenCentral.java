@@ -10,11 +10,25 @@ import Piscifactoria.Piscifactoria;
  */
 public class AlmacenCentral {
 
+    /**
+     * Instancia del almacén central
+     */
     private static AlmacenCentral instance;
+    /**
+     * Comida animal disponible en el almacén
+     */
     private int comidaAnimal = 0;
+    /**
+     * Comida vegetal disponible en el almacén
+     */
     private int comidaVegetal = 0;
-
+    /**
+     * Capacidad máxima de la comida animal
+     */
     private int capacidadcomidaanimal = 200;
+    /**
+     * Capacidad máxima de la comida vegetal
+     */
     private int capacidadcomidavegetal = 200;
 
     /**
