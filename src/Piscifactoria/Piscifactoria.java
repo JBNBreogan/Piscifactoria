@@ -34,16 +34,15 @@ public class Piscifactoria {
      * @param tipo El tipo de cría, puede ser de río o de mar.
      * @param primera Si es la primera vez que se crea la piscifactoría.
      */
-    public Piscifactoria(String nombre, CriaTipo tipo, boolean primera) {
+    public Piscifactoria(String nombre, boolean primera) {
         this.nombre = nombre;
-        if(tipo == CriaTipo.RIO ){
-            tanques = new ArrayList<>();
-            tanques.add(new Tanque(25,  this.tipo));
-            this.comidaAnimal = 25;
-            this.comidaVegetal = 25; 
-            this.maxComidaVegetal = 25;
-            this.maxComidaAnimal = 25;
-        } 
+        this.tipo = CriaTipo.RIO;
+        tanques = new ArrayList<>();
+        tanques.add(new Tanque(25,CriaTipo.RIO));
+        this.maxComidaVegetal = 25;
+        this.maxComidaAnimal = 25;
+        this.comidaAnimal = 25;
+        this.comidaVegetal = 25; 
     }
    
     /**
@@ -58,12 +57,12 @@ public class Piscifactoria {
         this.tipo = tipo;
         if(tipo == CriaTipo.RIO ){
             tanques = new ArrayList<>();
-            tanques.add(new Tanque(25,this.tipo));
+            tanques.add(new Tanque(25,CriaTipo.RIO));
             this.maxComidaVegetal = 25;
             this.maxComidaAnimal = 25;
         } else if(tipo == CriaTipo.MAR){
             tanques = new ArrayList<>();
-            tanques.add(new Tanque(100,this.tipo));
+            tanques.add(new Tanque(100,CriaTipo.MAR));
             this.maxComidaVegetal = 100;
             this.maxComidaAnimal = 100;
         }
@@ -145,7 +144,7 @@ public class Piscifactoria {
         System.out.println("Peces vivos: "+pecesVivosPiscifactoria()+"/"+pecesEnPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesVivosPiscifactoria(), pecesEnPiscifactoria())+")");
         System.out.println("Peces alimentados: "+pecesAlimentadosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesAlimentadosPiscifactoria(), pecesVivosPiscifactoria())+")");
         System.out.println("Peces adultos: "+pecesAdultosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesAdultosPiscifactoria(), pecesVivosPiscifactoria())+")");
-        System.out.println("Hembras/Machos: "+pecesMachoPiscifactoria()+"/"+pecesHembraPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesEnPiscifactoria(), pecesMaxPiscifactoria())+")");
+        System.out.println("Hembras/Machos: "+pecesHembraPiscifactoria()+"/"+pecesMachoPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesHembraPiscifactoria(), pecesMachoPiscifactoria())+")");
         System.out.println("Fértiles: "+pecesFertilesPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesEnPiscifactoria(), pecesMaxPiscifactoria())+")");
         System.out.println("Almacén de comida animal: "+ this.comidaAnimal+"/"+this.maxComidaAnimal+"("+PorcentajeHelper.hacerProcentaje(this.comidaAnimal, this.maxComidaAnimal)+")");
         System.out.println("Almacén de comida vegetal: "+ this.comidaVegetal+"/"+this.maxComidaVegetal+"("+PorcentajeHelper.hacerProcentaje(this.comidaVegetal, this.maxComidaVegetal)+")");
@@ -158,7 +157,7 @@ public class Piscifactoria {
      */
     public int selectTank() throws IOException{
         for (Tanque tanque : tanques) {
-            System.out.println("Tanque "+(tanque.getNumTanque()+1)+": "+tipo);
+            System.out.println("Tanque "+(tanques.indexOf(tanque)+1)+": "+tipo);
         }
         int opcion = InputHelper.GetIntWithBuffRead();
         return opcion-1;
@@ -169,7 +168,7 @@ public class Piscifactoria {
      */
     public void showTankStatus(){
         for (Tanque tanque : tanques) {
-            tanque.showStatus();
+            tanque.showStatus(tanques.indexOf(tanque));
         }
     }
 
@@ -188,31 +187,23 @@ public class Piscifactoria {
      */
     public void showCapacity() throws IOException{
         Tanque t = tanques.get(selectTank());
-        t.showCapacity();
+        t.showCapacity(tanques.indexOf(t));
     }
     
     /**
     * Avanza un día en la piscifactoría, actualizando los tanques y el estado de los peces.
     */
-    public void nextDay(){
+    public int[] nextDay(){
+        int totalpeces = 0;
+        int totalmonedastanques = 0;        
         for (Tanque tanque : tanques) {
-            /*for (Pez pez : tanque.getPeces()) {
-                if(pez instanceof Carnivoro){
-                    tanque.nextDay(comidaAnimal);
-                }
-                if(pez instanceof Filtrador){
-                    tanque.nextDay(comidaVegetal);
-                }
-                if(pez instanceof Omnivoro){
-                    if(comidaAnimal>=comidaVegetal){
-                        tanque.nextDay(comidaAnimal);
-                    } else {
-                        tanque.nextDay(comidaVegetal);
-                    }
-                }
-            }*/
-            tanque.nextDay(this);
+            int[] currTankValues = tanque.nextDay(this);
+            totalmonedastanques += currTankValues[0];
+            totalpeces += currTankValues[1];
         }
+        System.out.println("Piscifactoria "+getNombre()+": "+totalpeces+" peces vendidos por "+totalmonedastanques+" monedas");
+        int[] retorno = {totalmonedastanques,totalpeces};
+        return retorno;
     }
 
      /**

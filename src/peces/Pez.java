@@ -222,6 +222,7 @@ public abstract class Pez {
      * @return Comida consumida
      */
     public int grow(int comida){
+        this.Comido = false;
         Random morir = new Random();
         int comidaConsumida = 0;
         if (isAlive()){
@@ -232,7 +233,7 @@ public abstract class Pez {
                 if (isAdulto() && this.UltimaPuesta >= this.Ciclo){
                     this.Fertil = true;
                 }
-                this.Comido = false;
+                
             } else {
                 if (morir.nextInt(2) == 0){
                     this.Vivo = false;

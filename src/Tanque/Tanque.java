@@ -3,6 +3,7 @@ package Tanque;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import peces.Pez;
 import peces.Double.Dorada;
 import peces.Double.TruchaArcoiris;
@@ -36,9 +37,7 @@ import Piscifactoria.Piscifactoria;
  * @author Cristian
  */
 public class Tanque {
-
-    // **Número del tanque en la piscifactoria **/
-    private int numTanque = 0;
+    
     // **Lista de peces en el tanque **/
     private ArrayList<Pez> peces;
     // **Número máximo de peces que puede haber en el tanque **/
@@ -64,8 +63,7 @@ public class Tanque {
      * @param tipoT
      */
     public Tanque(int maxPeces, CriaTipo tipoT) {
-        this.numTanque++;
-        peces = new ArrayList<>();
+        this.peces = new ArrayList<>();
         this.maxPeces = maxPeces;
         this.tipoT = tipoT;
     }
@@ -73,8 +71,8 @@ public class Tanque {
     /**
      * Metodo que muestra las estadísticas del tanque.
      */
-    public void showStatus() {
-        System.out.println("============Tanque " + (numTanque) + "============");
+    public void showStatus(int numTanque) {
+        System.out.println("============Tanque " + (numTanque+1) + "============");
         System.out.println("Ocupación: " + pecesEnTanque() + "/" + maxPeces + " ("
                 + PorcentajeHelper.hacerProcentaje(pecesEnTanque(), maxPeces) + "%)");
         System.out.println("Peces vivos: " + pecesVivos() + "/" + pecesEnTanque() + " ("
@@ -99,8 +97,8 @@ public class Tanque {
     /**
      * Metodo que muestra información de la capacidad del tanque.
      */
-    public void showCapacity() {
-        System.out.println("Tanque " + numTanque + " al " + PorcentajeHelper.hacerProcentaje(pecesEnTanque(), maxPeces)
+    public void showCapacity(int numTanque) {
+        System.out.println("Tanque " + (numTanque+1) + " al " + PorcentajeHelper.hacerProcentaje(pecesEnTanque(), maxPeces)
                 + "% de capacidad [" + pecesEnTanque() + "/" + maxPeces + "].");
     }
 
@@ -110,7 +108,7 @@ public class Tanque {
      * 
      * @param comida Cantidad de comida disponible en la piscifactoria
      */
-    public void nextDay(Piscifactoria pisci) {
+    public int[] nextDay(Piscifactoria pisci) {
         int pecesHembraFertiles = 0;
         int pecesMachoFertiles = 0;
 
@@ -139,23 +137,34 @@ public class Tanque {
             }
 
             if (pez.isFemale() && pez.isFertile()) {
-                pecesHembraFertiles += 1;
+                pecesHembraFertiles ++;
             } else if (!pez.isFemale() && pez.isFertile()) {
-                pecesMachoFertiles += 1;
+                pecesMachoFertiles ++;
             }
         }
 
+        ArrayList<Pez> nuevosPeces = new ArrayList<>();
+
+        
         if (pecesHembra() > pecesMacho()) {
             if (pecesHembraFertiles >= 1 && pecesMachoFertiles >= 1) {
-                for (Pez pez : peces) {
+                Iterator<Pez> iterator = peces.iterator();
+                while (iterator.hasNext()) {
+                    Pez pez = iterator.next();
                     if (pez.isFemale() && pez.isFertile()) {
                         for (int i = 0; i < pez.getHuevos(); i++) {
                             if (i % 2 == 0) {
-                                pez.reproducirse(false);
-                                pez.notFertil();
-                                pez.resetPuesta();
+                                if(peces.size()<maxPeces){
+                                    nuevosPeces.add(pez.reproducirse(true));
+                                    pez.notFertil();
+                                    pez.resetPuesta();
+                                }
                             } else {
-                                pez.reproducirse(true);
+                                if(peces.size()<maxPeces){
+                                    nuevosPeces.add(pez.reproducirse(false));
+                                    pez.notFertil();
+                                    pez.resetPuesta();
+                                }
                             }
                         }
                     }
@@ -163,21 +172,32 @@ public class Tanque {
             }
         } else {
             if (pecesHembraFertiles >= 1 && pecesMachoFertiles >= 1) {
-                for (Pez pez : peces) {
+                Iterator<Pez> iterator = peces.iterator();
+                while (iterator.hasNext()) {
+                    Pez pez = iterator.next();
                     if (pez.isFemale() && pez.isFertile()) {
                         for (int i = 0; i < pez.getHuevos(); i++) {
                             if (i % 2 == 0) {
-                                pez.reproducirse(true);
+                                if(peces.size()<maxPeces){
+                                    nuevosPeces.add(pez.reproducirse(true));
+                                    pez.notFertil();
+                                    pez.resetPuesta();
+                                }
                             } else {
-                                pez.reproducirse(false);
+                                if(peces.size()<maxPeces){
+                                    nuevosPeces.add(pez.reproducirse(false));
+                                    pez.notFertil();
+                                    pez.resetPuesta();
+                                }
                             }
                         }
                     }
                 }
             }
         }
-
-        ventaPecesOptimos();
+        peces.addAll(nuevosPeces);
+     
+        return ventaPecesOptimos();
     }
 
     /**
@@ -286,21 +306,26 @@ public class Tanque {
      */
     public int[] ventaPecesOptimos() {
         int[] valores = new int[2];
-
+    
         int monedasObtenidas = 0;
         int pecesVendidos = 0;
-        for (Pez pez : peces) {
+    
+        Iterator<Pez> iterator = peces.iterator();
+        while (iterator.hasNext()) {
+            Pez pez = iterator.next();
             if (pez.getAge() == pez.getOptimo()) {
                 monedasObtenidas += pez.getMonedas();
-                peces.remove(pez);
+                iterator.remove();
                 pecesVendidos++;
             }
         }
+    
         monedero.setMonedas(monedero.getMonedas() + monedasObtenidas);
         valores[0] = monedasObtenidas;
         valores[1] = pecesVendidos;
         return valores;
     }
+    
 
     /**
      * Método que permite elegir entre los peces compatibles con el tanque.
@@ -460,15 +485,6 @@ public class Tanque {
             }
         } while (op == 0);
         return null;
-    }
-
-    /**
-     * Devuelve el número del tanque.
-     * 
-     * @return el número del tanque.
-     */
-    public int getNumTanque() {
-        return numTanque;
     }
 
     /**
