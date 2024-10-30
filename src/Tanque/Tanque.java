@@ -107,7 +107,7 @@ public class Tanque {
      * 
      * @param comida Cantidad de comida disponible en la piscifactoria
      */
-    public void nextDay(Piscifactoria pisci) {
+    public int[] nextDay(Piscifactoria pisci) {
         int pecesHembraFertiles = 0;
         int pecesMachoFertiles = 0;
 
@@ -196,8 +196,7 @@ public class Tanque {
         }
         peces.addAll(nuevosPeces);
      
-
-        ventaPecesOptimos();
+        return ventaPecesOptimos();
     }
 
     /**

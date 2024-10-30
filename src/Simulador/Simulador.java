@@ -103,7 +103,7 @@ public class Simulador {
       
         for (Piscifactoria piscifactoria : piscifactorias) {
             i+=1;
-            System.out.println(i + ".- " + piscifactoria.getNombre() + " [" + pecesVivosEnSist() + "/" + pecesTotalesEnSist() + "/" + espacioTotalSist()+"]");
+            System.out.println(i + ".- " + piscifactoria.getNombre() + " [" + pecesVivosEnSist() + "/" + pecesTotalesEnSist() + "/" + espacioEnPisci(piscifactoria)+"]");
         }
         
     }     
@@ -136,7 +136,7 @@ public class Simulador {
             Tanque tank= pisc.getTanques().get(pisc.selectTank());
             return tank;
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Introduce un núemro válido, krak");
+            System.out.println("Introduce un número válido, krak");
             return null;
         }
     }
@@ -169,7 +169,7 @@ public class Simulador {
         
             pisc.showTankStatus();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Introduce un núemro válido, krak");
+            System.out.println("Introduce un número válido, krak");
         }
         
     }
@@ -185,7 +185,7 @@ public class Simulador {
 
             tank.showStatus(pisc.getTanques().indexOf(tank));
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Introduce un núemro válido, krak");
+            System.out.println("Introduce un número válido, krak");
         }
     }
 
@@ -282,18 +282,15 @@ public class Simulador {
             almacenCentral.repartir(piscifactorias);
         }
 
-        for (Piscifactoria piscifactoria : piscifactorias) {
-            piscifactoria.nextDay();
-        }
-
         int pecesVendidos=0;
         int monedasObtenidas=0;
         for (Piscifactoria piscifactoria : piscifactorias) {
-            int[] currPiscValues=piscifactoria.venta();
+            int[] currPiscValues=piscifactoria.nextDay();
             pecesVendidos+=currPiscValues[1];
             monedasObtenidas+=currPiscValues[0];
         }
-        System.out.println(pecesVendidos + " peces optimos vendidos por un total de "+monedasObtenidas+ " monedas");
+
+        System.out.println("Total piscifactorias: "+pecesVendidos + " peces óptimos vendidos por un total de "+monedasObtenidas+ " monedas");
     }
 
     /**
@@ -307,7 +304,7 @@ public class Simulador {
                 Piscifactoria pisc = piscifactorias.get(selectPisc());
                 anadirComidaPisc(pisc);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("Introduce un núemro válido, krak");
+                System.out.println("Introduce un número válido, krak");
             }
         }
     }
@@ -326,7 +323,8 @@ public class Simulador {
                 Tanque tank =pisc.getTanques().get(pisc.selectTank());
 
                 Pez pezEleg=tank.showCompatible();
-                
+
+                if(pezEleg!=null){
                     if(MonederoHelper.monedasSuficientes(pezEleg.getCoste())){
                         if(pisc.pecesEnPiscifactoria()<pisc.pecesMaxPiscifactoria()){
                                 if(tank.getPeces().size()<1){
@@ -354,8 +352,9 @@ public class Simulador {
                             System.out.println("Esta piscifactoria esta llena, eliga otra");
                         }
                     }
+                }
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("Introduce un núemro válido, krak");
+                System.out.println("Introduce un número válido, krak");
             }
         } while (llena);
     } 
@@ -387,7 +386,7 @@ public class Simulador {
             
             System.out.println("Piscifactoría "+pisc.getNombre()+": "+pecesVend+" peces vendidos por "+monedasOb+" monedas");
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Introduce un núemro válido, krak");
+            System.out.println("Introduce un número válido, krak");
         }
     }
 
@@ -410,7 +409,7 @@ public class Simulador {
                 }
             }
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Introduce un núemro válido, krak");
+            System.out.println("Introduce un número válido, krak");
         }
     }
 
@@ -424,7 +423,7 @@ public class Simulador {
 
             tank.getPeces().clear();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Introduce un núemro válido, krak");
+            System.out.println("Introduce un número válido, krak");
         }
     }
 
@@ -479,6 +478,7 @@ public class Simulador {
                                         }
                                     }else{
                                         System.out.println("Ese tipo de piscifactoria no es válido, escoga uno válido");
+                                        break;
                                     }
                                 } while (!opcionValida);
                                 break;
@@ -599,6 +599,19 @@ public class Simulador {
             pecesEnSist += piscifactoria.pecesVivosPiscifactoria();
         }
         return pecesEnSist;
+    }
+
+    /**
+     * Método que devuelve el total de espacios de una piscifactoría.
+     * @param pisc Piscifactoría de la que quieres saber los espacios
+     * @return Número de espacios de la piscifactoria
+     */
+    private int espacioEnPisci(Piscifactoria pisc) {
+        int espacioEnPisci=0;
+        for (Tanque tanque : pisc.getTanques()) {
+            espacioEnPisci+=tanque.getMaxPeces();
+        }
+        return espacioEnPisci;
     }
 
     /**
@@ -874,7 +887,7 @@ public class Simulador {
                 }
             }
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Introduce un núemro válido, krak");
+            System.out.println("Introduce un número válido, krak");
         }
     }
 
