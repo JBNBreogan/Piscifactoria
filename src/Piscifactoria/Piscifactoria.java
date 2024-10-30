@@ -61,12 +61,12 @@ public class Piscifactoria {
         this.tipo = tipo;
         if(tipo == CriaTipo.RIO ){
             tanques = new ArrayList<>();
-            tanques.add(new Tanque(25),this.tipo);
+            tanques.add(new Tanque(25,this.tipo));
             this.maxComidaVegetal = 25;
             this.maxComidaAnimal = 25;
         } else if(tipo == CriaTipo.MAR){
             tanques = new ArrayList<>();
-            tanques.add(new Tanque(100),this.tipo);
+            tanques.add(new Tanque(100,this.tipo));
             this.maxComidaVegetal = 100;
             this.maxComidaAnimal = 100;
         }
