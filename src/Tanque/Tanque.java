@@ -1,8 +1,8 @@
 package Tanque;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.Scanner;
 import peces.Pez;
 import peces.Double.Dorada;
 import peces.Double.TruchaArcoiris;
@@ -22,6 +22,7 @@ import peces.Rio.TilapiaDelNilo;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
+import helpers.InputHelper;
 import helpers.MenuHelper;
 import helpers.PorcentajeHelper;
 import Comun.AlmacenCentral;
@@ -305,9 +306,9 @@ public class Tanque {
      * Método que permite elegir entre los peces compatibles con el tanque.
      * 
      * @return El pez elegido
+     * @throws IOException 
      */
-    public Pez showCompatible() {
-        Scanner sc = new Scanner(System.in);
+    public Pez showCompatible() throws IOException {
         int op = 0;
 
         do {
@@ -324,7 +325,7 @@ public class Tanque {
                                     "Dorada" + "(" + AlmacenPropiedades.DORADA.getCoste() + ")",
                                     "Trucha arcoiris" + "(" + AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste() + ")" },
                                     false);
-                            op = sc.nextInt();
+                            op = InputHelper.GetIntWithBuffRead();
                             switch (op) {
                                 case 1:
                                     if (this.pecesHembra() <= this.pecesMacho()) {
@@ -383,7 +384,7 @@ public class Tanque {
                                             "Trucha arcoiris" + "(" + AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste()
                                                     + ")" },
                                     false);
-                            op = sc.nextInt();
+                            op = InputHelper.GetIntWithBuffRead();
                             switch (op) {
                                 case 1:
                                     if (this.pecesHembra() <= this.pecesMacho()) {
@@ -430,6 +431,8 @@ public class Tanque {
                                 default:
                                     return null;
                             }
+                        default:
+                            break;
                     }
                 } else if (this.peces.size()==this.maxPeces) {
                     System.out.println("Este tanque esta lleno");
@@ -437,7 +440,7 @@ public class Tanque {
                 }else{
                     System.out.println("1. " + this.peces.get(0).getName());
                     System.out.println("0. Salir");
-                    op = sc.nextInt();
+                    op = InputHelper.GetIntWithBuffRead();
                     if (op == 1) {
                         if (this.pecesHembra() <= this.pecesMacho()) {
                             return peces.get(0).reproducirse(true);
