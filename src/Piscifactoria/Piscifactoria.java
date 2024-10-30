@@ -37,16 +37,15 @@ public class Piscifactoria {
      * @param tipo El tipo de cría, puede ser de río o de mar.
      * @param primera Si es la primera vez que se crea la piscifactoría.
      */
-    public Piscifactoria(String nombre, CriaTipo tipo, boolean primera) {
+    public Piscifactoria(String nombre, boolean primera) {
         this.nombre = nombre;
-        if(tipo == CriaTipo.RIO ){
-            tanques = new ArrayList<>();
-            tanques.add(new Tanque(25,  this.tipo));
-            this.comidaAnimal = 25;
-            this.comidaVegetal = 25; 
-            this.maxComidaVegetal = 25;
-            this.maxComidaAnimal = 25;
-        } 
+        this.tipo = CriaTipo.RIO;
+        tanques = new ArrayList<>();
+        tanques.add(new Tanque(25,CriaTipo.RIO));
+        this.maxComidaVegetal = 25;
+        this.maxComidaAnimal = 25;
+        this.comidaAnimal = 25;
+        this.comidaVegetal = 25; 
     }
    
     /**
@@ -161,7 +160,7 @@ public class Piscifactoria {
     public int selectTank(){
         Scanner sc=new Scanner(System.in);
         for (Tanque tanque : tanques) {
-            System.out.println("Tanque "+(tanque.getNumTanque()+1)+": "+tipo);
+            System.out.println("Tanque "+(tanques.indexOf(tanque)+1)+": "+tipo);
         }
         int opcion = sc.nextInt();
         return opcion-1;
@@ -172,7 +171,7 @@ public class Piscifactoria {
      */
     public void showTankStatus(){
         for (Tanque tanque : tanques) {
-            tanque.showStatus();
+            tanque.showStatus(tanques.indexOf(tanque));
         }
     }
 
@@ -190,7 +189,7 @@ public class Piscifactoria {
      */
     public void showCapacity(){
         Tanque t = tanques.get(selectTank());
-        t.showCapacity();
+        t.showCapacity(tanques.indexOf(t));
     }
     
     /**
