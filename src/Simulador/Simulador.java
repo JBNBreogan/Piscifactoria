@@ -1,9 +1,9 @@
 package Simulador;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import Comun.Monedero;
 import Piscifactoria.Piscifactoria;
@@ -16,9 +16,6 @@ import peces.Pez;
 import peces.Rio.*;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
-import propiedades.PecesDatos;
-import propiedades.PecesProps;
-import propiedades.PecesTipo;
 import Comun.AlmacenCentral;
 import java.util.Random;
 /**
@@ -27,9 +24,9 @@ import java.util.Random;
  */
 public class Simulador {
     //**Días avanzados en el sistema */
-    private static int dias = 1;
+    private int dias = 1;
     /**Nombre con el que se inicia el sistema */
-    private static String nombreEmpresa;
+    private String nombreEmpresa;
     /**Objeto AlmacenCentral que representa el almacén compartido de comida y se utiliza para el manejo de inventario de alimentos en la piscifactoría. */
     private AlmacenCentral almacenCentral=null;
     /**Lista de las piscifactorias del sistema */
@@ -60,13 +57,13 @@ public class Simulador {
 
     /**
      * Método que inicializa el sistema, asignando el nombre del sistema, creando una piscifactoria y añadiendo 100 monedas.
+     * @throws IOException 
      */
-    public void init(){
-        Scanner sc=new Scanner(System.in);
+    public void init() throws IOException{
         System.out.println("Nombre de la empresa:");
-        nombreEmpresa = sc.nextLine();
+        nombreEmpresa = InputHelper.ReadStringWithBuffRead();
         System.out.println("Nombre de la piscifactoria");
-        String npisc= sc.nextLine();
+        String npisc= InputHelper.ReadStringWithBuffRead();
         piscifactorias.add(new Piscifactoria(npisc,CriaTipo.RIO));
         Monedero.getInstance().setMonedas(100);
     }
@@ -111,16 +108,15 @@ public class Simulador {
     /**
      * Método que muestra el menú de piscifactorías y permite seleccionar una de ellas.
      * @return El número que ocupa en las lista de piscifactorias la seleccionada
+     * @throws IOException 
      */
-    public int selectPisc(){
-        Scanner sc=new Scanner(System.in);
+    public int selectPisc() throws IOException{
         try {
             menuPisc();
-            int opcion = sc.nextInt();
+            int opcion = InputHelper.GetIntWithBuffRead();
             return opcion-1;
         } catch (InputMismatchException e) {
             System.out.println("Introduce un valor correcto");
-            sc.next();
             selectPisc();
             return 0;
         }
@@ -129,8 +125,9 @@ public class Simulador {
     /**
      * Método que muestra el menú de tanques y permite seleccionar un tanque, mostrando un menú de los disponibles.
      * @return El número que ocupa en la lista de tanques de una pisicfactoria el tanque seleccionado
+     * @throws IOException 
      */
-    public Tanque selectTank(){
+    public Tanque selectTank() throws IOException{
         Piscifactoria pisc = piscifactorias.get(selectPisc());
         Tanque tank= pisc.getTanques().get(pisc.selectTank());
         return tank;
@@ -142,6 +139,7 @@ public class Simulador {
      */
     public void showGeneralStatus(){
 
+        System.out.println("Empresa: " + this.nombreEmpresa);
         System.out.println("Día: "+this.dias);
         System.out.println("Monedas disponibles: "+monedero.getMonedas());
         if(almacenCentral!=null){
@@ -157,8 +155,9 @@ public class Simulador {
 
     /**
      * Método que permite seleccionar una piscifactoria y muestra su estado.
+     * @throws IOException 
      */
-    public void showSpecificStatus(){
+    public void showSpecificStatus() throws IOException{
         Piscifactoria pisc = piscifactorias.get(selectPisc());
         
         pisc.showTankStatus();
@@ -166,8 +165,9 @@ public class Simulador {
 
     /**
      * Método que permite seleccionar un tanque y muestra su estado.
+     * @throws IOException 
      */
-    public void showTankStatus(){
+    public void showTankStatus() throws IOException{
         Piscifactoria pisc = piscifactorias.get(selectPisc());
 
         Tanque tank = pisc.getTanques().get(pisc.selectTank());
@@ -186,10 +186,10 @@ public class Simulador {
     /**
      * Método que muestra una lista de los peces disponibles en el sistema y permite elegir uno.
      * @return El tipo de pez elegido
+     * @throws IOException 
      */
-    public Pez showIctio(){
+    public Pez showIctio() throws IOException{
         int opcion=0;
-        Scanner sc=new Scanner(System.in);
         do {
             try {
                 MenuHelper.mostrarMenu(new String[]{"Lucio del norte",
@@ -206,7 +206,7 @@ public class Simulador {
                                           "Dorada",
                                           "Salir."},
                                            false);
-                opcion=sc.nextInt();
+                opcion=InputHelper.GetIntWithBuffRead();
                 switch (opcion) {
                     case 1:
                         infoLib(AlmacenPropiedades.LUCIO_NORTE.getNombre());
@@ -252,7 +252,6 @@ public class Simulador {
                 }
             }catch (InputMismatchException e) {
                 System.out.println("Esta opcion no es válida");
-                sc.next();
                 return null;
             }
         } while (opcion!=13);
@@ -284,8 +283,9 @@ public class Simulador {
 
     /**
      * Método que permite seleccionar una piscifactoria, seleccionar el tipo de comida que quieres añadir, seleccionar la cantidad de comida, y la añade.
+     * @throws IOException 
      */
-    public void addFood(){
+    public void addFood() throws IOException{
         if(almacenCentral!=null){
             anadirComidaAlm();
         }else{
@@ -297,8 +297,9 @@ public class Simulador {
     /**
      * Método que muestra las piscifactorias del sistema permite elegir una, despues muestra los tanques del sistema y permite elegir uno y después muestra
      * los posibles peces a añadir en ese tranque, permite elegir uno y lo añade.
+     * @throws IOException 
      */
-    public void addFish(){
+    public void addFish() throws IOException{
         boolean llena=false;
 
         do {
@@ -342,8 +343,9 @@ public class Simulador {
 
     /**
      * Método que permite seleccionar una piscifactoría y vende todos los peces adultos de esta, mostrando al final un mensaje de los peces vendidos y las monedas obtenidas con ello.
+     * @throws IOException 
      */
-    public void sell(){
+    public void sell() throws IOException{
         Piscifactoria pisc = piscifactorias.get(selectPisc());
 
         int monedasOb=0;
@@ -367,8 +369,9 @@ public class Simulador {
 
     /**
      * Método que elimina los peces muertos de todos los tanques.
+     * @throws IOException 
      */
-    public void cleanTank(){
+    public void cleanTank() throws IOException{
         Piscifactoria pisc = piscifactorias.get(selectPisc());
 
         for (Tanque tanque : pisc.getTanques()) {
@@ -385,8 +388,9 @@ public class Simulador {
 
     /**
      * Método que permite seleccionar un tanque, y elimina todos los peces del mismo independientemente de su estado.
+     * @throws IOException 
      */
-    public void emptyTank(){
+    public void emptyTank() throws IOException{
         Piscifactoria pisc = piscifactorias.get(selectPisc());
         Tanque tank=pisc.getTanques().get(pisc.selectTank());
 
@@ -395,12 +399,9 @@ public class Simulador {
 
     /**
      * Método que muestra un menú de mejoras disponibles para el sistema.
+     * @throws IOException 
      */
-    public void upgrade(){
-        Scanner sc=new Scanner(System.in);
-        Scanner sc2=new Scanner(System.in);
-        Scanner sc3=new Scanner(System.in);
-        Scanner sc4=new Scanner(System.in);
+    public void upgrade() throws IOException{
 
         int op=0;
         String op2="";
@@ -411,19 +412,19 @@ public class Simulador {
                                                 "Mejorar edificios.",
                                                 "Cancelar."},
                                                  false);
-                op=sc.nextInt();
+                op=InputHelper.GetIntWithBuffRead();
 
                 switch (op) {
                     case 1:
                         System.out.println("a. Piscifactoría.");
                         System.out.println("b. Almacén central.");
-                        op2=sc.next();
+                        op2=InputHelper.ReadStringWithBuffRead();
                         switch (op2) {
                             case "a":
                                 System.out.println("Nombre de la piscifactoria: ");
-                                String nombrePisc=sc4.next();
+                                String nombrePisc=InputHelper.ReadStringWithBuffRead();
                                 System.out.println("Tipo de la piscifactoria: (RIO, MAR o DOBLE)");
-                                String tipoPisc=sc4.next();
+                                String tipoPisc=InputHelper.ReadStringWithBuffRead();
                                 boolean opcionValida=false;
                                 do {
                                     if(tipoPisc.equals("RIO")){
@@ -466,12 +467,12 @@ public class Simulador {
                         if(almacenCentral==null){
                             System.out.println("b. Almacén central.");
                         }
-                        op2=sc.next();
+                        op2=InputHelper.ReadStringWithBuffRead();
                         switch (op2) {
                             case "a":
                                 System.out.println("i.  Comprar tanque.");
                                 System.out.println("ii. Aumentar almacén comida.");
-                                op3=sc.next();
+                                op3=InputHelper.ReadStringWithBuffRead();
                                 switch (op3) {
                                     case "i":
                                         System.out.println("Elige la piscifactoria a la que le quieres añadir un tanque");
@@ -506,7 +507,7 @@ public class Simulador {
                                 break;
                             case "b":
                                 System.out.println("i. Aumentar capacidad");
-                                op3=sc.next();
+                                op3=InputHelper.ReadStringWithBuffRead();
                                 switch (op3) {
                                     case "i":
                                         if(MonederoHelper.monedasSuficientes(200)){
@@ -533,7 +534,6 @@ public class Simulador {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Esta opción no es válida");
-                sc.next();
             }
         } while (op!=3);
     }
@@ -594,14 +594,13 @@ public class Simulador {
      * Mçetodo que permite elegir el tipo de comida y la cantidad que quieres añadir.
      * @param pisc 
      * @return cantidad y tipo de comida
+     * @throws IOException 
      */
-    public int[] elegirComida(Piscifactoria pisc){
-        Scanner sc=new Scanner(System.in);
+    public int[] elegirComida(Piscifactoria pisc) throws IOException{
         int opciontipo;
         int opCant;
         int tipo=0;
         int cantComida=0;
-        String tipoComidaEleg="";
         boolean a = false;
         boolean b=false;
         do {
@@ -610,7 +609,7 @@ public class Simulador {
                 MenuHelper.mostrarMenu(new String[]{"Animal",
                                                     "Vegetal"},
                                                     false);
-                opciontipo=sc.nextInt();
+                opciontipo=InputHelper.GetIntWithBuffRead();
                 switch (opciontipo) {
                     case 1:
                         tipo=0;
@@ -626,7 +625,6 @@ public class Simulador {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Esta opción no es válida");
-                sc.next();
             }
             
         } while (!a);
@@ -640,7 +638,7 @@ public class Simulador {
                                                     "llenar"},
                                                     false);
 
-                opCant=sc.nextInt();
+                opCant=InputHelper.GetIntWithBuffRead();
                 
                 switch (opCant) {
                     case 1:
@@ -690,7 +688,6 @@ public class Simulador {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("esta opción noes válida");
-                sc.next();
             }
         } while (!b);
         return null;
@@ -701,8 +698,9 @@ public class Simulador {
      * @param cant Número de comida a añadir
      * @param tipo Tipo de comida a añadir
      * @param pisc Piscifactoia en la que añadir la comida
+     * @throws IOException 
      */
-    public void anadirComidaPisc(Piscifactoria pisc){
+    public void anadirComidaPisc(Piscifactoria pisc) throws IOException{
 
         int[] cantTipo = elegirComida(pisc);
 
@@ -735,8 +733,9 @@ public class Simulador {
      * @param cant Número de comida a añadir
      * @param tipo Tipo de comida a añadir
      * @param almacenCentral 
+     * @throws IOException 
      */
-    private void anadirComidaAlm() {
+    private void anadirComidaAlm() throws IOException {
         int[] cantTipo = elegirComida(null);
 
         int cant = cantTipo[0];
@@ -766,8 +765,9 @@ public class Simulador {
 
     /**
      * Método que añade cuatro peces aleatorios a una piscifactoria seleccionada.
+     * @throws IOException 
      */
-    public void truco98(){
+    public void truco98() throws IOException{
         Piscifactoria pisc=piscifactorias.get(selectPisc());
         Random random=new Random();
         for (int i = 0; i < 4; i++) {
@@ -842,17 +842,17 @@ public class Simulador {
     /**
      * Ejecuta toda la lógica del programa.
      * @param args
+     * @throws IOException 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Monedero monedero=Monedero.getInstance();
-        Scanner sc=new Scanner(System.in);
         Simulador sim=new Simulador();
         sim.init();
         int opcion=0;
             do {
                 try {
                 sim.menu();
-                opcion=sc.nextInt();
+                opcion=InputHelper.GetIntWithBuffRead();
                     switch (opcion) {
                         case 1:
                             sim.showGeneralStatus();
@@ -891,9 +891,8 @@ public class Simulador {
                             sim.upgrade();
                             break;
                         case 13:
-                            Scanner sc2=new Scanner(System.in);
                             System.out.println("Elige los dias que quieres pasar");
-                            int numDias=sc2.nextInt();
+                            int numDias=InputHelper.GetIntWithBuffRead();
                             for (int i = 0; i < numDias; i++) {
                                 sim.nextDay();
                             }
@@ -913,7 +912,8 @@ public class Simulador {
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("Has introducido un tipo de dato incorrecto, introduce un número");
-                    sc.next();
+                } finally {
+                    InputHelper.CloseBuffReader();
                 }
         } while (opcion!=14);
     }

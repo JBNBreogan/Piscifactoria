@@ -1,13 +1,10 @@
 package Piscifactoria;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import Comun.*;
 import Tanque.Tanque;
 import peces.Pez;
-import peces.*;
-//import peces.Propiedades.Filtrador;
-//import peces.Propiedades.Omnivoro;
 import propiedades.CriaTipo;
 import helpers.*;
 
@@ -157,13 +154,13 @@ public class Piscifactoria {
     /**
      * Permite al usuario seleccionar un tanque de la piscifactoría. 
      * @return El índice del tanque seleccionado.
+     * @throws IOException 
      */
-    public int selectTank(){
-        Scanner sc=new Scanner(System.in);
+    public int selectTank() throws IOException{
         for (Tanque tanque : tanques) {
             System.out.println("Tanque "+(tanque.getNumTanque()+1)+": "+tipo);
         }
-        int opcion = sc.nextInt();
+        int opcion = InputHelper.GetIntWithBuffRead();
         return opcion-1;
     }
 
@@ -187,8 +184,9 @@ public class Piscifactoria {
 
      /**
      * Muestra la capacidad del tanque seleccionado por el usuario.
+     * @throws IOException 
      */
-    public void showCapacity(){
+    public void showCapacity() throws IOException{
         Tanque t = tanques.get(selectTank());
         t.showCapacity();
     }
