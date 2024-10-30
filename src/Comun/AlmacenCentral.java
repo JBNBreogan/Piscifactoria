@@ -11,7 +11,7 @@ import Piscifactoria.Piscifactoria;
 public class AlmacenCentral {
 
     /**
-     * Instancia del almacén central
+     * Instancia del almacén central.
      */
     private static AlmacenCentral instance;
     /**

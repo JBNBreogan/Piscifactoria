@@ -54,7 +54,7 @@ public class Piscifactoria {
      * iniciales de comida.
      * 
      * @param nombre El nombre de la piscifactoría.
-     * @param tipo El tipo de cría: puede ser RIO o MAR.
+     * @param tipo El tipo de cría: puede ser RIO o MAAR.
      */
     public Piscifactoria(String nombre, CriaTipo tipo) {
         this.nombre = nombre;
