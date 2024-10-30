@@ -35,9 +35,11 @@ import Piscifactoria.Piscifactoria;
  * @author Cristian
  */
 public class Tanque {
-
+    
+    //** Número de tanques en la piscifactoria*/
+    private static int contadorTanque=0;
     // **Número del tanque en la piscifactoria **/
-    private int numTanque = 0;
+    private int numTanque;
     // **Lista de peces en el tanque **/
     private ArrayList<Pez> peces;
     // **Número máximo de peces que puede haber en el tanque **/
@@ -63,8 +65,8 @@ public class Tanque {
      * @param tipoT
      */
     public Tanque(int maxPeces, CriaTipo tipoT) {
-        this.numTanque++;
-        peces = new ArrayList<>();
+        this.numTanque=contadorTanque++;
+        this.peces = new ArrayList<>();
         this.maxPeces = maxPeces;
         this.tipoT = tipoT;
     }
@@ -73,7 +75,7 @@ public class Tanque {
      * Metodo que muestra las estadísticas del tanque.
      */
     public void showStatus() {
-        System.out.println("============Tanque " + (numTanque) + "============");
+        System.out.println("============Tanque " + (numTanque+1) + "============");
         System.out.println("Ocupación: " + pecesEnTanque() + "/" + maxPeces + " ("
                 + PorcentajeHelper.hacerProcentaje(pecesEnTanque(), maxPeces) + "%)");
         System.out.println("Peces vivos: " + pecesVivos() + "/" + pecesEnTanque() + " ("
