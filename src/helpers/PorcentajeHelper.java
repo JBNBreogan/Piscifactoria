@@ -2,7 +2,7 @@ package helpers;
 
 public class PorcentajeHelper {
     /**
-     * Hace el calculo del porcentaje de dos numeros dados
+     * Hace el cálculo del porcentaje de dos números pasados por parámetro.
      * @param numero
      * @param max
      * @return porcentaje calculado

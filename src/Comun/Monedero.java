@@ -3,22 +3,22 @@ package Comun;
 //Patron singleton
 
 /**
- * Clase singleton monedero, es la clase que se encarga de la gestion de las monedas del programa
+ * Clase singleton que representa el monedero del sistema. Se encarga de almacenar las monedas obtenidas gracias a ir avanzando en el uso del sistema. 
  */
 public class Monedero {
-    //**Instancia del objeto de monedero */
+    //**Instancia del objeto de monedero. */
     private static Monedero instance;
-    //**Cantidad de monedas */ 
+    //**Cantidad de monedas. */ 
     public int monedas;
 
     /**
-     * Constructor vacio de la clase monedero
+     * Constructor vacío de la clase Monedero.
      */
     private Monedero() {
     }
 
     /**
-     * Método que permite crear el objeto en caso de que no exista, y en caso de que exista solo devuelve la instancia
+     * Método que permite crear el objeto en caso de que no exista, y en caso de que exista solo devuelve la instancia.
      */
     public static Monedero getInstance() {
         if (instance == null) {
@@ -28,7 +28,7 @@ public class Monedero {
     }
 
     /**
-     * Obtiene la cantidad de monedas
+     * Obtiene la cantidad de monedas.
      * @return Número de monedas
      */
     public int getMonedas() {
@@ -36,7 +36,7 @@ public class Monedero {
     }
 
     /**
-     * Permite cambiar la cantidad de monedas
+     * Permite cambiar la cantidad de monedas.
      * @param monedas Número de monedas que se va a establecer
      */
     public void setMonedas(int monedas) {
