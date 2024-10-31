@@ -16,13 +16,37 @@ import helpers.*;
 
 public class Piscifactoria {
     
+    /**
+     * Nombre de la piscifactoría
+     */
     private String nombre;
+    /**
+     * Tipo de la piscifactoría
+     */
     private CriaTipo tipo;
+    /**
+     * Tanques de la piscifactoría
+     */
     private ArrayList<Tanque> tanques;
+    /**
+     * Cantidad de comidad vegetal
+     */
     private int comidaVegetal = 0;
+    /**
+     * Cantidad de comida animal
+     */
     private int comidaAnimal = 0;
+    /**
+     * Cantidad máxima de comida animal
+     */
     private int maxComidaAnimal;
+    /**
+     * Cantidad máxima de comida vegetal
+     */
     private int maxComidaVegetal;
+    /**
+    * Objeto Monedero que se encarga de gestionar el sistema de monedas de la piscifactoría.
+    */
     private Monedero monedero=Monedero.getInstance();
 
 
