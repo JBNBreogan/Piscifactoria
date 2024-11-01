@@ -901,8 +901,9 @@ public class Simulador {
         Simulador sim=new Simulador();
         sim.init();
         int opcion=0;
-            do {
+           
                 try {
+                    do {
                 sim.menu();
                 opcion=InputHelper.GetIntWithBuffRead();
                     switch (opcion) {
@@ -961,12 +962,13 @@ public class Simulador {
                         default:
                             System.out.println("Esta opción no es válida");
                             break;
-                    }
+                        }
+                    } while (opcion!=14);
                 } catch (InputMismatchException e) {
                     System.out.println("Has introducido un tipo de dato incorrecto, introduce un número");
                 } finally {
                     InputHelper.CloseBuffReader();
                 }
-        } while (opcion!=14);
+        
     }
 }
