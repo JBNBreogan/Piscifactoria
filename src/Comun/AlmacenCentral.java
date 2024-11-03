@@ -182,5 +182,6 @@ public class AlmacenCentral {
     public void aumentarCapacidad(int capacidad) {
         this.capacidadcomidaanimal += capacidad;
         this.capacidadcomidavegetal += capacidad;
+        System.out.println("Capacidad aumentada en "+capacidad+". Capacidad total: "+capacidadcomidaanimal);
     }
 }

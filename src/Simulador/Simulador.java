@@ -499,7 +499,7 @@ public class Simulador {
                         break;
                     case 2:
                         System.out.println("a. Piscifactoria.");
-                        if(almacenCentral==null){
+                        if(almacenCentral!=null){
                             System.out.println("b. Almacén central.");
                         }
                         op2=InputHelper.ReadStringWithBuffRead();
