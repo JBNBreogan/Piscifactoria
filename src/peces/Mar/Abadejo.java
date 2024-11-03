@@ -29,7 +29,7 @@ public class Abadejo extends Carnivoro{
     @Override
     public int comer(int cantidad) {
         Random rnd = new Random();
-        if(rnd.nextInt(4) <= 2){
+        if(rnd.nextInt(4) <= 2  && cantidad>=2){
             this.Comido = true;
             return 2;
         } else if (cantidad >= 1){
