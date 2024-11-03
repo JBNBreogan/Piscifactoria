@@ -1,18 +1,15 @@
-## Getting Started
+## Introducción
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+La idea base del proyecto es crear un programa que simule una piscifactoría y toda la infraestructura que lo rodea, 
+incluyendo el ciclo de vida de los peces, su alimentación, reproducción y gestión de piscifactorías y edificios.
 
-## Folder Structure
+## Estructura de directorios
 
 The workspace contains two folders by default, where:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+- `src`: carpeta con el código fuente
+- `lib`: carpeta con las dependencias
 
 ## Dependency Management
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Se requiere la librería Orca_lib_1.2.1 para la ejecución del proyecto.
