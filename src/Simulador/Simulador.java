@@ -748,33 +748,37 @@ public class Simulador {
      * @param pisc Piscifactoia en la que añadir la comida
      * @throws IOException 
      */
-    public void anadirComidaPisc(Piscifactoria pisc) throws IOException{
-
+    public void anadirComidaPisc(Piscifactoria pisc) throws IOException {
         int[] cantTipo = elegirComida(pisc);
-
         int cant = cantTipo[0];
-        String tipo = ((cantTipo[1] == 0) ? "Animal" : "Vegetal");
-        if(tipo=="Animal" && cant>pisc.getMaxComidaAnimal()-pisc.getComidaAnimal()){
-            cant-=pisc.getMaxComidaAnimal()-pisc.getComidaAnimal();
-        }else if (tipo=="Vegetal" && cant>pisc.getMaxComidaVegetal()-pisc.getComidaVegetal()) {
-            cant-=pisc.getMaxComidaVegetal()-pisc.getComidaVegetal();
+        String tipo = (cantTipo[1] == 0) ? "Animal" : "Vegetal";
+    
+        if (tipo.equals("Animal")) {
+            cant = Math.min(cant, pisc.getMaxComidaAnimal() - pisc.getComidaAnimal());
+        } else if (tipo.equals("Vegetal")) {
+            cant = Math.min(cant, pisc.getMaxComidaVegetal() - pisc.getComidaVegetal());
         }
-
-        int precioComida=MonederoHelper.calcularDescuento(cant);
-
-        monedero.setMonedas(monedero.getMonedas()-precioComida);
+    
+        int precioComida = MonederoHelper.calcularDescuento(cant);
+        monedero.setMonedas(monedero.getMonedas() - precioComida);
+    
         System.out.println("Cantidad de comida añadida: ");
-        System.out.println("Añadida "+cant+" de comida "+tipo);
-        if(tipo=="Vegetal"){
-            pisc.addFood(cant,tipo);
-            System.out.println("Deposito de comida vegetal del la piscifactoria "+pisc.getNombre()+" al "+PorcentajeHelper.hacerProcentaje(cant, pisc.getMaxComidaVegetal())
-            +"% de su capacidad. ["+pisc.getComidaVegetal()+"/"+pisc.getMaxComidaVegetal()+"]");
-        }else if (tipo=="Animal") {
-            pisc.addFood(cant,tipo);
-            System.out.println("Deposito de comida animal del la piscifactoria "+pisc.getNombre()+" al "+PorcentajeHelper.hacerProcentaje(cant, pisc.getMaxComidaAnimal())
-            +"% de su capacidad. ["+pisc.getComidaAnimal()+"/"+pisc.getMaxComidaAnimal()+"]");
-        }   
-    }
+        System.out.println("Añadida " + cant + " de comida " + tipo);
+    
+        pisc.addFood(cant, tipo);
+    
+        if (tipo.equals("Vegetal")) {
+            int porcentaje = (int) PorcentajeHelper.hacerProcentaje(pisc.getComidaVegetal(), pisc.getMaxComidaVegetal());
+            System.out.println("Depósito de comida vegetal de la piscifactoría " + pisc.getNombre() +
+                               " al " + porcentaje + "% de su capacidad. [" +
+                               pisc.getComidaVegetal() + "/" + pisc.getMaxComidaVegetal() + "]");
+        } else if (tipo.equals("Animal")) {
+            int porcentaje = (int) PorcentajeHelper.hacerProcentaje(pisc.getComidaAnimal(), pisc.getMaxComidaAnimal());
+            System.out.println("Depósito de comida animal de la piscifactoría " + pisc.getNombre() +
+                               " al " + porcentaje + "% de su capacidad. [" +
+                               pisc.getComidaAnimal() + "/" + pisc.getMaxComidaAnimal() + "]");
+                            }
+        }
 
     /**
      * Método que añade al almacén central la cantidad del tipo de comida pasado por parámetro.
