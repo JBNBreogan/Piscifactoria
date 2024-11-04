@@ -349,7 +349,7 @@ public class Tanque {
                                     "Pejerrey" + "(" + AlmacenPropiedades.PEJERREY.getCoste() + ")",
                                     "Dorada" + "(" + AlmacenPropiedades.DORADA.getCoste() + ")",
                                     "Trucha arcoiris" + "(" + AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste() + ")" },
-                                    false);
+                                    true);
                             op = InputHelper.GetIntWithBuffRead();
                             switch (op) {
                                 case 1:
@@ -394,9 +394,11 @@ public class Tanque {
                                     } else {
                                         return new TruchaArcoiris(false);
                                     }
+                                case 0:
+                                    return null;
                                 default:
                                     System.out.println("Escoge un número válido");
-                                    break;
+                                    return null;
                             }
                         case MAR:
                             MenuHelper.mostrarMenu(
@@ -406,9 +408,8 @@ public class Tanque {
                                             "Rodaballo" + "(" + AlmacenPropiedades.RODABALLO.getCoste() + ")",
                                             "Sargo" + "(" + AlmacenPropiedades.SARGO.getCoste() + ")",
                                             "Dorada" + "(" + AlmacenPropiedades.DORADA.getCoste() + ")",
-                                            "Trucha arcoiris" + "(" + AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste()
-                                                    + ")" },
-                                    false);
+                                            "Trucha arcoiris" + "(" + AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste()+ ")" },
+                                        true);
                             op = InputHelper.GetIntWithBuffRead();
                             switch (op) {
                                 case 1:
@@ -453,7 +454,10 @@ public class Tanque {
                                     } else {
                                         return new TruchaArcoiris(false);
                                     }
+                                case 0:
+                                    return null;
                                 default:
+                                    System.out.println("Escoge un número válido");
                                     return null;
                             }
                         default:

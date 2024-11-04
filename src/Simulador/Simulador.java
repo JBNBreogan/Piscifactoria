@@ -451,7 +451,9 @@ public class Simulador {
                 switch (op) {
                     case 1:
                         System.out.println("a. Piscifactoría.");
-                        System.out.println("b. Almacén central.");
+                        if(almacenCentral==null){
+                            System.out.println("b. Almacén central.");
+                        }
                         op2=InputHelper.ReadStringWithBuffRead();
                         switch (op2) {
                             case "a":
@@ -806,10 +808,12 @@ public class Simulador {
         System.out.println("Añadida "+cant+" de comida "+tipo);
         if(tipo=="Vegetal"){
             almacenCentral.addFood(cant,tipo);
+            almacenCentral.repartir(piscifactorias);
             System.out.println("Deposito de comida vegetal del almacen central al"+PorcentajeHelper.hacerProcentaje(cant, almacenCentral.getCapacidadComidaVegetal())
             +"% de su capacidad. [ "+almacenCentral.getComidaVegetal()+"/"+almacenCentral.getCapacidadComidaVegetal()+"]");
         }else if (tipo=="Animal") {
             almacenCentral.addFood(cant,tipo);
+            almacenCentral.repartir(piscifactorias);
             System.out.println("Deposito de comida animal del almacen central al"+PorcentajeHelper.hacerProcentaje(cant, almacenCentral.getCapacidadComidaAnimal())
             +"% de su capacidad. [ "+almacenCentral.getComidaAnimal()+"/"+almacenCentral.getCapacidadComidaAnimal()+"]");
         }
