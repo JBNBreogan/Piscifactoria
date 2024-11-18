@@ -64,7 +64,7 @@ public class Transacciones {
 
     public void escribirArchivo(String texto){
         try {
-            bw.append(texto);
+            bw.write(texto);
             bw.flush();
         } catch (IOException e) {
             System.out.println("No se ha podido escribir en el archivo");
