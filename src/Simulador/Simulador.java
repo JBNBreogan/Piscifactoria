@@ -61,9 +61,9 @@ public class Simulador {
      */
     public void init() throws IOException{
         System.out.println("Nombre de la empresa:");
-        nombreEmpresa = InputHelper.ReadStringWithBuffRead();
+        nombreEmpresa = InputHelper.readStringWithBuffRead();
         System.out.println("Nombre de la piscifactoria");
-        String npisc= InputHelper.ReadStringWithBuffRead();
+        String npisc= InputHelper.readStringWithBuffRead();
         piscifactorias.add(new Piscifactoria(npisc,true));
         Monedero.getInstance().setMonedas(100);
     }
@@ -452,13 +452,13 @@ public class Simulador {
                     case 1:
                         System.out.println("a. Piscifactoría.");
                         System.out.println("b. Almacén central.");
-                        op2=InputHelper.ReadStringWithBuffRead();
+                        op2=InputHelper.readStringWithBuffRead();
                         switch (op2) {
                             case "a":
                                 System.out.println("Nombre de la piscifactoria: ");
-                                String nombrePisc=InputHelper.ReadStringWithBuffRead();
+                                String nombrePisc=InputHelper.readStringWithBuffRead();
                                 System.out.println("Tipo de la piscifactoria: (RIO, MAR)");
-                                String tipoPisc=InputHelper.ReadStringWithBuffRead();
+                                String tipoPisc=InputHelper.readStringWithBuffRead();
                                 boolean opcionValida=false;
                                 do {
                                     if(tipoPisc.equals("RIO")){
@@ -502,12 +502,12 @@ public class Simulador {
                         if(almacenCentral==null){
                             System.out.println("b. Almacén central.");
                         }
-                        op2=InputHelper.ReadStringWithBuffRead();
+                        op2=InputHelper.readStringWithBuffRead();
                         switch (op2) {
                             case "a":
                                 System.out.println("i.  Comprar tanque.");
                                 System.out.println("ii. Aumentar almacén comida.");
-                                op3=InputHelper.ReadStringWithBuffRead();
+                                op3=InputHelper.readStringWithBuffRead();
                                 switch (op3) {
                                     case "i":
                                         System.out.println("Elige la piscifactoria a la que le quieres añadir un tanque");
@@ -542,7 +542,7 @@ public class Simulador {
                                 break;
                             case "b":
                                 System.out.println("i. Aumentar capacidad");
-                                op3=InputHelper.ReadStringWithBuffRead();
+                                op3=InputHelper.readStringWithBuffRead();
                                 switch (op3) {
                                     case "i":
                                         if(MonederoHelper.monedasSuficientes(200)){
@@ -965,7 +965,7 @@ public class Simulador {
                 } catch (InputMismatchException e) {
                     System.out.println("Has introducido un tipo de dato incorrecto, introduce un número");
                 } finally {
-                    InputHelper.CloseBuffReader();
+                    InputHelper.closeBuffReader();
                 }
         } while (opcion!=14);
     }
