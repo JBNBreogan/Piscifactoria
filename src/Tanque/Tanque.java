@@ -350,7 +350,7 @@ public class Tanque {
                                     "Dorada" + "(" + AlmacenPropiedades.DORADA.getCoste() + ")",
                                     "Trucha arcoiris" + "(" + AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste() + ")" },
                                     false);
-                            op = InputHelper.GetIntWithBuffRead();
+                            op = InputHelper.getIntRanges(7,1);
                             switch (op) {
                                 case 1:
                                     if (this.pecesHembra() <= this.pecesMacho()) {
@@ -409,7 +409,7 @@ public class Tanque {
                                             "Trucha arcoiris" + "(" + AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste()
                                                     + ")" },
                                     false);
-                            op = InputHelper.GetIntWithBuffRead();
+                            op = InputHelper.getIntRanges(7,1);
                             switch (op) {
                                 case 1:
                                     if (this.pecesHembra() <= this.pecesMacho()) {
@@ -465,7 +465,7 @@ public class Tanque {
                 }else{
                     System.out.println("1. " + this.peces.get(0).getName());
                     System.out.println("0. Salir");
-                    op = InputHelper.GetIntWithBuffRead();
+                    op = InputHelper.getIntRanges(1);
                     if (op == 1) {
                         if (this.pecesHembra() <= this.pecesMacho()) {
                             return peces.get(0).reproducirse(true);
