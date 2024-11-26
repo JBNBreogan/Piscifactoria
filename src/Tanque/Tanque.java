@@ -154,6 +154,7 @@ public class Tanque {
 
         
         if (pecesHembra() > pecesMacho()) {
+            int pecesEnTanque=peces.size();
             if (pecesHembraFertiles >= 1 && pecesMachoFertiles >= 1) {
                 Iterator<Pez> iterator = peces.iterator();
                 while (iterator.hasNext()) {
@@ -161,14 +162,16 @@ public class Tanque {
                     if (pez.isFemale() && pez.isFertile() && pez.isAlive()) {
                         for (int i = 0; i < pez.getHuevos(); i++) {
                             if (i % 2 == 0) {
-                                if(peces.size()<maxPeces){
+                                if(pecesEnTanque<maxPeces){
                                     nuevosPeces.add(pez.reproducirse(true));
+                                    pecesEnTanque++;
                                     stats.registrarNacimiento(pez.getName());
                                     pez.notFertil();
                                     pez.resetPuesta();
                                 }
                             } else {
-                                if(peces.size()<maxPeces){
+                                if(pecesEnTanque<maxPeces){
+                                    pecesEnTanque++;
                                     nuevosPeces.add(pez.reproducirse(false));
                                     stats.registrarNacimiento(pez.getName());
                                     pez.notFertil();
@@ -180,6 +183,7 @@ public class Tanque {
                 }
             }
         } else {
+            int pecesEnTanque=peces.size();
             if (pecesHembraFertiles >= 1 && pecesMachoFertiles >= 1) {
                 Iterator<Pez> iterator = peces.iterator();
                 while (iterator.hasNext()) {
@@ -187,14 +191,16 @@ public class Tanque {
                     if (pez.isFemale() && pez.isFertile()) {
                         for (int i = 0; i < pez.getHuevos(); i++) {
                             if (i % 2 == 0) {
-                                if(peces.size()<maxPeces){
+                                if(pecesEnTanque<maxPeces){
                                     nuevosPeces.add(pez.reproducirse(true));
+                                    pecesEnTanque++;
                                     stats.registrarNacimiento(pez.getName());
                                     pez.notFertil();
                                     pez.resetPuesta();
                                 }
                             } else {
-                                if(peces.size()<maxPeces){
+                                if(pecesEnTanque<maxPeces){
+                                    pecesEnTanque++;
                                     nuevosPeces.add(pez.reproducirse(false));
                                     stats.registrarNacimiento(pez.getName());
                                     pez.notFertil();

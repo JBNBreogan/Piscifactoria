@@ -165,28 +165,28 @@ public class Piscifactoria {
         System.out.println("=============== "+getNombre()+" ===============");
         System.out.println("Tanques: "+tanques.size());
     
-        int ocupacionPorcentaje = (pecesMaxPiscifactoria() != 0) ? (pecesEnPiscifactoria() / pecesMaxPiscifactoria()) * 100 : 0;
-        System.out.println("Ocupación: "+pecesEnPiscifactoria()+"/"+pecesMaxPiscifactoria()+"("+ocupacionPorcentaje+"%)");
+        int ocupacionPorcentaje = (this.pecesMaxPiscifactoria() != 0) ? ((this.pecesEnPiscifactoria() * 100) / this.pecesMaxPiscifactoria()) : 0;
+        System.out.println("Ocupación: "+this.pecesEnPiscifactoria()+"/"+this.pecesMaxPiscifactoria()+"("+ocupacionPorcentaje+"%)");
     
-        int pecesVivosPorcentaje = (pecesEnPiscifactoria() != 0) ? (pecesVivosPiscifactoria() / pecesEnPiscifactoria()) * 100 : 0;
-        System.out.println("Peces vivos: "+pecesVivosPiscifactoria()+"/"+pecesEnPiscifactoria()+"("+pecesVivosPorcentaje+"%)");
+        int pecesVivosPorcentaje = (this.pecesEnPiscifactoria() != 0) ? ((this.pecesVivosPiscifactoria() * 100) / this.pecesEnPiscifactoria()) : 0;
+        System.out.println("Peces vivos: "+this.pecesVivosPiscifactoria()+"/"+this.pecesEnPiscifactoria()+"("+pecesVivosPorcentaje+"%)");
     
-        int pecesAlimentadosPorcentaje = ((pecesVivosPiscifactoria() != 0) ? (pecesAlimentadosPiscifactoria() / pecesVivosPiscifactoria()) * 100 : 0);
-        System.out.println("Peces alimentados: "+pecesAlimentadosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+pecesAlimentadosPorcentaje+"%)");
+        int pecesAlimentadosPorcentaje = ((this.pecesVivosPiscifactoria() != 0) ? ((this.pecesAlimentadosPiscifactoria() * 100) / this.pecesVivosPiscifactoria())  : 0);
+        System.out.println("Peces alimentados: "+this.pecesAlimentadosPiscifactoria()+"/"+this.pecesVivosPiscifactoria()+"("+pecesAlimentadosPorcentaje+"%)");
     
-        int pecesAdultosPorcentaje = (pecesVivosPiscifactoria() != 0) ? (pecesAdultosPiscifactoria() / pecesVivosPiscifactoria()) * 100 : 0;
-        System.out.println("Peces adultos: "+pecesAdultosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+pecesAdultosPorcentaje+"%)");
+        int pecesAdultosPorcentaje = (this.pecesVivosPiscifactoria() != 0) ? ((this.pecesAdultosPiscifactoria() * 100) / this.pecesVivosPiscifactoria()) : 0;
+        System.out.println("Peces adultos: "+this.pecesAdultosPiscifactoria()+"/"+this.pecesVivosPiscifactoria()+"("+pecesAdultosPorcentaje+"%)");
     
-        int hembrasMachosPorcentaje = (pecesMachoPiscifactoria() != 0) ? (pecesHembraPiscifactoria() / pecesMachoPiscifactoria()) * 100 : 0;
-        System.out.println("Hembras/Machos: "+pecesHembraPiscifactoria()+"/"+pecesMachoPiscifactoria()+"("+hembrasMachosPorcentaje+"%)");
+        int hembrasMachosPorcentaje = (this.pecesMachoPiscifactoria() != 0) ? ((this.pecesHembraPiscifactoria() * 100) / this.pecesMachoPiscifactoria()) : 0;
+        System.out.println("Hembras/Machos: "+this.pecesHembraPiscifactoria()+"/"+this.pecesMachoPiscifactoria()+"("+hembrasMachosPorcentaje+"%)");
     
-        int pecesFertilesPorcentaje = (pecesVivosPiscifactoria() != 0) ? (pecesFertilesPiscifactoria() / pecesVivosPiscifactoria()) * 100 : 0;
-        System.out.println("Fértiles: "+pecesFertilesPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+pecesFertilesPorcentaje+"%)");
+        int pecesFertilesPorcentaje = (this.pecesVivosPiscifactoria() != 0) ? ((this.pecesFertilesPiscifactoria() * 100) / this.pecesVivosPiscifactoria()) : 0;
+        System.out.println("Fértiles: "+this.pecesFertilesPiscifactoria()+"/"+this.pecesVivosPiscifactoria()+"("+pecesFertilesPorcentaje+"%)");
     
-        int comidaAnimalPorcentaje = (maxComidaAnimal != 0) ? (comidaAnimal / maxComidaAnimal) * 100 : 0;
+        int comidaAnimalPorcentaje = (this.maxComidaAnimal != 0) ? ((this.comidaAnimal * 100) / this.maxComidaAnimal) : 0;
         System.out.println("Almacén de comida animal: "+ this.comidaAnimal+"/"+this.maxComidaAnimal+"("+comidaAnimalPorcentaje+"%)");
     
-        int comidaVegetalPorcentaje = (maxComidaVegetal != 0) ? (comidaVegetal / maxComidaVegetal) * 100 : 0;
+        int comidaVegetalPorcentaje = (this.maxComidaVegetal != 0) ? ((this.comidaVegetal * 100) / this.maxComidaVegetal) : 0;
         System.out.println("Almacén de comida vegetal: "+ this.comidaVegetal+"/"+this.maxComidaVegetal+"("+comidaVegetalPorcentaje+"%)");
     }    
 
