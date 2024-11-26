@@ -19,7 +19,6 @@ import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import Comun.AlmacenCentral;
 import java.util.Random;
-import java.util.concurrent.TransferQueue;
 /**
  * Clase simulador
  * @author Cristian
@@ -157,17 +156,22 @@ public class Simulador {
      * Método que muestra el día actual, las monedas del sistema, el estado de todas las piscifactorías del sistema y en caso de tener 
      * la mejora del almacén central, muestra el estado de este también.
      */
-    public void showGeneralStatus(){
-
+    public void showGeneralStatus() {
         System.out.println("Empresa: " + this.nombreEmpresa);
-        System.out.println("Día: "+this.dias);
-        System.out.println("Monedas disponibles: "+monedero.getMonedas());
-        if(almacenCentral!=null){
-            System.out.println("Deposito de comida vegetal del almacen central al "+((almacenCentral.getComidaAnimal()/almacenCentral.getCapacidadComidaAnimal())*100)
-            +"% de su capacidad. ["+almacenCentral.getComidaAnimal()+"/"+almacenCentral.getCapacidadComidaAnimal()+"]");
-            System.out.println("Deposito de comida vegetal del almacen central al "+((almacenCentral.getComidaVegetal()/almacenCentral.getCapacidadComidaVegetal())*100)
-            +"% de su capacidad. ["+almacenCentral.getComidaVegetal()+"/"+almacenCentral.getCapacidadComidaVegetal()+"]");
+        System.out.println("Día: " + this.dias);
+        System.out.println("Monedas disponibles: " + monedero.getMonedas());
+        
+        if (almacenCentral != null) {
+            int comidaAnimalPorcentaje = (almacenCentral.getCapacidadComidaAnimal() != 0) ? ((almacenCentral.getComidaAnimal() * 100) / almacenCentral.getCapacidadComidaAnimal()) : 0;
+            System.out.println("Deposito de comida animal del almacen central al " + comidaAnimalPorcentaje 
+                    + "% de su capacidad. [" + almacenCentral.getComidaAnimal() + "/" + almacenCentral.getCapacidadComidaAnimal() + "]");
+            
+            int comidaVegetalPorcentaje = (almacenCentral.getCapacidadComidaVegetal() != 0) ? ((almacenCentral.getComidaVegetal() * 100) / almacenCentral.getCapacidadComidaVegetal()) : 0;
+            System.out.println("Deposito de comida vegetal del almacen central al " + comidaVegetalPorcentaje 
+                    + "% de su capacidad. [" + almacenCentral.getComidaVegetal() + "/" + almacenCentral.getCapacidadComidaVegetal() + "]");
         }
+    
+        // Mostrar el estado de cada piscifactoría
         for (Piscifactoria pisc : piscifactorias) {
             pisc.showStatus();
         }
@@ -338,7 +342,7 @@ public class Simulador {
 
                 Tanque tank =pisc.getTanques().get(pisc.selectTank());
 
-                Pez pezEleg=tank.showCompatible(stats);
+                Pez pezEleg=tank.showCompatible();
 
                 if(pezEleg!=null){
                     if(Monedero.monedasSuficientes(pezEleg.getCoste())){

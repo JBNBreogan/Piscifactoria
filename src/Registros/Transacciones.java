@@ -2,20 +2,12 @@ package Registros;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOError;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 
-import Piscifactoria.Piscifactoria;
-import Tanque.Tanque;
-import peces.Pez;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 

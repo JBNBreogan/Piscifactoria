@@ -71,18 +71,26 @@ public class Tanque {
      * Metodo que muestra las estadísticas del tanque.
      */
     public void showStatus(int numTanque) {
-        System.out.println("============Tanque " + (numTanque+1) + "============");
-        System.out.println("Ocupación: " + pecesEnTanque() + "/" + maxPeces + " (" 
-                + ((pecesEnTanque()/maxPeces)*100) + "%)");
-        System.out.println("Peces vivos: " + pecesVivos() + "/" + pecesEnTanque() + " (" 
-                + ((pecesVivos()/pecesEnTanque())*100) + "%)");
-        System.out.println("Peces alimentados: " + pecesAlimentados() + "/" + pecesVivos() + " (" 
-                + ((pecesAlimentados()/pecesVivos())*100) + "%)");
-        System.out.println("Peces adultos: " + pecesAdultos() + "/" + pecesVivos() + " (" 
-                + ((pecesAdultos()/pecesVivos())*100) + "%)");
+        System.out.println("============Tanque " + (numTanque + 1) + "============");
+    
+        int ocupacionPorcentaje = (maxPeces != 0) ? ((pecesEnTanque() * 100) / maxPeces) : 0;
+        System.out.println("Ocupación: " + pecesEnTanque() + "/" + maxPeces + " (" + ocupacionPorcentaje + "%)");
+    
+        int pecesVivosPorcentaje = (pecesEnTanque() != 0) ? ((pecesVivos() * 100) / pecesEnTanque()) : 0;
+        System.out.println("Peces vivos: " + pecesVivos() + "/" + pecesEnTanque() + " (" + pecesVivosPorcentaje + "%)");
+    
+        int pecesAlimentadosPorcentaje = (pecesVivos() != 0) ? ((pecesAlimentados() * 100) / pecesVivos()) : 0;
+        System.out.println("Peces alimentados: " + pecesAlimentados() + "/" + pecesVivos() + " (" + pecesAlimentadosPorcentaje + "%)");
+    
+        int pecesAdultosPorcentaje = (pecesVivos() != 0) ? ((pecesAdultos() * 100) / pecesVivos()) : 0;
+        System.out.println("Peces adultos: " + pecesAdultos() + "/" + pecesVivos() + " (" + pecesAdultosPorcentaje + "%)");
+    
         System.out.println("H/M: " + pecesHembra() + "/" + pecesMacho());
-        System.out.println("Fértiles: " + pecesFertiles() + "/" + pecesVivos());
+    
+        int pecesFertilesPorcentaje = (pecesVivos() != 0) ? ((pecesFertiles() * 100) / pecesVivos()) : 0;
+        System.out.println("Fértiles: " + pecesFertiles() + "/" + pecesVivos() + " (" + pecesFertilesPorcentaje + "%)");
     }
+    
 
     /**
      * Método que muestra las estadísticas de todos los peces del tanque.
@@ -337,7 +345,7 @@ public class Tanque {
      * @return El pez elegido
      * @throws IOException 
      */
-    public Pez showCompatible(estadisticas.Estadisticas stats) throws IOException {
+    public Pez showCompatible() throws IOException {
         int op = 0;
 
         do {

@@ -162,17 +162,33 @@ public class Piscifactoria {
      * totales, alimentados, adultos y fértiles.
      */
     public void showStatus(){
-            System.out.println("=============== "+getNombre()+" ===============");
-            System.out.println("Tanques: "+tanques.size());
-            System.out.println("Ocupación: "+pecesEnPiscifactoria()+"/"+pecesMaxPiscifactoria()+"("+((pecesEnPiscifactoria()/pecesMaxPiscifactoria())*100)+"%)");
-            System.out.println("Peces vivos: "+pecesVivosPiscifactoria()+"/"+pecesEnPiscifactoria()+"("+((pecesVivosPiscifactoria()/pecesEnPiscifactoria())*100)+"%)");
-            System.out.println("Peces alimentados: "+pecesAlimentadosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+((pecesAlimentadosPiscifactoria()/pecesVivosPiscifactoria())*100)+"%)");
-            System.out.println("Peces adultos: "+pecesAdultosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+((pecesAdultosPiscifactoria()/pecesVivosPiscifactoria())*100)+"%)");
-            System.out.println("Hembras/Machos: "+pecesHembraPiscifactoria()+"/"+pecesMachoPiscifactoria()+"("+((pecesHembraPiscifactoria()/pecesMachoPiscifactoria())*100)+"%)");
-            System.out.println("Fértiles: "+pecesFertilesPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+((pecesFertilesPiscifactoria()/pecesMaxPiscifactoria())*100)+"%)");
-            System.out.println("Almacén de comida animal: "+ this.comidaAnimal+"/"+this.maxComidaAnimal+"("+((this.comidaAnimal/this.maxComidaAnimal)*100)+"%)");
-            System.out.println("Almacén de comida vegetal: "+ this.comidaVegetal+"/"+this.maxComidaVegetal+"("+((this.comidaVegetal/this.maxComidaVegetal)*100)+"%)");
-    }
+        System.out.println("=============== "+getNombre()+" ===============");
+        System.out.println("Tanques: "+tanques.size());
+    
+        int ocupacionPorcentaje = (pecesMaxPiscifactoria() != 0) ? (pecesEnPiscifactoria() / pecesMaxPiscifactoria()) * 100 : 0;
+        System.out.println("Ocupación: "+pecesEnPiscifactoria()+"/"+pecesMaxPiscifactoria()+"("+ocupacionPorcentaje+"%)");
+    
+        int pecesVivosPorcentaje = (pecesEnPiscifactoria() != 0) ? (pecesVivosPiscifactoria() / pecesEnPiscifactoria()) * 100 : 0;
+        System.out.println("Peces vivos: "+pecesVivosPiscifactoria()+"/"+pecesEnPiscifactoria()+"("+pecesVivosPorcentaje+"%)");
+    
+        int pecesAlimentadosPorcentaje = ((pecesVivosPiscifactoria() != 0) ? (pecesAlimentadosPiscifactoria() / pecesVivosPiscifactoria()) * 100 : 0);
+        System.out.println("Peces alimentados: "+pecesAlimentadosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+pecesAlimentadosPorcentaje+"%)");
+    
+        int pecesAdultosPorcentaje = (pecesVivosPiscifactoria() != 0) ? (pecesAdultosPiscifactoria() / pecesVivosPiscifactoria()) * 100 : 0;
+        System.out.println("Peces adultos: "+pecesAdultosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+pecesAdultosPorcentaje+"%)");
+    
+        int hembrasMachosPorcentaje = (pecesMachoPiscifactoria() != 0) ? (pecesHembraPiscifactoria() / pecesMachoPiscifactoria()) * 100 : 0;
+        System.out.println("Hembras/Machos: "+pecesHembraPiscifactoria()+"/"+pecesMachoPiscifactoria()+"("+hembrasMachosPorcentaje+"%)");
+    
+        int pecesFertilesPorcentaje = (pecesVivosPiscifactoria() != 0) ? (pecesFertilesPiscifactoria() / pecesVivosPiscifactoria()) * 100 : 0;
+        System.out.println("Fértiles: "+pecesFertilesPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+pecesFertilesPorcentaje+"%)");
+    
+        int comidaAnimalPorcentaje = (maxComidaAnimal != 0) ? (comidaAnimal / maxComidaAnimal) * 100 : 0;
+        System.out.println("Almacén de comida animal: "+ this.comidaAnimal+"/"+this.maxComidaAnimal+"("+comidaAnimalPorcentaje+"%)");
+    
+        int comidaVegetalPorcentaje = (maxComidaVegetal != 0) ? (comidaVegetal / maxComidaVegetal) * 100 : 0;
+        System.out.println("Almacén de comida vegetal: "+ this.comidaVegetal+"/"+this.maxComidaVegetal+"("+comidaVegetalPorcentaje+"%)");
+    }    
 
     /**
      * Permite al usuario seleccionar un tanque de la piscifactoría. 
