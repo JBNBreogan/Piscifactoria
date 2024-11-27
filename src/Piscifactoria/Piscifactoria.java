@@ -169,9 +169,6 @@ public class Piscifactoria {
         int pecesVivosEnPisc=this.pecesVivosPiscifactoria();
         int pecesAlimentEnPisc=this.pecesAlimentadosPiscifactoria();
         int peceAdultEnPisc=this.pecesAdultosPiscifactoria();
-        int pecesHembraEnPisc=this.pecesHembraPiscifactoria();
-        int pecesMachoEnPisc=this.pecesMachoPiscifactoria();
-        int pecesFertilesEnPisc=this.pecesFertilesPiscifactoria();
     
         int ocupacionPorcentaje = (pecesMaxEnPisc != 0) ? ((pecesEnPisc * 100) / pecesMaxEnPisc) : 0;
         System.out.println("Ocupación: "+pecesEnPisc+"/"+pecesMaxEnPisc+"("+ocupacionPorcentaje+"%)");
@@ -185,11 +182,9 @@ public class Piscifactoria {
         int pecesAdultosPorcentaje = (pecesVivosEnPisc != 0) ? ((peceAdultEnPisc * 100) / pecesVivosEnPisc) : 0;
         System.out.println("Peces adultos: "+peceAdultEnPisc+"/"+pecesVivosEnPisc+"("+pecesAdultosPorcentaje+"%)");
     
-        int hembrasMachosPorcentaje = (pecesMachoEnPisc != 0) ? ((pecesHembraEnPisc * 100) / pecesMachoEnPisc) : 0;
-        System.out.println("Hembras/Machos: "+pecesHembraEnPisc+"/"+pecesMachoEnPisc+"("+hembrasMachosPorcentaje+"%)");
+        System.out.println("Hembras/Machos: "+this.pecesHembraPiscifactoria()+"/"+this.pecesMachoPiscifactoria());
     
-        int pecesFertilesPorcentaje = (pecesVivosEnPisc != 0) ? ((pecesFertilesEnPisc * 100) / pecesVivosEnPisc) : 0;
-        System.out.println("Fértiles: "+pecesFertilesEnPisc+"/"+pecesVivosEnPisc+"("+pecesFertilesPorcentaje+"%)");
+        System.out.println("Fértiles: "+this.pecesFertilesPiscifactoria()+"/"+pecesVivosEnPisc);
     
         int comidaAnimalPorcentaje = (this.maxComidaAnimal != 0) ? ((this.comidaAnimal * 100) / this.maxComidaAnimal) : 0;
         System.out.println("Almacén de comida animal: "+ this.comidaAnimal+"/"+this.maxComidaAnimal+"("+comidaAnimalPorcentaje+"%)");

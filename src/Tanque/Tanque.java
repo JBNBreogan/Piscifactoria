@@ -76,7 +76,6 @@ public class Tanque {
         int pecesEnTanque=this.pecesEnTanque();
         int pecesVivos = this.pecesVivos();
         int pecesAlimentados = this.pecesAlimentados();
-        int pecesFertiles = this.pecesFertiles();
         int pecesAdultos = this.pecesAdultos();
     
         int ocupacionPorcentaje = (this.maxPeces != 0) ? ((pecesEnTanque * 100) / this.maxPeces) : 0;
@@ -93,8 +92,7 @@ public class Tanque {
     
         System.out.println("H/M: " + pecesHembra() + "/" + pecesMacho());
     
-        int pecesFertilesPorcentaje = (pecesVivos != 0) ? ((pecesFertiles * 100) / pecesVivos) : 0;
-        System.out.println("Fértiles: " + pecesFertiles + "/" + pecesVivos + " (" + pecesFertilesPorcentaje + "%)");
+        System.out.println("Fértiles: " + this.pecesFertiles() + "/" + pecesVivos);
     }
     
 
