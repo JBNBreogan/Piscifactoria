@@ -1,4 +1,4 @@
-package Tanque;
+package tanque;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,9 +25,9 @@ import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import helpers.InputHelper;
 import helpers.MenuHelper;
-import Comun.AlmacenCentral;
-import Comun.Monedero;
 import Piscifactoria.Piscifactoria;
+import comun.AlmacenCentral;
+import comun.Monedero;
 
 /**
  * Clase que representa los tanques que albergan a los peces de una

@@ -1,4 +1,4 @@
-package Comun;
+package comun;
 
 import java.util.ArrayList;
 import Piscifactoria.Piscifactoria;

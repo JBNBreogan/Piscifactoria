@@ -1,14 +1,13 @@
-package Simulador;
+package simulador;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 
-import Comun.Monedero;
 import Piscifactoria.Piscifactoria;
-import Registros.Transacciones;
-import Tanque.Tanque;
+import comun.AlmacenCentral;
+import comun.Monedero;
 import estadisticas.Estadisticas;
 import helpers.*;
 import peces.Double.*;
@@ -17,7 +16,9 @@ import peces.Pez;
 import peces.Rio.*;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
-import Comun.AlmacenCentral;
+import registros.Transacciones;
+import tanque.Tanque;
+
 import java.util.Random;
 /**
  * Clase simulador

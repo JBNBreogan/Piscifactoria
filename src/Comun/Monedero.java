@@ -1,4 +1,4 @@
-package Comun;
+package comun;
 
 //Patron singleton
 

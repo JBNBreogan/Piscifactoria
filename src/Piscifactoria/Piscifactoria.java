@@ -2,10 +2,10 @@ package Piscifactoria;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import Comun.*;
-import Tanque.Tanque;
+import comun.*;
 import peces.Pez;
 import propiedades.CriaTipo;
+import tanque.Tanque;
 import helpers.*;
 
 /**

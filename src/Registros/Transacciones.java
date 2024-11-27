@@ -1,4 +1,4 @@
-package Registros;
+package registros;
 
 import java.io.BufferedWriter;
 import java.io.File;
