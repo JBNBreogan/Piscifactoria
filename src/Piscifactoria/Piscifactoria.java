@@ -164,24 +164,32 @@ public class Piscifactoria {
     public void showStatus(){
         System.out.println("=============== "+getNombre()+" ===============");
         System.out.println("Tanques: "+tanques.size());
+        int pecesMaxEnPisc=this.pecesMaxPiscifactoria();
+        int pecesEnPisc=this.pecesEnPiscifactoria();
+        int pecesVivosEnPisc=this.pecesVivosPiscifactoria();
+        int pecesAlimentEnPisc=this.pecesAlimentadosPiscifactoria();
+        int peceAdultEnPisc=this.pecesAdultosPiscifactoria();
+        int pecesHembraEnPisc=this.pecesHembraPiscifactoria();
+        int pecesMachoEnPisc=this.pecesMachoPiscifactoria();
+        int pecesFertilesEnPisc=this.pecesFertilesPiscifactoria();
     
-        int ocupacionPorcentaje = (this.pecesMaxPiscifactoria() != 0) ? ((this.pecesEnPiscifactoria() * 100) / this.pecesMaxPiscifactoria()) : 0;
-        System.out.println("Ocupación: "+this.pecesEnPiscifactoria()+"/"+this.pecesMaxPiscifactoria()+"("+ocupacionPorcentaje+"%)");
+        int ocupacionPorcentaje = (pecesMaxEnPisc != 0) ? ((pecesEnPisc * 100) / pecesMaxEnPisc) : 0;
+        System.out.println("Ocupación: "+pecesEnPisc+"/"+pecesMaxEnPisc+"("+ocupacionPorcentaje+"%)");
     
-        int pecesVivosPorcentaje = (this.pecesEnPiscifactoria() != 0) ? ((this.pecesVivosPiscifactoria() * 100) / this.pecesEnPiscifactoria()) : 0;
-        System.out.println("Peces vivos: "+this.pecesVivosPiscifactoria()+"/"+this.pecesEnPiscifactoria()+"("+pecesVivosPorcentaje+"%)");
+        int pecesVivosPorcentaje = (pecesEnPisc != 0) ? ((pecesVivosEnPisc * 100) / pecesEnPisc) : 0;
+        System.out.println("Peces vivos: "+pecesVivosEnPisc+"/"+pecesEnPisc+"("+pecesVivosPorcentaje+"%)");
     
-        int pecesAlimentadosPorcentaje = ((this.pecesVivosPiscifactoria() != 0) ? ((this.pecesAlimentadosPiscifactoria() * 100) / this.pecesVivosPiscifactoria())  : 0);
-        System.out.println("Peces alimentados: "+this.pecesAlimentadosPiscifactoria()+"/"+this.pecesVivosPiscifactoria()+"("+pecesAlimentadosPorcentaje+"%)");
+        int pecesAlimentadosPorcentaje = ((pecesVivosEnPisc != 0) ? ((pecesAlimentEnPisc * 100) / pecesVivosEnPisc)  : 0);
+        System.out.println("Peces alimentados: "+pecesAlimentEnPisc+"/"+pecesVivosEnPisc+"("+pecesAlimentadosPorcentaje+"%)");
     
-        int pecesAdultosPorcentaje = (this.pecesVivosPiscifactoria() != 0) ? ((this.pecesAdultosPiscifactoria() * 100) / this.pecesVivosPiscifactoria()) : 0;
-        System.out.println("Peces adultos: "+this.pecesAdultosPiscifactoria()+"/"+this.pecesVivosPiscifactoria()+"("+pecesAdultosPorcentaje+"%)");
+        int pecesAdultosPorcentaje = (pecesVivosEnPisc != 0) ? ((peceAdultEnPisc * 100) / pecesVivosEnPisc) : 0;
+        System.out.println("Peces adultos: "+peceAdultEnPisc+"/"+pecesVivosEnPisc+"("+pecesAdultosPorcentaje+"%)");
     
-        int hembrasMachosPorcentaje = (this.pecesMachoPiscifactoria() != 0) ? ((this.pecesHembraPiscifactoria() * 100) / this.pecesMachoPiscifactoria()) : 0;
-        System.out.println("Hembras/Machos: "+this.pecesHembraPiscifactoria()+"/"+this.pecesMachoPiscifactoria()+"("+hembrasMachosPorcentaje+"%)");
+        int hembrasMachosPorcentaje = (pecesMachoEnPisc != 0) ? ((pecesHembraEnPisc * 100) / pecesMachoEnPisc) : 0;
+        System.out.println("Hembras/Machos: "+pecesHembraEnPisc+"/"+pecesMachoEnPisc+"("+hembrasMachosPorcentaje+"%)");
     
-        int pecesFertilesPorcentaje = (this.pecesVivosPiscifactoria() != 0) ? ((this.pecesFertilesPiscifactoria() * 100) / this.pecesVivosPiscifactoria()) : 0;
-        System.out.println("Fértiles: "+this.pecesFertilesPiscifactoria()+"/"+this.pecesVivosPiscifactoria()+"("+pecesFertilesPorcentaje+"%)");
+        int pecesFertilesPorcentaje = (pecesVivosEnPisc != 0) ? ((pecesFertilesEnPisc * 100) / pecesVivosEnPisc) : 0;
+        System.out.println("Fértiles: "+pecesFertilesEnPisc+"/"+pecesVivosEnPisc+"("+pecesFertilesPorcentaje+"%)");
     
         int comidaAnimalPorcentaje = (this.maxComidaAnimal != 0) ? ((this.comidaAnimal * 100) / this.maxComidaAnimal) : 0;
         System.out.println("Almacén de comida animal: "+ this.comidaAnimal+"/"+this.maxComidaAnimal+"("+comidaAnimalPorcentaje+"%)");

@@ -72,23 +72,29 @@ public class Tanque {
      */
     public void showStatus(int numTanque) {
         System.out.println("============Tanque " + (numTanque + 1) + "============");
+
+        int pecesEnTanque=this.pecesEnTanque();
+        int pecesVivos = this.pecesVivos();
+        int pecesAlimentados = this.pecesAlimentados();
+        int pecesFertiles = this.pecesFertiles();
+        int pecesAdultos = this.pecesAdultos();
     
-        int ocupacionPorcentaje = (maxPeces != 0) ? ((pecesEnTanque() * 100) / maxPeces) : 0;
-        System.out.println("Ocupación: " + pecesEnTanque() + "/" + maxPeces + " (" + ocupacionPorcentaje + "%)");
+        int ocupacionPorcentaje = (this.maxPeces != 0) ? ((pecesEnTanque * 100) / this.maxPeces) : 0;
+        System.out.println("Ocupación: " + pecesEnTanque + "/" + this.maxPeces + " (" + ocupacionPorcentaje + "%)");
     
-        int pecesVivosPorcentaje = (pecesEnTanque() != 0) ? ((pecesVivos() * 100) / pecesEnTanque()) : 0;
-        System.out.println("Peces vivos: " + pecesVivos() + "/" + pecesEnTanque() + " (" + pecesVivosPorcentaje + "%)");
+        int pecesVivosPorcentaje = (pecesEnTanque != 0) ? ((pecesVivos * 100) / pecesEnTanque) : 0;
+        System.out.println("Peces vivos: " + pecesVivos + "/" + pecesEnTanque + " (" + pecesVivosPorcentaje + "%)");
     
-        int pecesAlimentadosPorcentaje = (pecesVivos() != 0) ? ((pecesAlimentados() * 100) / pecesVivos()) : 0;
-        System.out.println("Peces alimentados: " + pecesAlimentados() + "/" + pecesVivos() + " (" + pecesAlimentadosPorcentaje + "%)");
+        int pecesAlimentadosPorcentaje = (pecesVivos != 0) ? ((pecesAlimentados * 100) / pecesVivos) : 0;
+        System.out.println("Peces alimentados: " + pecesAlimentados + "/" + pecesVivos + " (" + pecesAlimentadosPorcentaje + "%)");
     
-        int pecesAdultosPorcentaje = (pecesVivos() != 0) ? ((pecesAdultos() * 100) / pecesVivos()) : 0;
-        System.out.println("Peces adultos: " + pecesAdultos() + "/" + pecesVivos() + " (" + pecesAdultosPorcentaje + "%)");
+        int pecesAdultosPorcentaje = (pecesVivos != 0) ? ((pecesAdultos * 100) / pecesVivos) : 0;
+        System.out.println("Peces adultos: " + pecesAdultos + "/" + pecesVivos + " (" + pecesAdultosPorcentaje + "%)");
     
         System.out.println("H/M: " + pecesHembra() + "/" + pecesMacho());
     
-        int pecesFertilesPorcentaje = (pecesVivos() != 0) ? ((pecesFertiles() * 100) / pecesVivos()) : 0;
-        System.out.println("Fértiles: " + pecesFertiles() + "/" + pecesVivos() + " (" + pecesFertilesPorcentaje + "%)");
+        int pecesFertilesPorcentaje = (pecesVivos != 0) ? ((pecesFertiles * 100) / pecesVivos) : 0;
+        System.out.println("Fértiles: " + pecesFertiles + "/" + pecesVivos + " (" + pecesFertilesPorcentaje + "%)");
     }
     
 
