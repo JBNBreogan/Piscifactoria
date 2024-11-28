@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 
-import Piscifactoria.Piscifactoria;
+import piscifactoria.Piscifactoria;
 import comun.AlmacenCentral;
 import comun.Monedero;
 import estadisticas.Estadisticas;
@@ -50,6 +50,8 @@ public class Simulador {
         AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
         AlmacenPropiedades.DORADA.getNombre()
     });
+    /**Objeto de la clase transacciones */
+    private Transacciones transacciones=null;
 
     /**
      * Constructor vacío de la clase simulador.
@@ -68,7 +70,7 @@ public class Simulador {
         String npisc= InputHelper.ReadStringWithBuffRead();
         piscifactorias.add(new Piscifactoria(npisc,true));
         Monedero.getInstance().setMonedas(100);  
-        Transacciones transacciones=Transacciones.getInstance(nombreEmpresa);
+        transacciones = Transacciones.getInstance(nombreEmpresa);
         transacciones.inicio(npisc, null, new String[]{AlmacenPropiedades.LUCIO_NORTE.getNombre(),
                                           AlmacenPropiedades.CARPA_PLATEADA.getNombre(),
                                           AlmacenPropiedades.CARPA.getNombre(),
@@ -352,6 +354,11 @@ public class Simulador {
                                     tank.getPeces().add(pezEleg);
                                     monedero.setMonedas(monedero.getMonedas()-pezEleg.getCoste());
                                     stats.registrarNacimiento(pezEleg.getName());
+                                    if(pezEleg.isFemale()){
+                                        transacciones.comprarPeces(pezEleg, 'H', pisc.getTanques().indexOf(tank), pisc, pezEleg.getCoste());
+                                    }else{
+                                        transacciones.comprarPeces(pezEleg, 'M', pisc.getTanques().indexOf(tank), pisc, pezEleg.getCoste());
+                                    }
                                     tank.showCapacity(pisc.getTanques().indexOf(tank));
                                     break;
                                 }else{
@@ -360,6 +367,11 @@ public class Simulador {
                                             tank.getPeces().add(pezEleg);
                                             monedero.setMonedas(monedero.getMonedas()-pezEleg.getCoste());
                                             stats.registrarNacimiento(pezEleg.getName());
+                                            if(pezEleg.isFemale()){
+                                                transacciones.comprarPeces(pezEleg, 'H', pisc.getTanques().indexOf(tank), pisc, pezEleg.getCoste());
+                                            }else{
+                                                transacciones.comprarPeces(pezEleg, 'M', pisc.getTanques().indexOf(tank), pisc, pezEleg.getCoste());
+                                            }
                                             tank.showCapacity(pisc.getTanques().indexOf(tank));
                                             break;
                                         }
@@ -661,7 +673,7 @@ public class Simulador {
     }
 
     /**
-     * Mçetodo que permite elegir el tipo de comida y la cantidad que quieres añadir.
+     * Metodo que permite elegir el tipo de comida y la cantidad que quieres añadir.
      * @param pisc 
      * @return cantidad y tipo de comida
      * @throws IOException 
@@ -788,6 +800,8 @@ public class Simulador {
         System.out.println("Añadida " + cant + " de comida " + tipo);
     
         pisc.addFood(cant, tipo);
+        transacciones.comprarComida(cant, tipo, precioComida, "piscifactoria", pisc);
+
     
         if (tipo.equals("Vegetal")) {
             int porcentaje = ((pisc.getComidaVegetal()/pisc.getMaxComidaVegetal())*100);
@@ -828,11 +842,13 @@ public class Simulador {
         System.out.println("Añadida "+cant+" de comida "+tipo);
         if(tipo=="Vegetal"){
             almacenCentral.addFood(cant,tipo);
+            transacciones.comprarComida(cant, tipo, precioComida, "almacen central", null);
             almacenCentral.repartir(piscifactorias);
             System.out.println("Deposito de comida vegetal del almacen central al"+((cant/almacenCentral.getCapacidadComidaVegetal())*100)
             +"% de su capacidad. [ "+almacenCentral.getComidaVegetal()+"/"+almacenCentral.getCapacidadComidaVegetal()+"]");
         }else if (tipo=="Animal") {
             almacenCentral.addFood(cant,tipo);
+            transacciones.comprarComida(cant, tipo, precioComida, "almacen central", null);
             almacenCentral.repartir(piscifactorias);
             System.out.println("Deposito de comida animal del almacen central al"+((cant/almacenCentral.getCapacidadComidaAnimal())*100)
             +"% de su capacidad. [ "+almacenCentral.getComidaAnimal()+"/"+almacenCentral.getCapacidadComidaAnimal()+"]");

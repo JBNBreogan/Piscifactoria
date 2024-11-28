@@ -25,7 +25,7 @@ import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import helpers.InputHelper;
 import helpers.MenuHelper;
-import Piscifactoria.Piscifactoria;
+import piscifactoria.Piscifactoria;
 import comun.AlmacenCentral;
 import comun.Monedero;
 
