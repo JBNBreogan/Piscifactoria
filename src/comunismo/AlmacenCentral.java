@@ -1,7 +1,8 @@
-package Comun;
+package comunismo;
 
 import java.util.ArrayList;
-import Piscifactoria.Piscifactoria;
+
+import piscifactorizacion.Piscifactoria;
 
 /**
  * Clase singleton que representa un almacén central para el manejo de comida animal
@@ -134,44 +135,13 @@ public class AlmacenCentral {
     * @param piscifactorias Lista de instancias de Piscifactoria para repartir alimentos.
     */
     public void repartir(ArrayList<Piscifactoria> piscifactorias) {
-        boolean todasllenas = false;
-        int comidaanimalarepartir = comidaAnimal / piscifactorias.size();
-        int comidavegetalarepartir = comidaVegetal / piscifactorias.size();
-
-        for (Piscifactoria piscifactoria : piscifactorias) {
-            if (piscifactoria.comidaAnimalLlena() && piscifactoria.comidaVegetalLlena()) {
-                todasllenas = true;
-            } else {
-                todasllenas = false;
-                break;
+        
+        int repartoAnimal = comidaAnimal/piscifactorias.size();
+        int repartoVegetal = comidaVegetal/piscifactorias.size();
+    
+            for (Piscifactoria pisci : piscifactorias) {
+                pisci.repartirPiscifactoria(repartoAnimal, repartoVegetal, this);
             }
-        }
-        if (!todasllenas || !(comidaAnimal == 0 && comidaVegetal == 0)) {
-            for (Piscifactoria piscifactoria : piscifactorias) {
-                if (piscifactoria.getMaxComidaAnimal() > comidaanimalarepartir + piscifactoria.getComidaAnimal()) {
-                    int restar = (piscifactoria.getMaxComidaAnimal() - piscifactoria.getComidaAnimal());
-                    if (restar > comidaanimalarepartir) {
-                        comidaAnimal -= comidaanimalarepartir;
-                        piscifactoria.addFood(comidaanimalarepartir, "Animal");
-                    } else {
-                        comidaAnimal -= restar;
-                        piscifactoria.addFood(restar, "Animal");
-                    }
-                }
-
-                if (piscifactoria.getMaxComidaVegetal() > comidavegetalarepartir + piscifactoria.getComidaVegetal()) {
-                    int restar = (piscifactoria.getMaxComidaVegetal() - piscifactoria.getComidaVegetal());
-                    if (restar > comidavegetalarepartir) {
-                        comidaVegetal -= comidavegetalarepartir;
-                        piscifactoria.addFood(comidavegetalarepartir, "Vegetal");
-                    } else {
-                        comidaVegetal -= restar;
-                        piscifactoria.addFood(restar, "Vegetal");
-                    }
-                }
-                repartir(piscifactorias);
-            }
-        }
     }
 
     /**
