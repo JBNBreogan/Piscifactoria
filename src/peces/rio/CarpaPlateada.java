@@ -1,26 +1,26 @@
-package peces.Rio;
+package peces.rio;
 
 import peces.Pez;
 import peces.Propiedades.Filtrador;
 import propiedades.AlmacenPropiedades;
 
 /**
- * Clase que representa a la Tilapia del Nilo
+ * Clase que representa a una Carpa Plateada
  * @author Breogan
  */
-public class TilapiaDelNilo extends Filtrador{
+public class CarpaPlateada extends Filtrador{
 
     /**
      * Constructor parametrizado
      * @param hembra Si es hembra
      */
-    public TilapiaDelNilo(boolean hembra){
-        super(AlmacenPropiedades.TILAPIA_NILO);
+    public CarpaPlateada(boolean hembra){
+        super(AlmacenPropiedades.CARPA_PLATEADA);
         this.Sexo = hembra;
     }
 
     @Override
     public Pez reproducirse(boolean hembra) {
-        return new TilapiaDelNilo(hembra);
+        return new CarpaPlateada(hembra);
     }
 }

@@ -1,4 +1,4 @@
-package peces.Mar;
+package peces.mar;
 
 import java.util.Random;
 

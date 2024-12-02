@@ -1,26 +1,26 @@
-package peces.Mar;
+package peces.doble;
 
 import peces.Pez;
-import peces.Propiedades.Carnivoro;
+import peces.Propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
 
 /**
- * Clase que representa al Besugo
+ * Clase que representa a la Dorada
  * @author Breogan
  */
-public class Besugo extends Carnivoro{
+public class Dorada extends Omnivoro{
 
     /**
      * Constructor parametrizado
      * @param hembra Si es hembra
      */
-    public Besugo(boolean hembra){
-        super(AlmacenPropiedades.BESUGO);
+    public Dorada(boolean hembra){
+        super(AlmacenPropiedades.DORADA);
         this.Sexo = hembra;
     }
 
     @Override
     public Pez reproducirse(boolean hembra) {
-        return new Besugo(hembra);
+        return new Dorada(hembra);
     }
 }
