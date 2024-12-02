@@ -134,7 +134,7 @@ public class AlmacenCentral {
     * @param piscifactorias Lista de instancias de Piscifactoria para repartir alimentos.
     */
     public void repartir(ArrayList<Piscifactoria> piscifactorias) {
-        boolean todasllenas = false;
+        /*boolean todasllenas = false;
         int comidaanimalarepartir = comidaAnimal / piscifactorias.size();
         int comidavegetalarepartir = comidaVegetal / piscifactorias.size();
 
@@ -171,7 +171,15 @@ public class AlmacenCentral {
                 }
                 repartir(piscifactorias);
             }
-        }
+        }*/
+        int repartoAnimal = comidaAnimal/piscifactorias.size();
+        int repartoVegetal = comidaVegetal/piscifactorias.size();
+    
+        //if(comidaAnimal > piscifactorias.size()){
+            for (Piscifactoria pisci : piscifactorias) {
+                pisci.repartirPiscifactoria(repartoAnimal, repartoVegetal, this);
+            }
+        //}
     }
 
     /**

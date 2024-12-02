@@ -465,5 +465,18 @@ public class Piscifactoria {
         return false;
     }
 
+    public void repartirPiscifactoria(int repartoAnimal, int repartoVegetal, AlmacenCentral almacenCentral) {
+        while (repartoAnimal != 0 && !comidaAnimalLlena())  {
+            this.comidaAnimal++;
+            repartoAnimal--;
+            almacenCentral.cogerComidaAnimal(1);
+        }
+        while (repartoVegetal != 0 && !comidaVegetalLlena())  {
+            this.comidaVegetal++;
+            repartoVegetal--;
+            almacenCentral.cogerComidaVegetal(1);
+        }
+    }
+
     
 }
