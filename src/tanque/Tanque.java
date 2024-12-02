@@ -1,4 +1,4 @@
-package Tanque;
+package tanque;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,15 +20,14 @@ import peces.Rio.CarpaPlateada;
 import peces.Rio.LucioDelNorte;
 import peces.Rio.Pejerrey;
 import peces.Rio.TilapiaDelNilo;
+import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import helpers.InputHelper;
 import helpers.MenuHelper;
-import helpers.PorcentajeHelper;
-import Comun.AlmacenCentral;
-import Comun.Monedero;
-import Piscifactoria.Piscifactoria;
+import comun.AlmacenCentral;
+import comun.Monedero;
 
 /**
  * Clase que representa los tanques que albergan a los peces de una
@@ -72,18 +71,30 @@ public class Tanque {
      * Metodo que muestra las estadísticas del tanque.
      */
     public void showStatus(int numTanque) {
-        System.out.println("============Tanque " + (numTanque+1) + "============");
-        System.out.println("Ocupación: " + pecesEnTanque() + "/" + maxPeces + " ("
-                + PorcentajeHelper.hacerProcentaje(pecesEnTanque(), maxPeces) + "%)");
-        System.out.println("Peces vivos: " + pecesVivos() + "/" + pecesEnTanque() + " ("
-                + PorcentajeHelper.hacerProcentaje(pecesVivos(), pecesEnTanque()) + "%)");
-        System.out.println("Peces alimentados: " + pecesAlimentados() + "/" + pecesVivos() + " ("
-                + PorcentajeHelper.hacerProcentaje(pecesAlimentados(), pecesVivos()) + "%)");
-        System.out.println("Peces adultos: " + pecesAdultos() + "/" + pecesVivos() + " ("
-                + PorcentajeHelper.hacerProcentaje(pecesAdultos(), pecesVivos()) + "%)");
-        System.out.println(pecesHembra() + "/" + pecesMacho() + " H/M");
-        System.out.println("Fértiles: " + pecesFertiles() + "/" + pecesVivos());
+        System.out.println("============Tanque " + (numTanque + 1) + "============");
+
+        int pecesEnTanque=this.pecesEnTanque();
+        int pecesVivos = this.pecesVivos();
+        int pecesAlimentados = this.pecesAlimentados();
+        int pecesAdultos = this.pecesAdultos();
+    
+        int ocupacionPorcentaje = (this.maxPeces != 0) ? ((pecesEnTanque * 100) / this.maxPeces) : 0;
+        System.out.println("Ocupación: " + pecesEnTanque + "/" + this.maxPeces + " (" + ocupacionPorcentaje + "%)");
+    
+        int pecesVivosPorcentaje = (pecesEnTanque != 0) ? ((pecesVivos * 100) / pecesEnTanque) : 0;
+        System.out.println("Peces vivos: " + pecesVivos + "/" + pecesEnTanque + " (" + pecesVivosPorcentaje + "%)");
+    
+        int pecesAlimentadosPorcentaje = (pecesVivos != 0) ? ((pecesAlimentados * 100) / pecesVivos) : 0;
+        System.out.println("Peces alimentados: " + pecesAlimentados + "/" + pecesVivos + " (" + pecesAlimentadosPorcentaje + "%)");
+    
+        int pecesAdultosPorcentaje = (pecesVivos != 0) ? ((pecesAdultos * 100) / pecesVivos) : 0;
+        System.out.println("Peces adultos: " + pecesAdultos + "/" + pecesVivos + " (" + pecesAdultosPorcentaje + "%)");
+    
+        System.out.println("H/M: " + pecesHembra() + "/" + pecesMacho());
+    
+        System.out.println("Fértiles: " + this.pecesFertiles() + "/" + pecesVivos);
     }
+    
 
     /**
      * Método que muestra las estadísticas de todos los peces del tanque.
@@ -98,7 +109,7 @@ public class Tanque {
      * Metodo que muestra información de la capacidad del tanque.
      */
     public void showCapacity(int numTanque) {
-        System.out.println("Tanque " + (numTanque+1) + " al " + PorcentajeHelper.hacerProcentaje(pecesEnTanque(), maxPeces)
+        System.out.println("Tanque " + (numTanque+1) + " al " + ((pecesEnTanque()/maxPeces)*100)
                 + "% de capacidad [" + pecesEnTanque() + "/" + maxPeces + "].");
     }
 
@@ -108,7 +119,7 @@ public class Tanque {
      * 
      * @param comida Cantidad de comida disponible en la piscifactoria
      */
-    public int[] nextDay(Piscifactoria pisci) {
+    public int[] nextDay(Piscifactoria pisci,estadisticas.Estadisticas stats) {
         int pecesHembraFertiles = 0;
         int pecesMachoFertiles = 0;
 
@@ -136,9 +147,9 @@ public class Tanque {
                 pisci.addFood(almacenCentral.cogerComidaAnimal(2), "Animal");
             }
 
-            if (pez.isFemale() && pez.isFertile()) {
+            if (pez.isFemale() && pez.isFertile() && pez.isAlive()) {
                 pecesHembraFertiles ++;
-            } else if (!pez.isFemale() && pez.isFertile()) {
+            } else if (!pez.isFemale() && pez.isFertile() && pez.isAlive()) {
                 pecesMachoFertiles ++;
             }
         }
@@ -147,21 +158,26 @@ public class Tanque {
 
         
         if (pecesHembra() > pecesMacho()) {
+            int pecesEnTanque=peces.size();
             if (pecesHembraFertiles >= 1 && pecesMachoFertiles >= 1) {
                 Iterator<Pez> iterator = peces.iterator();
                 while (iterator.hasNext()) {
                     Pez pez = iterator.next();
-                    if (pez.isFemale() && pez.isFertile()) {
+                    if (pez.isFemale() && pez.isFertile() && pez.isAlive()) {
                         for (int i = 0; i < pez.getHuevos(); i++) {
                             if (i % 2 == 0) {
-                                if(peces.size()<maxPeces){
+                                if(pecesEnTanque<maxPeces){
                                     nuevosPeces.add(pez.reproducirse(true));
+                                    pecesEnTanque++;
+                                    stats.registrarNacimiento(pez.getName());
                                     pez.notFertil();
                                     pez.resetPuesta();
                                 }
                             } else {
-                                if(peces.size()<maxPeces){
+                                if(pecesEnTanque<maxPeces){
+                                    pecesEnTanque++;
                                     nuevosPeces.add(pez.reproducirse(false));
+                                    stats.registrarNacimiento(pez.getName());
                                     pez.notFertil();
                                     pez.resetPuesta();
                                 }
@@ -171,6 +187,7 @@ public class Tanque {
                 }
             }
         } else {
+            int pecesEnTanque=peces.size();
             if (pecesHembraFertiles >= 1 && pecesMachoFertiles >= 1) {
                 Iterator<Pez> iterator = peces.iterator();
                 while (iterator.hasNext()) {
@@ -178,14 +195,18 @@ public class Tanque {
                     if (pez.isFemale() && pez.isFertile()) {
                         for (int i = 0; i < pez.getHuevos(); i++) {
                             if (i % 2 == 0) {
-                                if(peces.size()<maxPeces){
+                                if(pecesEnTanque<maxPeces){
                                     nuevosPeces.add(pez.reproducirse(true));
+                                    pecesEnTanque++;
+                                    stats.registrarNacimiento(pez.getName());
                                     pez.notFertil();
                                     pez.resetPuesta();
                                 }
                             } else {
-                                if(peces.size()<maxPeces){
+                                if(pecesEnTanque<maxPeces){
+                                    pecesEnTanque++;
                                     nuevosPeces.add(pez.reproducirse(false));
+                                    stats.registrarNacimiento(pez.getName());
                                     pez.notFertil();
                                     pez.resetPuesta();
                                 }
@@ -197,7 +218,7 @@ public class Tanque {
         }
         peces.addAll(nuevosPeces);
      
-        return ventaPecesOptimos();
+        return ventaPecesOptimos(stats);
     }
 
     /**
@@ -304,7 +325,7 @@ public class Tanque {
      * 
      * @return Valores de monedas obtenidas con la venta y número de peces vendidos
      */
-    public int[] ventaPecesOptimos() {
+    public int[] ventaPecesOptimos(estadisticas.Estadisticas stats) {
         int[] valores = new int[2];
     
         int monedasObtenidas = 0;
@@ -317,6 +338,7 @@ public class Tanque {
                 monedasObtenidas += pez.getMonedas();
                 iterator.remove();
                 pecesVendidos++;
+                stats.registrarVenta(pez.getName(), monedasObtenidas);
             }
         }
     
@@ -350,7 +372,7 @@ public class Tanque {
                                     "Dorada" + "(" + AlmacenPropiedades.DORADA.getCoste() + ")",
                                     "Trucha arcoiris" + "(" + AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste() + ")" },
                                     false);
-                            op = InputHelper.GetIntWithBuffRead();
+                            op = InputHelper.getIntRanges(7,1);
                             switch (op) {
                                 case 1:
                                     if (this.pecesHembra() <= this.pecesMacho()) {
@@ -394,9 +416,11 @@ public class Tanque {
                                     } else {
                                         return new TruchaArcoiris(false);
                                     }
+                                case 0:
+                                    return null;
                                 default:
                                     System.out.println("Escoge un número válido");
-                                    break;
+                                    return null;
                             }
                         case MAR:
                             MenuHelper.mostrarMenu(
@@ -409,7 +433,7 @@ public class Tanque {
                                             "Trucha arcoiris" + "(" + AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste()
                                                     + ")" },
                                     false);
-                            op = InputHelper.GetIntWithBuffRead();
+                            op = InputHelper.getIntRanges(7,1);
                             switch (op) {
                                 case 1:
                                     if (this.pecesHembra() <= this.pecesMacho()) {
@@ -453,7 +477,10 @@ public class Tanque {
                                     } else {
                                         return new TruchaArcoiris(false);
                                     }
+                                case 0:
+                                    return null;
                                 default:
+                                    System.out.println("Escoge un número válido");
                                     return null;
                             }
                         default:
@@ -465,7 +492,7 @@ public class Tanque {
                 }else{
                     System.out.println("1. " + this.peces.get(0).getName());
                     System.out.println("0. Salir");
-                    op = InputHelper.GetIntWithBuffRead();
+                    op = InputHelper.getIntRanges(1);
                     if (op == 1) {
                         if (this.pecesHembra() <= this.pecesMacho()) {
                             return peces.get(0).reproducirse(true);
@@ -514,4 +541,12 @@ public class Tanque {
         return tipoPez;
     }
 
+    /**
+     * Devuelve el tipo de tanque (RIO, MAR, DOUBLE).
+     * 
+     * @return el tipo de tanque 
+     */
+    public CriaTipo getTipoT() {
+        return tipoT;
+    }    
 }
