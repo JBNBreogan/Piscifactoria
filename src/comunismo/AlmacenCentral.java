@@ -1,8 +1,8 @@
-package comun;
+package comunismo;
 
 import java.util.ArrayList;
 
-import piscifactoria.Piscifactoria;
+import piscifactorizacion.Piscifactoria;
 
 /**
  * Clase singleton que representa un almacén central para el manejo de comida animal

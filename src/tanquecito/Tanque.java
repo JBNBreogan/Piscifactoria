@@ -1,9 +1,12 @@
-package tanque;
+package tanquecito;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
+
+import comunismo.AlmacenCentral;
+import comunismo.Monedero;
 import peces.Pez;
 import peces.Double.Dorada;
 import peces.Double.TruchaArcoiris;
@@ -20,14 +23,12 @@ import peces.Rio.CarpaPlateada;
 import peces.Rio.LucioDelNorte;
 import peces.Rio.Pejerrey;
 import peces.Rio.TilapiaDelNilo;
-import piscifactoria.Piscifactoria;
+import piscifactorizacion.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import helpers.InputHelper;
 import helpers.MenuHelper;
-import comun.AlmacenCentral;
-import comun.Monedero;
 
 /**
  * Clase que representa los tanques que albergan a los peces de una
