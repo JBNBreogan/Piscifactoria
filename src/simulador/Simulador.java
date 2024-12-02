@@ -1,4 +1,4 @@
-package simuladorcin;
+package simulador;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,20 +7,20 @@ import java.util.Iterator;
 
 import estadisticas.Estadisticas;
 import helpers.*;
-import peces.Double.*;
-import peces.Mar.*;
+import peces.doble.*;
+import peces.mar.*;
 import peces.Pez;
-import peces.Rio.*;
-import piscifactorizacion.Piscifactoria;
+import peces.rio.*;
+import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import registros.Transcripciones;
-import tanquecito.Tanque;
+import tanque.Tanque;
 
 import java.util.Random;
 
-import comunismo.AlmacenCentral;
-import comunismo.Monedero;
+import comun.AlmacenCentral;
+import comun.Monedero;
 /**
  * Clase simulador
  * @author Cristian

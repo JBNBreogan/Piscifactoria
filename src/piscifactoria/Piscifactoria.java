@@ -1,11 +1,11 @@
-package piscifactorizacion;
+package piscifactoria;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import comunismo.*;
+import comun.*;
 import peces.Pez;
 import propiedades.CriaTipo;
-import tanquecito.Tanque;
+import tanque.Tanque;
 import helpers.*;
 
 /**
