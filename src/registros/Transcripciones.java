@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
+import helpers.ErrorHelper;
 import peces.Pez;
 import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
@@ -47,14 +48,14 @@ public class Transcripciones {
                 try {
                     archivo.createNewFile();
                 } catch (IOException e) {
-                    System.out.println("No se ha podido crear el archivo de transacciones");
+                    ErrorHelper.writeError("No se ha podido crear el archivo de transacciones");
                 }
             }
 
             try {
                 bw=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(archivo, true),"UTF-8"));
             } catch (UnsupportedEncodingException | FileNotFoundException e) {
-                System.out.println("Error la escritura en el archivo");
+                ErrorHelper.writeError("Error la escritura en el archivo");
             }
 
         }
@@ -70,7 +71,7 @@ public class Transcripciones {
             bw.write(texto);
             bw.flush();
         } catch (IOException e) {
-            System.out.println("No se ha podido escribir en el archivo");
+            ErrorHelper.writeError("No se ha podido escribir en el archivo de transcripciones");
         }
         
     }

@@ -84,6 +84,8 @@ public class Simulador {
                                           AlmacenPropiedades.SARGO.getNombre(),
                                           AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
                                           AlmacenPropiedades.DORADA.getNombre()}, monedero.getMonedas(), nombreEmpresa);
+        ErrorHelper.createErrorFile();
+        ErrorHelper.writeError("prueba de error");
     }
 
     /**
