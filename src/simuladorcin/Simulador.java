@@ -1,25 +1,26 @@
-package simulador;
+package simuladorcin;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
-import piscifactoria.Piscifactoria;
-import comun.AlmacenCentral;
-import comun.Monedero;
+
 import estadisticas.Estadisticas;
 import helpers.*;
 import peces.Double.*;
 import peces.Mar.*;
 import peces.Pez;
 import peces.Rio.*;
-import piscifactoria.Piscifactoria;
+import piscifactorizacion.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import registros.Transcripciones;
-import tanque.Tanque;
+import tanquecito.Tanque;
 
 import java.util.Random;
+
+import comunismo.AlmacenCentral;
+import comunismo.Monedero;
 /**
  * Clase simulador
  * @author Cristian

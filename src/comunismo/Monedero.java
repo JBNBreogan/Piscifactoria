@@ -1,4 +1,4 @@
-package comun;
+package comunismo;
 
 //Patron singleton
 
