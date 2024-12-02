@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
-
+import piscifactoria.Piscifactoria;
 import comun.AlmacenCentral;
 import comun.Monedero;
 import estadisticas.Estadisticas;
@@ -846,13 +846,13 @@ public class Simulador {
             almacenCentral.addFood(cant,tipo);
             transcripciones.comprarComida(cant, tipo, precioComida, "almacen central", null);
             almacenCentral.repartir(piscifactorias);
-            System.out.println("Deposito de comida vegetal del almacen central al"+((cant/almacenCentral.getCapacidadComidaVegetal())*100)
+            System.out.println("Deposito de comida vegetal del almacen central al "+((cant*100/almacenCentral.getCapacidadComidaVegetal()))
             +"% de su capacidad. [ "+almacenCentral.getComidaVegetal()+"/"+almacenCentral.getCapacidadComidaVegetal()+"]");
         }else if (tipo=="Animal") {
             almacenCentral.addFood(cant,tipo);
             transcripciones.comprarComida(cant, tipo, precioComida, "almacen central", null);
             almacenCentral.repartir(piscifactorias);
-            System.out.println("Deposito de comida animal del almacen central al"+((cant/almacenCentral.getCapacidadComidaAnimal())*100)
+            System.out.println("Deposito de comida animal del almacen central al "+((cant*100/almacenCentral.getCapacidadComidaAnimal()))
             +"% de su capacidad. [ "+almacenCentral.getComidaAnimal()+"/"+almacenCentral.getCapacidadComidaAnimal()+"]");
         }
     }
