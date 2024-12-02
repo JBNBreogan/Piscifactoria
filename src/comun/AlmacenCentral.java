@@ -1,7 +1,7 @@
-package Comun;
+package comun;
 
 import java.util.ArrayList;
-import Piscifactoria.Piscifactoria;
+import piscifactroria.Piscifactoria;
 
 /**
  * Clase singleton que representa un almacén central para el manejo de comida animal
@@ -182,5 +182,6 @@ public class AlmacenCentral {
     public void aumentarCapacidad(int capacidad) {
         this.capacidadcomidaanimal += capacidad;
         this.capacidadcomidavegetal += capacidad;
+        System.out.println("Capacidad aumentada en "+capacidad+". Capacidad total: "+capacidadcomidaanimal);
     }
 }

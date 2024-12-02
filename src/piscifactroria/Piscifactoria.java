@@ -1,11 +1,11 @@
-package Piscifactoria;
+package piscifactroria;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import Comun.*;
-import Tanque.Tanque;
+import comun.*;
 import peces.Pez;
 import propiedades.CriaTipo;
+import tanque.Tanque;
 import helpers.*;
 
 /**
@@ -16,13 +16,37 @@ import helpers.*;
 
 public class Piscifactoria {
     
+    /**
+     * Nombre de la piscifactoría
+     */
     private String nombre;
+    /**
+     * Tipo de la piscifactoría
+     */
     private CriaTipo tipo;
+    /**
+     * Tanques de la piscifactoría
+     */
     private ArrayList<Tanque> tanques;
+    /**
+     * Cantidad de comidad vegetal
+     */
     private int comidaVegetal = 0;
+    /**
+     * Cantidad de comida animal
+     */
     private int comidaAnimal = 0;
+    /**
+     * Cantidad máxima de comida animal
+     */
     private int maxComidaAnimal;
+    /**
+     * Cantidad máxima de comida vegetal
+     */
     private int maxComidaVegetal;
+    /**
+    * Objeto Monedero que se encarga de gestionar el sistema de monedas de la piscifactoría.
+    */
     private Monedero monedero=Monedero.getInstance();
 
 
@@ -140,15 +164,34 @@ public class Piscifactoria {
     public void showStatus(){
         System.out.println("=============== "+getNombre()+" ===============");
         System.out.println("Tanques: "+tanques.size());
-        System.out.println("Ocupación: "+pecesEnPiscifactoria()+"/"+pecesMaxPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesEnPiscifactoria(), pecesMaxPiscifactoria())+")");
-        System.out.println("Peces vivos: "+pecesVivosPiscifactoria()+"/"+pecesEnPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesVivosPiscifactoria(), pecesEnPiscifactoria())+")");
-        System.out.println("Peces alimentados: "+pecesAlimentadosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesAlimentadosPiscifactoria(), pecesVivosPiscifactoria())+")");
-        System.out.println("Peces adultos: "+pecesAdultosPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesAdultosPiscifactoria(), pecesVivosPiscifactoria())+")");
-        System.out.println("Hembras/Machos: "+pecesHembraPiscifactoria()+"/"+pecesMachoPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesHembraPiscifactoria(), pecesMachoPiscifactoria())+")");
-        System.out.println("Fértiles: "+pecesFertilesPiscifactoria()+"/"+pecesVivosPiscifactoria()+"("+PorcentajeHelper.hacerProcentaje(pecesEnPiscifactoria(), pecesMaxPiscifactoria())+")");
-        System.out.println("Almacén de comida animal: "+ this.comidaAnimal+"/"+this.maxComidaAnimal+"("+PorcentajeHelper.hacerProcentaje(this.comidaAnimal, this.maxComidaAnimal)+")");
-        System.out.println("Almacén de comida vegetal: "+ this.comidaVegetal+"/"+this.maxComidaVegetal+"("+PorcentajeHelper.hacerProcentaje(this.comidaVegetal, this.maxComidaVegetal)+")");
-    }
+        int pecesMaxEnPisc=this.pecesMaxPiscifactoria();
+        int pecesEnPisc=this.pecesEnPiscifactoria();
+        int pecesVivosEnPisc=this.pecesVivosPiscifactoria();
+        int pecesAlimentEnPisc=this.pecesAlimentadosPiscifactoria();
+        int peceAdultEnPisc=this.pecesAdultosPiscifactoria();
+    
+        int ocupacionPorcentaje = (pecesMaxEnPisc != 0) ? ((pecesEnPisc * 100) / pecesMaxEnPisc) : 0;
+        System.out.println("Ocupación: "+pecesEnPisc+"/"+pecesMaxEnPisc+"("+ocupacionPorcentaje+"%)");
+    
+        int pecesVivosPorcentaje = (pecesEnPisc != 0) ? ((pecesVivosEnPisc * 100) / pecesEnPisc) : 0;
+        System.out.println("Peces vivos: "+pecesVivosEnPisc+"/"+pecesEnPisc+"("+pecesVivosPorcentaje+"%)");
+    
+        int pecesAlimentadosPorcentaje = ((pecesVivosEnPisc != 0) ? ((pecesAlimentEnPisc * 100) / pecesVivosEnPisc)  : 0);
+        System.out.println("Peces alimentados: "+pecesAlimentEnPisc+"/"+pecesVivosEnPisc+"("+pecesAlimentadosPorcentaje+"%)");
+    
+        int pecesAdultosPorcentaje = (pecesVivosEnPisc != 0) ? ((peceAdultEnPisc * 100) / pecesVivosEnPisc) : 0;
+        System.out.println("Peces adultos: "+peceAdultEnPisc+"/"+pecesVivosEnPisc+"("+pecesAdultosPorcentaje+"%)");
+    
+        System.out.println("Hembras/Machos: "+this.pecesHembraPiscifactoria()+"/"+this.pecesMachoPiscifactoria());
+    
+        System.out.println("Fértiles: "+this.pecesFertilesPiscifactoria()+"/"+pecesVivosEnPisc);
+    
+        int comidaAnimalPorcentaje = (this.maxComidaAnimal != 0) ? ((this.comidaAnimal * 100) / this.maxComidaAnimal) : 0;
+        System.out.println("Almacén de comida animal: "+ this.comidaAnimal+"/"+this.maxComidaAnimal+"("+comidaAnimalPorcentaje+"%)");
+    
+        int comidaVegetalPorcentaje = (this.maxComidaVegetal != 0) ? ((this.comidaVegetal * 100) / this.maxComidaVegetal) : 0;
+        System.out.println("Almacén de comida vegetal: "+ this.comidaVegetal+"/"+this.maxComidaVegetal+"("+comidaVegetalPorcentaje+"%)");
+    }    
 
     /**
      * Permite al usuario seleccionar un tanque de la piscifactoría. 
@@ -193,11 +236,11 @@ public class Piscifactoria {
     /**
     * Avanza un día en la piscifactoría, actualizando los tanques y el estado de los peces.
     */
-    public int[] nextDay(){
+    public int[] nextDay(estadisticas.Estadisticas stats){
         int totalpeces = 0;
         int totalmonedastanques = 0;        
         for (Tanque tanque : tanques) {
-            int[] currTankValues = tanque.nextDay(this);
+            int[] currTankValues = tanque.nextDay(this,stats);
             totalmonedastanques += currTankValues[0];
             totalpeces += currTankValues[1];
         }
@@ -362,11 +405,11 @@ public class Piscifactoria {
      * y la cantidad de monedas obtenidas.
      * @return Un array de dos enteros: la cantidad de monedas y el número de peces vendidos.
      */
-    public int[] venta(){
+    public int[] venta(estadisticas.Estadisticas stats){
         int totalpeces = 0;
         int totalmonedastanques = 0;
         for (Tanque tanque : tanques) {
-            int[] currTankValues = tanque.ventaPecesOptimos();
+            int[] currTankValues = tanque.ventaPecesOptimos(stats);
             totalmonedastanques += currTankValues[0];
             totalpeces += currTankValues[1];
         }
