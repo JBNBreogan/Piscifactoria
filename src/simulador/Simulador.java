@@ -952,7 +952,7 @@ public class Simulador {
                 try {
                     do {
                 sim.menu();
-                opcion=InputHelper.getIntRanges(13,1, new int[] {98,99});
+                opcion=InputHelper.getIntRanges(14,1, new int[] {98,99});
                     switch (opcion) {
                         case 1:
                             sim.showGeneralStatus();
