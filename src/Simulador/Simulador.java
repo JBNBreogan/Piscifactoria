@@ -844,13 +844,13 @@ public class Simulador {
             almacenCentral.addFood(cant,tipo);
             transcripciones.comprarComida(cant, tipo, precioComida, "almacen central", null);
             almacenCentral.repartir(piscifactorias);
-            System.out.println("Deposito de comida vegetal del almacen central al"+((cant*100/almacenCentral.getCapacidadComidaVegetal()))
+            System.out.println("Deposito de comida vegetal del almacen central al "+((cant*100/almacenCentral.getCapacidadComidaVegetal()))
             +"% de su capacidad. [ "+almacenCentral.getComidaVegetal()+"/"+almacenCentral.getCapacidadComidaVegetal()+"]");
         }else if (tipo=="Animal") {
             almacenCentral.addFood(cant,tipo);
             transcripciones.comprarComida(cant, tipo, precioComida, "almacen central", null);
             almacenCentral.repartir(piscifactorias);
-            System.out.println("Deposito de comida animal del almacen central al"+((cant*100/almacenCentral.getCapacidadComidaAnimal()))
+            System.out.println("Deposito de comida animal del almacen central al "+((cant*100/almacenCentral.getCapacidadComidaAnimal()))
             +"% de su capacidad. [ "+almacenCentral.getComidaAnimal()+"/"+almacenCentral.getCapacidadComidaAnimal()+"]");
         }
     }
