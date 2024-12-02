@@ -20,12 +20,12 @@ import peces.Rio.CarpaPlateada;
 import peces.Rio.LucioDelNorte;
 import peces.Rio.Pejerrey;
 import peces.Rio.TilapiaDelNilo;
+import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import helpers.InputHelper;
 import helpers.MenuHelper;
-import piscifactoria.Piscifactoria;
 import comun.AlmacenCentral;
 import comun.Monedero;
 
@@ -371,8 +371,8 @@ public class Tanque {
                                     "Pejerrey" + "(" + AlmacenPropiedades.PEJERREY.getCoste() + ")",
                                     "Dorada" + "(" + AlmacenPropiedades.DORADA.getCoste() + ")",
                                     "Trucha arcoiris" + "(" + AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste() + ")" },
-                                    true);
-                            op = InputHelper.GetIntWithBuffRead();
+                                    false);
+                            op = InputHelper.getIntRanges(7,1);
                             switch (op) {
                                 case 1:
                                     if (this.pecesHembra() <= this.pecesMacho()) {
@@ -430,9 +430,10 @@ public class Tanque {
                                             "Rodaballo" + "(" + AlmacenPropiedades.RODABALLO.getCoste() + ")",
                                             "Sargo" + "(" + AlmacenPropiedades.SARGO.getCoste() + ")",
                                             "Dorada" + "(" + AlmacenPropiedades.DORADA.getCoste() + ")",
-                                            "Trucha arcoiris" + "(" + AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste()+ ")" },
-                                        true);
-                            op = InputHelper.GetIntWithBuffRead();
+                                            "Trucha arcoiris" + "(" + AlmacenPropiedades.TRUCHA_ARCOIRIS.getCoste()
+                                                    + ")" },
+                                    false);
+                            op = InputHelper.getIntRanges(7,1);
                             switch (op) {
                                 case 1:
                                     if (this.pecesHembra() <= this.pecesMacho()) {
@@ -491,7 +492,7 @@ public class Tanque {
                 }else{
                     System.out.println("1. " + this.peces.get(0).getName());
                     System.out.println("0. Salir");
-                    op = InputHelper.GetIntWithBuffRead();
+                    op = InputHelper.getIntRanges(1);
                     if (op == 1) {
                         if (this.pecesHembra() <= this.pecesMacho()) {
                             return peces.get(0).reproducirse(true);
@@ -547,7 +548,5 @@ public class Tanque {
      */
     public CriaTipo getTipoT() {
         return tipoT;
-    }
-
-    
+    }    
 }

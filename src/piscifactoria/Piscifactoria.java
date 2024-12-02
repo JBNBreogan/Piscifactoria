@@ -202,7 +202,7 @@ public class Piscifactoria {
         for (Tanque tanque : tanques) {
             System.out.println("Tanque "+(tanques.indexOf(tanque)+1)+": "+tipo);
         }
-        int opcion = InputHelper.GetIntWithBuffRead();
+        int opcion = InputHelper.getIntRanges(tanques.size(),1);
         return opcion-1;
     }
 

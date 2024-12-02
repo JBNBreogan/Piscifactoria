@@ -13,6 +13,7 @@ import peces.Double.*;
 import peces.Mar.*;
 import peces.Pez;
 import peces.Rio.*;
+import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import registros.Transcripciones;
@@ -64,9 +65,9 @@ public class Simulador {
      */
     public void init() throws IOException{
         System.out.println("Nombre de la empresa:");
-        nombreEmpresa = InputHelper.ReadStringWithBuffRead();
+        nombreEmpresa = InputHelper.readStringWithBuffRead();
         System.out.println("Nombre de la piscifactoria");
-        String npisc= InputHelper.ReadStringWithBuffRead();
+        String npisc= InputHelper.readStringWithBuffRead();
         piscifactorias.add(new Piscifactoria(npisc,true));
         Monedero.getInstance().setMonedas(100);  
         transcripciones = Transcripciones.getInstance(nombreEmpresa);
@@ -118,6 +119,7 @@ public class Simulador {
             i+=1;
             System.out.println(i + ".- " + piscifactoria.getNombre() + " [" + pecesVivosEnSist() + "/" + pecesTotalesEnSist() + "/" + espacioEnPisci(piscifactoria)+"]");
         }
+
         
     }     
 
@@ -129,7 +131,7 @@ public class Simulador {
     public int selectPisc() throws IOException{
         try {
             menuPisc();
-            int opcion = InputHelper.GetIntWithBuffRead();
+            int opcion = InputHelper.getIntRanges(piscifactorias.size());
             return opcion-1;
         } catch (Exception e ) {
             System.out.println("Introduce un valor correcto");
@@ -241,7 +243,7 @@ public class Simulador {
                                           "Dorada",
                                           "Salir."},
                                            false);
-                opcion=InputHelper.GetIntWithBuffRead();
+                opcion=InputHelper.getIntRanges(13);
                 switch (opcion) {
                     case 1:
                         infoLib(AlmacenPropiedades.LUCIO_NORTE.getNombre());
@@ -478,7 +480,7 @@ public class Simulador {
                                                 "Mejorar edificios.",
                                                 "Cancelar."},
                                                  false);
-                op=InputHelper.GetIntWithBuffRead();
+                op=InputHelper.getIntRanges(3,1);
 
                 switch (op) {
                     case 1:
@@ -486,13 +488,13 @@ public class Simulador {
                         if(almacenCentral==null){
                             System.out.println("2. Almacén central.");
                         }
-                        op2=InputHelper.GetIntWithBuffRead();
+                        op2=InputHelper.getIntRanges(2,1);
                         switch (op2) {
                             case 1:
                                 System.out.println("Nombre de la piscifactoria: ");
-                                String nombrePisc=InputHelper.ReadStringWithBuffRead();
+                                String nombrePisc=InputHelper.readStringWithBuffRead();
                                 System.out.println("Tipo de la piscifactoria: (1.RIO, 2.MAR)");
-                                int tipoPisc=InputHelper.GetIntWithBuffRead();
+                                int tipoPisc=InputHelper.getIntRanges(2,1);
                                 boolean opcionValida=false;
                                 do {
                                     if(tipoPisc==1){
@@ -536,12 +538,12 @@ public class Simulador {
                         if(almacenCentral!=null){
                             System.out.println("2. Almacén central.");
                         }
-                        op2=InputHelper.GetIntWithBuffRead();
+                        op2=InputHelper.getIntRanges(2,1);
                         switch (op2) {
                             case 1:
                                 System.out.println("1. Comprar tanque.");
                                 System.out.println("2. Aumentar almacén comida.");
-                                op3=InputHelper.GetIntWithBuffRead();
+                                op3=InputHelper.getIntRanges(2,1);
                                 switch (op3) {
                                     case 1:
                                         System.out.println("Elige la piscifactoria a la que le quieres añadir un tanque");
@@ -576,7 +578,7 @@ public class Simulador {
                                 break;
                             case 2:
                                 System.out.println("1. Aumentar capacidad");
-                                op3=InputHelper.GetIntWithBuffRead();
+                                op3=InputHelper.getIntRanges(1,1);
                                 switch (op3) {
                                     case 1:
                                         if(Monedero.monedasSuficientes(200)){
@@ -691,7 +693,7 @@ public class Simulador {
                 MenuHelper.mostrarMenu(new String[]{"Animal",
                                                     "Vegetal"},
                                                     false);
-                opciontipo=InputHelper.GetIntWithBuffRead();
+                opciontipo=InputHelper.getIntRanges(2,1);
                 switch (opciontipo) {
                     case 1:
                         tipo=0;
@@ -720,7 +722,7 @@ public class Simulador {
                                                     "llenar"},
                                                     false);
 
-                opCant=InputHelper.GetIntWithBuffRead();
+                opCant=InputHelper.getIntRanges(4,1);
                 
                 switch (opCant) {
                     case 1:
@@ -949,7 +951,7 @@ public class Simulador {
                 try {
                     do {
                 sim.menu();
-                opcion=InputHelper.GetIntWithBuffRead();
+                opcion=InputHelper.getIntRanges(13,1, new int[] {98,99});
                     switch (opcion) {
                         case 1:
                             sim.showGeneralStatus();
@@ -989,7 +991,7 @@ public class Simulador {
                             break;
                         case 13:
                             System.out.println("Elige los dias que quieres pasar");
-                            int numDias=InputHelper.GetIntWithBuffRead();
+                            int numDias=InputHelper.getIntRanges(Integer.MAX_VALUE,1);
                             for (int i = 0; i < numDias; i++) {
                                 sim.nextDay();
                             }
@@ -1011,7 +1013,7 @@ public class Simulador {
                 } catch (InputMismatchException e) {
                     System.out.println("Has introducido un tipo de dato incorrecto, introduce un número");
                 } finally {
-                    InputHelper.CloseBuffReader();
+                    InputHelper.closeBuffReader();
                 }
         
     }
