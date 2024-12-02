@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 
-import piscifactroria.Piscifactoria;
 import comun.AlmacenCentral;
 import comun.Monedero;
 import estadisticas.Estadisticas;
@@ -14,6 +13,7 @@ import peces.Double.*;
 import peces.Mar.*;
 import peces.Pez;
 import peces.Rio.*;
+import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import registros.Transcripciones;

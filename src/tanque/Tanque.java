@@ -20,12 +20,12 @@ import peces.Rio.CarpaPlateada;
 import peces.Rio.LucioDelNorte;
 import peces.Rio.Pejerrey;
 import peces.Rio.TilapiaDelNilo;
+import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import helpers.InputHelper;
 import helpers.MenuHelper;
-import piscifactroria.Piscifactoria;
 import comun.AlmacenCentral;
 import comun.Monedero;
 
