@@ -1,26 +1,26 @@
-package peces.Double;
+package peces.rio;
 
 import peces.Pez;
-import peces.Propiedades.Omnivoro;
+import peces.propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
 /**
- * Clase que representa a la Dorada
+ * Clase que representa al Pejerrey
  * @author Breogan
  */
-public class Dorada extends Omnivoro{
+public class Pejerrey extends Carnivoro{
 
     /**
      * Constructor parametrizado
      * @param hembra Si es hembra
      */
-    public Dorada(boolean hembra){
-        super(AlmacenPropiedades.DORADA);
+    public Pejerrey(boolean hembra){
+        super(AlmacenPropiedades.PEJERREY);
         this.Sexo = hembra;
     }
 
     @Override
     public Pez reproducirse(boolean hembra) {
-        return new Dorada(hembra);
+        return new Pejerrey(hembra);
     }
 }

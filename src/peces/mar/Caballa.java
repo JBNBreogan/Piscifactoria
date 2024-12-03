@@ -1,26 +1,26 @@
-package peces.Mar;
+package peces.mar;
 
 import peces.Pez;
-import peces.Propiedades.Omnivoro;
+import peces.propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
 /**
- * Clase que representa al Sargo
+ * Clase que representa a la Caballa
  * @author Breogan
  */
-public class Sargo extends Omnivoro{
+public class Caballa extends Carnivoro{
 
     /**
      * Constructor parametrizado
      * @param hembra Si es hembra
      */
-    public Sargo(boolean hembra){
-        super(AlmacenPropiedades.SARGO);
+    public Caballa(boolean hembra){
+        super(AlmacenPropiedades.CABALLA);
         this.Sexo = hembra;
     }
 
     @Override
     public Pez reproducirse(boolean hembra) {
-        return new Sargo(hembra);
+        return new Caballa(hembra);
     }
 }

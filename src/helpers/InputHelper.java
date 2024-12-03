@@ -87,7 +87,6 @@ public class InputHelper {
     /**
      * Devuelve un String pasado por teclado
      * @return El String
-     * @throws IOException
      */
     public static String readStringWithBuffRead(){
         try {
@@ -98,7 +97,6 @@ public class InputHelper {
 
     /**
      * Cierra el flujo de BufferedReader
-     * @throws IOException
      */
     public static void closeBuffReader(){
         try {

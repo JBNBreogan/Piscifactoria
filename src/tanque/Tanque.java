@@ -1,29 +1,17 @@
-package tanquecito;
+package tanque;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 
-import comunismo.AlmacenCentral;
-import comunismo.Monedero;
+import comun.*;
 import peces.Pez;
-import peces.Double.Dorada;
-import peces.Double.TruchaArcoiris;
-import peces.Mar.Abadejo;
-import peces.Mar.Besugo;
-import peces.Mar.Caballa;
-import peces.Mar.Rodaballo;
-import peces.Mar.Sargo;
-import peces.Propiedades.Carnivoro;
-import peces.Propiedades.Filtrador;
-import peces.Propiedades.Omnivoro;
-import peces.Rio.Carpa;
-import peces.Rio.CarpaPlateada;
-import peces.Rio.LucioDelNorte;
-import peces.Rio.Pejerrey;
-import peces.Rio.TilapiaDelNilo;
-import piscifactorizacion.Piscifactoria;
+import peces.doble.*;
+import peces.mar.*;
+import peces.propiedades.*;
+import peces.rio.*;
+import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
@@ -354,9 +342,8 @@ public class Tanque {
      * Método que permite elegir entre los peces compatibles con el tanque.
      * 
      * @return El pez elegido
-     * @throws IOException 
      */
-    public Pez showCompatible() throws IOException {
+    public Pez showCompatible(){
         int op = 0;
 
         do {

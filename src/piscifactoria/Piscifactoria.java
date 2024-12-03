@@ -1,11 +1,11 @@
-package piscifactorizacion;
+package piscifactoria;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import comunismo.*;
+import comun.*;
 import peces.Pez;
 import propiedades.CriaTipo;
-import tanquecito.Tanque;
+import tanque.Tanque;
 import helpers.*;
 
 /**
@@ -196,9 +196,8 @@ public class Piscifactoria {
     /**
      * Permite al usuario seleccionar un tanque de la piscifactoría. 
      * @return El índice del tanque seleccionado.
-     * @throws IOException 
      */
-    public int selectTank() throws IOException{
+    public int selectTank(){
         for (Tanque tanque : tanques) {
             System.out.println("Tanque "+(tanques.indexOf(tanque)+1)+": "+tipo);
         }
@@ -226,9 +225,8 @@ public class Piscifactoria {
 
      /**
      * Muestra la capacidad del tanque seleccionado por el usuario.
-     * @throws IOException 
      */
-    public void showCapacity() throws IOException{
+    public void showCapacity(){
         Tanque t = tanques.get(selectTank());
         t.showCapacity(tanques.indexOf(t));
     }

@@ -1,4 +1,4 @@
-package peces.Propiedades;
+package peces.propiedades;
 
 import peces.Pez;
 import propiedades.PecesDatos;

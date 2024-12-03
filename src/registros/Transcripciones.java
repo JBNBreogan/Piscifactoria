@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
+import comun.AlmacenCentral;
+import helpers.ErrorHelper;
 import peces.Pez;
 import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
@@ -47,14 +49,14 @@ public class Transcripciones {
                 try {
                     archivo.createNewFile();
                 } catch (IOException e) {
-                    System.out.println("No se ha podido crear el archivo de transacciones");
+                    ErrorHelper.writeError("No se ha podido crear el archivo de transacciones");
                 }
             }
 
             try {
                 bw=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(archivo, true),"UTF-8"));
             } catch (UnsupportedEncodingException | FileNotFoundException e) {
-                System.out.println("Error la escritura en el archivo");
+                ErrorHelper.writeError("Error la escritura en el archivo");
             }
 
         }
@@ -70,7 +72,7 @@ public class Transcripciones {
             bw.write(texto);
             bw.flush();
         } catch (IOException e) {
-            System.out.println("No se ha podido escribir en el archivo");
+            ErrorHelper.writeError("No se ha podido escribir en el archivo de transcripciones");
         }
         
     }
@@ -130,11 +132,11 @@ public class Transcripciones {
 
     /**
      * Metodo que escribe en el archivo la infromacion de las compras de comida.
-     * @param cantComida Cantidad de comida
-     * @param tipoCom Tipo de comida
-     * @param monedas Monedas gastadas en la comida
-     * @param lugarGuardado Lugar donde se guardo
-     * @param pisc Piscifactoria en la que se guardo en caso de que no se haya guardado en el almacen central
+     * @param cantComida Cantidad de comida.
+     * @param tipoCom Tipo de comida.
+     * @param monedas Monedas gastadas en la comida.
+     * @param lugarGuardado Lugar donde se guardo.
+     * @param pisc Piscifactoria en la que se guardo en caso de que no se haya guardado en el almacen central.
      */
     public void comprarComida(int cantComida, String tipoCom, int monedas, String lugarGuardado ,Piscifactoria pisc){
         if(lugarGuardado.equals("almacen central")){
@@ -148,11 +150,11 @@ public class Transcripciones {
     
     /**
      * Metodo que escribe en el archivo la informacion de las compras de los peces.
-     * @param pez Pez que se compra
-     * @param sexo Sexo de pez comprado
-     * @param tanque Tanque en el que se añade el pez
-     * @param pisc Piscifactoria en la que se añade el pez
-     * @param monedas Monedas gastadas en el pez
+     * @param pez Pez que se compra.
+     * @param sexo Sexo de pez comprado.
+     * @param tanque Tanque en el que se añade el pez.
+     * @param pisc Piscifactoria en la que se añade el pez.
+     * @param monedas Monedas gastadas en el pez.
      */
     public void comprarPeces(Pez pez, char sexo, int tanque, Piscifactoria pisc, int monedas){
         this.escribirArchivo(pez.getName() + "("+sexo+") comprado por " + monedas + 
@@ -162,9 +164,9 @@ public class Transcripciones {
 
     /**
      * Metodo que escribe en el archivo la informacion de las ventas manuales de los peces.
-     * @param cantPeces Numero de peces vendidos
-     * @param monedas Cantidad de monedas obtenidas
-     * @param pisc Piscifactoria de la que se vendieron los peces
+     * @param cantPeces Numero de peces vendidos.
+     * @param monedas Cantidad de monedas obtenidas.
+     * @param pisc Piscifactoria de la que se vendieron los peces.
      */
     public void venderPeces(int cantPeces, int monedas, Piscifactoria pisc){
         this.escribirArchivo("Vendidos " + cantPeces + " peces de la piscifactoria "
@@ -172,12 +174,89 @@ public class Transcripciones {
     }
 
     /**
-     * Metodo que escribe en el archivo la informacion de la limpieza de un tanque
-     * @param tanque Tanque limpiado
-     * @param pisc Piscifactoria a la que pertenece el tanque
+     * Metodo que escribe en el archivo la informacion de la limpieza de un tanque.
+     * @param tanque Tanque limpiado.
+     * @param pisc Piscifactoria a la que pertenece el tanque.
      */
     public void limpiarTanque(int tanque, Piscifactoria pisc){
         this.escribirArchivo("Limpiando el tanque " + (tanque+1) 
         + " de la piscifactoria " + pisc.getNombre() + ".\n");
+    }
+
+    /**
+     * Metodo que escribe en el archivo la informacion del vaciado de los peces del tanque.
+     * @param tanque Tanque vaciado.
+     * @param pisc Piscifactoria a la que pertenece el tanque.
+     */
+    public void vaciarTanque(int tanque, Piscifactoria pisc){
+        this.escribirArchivo("Vaciado el tanque " + (tanque+1) 
+        + " de la piscifactoria " + pisc.getNombre() + ".\n");
+    }
+
+    /**
+     * Metodo que escribe en el archivo la informacion de la compra de algun edificio.
+     * @param pisc Edificio comprado.
+     * @param monedas Monedas gastadas en el edificio.
+     */
+    public void comprarEdificio(Piscifactoria pisc, int monedas){
+        if (pisc != null) {
+            if(pisc.getTipo() == CriaTipo.MAR){
+                this.escribirArchivo("Comprada la piscifactoria de " + CriaTipo.MAR.getName() + " " + pisc.getNombre() + " por " + monedas + " monedas.\n");
+            }else if(pisc.getTipo() == CriaTipo.RIO){
+                this.escribirArchivo("Comprada la piscifactoria de " + CriaTipo.RIO.getName() + " " + pisc.getNombre() + " por " + monedas + " monedas.\n");
+            }
+        }else{
+            this.escribirArchivo("Comprado el almacen central.\n");
+
+        }
+    }
+
+    /**
+     * Metodo que escribe en el archivo la informacion de las mejoras de los edificios.
+     * @param pisc Piscifactoria mejorada (en caso de mejorar un piscifactoria).
+     * @param monedas Monedas gastadas en la mejora.
+     * @param tanque Tanque de la piscifactoria añadido (en caso de añadir un tanque).
+     * @param almacenCentral Almacen central (en caso de ser mejorado).
+     */
+    public void mejorarEdificio(Piscifactoria pisc, int monedas, int tanque, AlmacenCentral almacenCentral){
+        if (pisc != null) {
+            tanque++;
+            if(tanque!=0){
+                this.escribirArchivo("Mejorada la piscifactoria " + pisc.getNombre() + " añadiendo el tanque " + tanque + " por " + monedas + " monedas.\n");
+            }else{
+                this.escribirArchivo("Mejorada la piscifactoria " + pisc.getNombre() +
+                " aumentando su capacidad de comida hasta un total de " + pisc.getMaxComidaAnimal() + " por " + monedas + " monedas.\n");
+            }
+        }else{
+            this.escribirArchivo("Mejorado el almacen central aumentando su capacidad de comida hasta un total de " +
+            almacenCentral.getCapacidadComidaAnimal() + " por " + monedas + " monedas.\n");
+        }
+    }
+
+    /**
+     * Metoto que escribe en el archivo la informacion de los peces totales al final del dia y las monedas obtenidas con la venta automatica y las monedas totales.
+     * @param numDia Dia terminado.
+     * @param pecesRio Número de peces de rio.
+     * @param pecesMar Número de peces de mar.
+     * @param monedasObtenidas Monedas obtenidas con la venta automatica.
+     * @param monedasTotales Monedas totales.
+     */
+    public void pasarDia(int numDia, int pecesRio, int pecesMar, int monedasObtenidas, int monedasTotales){
+        this.escribirArchivo("Fin del día " + numDia + ".\n" + "Peces actuales, " + pecesRio + " de río " + pecesMar + " de mar.\n" +
+        monedasObtenidas + " monedas ganadas por un total de " + monedasTotales + ".\n" + "--------------------\n" + ">>>Inicio del día " + (numDia+1) + ".\n");
+    }
+
+    /**
+     * Metodo que escribe en el archivo la informacion del uso de las opciones ocultas del programa
+     * @param pisc Piscifactoria a la que se añaden los peces(en caso de ser la opcion 98)
+     * @param monedasAñad Monedas añadidas(en caso de ser la opcion 99)
+     * @param monedas Monedas totales(en caso de ser la opcion 99)
+     */
+    public void ocultas(Piscifactoria pisc, int monedasAñad, int monedas){
+        if(pisc==null){
+            this.escribirArchivo("Añadidas " + monedasAñad + " monedas mediante la opción oculta. Monedas actuales, " + monedas + ".\n");
+        }else{
+            this.escribirArchivo("Añadidos peces mediante la opción oculta a la piscifactoría " + pisc.getNombre() + ".\n");
+        }
     }
 }
