@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
+import comun.AlmacenCentral;
 import helpers.ErrorHelper;
 import peces.Pez;
 import piscifactoria.Piscifactoria;
@@ -209,4 +210,28 @@ public class Transcripciones {
 
         }
     }
+
+    /**
+     * Metodo que escribe en el archivo la informacion de las mejoras de los edificios
+     * @param pisc Piscifactoria mejorada (en caso de mejorar un piscifactoria)
+     * @param monedas Monedas gastadas en la mejora
+     * @param tanque Tanque de la piscifactoria añadido (en caso de añadir un tanque)
+     * @param almacenCentral Almacen central (en caso de ser mejorado)
+     */
+    public void mejorarEdificio(Piscifactoria pisc, int monedas, int tanque, AlmacenCentral almacenCentral){
+        if (pisc != null) {
+            tanque++;
+            if(tanque!=0){
+                this.escribirArchivo("Mejorada la piscifactoria " + pisc.getNombre() + " añadiendo el tanque " + tanque + " por " + monedas + " monedas.\n");
+            }else{
+                this.escribirArchivo("Mejorada la piscifactoria " + pisc.getNombre() +
+                " aumentando su capacidad de comida hasta un total de " + pisc.getMaxComidaAnimal() + " por " + monedas + " monedas.\n");
+            }
+        }else{
+            this.escribirArchivo("Mejorado el almacen central aumentando su capacidad de comida hasta un total de " +
+            almacenCentral.getCapacidadComidaAnimal() + " por " + monedas + " monedas.\n");
+        }
+    }
+
+    
 }

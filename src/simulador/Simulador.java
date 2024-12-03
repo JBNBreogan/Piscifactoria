@@ -559,12 +559,18 @@ public class Simulador {
                                         Piscifactoria pisc =piscifactorias.get(selectPisc());
                                         if(pisc.getTipo()==CriaTipo.RIO){
                                             if (Monedero.monedasSuficientes(150) && pisc.getTanques().size()<10) {
-                                                pisc.getTanques().add(new Tanque(25,pisc.getTipo()));
+                                                monedero.setMonedas(monedero.getMonedas()-150);
+                                                Tanque tanque = new Tanque(25, pisc.getTipo());
+                                                pisc.getTanques().add(tanque);
+                                                this.transcripciones.mejorarEdificio(pisc, 150, pisc.getTanques().indexOf(tanque), null);
                                                 System.out.println("Tanque añadido");
                                             }
                                         }else if (pisc.getTipo()==CriaTipo.MAR) {
                                             if (Monedero.monedasSuficientes(600) && pisc.getTanques().size()<10) {
-                                                pisc.getTanques().add(new Tanque(100,pisc.getTipo()));
+                                                monedero.setMonedas(monedero.getMonedas()-600);
+                                                Tanque tanque = new Tanque(100, pisc.getTipo());
+                                                pisc.getTanques().add(tanque);
+                                                this.transcripciones.mejorarEdificio(pisc, 600, pisc.getTanques().indexOf(tanque), null);
                                                 System.out.println("Tanque añadido");
                                             }
                                         }
@@ -573,8 +579,10 @@ public class Simulador {
                                         System.out.println("Elige la piscifactoria a la que le quieres aumentar el almacen de comida");
                                         Piscifactoria pisc2 =piscifactorias.get(selectPisc());
                                         if(Monedero.monedasSuficientes(50)){
+                                            monedero.setMonedas(monedero.getMonedas()-50);
                                             pisc2.addFood(25, "Vegetal");
                                             pisc2.addFood(25, "Animal");
+                                            this.transcripciones.mejorarEdificio(pisc2, 50, -1, null);
                                         }
                                         break;
                                     default:
@@ -591,7 +599,9 @@ public class Simulador {
                                 switch (op3) {
                                     case 1:
                                         if(Monedero.monedasSuficientes(200)){
+                                            monedero.setMonedas(monedero.getMonedas()-200);
                                             almacenCentral.aumentarCapacidad(50);
+                                            this.transcripciones.mejorarEdificio(null, 200, -1, almacenCentral);
                                         }
                                         break;
                                     default:
