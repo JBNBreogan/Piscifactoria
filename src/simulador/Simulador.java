@@ -62,9 +62,8 @@ public class Simulador {
 
     /**
      * Método que inicializa el sistema, asignando el nombre del sistema, creando una piscifactoria y añadiendo 100 monedas.
-     * @throws IOException 
      */
-    public void init() throws IOException{
+    public void init(){
         System.out.println("Nombre de la empresa:");
         nombreEmpresa = InputHelper.readStringWithBuffRead();
         System.out.println("Nombre de la piscifactoria");
@@ -129,34 +128,22 @@ public class Simulador {
     /**
      * Método que muestra el menú de piscifactorías y permite seleccionar una de ellas.
      * @return El número que ocupa en las lista de piscifactorias la seleccionada
-     * @throws IOException 
      */
-    public int selectPisc() throws IOException{
-        try {
-            menuPisc();
-            int opcion = InputHelper.getIntRanges(piscifactorias.size());
-            return opcion-1;
-        } catch (Exception e ) {
-            System.out.println("Introduce un valor correcto");
-            selectPisc();
-            return 0;
-        }
+    public int selectPisc(){
+        menuPisc();
+        int opcion = InputHelper.getIntRanges(piscifactorias.size());
+        return opcion-1;
+        
     }
     
     /**
      * Método que muestra el menú de tanques y permite seleccionar un tanque, mostrando un menú de los disponibles.
      * @return El número que ocupa en la lista de tanques de una pisicfactoria el tanque seleccionado
-     * @throws IOException 
      */
-    public Tanque selectTank() throws IOException{
-        try {
-            Piscifactoria pisc = piscifactorias.get(selectPisc());
-            Tanque tank= pisc.getTanques().get(pisc.selectTank());
-            return tank;
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Introduce un número válido, krak");
-            return null;
-        }
+    public Tanque selectTank(){
+        Piscifactoria pisc = piscifactorias.get(selectPisc());
+        Tanque tank= pisc.getTanques().get(pisc.selectTank());
+        return tank;
     }
 
     /**
@@ -186,33 +173,22 @@ public class Simulador {
     
     /**
      * Método que permite seleccionar una piscifactoria y muestra su estado.
-     * @throws IOException 
      */
-    public void showSpecificStatus() throws IOException{
-        try {
-            Piscifactoria pisc = piscifactorias.get(selectPisc());
-        
-            pisc.showTankStatus();
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Introduce un número válido, krak");
-        }
-        
+    public void showSpecificStatus(){
+        Piscifactoria pisc = piscifactorias.get(selectPisc());
+        pisc.showTankStatus();
     }
 
     /**
      * Método que permite seleccionar un tanque y muestra su estado.
-     * @throws IOException 
      */
-    public void showTankStatus() throws IOException{
-        try {
-            Piscifactoria pisc = piscifactorias.get(selectPisc());
+    public void showTankStatus(){
 
-            Tanque tank = pisc.getTanques().get(pisc.selectTank());
+        Piscifactoria pisc = piscifactorias.get(selectPisc());
 
-            tank.showStatus(pisc.getTanques().indexOf(tank));
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Introduce un número válido, krak");
-        }
+        Tanque tank = pisc.getTanques().get(pisc.selectTank());
+
+        tank.showStatus(pisc.getTanques().indexOf(tank));
     }
 
     /**
@@ -226,9 +202,8 @@ public class Simulador {
     /**
      * Método que muestra una lista de los peces disponibles en el sistema y permite elegir uno.
      * @return El tipo de pez elegido
-     * @throws IOException 
      */
-    public Pez showIctio() throws IOException{
+    public Pez showIctio(){
         int opcion=0;
         do {
             try {
@@ -320,9 +295,8 @@ public class Simulador {
 
     /**
      * Método que permite seleccionar una piscifactoria, seleccionar el tipo de comida que quieres añadir, seleccionar la cantidad de comida, y la añade.
-     * @throws IOException 
      */
-    public void addFood() throws IOException{
+    public void addFood(){
         if(almacenCentral!=null){
             anadirComidaAlm();
         }else{
@@ -338,9 +312,8 @@ public class Simulador {
     /**
      * Método que muestra las piscifactorias del sistema permite elegir una, despues muestra los tanques del sistema y permite elegir uno y después muestra
      * los posibles peces a añadir en ese tranque, permite elegir uno y lo añade.
-     * @throws IOException 
      */
-    public void addFish() throws IOException{
+    public void addFish(){
         boolean llena=false;
 
         do {
@@ -398,9 +371,8 @@ public class Simulador {
 
     /**
      * Método que permite seleccionar una piscifactoría y vende todos los peces adultos de esta, mostrando al final un mensaje de los peces vendidos y las monedas obtenidas con ello.
-     * @throws IOException 
      */
-    public void sell() throws IOException{
+    public void sell(){
         try {
             Piscifactoria pisc = piscifactorias.get(selectPisc());
 
@@ -430,9 +402,8 @@ public class Simulador {
 
     /**
      * Método que elimina los peces muertos de todos los tanques.
-     * @throws IOException 
      */
-    public void cleanTank() throws IOException{
+    public void cleanTank(){
         try {
             Piscifactoria pisc = piscifactorias.get(selectPisc());
 
@@ -455,9 +426,8 @@ public class Simulador {
 
     /**
      * Método que permite seleccionar un tanque, y elimina todos los peces del mismo independientemente de su estado.
-     * @throws IOException 
      */
-    public void emptyTank() throws IOException{
+    public void emptyTank(){
         try {
             Piscifactoria pisc = piscifactorias.get(selectPisc());
             Tanque tank=pisc.getTanques().get(pisc.selectTank());
@@ -470,9 +440,8 @@ public class Simulador {
 
     /**
      * Método que muestra un menú de mejoras disponibles para el sistema.
-     * @throws IOException 
      */
-    public void upgrade() throws IOException{
+    public void upgrade(){
 
         int op=0;
         int op2=0;
@@ -681,9 +650,8 @@ public class Simulador {
      * Metodo que permite elegir el tipo de comida y la cantidad que quieres añadir.
      * @param pisc 
      * @return cantidad y tipo de comida
-     * @throws IOException 
      */
-    public int[] elegirComida(Piscifactoria pisc) throws IOException{
+    public int[] elegirComida(Piscifactoria pisc){
         int opciontipo;
         int opCant;
         int tipo=0;
@@ -785,9 +753,8 @@ public class Simulador {
      * @param cant Número de comida a añadir
      * @param tipo Tipo de comida a añadir
      * @param pisc Piscifactoia en la que añadir la comida
-     * @throws IOException 
      */
-    public void anadirComidaPisc(Piscifactoria pisc) throws IOException {
+    public void anadirComidaPisc(Piscifactoria pisc){
         int[] cantTipo = elegirComida(pisc);
         int cant = cantTipo[0];
         String tipo = (cantTipo[1] == 0) ? "Animal" : "Vegetal";
@@ -826,9 +793,8 @@ public class Simulador {
      * @param cant Número de comida a añadir
      * @param tipo Tipo de comida a añadir
      * @param almacenCentral 
-     * @throws IOException 
      */
-    private void anadirComidaAlm() throws IOException {
+    private void anadirComidaAlm(){
         int[] cantTipo = elegirComida(null);
 
         int cant = cantTipo[0];
@@ -862,9 +828,8 @@ public class Simulador {
 
     /**
      * Método que añade cuatro peces aleatorios a una piscifactoria seleccionada.
-     * @throws IOException 
      */
-    public void truco98() throws IOException{
+    public void truco98() {
         try {
             Piscifactoria pisc=piscifactorias.get(selectPisc());
             Random random=new Random();
@@ -943,9 +908,8 @@ public class Simulador {
     /**
      * Ejecuta toda la lógica del programa.
      * @param args
-     * @throws IOException 
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         Monedero monedero=Monedero.getInstance();
         Simulador sim=new Simulador();
         sim.init();
