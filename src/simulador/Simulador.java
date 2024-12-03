@@ -120,9 +120,8 @@ public class Simulador {
       
         for (Piscifactoria piscifactoria : piscifactorias) {
             i+=1;
-            System.out.println(i + ".- " + piscifactoria.getNombre() + " [" + pecesVivosEnSist() + "/" + pecesTotalesEnSist() + "/" + espacioEnPisci(piscifactoria)+"]");
+            System.out.println(i + ".- " + piscifactoria.getNombre() + " [" + piscifactoria.pecesVivosPiscifactoria() + "/" + piscifactoria.pecesEnPiscifactoria() + "/" + espacioEnPisci(piscifactoria)+"]");
         }
-
         
     }     
 
@@ -302,6 +301,9 @@ public class Simulador {
      * en todo el sistema y las monedas obtenidas con ello.
      */
     public void nextDay(){
+        int numPecesRio=0;
+        int numPecesMar=0;
+
         dias++;
         if (almacenCentral!=null) {
             almacenCentral.repartir(piscifactorias);
@@ -313,9 +315,28 @@ public class Simulador {
             int[] currPiscValues=piscifactoria.nextDay(stats);
             pecesVendidos+=currPiscValues[1];
             monedasObtenidas+=currPiscValues[0];
+
+            if(piscifactoria.getTipo()==CriaTipo.RIO){
+                for (Tanque tanque : piscifactoria.getTanques()) {
+                    for (Pez pez : tanque.getPeces()) {
+                        if(pez.isAlive()){
+                            numPecesRio++;
+                        }
+                    }
+                }
+            }else if(piscifactoria.getTipo()==CriaTipo.MAR){
+                for (Tanque tanque : piscifactoria.getTanques()) {
+                    for (Pez pez : tanque.getPeces()) {
+                        if(pez.isAlive()){
+                            numPecesMar++;
+                        }
+                    }
+                }
+            }
         }
 
         System.out.println("Total piscifactorias: "+pecesVendidos + " peces óptimos vendidos por un total de "+monedasObtenidas+ " monedas");
+        this.transcripciones.pasarDia((dias-1), numPecesRio, numPecesMar, monedasObtenidas, monedero.getMonedas());
     }
 
     /**
@@ -516,7 +537,7 @@ public class Simulador {
                                             opcionValida=true;
                                             monedero.setMonedas(monedero.getMonedas()-(2000*piscifactorias.size()));
                                             piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.MAR));
-                                            this.transcripciones.comprarEdificio(new Piscifactoria(nombrePisc, CriaTipo.MAR), 2000*piscifactorias.size());
+                                            this.transcripciones.comprarEdificio(new Piscifactoria(nombrePisc, CriaTipo.MAR), 2000*(piscifactorias.size()-1));
                                             System.out.println("Piscifactoria añadida");
                                         }else{
                                             break;
@@ -951,9 +972,19 @@ public class Simulador {
                     }
                 }
             }
+            this.transcripciones.ocultas(pisc, 0, 0);
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Introduce un número válido, krak");
         }
+    }
+
+    /**
+     * Metodo qe permite añadir 100 monedas la monedero
+     */
+    public void truco99(){
+        monedero.setMonedas(monedero.getMonedas()+1000);
+        this.transcripciones.ocultas(null, 1000, monedero.getMonedas());
+        System.out.println("Añadidas 1000 monedas");
     }
 
     /**
@@ -962,11 +993,9 @@ public class Simulador {
      * @throws IOException 
      */
     public static void main(String[] args) throws IOException {
-        Monedero monedero=Monedero.getInstance();
         Simulador sim=new Simulador();
         sim.init();
         int opcion=0;
-           
                 try {
                     do {
                 sim.menu();
@@ -1021,8 +1050,7 @@ public class Simulador {
                             sim.truco98();
                             break;
                         case 99:
-                            monedero.setMonedas(monedero.getMonedas()+1000);
-                            System.out.println("Añadidas 1000 monedas");
+                            sim.truco99();
                             break;
                         default:
                             System.out.println("Esta opción no es válida");
@@ -1034,6 +1062,5 @@ public class Simulador {
                 } finally {
                     InputHelper.closeBuffReader();
                 }
-        
     }
 }
