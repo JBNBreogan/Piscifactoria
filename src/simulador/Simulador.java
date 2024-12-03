@@ -14,7 +14,7 @@ import peces.rio.*;
 import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
-import registros.Transcripciones;
+import registros.Registros;
 import tanque.Tanque;
 
 import java.util.Random;
@@ -51,8 +51,9 @@ public class Simulador {
         AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
         AlmacenPropiedades.DORADA.getNombre()
     });
-    /**Objeto de la clase Transcripciones */
-    private Transcripciones transcripciones=null;
+
+    /**Objeto de la calse Registros */
+    private Registros registros=null;
 
     /**
      * Constructor vacío de la clase simulador.
@@ -71,19 +72,19 @@ public class Simulador {
         String npisc= InputHelper.readStringWithBuffRead();
         piscifactorias.add(new Piscifactoria(npisc,true));
         Monedero.getInstance().setMonedas(100);  
-        transcripciones = Transcripciones.getInstance(nombreEmpresa);
-        transcripciones.inicio(npisc, null, new String[]{AlmacenPropiedades.LUCIO_NORTE.getNombre(),
-                                          AlmacenPropiedades.CARPA_PLATEADA.getNombre(),
-                                          AlmacenPropiedades.CARPA.getNombre(),
-                                          AlmacenPropiedades.TILAPIA_NILO.getNombre(),
-                                          AlmacenPropiedades.PEJERREY.getNombre(),
-                                          AlmacenPropiedades.RODABALLO.getNombre(),
-                                          AlmacenPropiedades.CABALLA.getNombre(),
-                                          AlmacenPropiedades.BESUGO.getNombre(),
-                                          AlmacenPropiedades.ABADEJO.getNombre(),
-                                          AlmacenPropiedades.SARGO.getNombre(),
-                                          AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
-                                          AlmacenPropiedades.DORADA.getNombre()}, monedero.getMonedas(), nombreEmpresa);
+        this.registros=new Registros(nombreEmpresa);
+        this.registros.inicio(npisc, null, new String[]{AlmacenPropiedades.LUCIO_NORTE.getNombre(),
+                                                          AlmacenPropiedades.CARPA_PLATEADA.getNombre(),
+                                                          AlmacenPropiedades.CARPA.getNombre(),
+                                                          AlmacenPropiedades.TILAPIA_NILO.getNombre(),
+                                                          AlmacenPropiedades.PEJERREY.getNombre(),
+                                                          AlmacenPropiedades.RODABALLO.getNombre(),
+                                                          AlmacenPropiedades.CABALLA.getNombre(),
+                                                          AlmacenPropiedades.BESUGO.getNombre(),
+                                                          AlmacenPropiedades.ABADEJO.getNombre(),
+                                                          AlmacenPropiedades.SARGO.getNombre(),
+                                                          AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
+                                                          AlmacenPropiedades.DORADA.getNombre()}, monedero.getMonedas(), nombreEmpresa);
         ErrorHelper.createErrorFile();
         ErrorHelper.writeError("prueba de error");
     }
@@ -336,7 +337,7 @@ public class Simulador {
         }
 
         System.out.println("Total piscifactorias: "+pecesVendidos + " peces óptimos vendidos por un total de "+monedasObtenidas+ " monedas");
-        this.transcripciones.pasarDia((dias-1), numPecesRio, numPecesMar, monedasObtenidas, monedero.getMonedas());
+        this.registros.pasarDia((dias-1), numPecesRio, numPecesMar, monedasObtenidas, monedero.getMonedas());
     }
 
     /**
@@ -380,9 +381,9 @@ public class Simulador {
                                     monedero.setMonedas(monedero.getMonedas()-pezEleg.getCoste());
                                     stats.registrarNacimiento(pezEleg.getName());
                                     if(pezEleg.isFemale()){
-                                        transcripciones.comprarPeces(pezEleg, 'H', pisc.getTanques().indexOf(tank), pisc, pezEleg.getCoste());
+                                        this.registros.comprarPeces(pezEleg, 'H', pisc.getTanques().indexOf(tank), pisc, pezEleg.getCoste());
                                     }else{
-                                        transcripciones.comprarPeces(pezEleg, 'M', pisc.getTanques().indexOf(tank), pisc, pezEleg.getCoste());
+                                        this.registros.comprarPeces(pezEleg, 'M', pisc.getTanques().indexOf(tank), pisc, pezEleg.getCoste());
                                     }
                                     tank.showCapacity(pisc.getTanques().indexOf(tank));
                                     break;
@@ -393,9 +394,9 @@ public class Simulador {
                                             monedero.setMonedas(monedero.getMonedas()-pezEleg.getCoste());
                                             stats.registrarNacimiento(pezEleg.getName());
                                             if(pezEleg.isFemale()){
-                                                transcripciones.comprarPeces(pezEleg, 'H', pisc.getTanques().indexOf(tank), pisc, pezEleg.getCoste());
+                                                this.registros.comprarPeces(pezEleg, 'H', pisc.getTanques().indexOf(tank), pisc, pezEleg.getCoste());
                                             }else{
-                                                transcripciones.comprarPeces(pezEleg, 'M', pisc.getTanques().indexOf(tank), pisc, pezEleg.getCoste());
+                                                this.registros.comprarPeces(pezEleg, 'M', pisc.getTanques().indexOf(tank), pisc, pezEleg.getCoste());
                                             }
                                             tank.showCapacity(pisc.getTanques().indexOf(tank));
                                             break;
@@ -442,7 +443,7 @@ public class Simulador {
                     }
                 }
             }
-            transcripciones.venderPeces(pecesVend, monedasOb, pisc);
+            this.registros.venderPeces(pecesVend, monedasOb, pisc);
             System.out.println("Piscifactoría "+pisc.getNombre()+": "+pecesVend+" peces vendidos por "+monedasOb+" monedas");
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Introduce un número válido, krak");
@@ -467,7 +468,7 @@ public class Simulador {
                         }
                     }
                 }
-                this.transcripciones.limpiarTanque(pisc.getTanques().indexOf(tanque), pisc);
+                this.registros.limpiarTanque(pisc.getTanques().indexOf(tanque), pisc);
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Introduce un número válido, krak");
@@ -484,7 +485,7 @@ public class Simulador {
             Tanque tank=pisc.getTanques().get(pisc.selectTank());
 
             tank.getPeces().clear();
-            this.transcripciones.limpiarTanque(pisc.getTanques().indexOf(tank), pisc);
+            this.registros.limpiarTanque(pisc.getTanques().indexOf(tank), pisc);
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Introduce un número válido, krak");
         }
@@ -527,7 +528,7 @@ public class Simulador {
                                             opcionValida=true;
                                             monedero.setMonedas(monedero.getMonedas()-(500*piscifactorias.size()));
                                             piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.RIO));
-                                            this.transcripciones.comprarEdificio(new Piscifactoria(nombrePisc, CriaTipo.RIO), 500*piscifactorias.size());
+                                            this.registros.comprarEdificio(new Piscifactoria(nombrePisc, CriaTipo.RIO), 500*piscifactorias.size());
                                             System.out.println("Piscifactoria añadida");
                                         }else{
                                             break;
@@ -537,7 +538,7 @@ public class Simulador {
                                             opcionValida=true;
                                             monedero.setMonedas(monedero.getMonedas()-(2000*piscifactorias.size()));
                                             piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.MAR));
-                                            this.transcripciones.comprarEdificio(new Piscifactoria(nombrePisc, CriaTipo.MAR), 2000*(piscifactorias.size()-1));
+                                            this.registros.comprarEdificio(new Piscifactoria(nombrePisc, CriaTipo.MAR), 2000*(piscifactorias.size()-1));
                                             System.out.println("Piscifactoria añadida");
                                         }else{
                                             break;
@@ -552,7 +553,7 @@ public class Simulador {
                                 if(Monedero.monedasSuficientes(2000)){
                                     almacenCentral=AlmacenCentral.getInstance();
                                     monedero.setMonedas(monedero.getMonedas()-2000);
-                                    this.transcripciones.comprarEdificio(null, 2000);
+                                    this.registros.comprarEdificio(null, 2000);
                                     System.out.println("Almacén central adquirido.");
                                 }
                                 break;
@@ -583,7 +584,7 @@ public class Simulador {
                                                 monedero.setMonedas(monedero.getMonedas()-150);
                                                 Tanque tanque = new Tanque(25, pisc.getTipo());
                                                 pisc.getTanques().add(tanque);
-                                                this.transcripciones.mejorarEdificio(pisc, 150, pisc.getTanques().indexOf(tanque), null);
+                                                this.registros.mejorarEdificio(pisc, 150, pisc.getTanques().indexOf(tanque), null);
                                                 System.out.println("Tanque añadido");
                                             }
                                         }else if (pisc.getTipo()==CriaTipo.MAR) {
@@ -591,7 +592,7 @@ public class Simulador {
                                                 monedero.setMonedas(monedero.getMonedas()-600);
                                                 Tanque tanque = new Tanque(100, pisc.getTipo());
                                                 pisc.getTanques().add(tanque);
-                                                this.transcripciones.mejorarEdificio(pisc, 600, pisc.getTanques().indexOf(tanque), null);
+                                                this.registros.mejorarEdificio(pisc, 600, pisc.getTanques().indexOf(tanque), null);
                                                 System.out.println("Tanque añadido");
                                             }
                                         }
@@ -603,7 +604,7 @@ public class Simulador {
                                             monedero.setMonedas(monedero.getMonedas()-50);
                                             pisc2.addFood(25, "Vegetal");
                                             pisc2.addFood(25, "Animal");
-                                            this.transcripciones.mejorarEdificio(pisc2, 50, -1, null);
+                                            this.registros.mejorarEdificio(pisc2, 50, -1, null);
                                         }
                                         break;
                                     default:
@@ -622,7 +623,7 @@ public class Simulador {
                                         if(Monedero.monedasSuficientes(200)){
                                             monedero.setMonedas(monedero.getMonedas()-200);
                                             almacenCentral.aumentarCapacidad(50);
-                                            this.transcripciones.mejorarEdificio(null, 200, -1, almacenCentral);
+                                            this.registros.mejorarEdificio(null, 200, -1, almacenCentral);
                                         }
                                         break;
                                     default:
@@ -842,7 +843,7 @@ public class Simulador {
         System.out.println("Añadida " + cant + " de comida " + tipo);
     
         pisc.addFood(cant, tipo);
-        transcripciones.comprarComida(cant, tipo, precioComida, "piscifactoria", pisc);
+        this.registros.comprarComida(cant, tipo, precioComida, "piscifactoria", pisc);
 
     
         if (tipo.equals("Vegetal")) {
@@ -884,13 +885,13 @@ public class Simulador {
         System.out.println("Añadida "+cant+" de comida "+tipo);
         if(tipo=="Vegetal"){
             almacenCentral.addFood(cant,tipo);
-            transcripciones.comprarComida(cant, tipo, precioComida, "almacen central", null);
+            this.registros.comprarComida(cant, tipo, precioComida, "almacen central", null);
             almacenCentral.repartir(piscifactorias);
             System.out.println("Deposito de comida vegetal del almacen central al "+((cant*100/almacenCentral.getCapacidadComidaVegetal()))
             +"% de su capacidad. [ "+almacenCentral.getComidaVegetal()+"/"+almacenCentral.getCapacidadComidaVegetal()+"]");
         }else if (tipo=="Animal") {
             almacenCentral.addFood(cant,tipo);
-            transcripciones.comprarComida(cant, tipo, precioComida, "almacen central", null);
+            this.registros.comprarComida(cant, tipo, precioComida, "almacen central", null);
             almacenCentral.repartir(piscifactorias);
             System.out.println("Deposito de comida animal del almacen central al "+((cant*100/almacenCentral.getCapacidadComidaAnimal()))
             +"% de su capacidad. [ "+almacenCentral.getComidaAnimal()+"/"+almacenCentral.getCapacidadComidaAnimal()+"]");
@@ -972,7 +973,7 @@ public class Simulador {
                     }
                 }
             }
-            this.transcripciones.ocultas(pisc, 0, 0);
+            this.registros.ocultas(pisc, 0, 0);
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Introduce un número válido, krak");
         }
@@ -983,7 +984,7 @@ public class Simulador {
      */
     public void truco99(){
         monedero.setMonedas(monedero.getMonedas()+1000);
-        this.transcripciones.ocultas(null, 1000, monedero.getMonedas());
+        this.registros.ocultas(null, 1000, monedero.getMonedas());
         System.out.println("Añadidas 1000 monedas");
     }
 
