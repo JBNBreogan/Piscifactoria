@@ -463,6 +463,7 @@ public class Simulador {
             Tanque tank=pisc.getTanques().get(pisc.selectTank());
 
             tank.getPeces().clear();
+            this.transcripciones.limpiarTanque(pisc.getTanques().indexOf(tank), pisc);
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Introduce un número válido, krak");
         }
@@ -503,7 +504,9 @@ public class Simulador {
                                     if(tipoPisc==1){
                                         if(Monedero.monedasSuficientes(500*piscifactorias.size())){
                                             opcionValida=true;
+                                            monedero.setMonedas(monedero.getMonedas()-(500*piscifactorias.size()));
                                             piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.RIO));
+                                            this.transcripciones.comprarEdificio(new Piscifactoria(nombrePisc, CriaTipo.RIO), 500*piscifactorias.size());
                                             System.out.println("Piscifactoria añadida");
                                         }else{
                                             break;
@@ -511,7 +514,9 @@ public class Simulador {
                                     }else if (tipoPisc==2) {
                                         if (Monedero.monedasSuficientes(2000*piscifactorias.size())) {
                                             opcionValida=true;
+                                            monedero.setMonedas(monedero.getMonedas()-(2000*piscifactorias.size()));
                                             piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.MAR));
+                                            this.transcripciones.comprarEdificio(new Piscifactoria(nombrePisc, CriaTipo.MAR), 2000*piscifactorias.size());
                                             System.out.println("Piscifactoria añadida");
                                         }else{
                                             break;
@@ -526,6 +531,7 @@ public class Simulador {
                                 if(Monedero.monedasSuficientes(2000)){
                                     almacenCentral=AlmacenCentral.getInstance();
                                     monedero.setMonedas(monedero.getMonedas()-2000);
+                                    this.transcripciones.comprarEdificio(null, 2000);
                                     System.out.println("Almacén central adquirido.");
                                 }
                                 break;
@@ -954,7 +960,7 @@ public class Simulador {
                 try {
                     do {
                 sim.menu();
-                opcion=InputHelper.getIntRanges(13,1, new int[] {98,99});
+                opcion=InputHelper.getIntRanges(14,1, new int[] {98,99});
                     switch (opcion) {
                         case 1:
                             sim.showGeneralStatus();

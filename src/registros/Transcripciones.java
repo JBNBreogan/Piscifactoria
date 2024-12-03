@@ -181,4 +181,32 @@ public class Transcripciones {
         this.escribirArchivo("Limpiando el tanque " + (tanque+1) 
         + " de la piscifactoria " + pisc.getNombre() + ".\n");
     }
+
+    /**
+     * Metodo que escribe en el archivo la informacion del vaciado de los peces del tanque
+     * @param tanque Tanque vaciado
+     * @param pisc Piscifactoria a la que pertenece el tanque
+     */
+    public void vaciarTanque(int tanque, Piscifactoria pisc){
+        this.escribirArchivo("Vaciado el tanque " + (tanque+1) 
+        + " de la piscifactoria " + pisc.getNombre() + ".\n");
+    }
+
+    /**
+     * Metodo que escribe en el archivo la informacion de la compra de algun edificio
+     * @param pisc Edificio comprado
+     * @param monedas Monedas gastadas en el edificio
+     */
+    public void comprarEdificio(Piscifactoria pisc, int monedas){
+        if (pisc != null) {
+            if(pisc.getTipo() == CriaTipo.MAR){
+                this.escribirArchivo("Comprada la piscifactoria de " + CriaTipo.MAR.getName() + " " + pisc.getNombre() + " por " + monedas + " monedas.\n");
+            }else if(pisc.getTipo() == CriaTipo.RIO){
+                this.escribirArchivo("Comprada la piscifactoria de " + CriaTipo.RIO.getName() + " " + pisc.getNombre() + " por " + monedas + " monedas.\n");
+            }
+        }else{
+            this.escribirArchivo("Comprado el almacen central.\n");
+
+        }
+    }
 }
