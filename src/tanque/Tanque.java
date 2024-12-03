@@ -342,9 +342,8 @@ public class Tanque {
      * Método que permite elegir entre los peces compatibles con el tanque.
      * 
      * @return El pez elegido
-     * @throws IOException 
      */
-    public Pez showCompatible() throws IOException {
+    public Pez showCompatible(){
         int op = 0;
 
         do {

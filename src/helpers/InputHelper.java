@@ -42,10 +42,8 @@ public class InputHelper {
                     System.out.println("Introduzca un número válido");
                 }
             } catch (NumberFormatException e) {
-                ErrorHelper.writeError("Error introduciendo número");
                 System.out.println("Introduzca un valor entero");                
             } catch (IOException e) {
-                ErrorHelper.writeError("Valor numérico mal introducido");
                 System.out.println("Introduzca un valor numérico");
             }
         } while (!right);
@@ -89,27 +87,21 @@ public class InputHelper {
     /**
      * Devuelve un String pasado por teclado
      * @return El String
-     * @throws IOException
      */
     public static String readStringWithBuffRead(){
         try {
             return br.readLine();
-        } catch (IOException e) {
-            ErrorHelper.writeError("Error al introducir una cadena de caracteres");
-        }
+        } catch (IOException e) {}
         return "";
     }
 
     /**
      * Cierra el flujo de BufferedReader
-     * @throws IOException
      */
     public static void closeBuffReader(){
         try {
             br.close();
-        } catch (IOException e) {
-            ErrorHelper.writeError("Error al cerrar BufferedReader");
-        }
+        } catch (IOException e) {}
     }
 }
 
