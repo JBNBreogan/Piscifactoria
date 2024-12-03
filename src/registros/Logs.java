@@ -85,7 +85,7 @@ public class Logs {
      * @param nombrePartida Nombre de la empresa.
      */
     public void inicio(String primeraPisc,String[] extras,String[] pecesImplementasdo,String nombrePartida){
-        this.escribirArchivo(this.fechaActual() + " Inicio de la simulación " + nombrePartida + ".\n" + this.fechaActual() + " Piscifactoría inicial: " + primeraPisc + ".\n");
+        this.escribirArchivo(this.fechaActual() + "Inicio de la simulación " + nombrePartida + ".\n" + this.fechaActual() + "Piscifactoría inicial: " + primeraPisc + ".\n");
     }
 
     /**

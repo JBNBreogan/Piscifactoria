@@ -1058,6 +1058,7 @@ public class Simulador {
                             break;
                         }
                     } while (opcion!=14);
+                    sim.registros.salir();
                 } catch (InputMismatchException e) {
                     System.out.println("Has introducido un tipo de dato incorrecto, introduce un número");
                 } finally {

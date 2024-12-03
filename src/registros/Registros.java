@@ -62,4 +62,8 @@ public class Registros {
         transcripciones.ocultas(pisc, monedasAñad, monedas);
         logs.ocultas(pisc);
     }
+
+    public void salir(){
+        logs.salir();
+    }
 }
