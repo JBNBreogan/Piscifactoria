@@ -14,6 +14,7 @@ import peces.rio.*;
 import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
+import recompensas.Recompensas;
 import registros.Transcripciones;
 import tanque.Tanque;
 
@@ -84,6 +85,7 @@ public class Simulador {
                                           AlmacenPropiedades.SARGO.getNombre(),
                                           AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
                                           AlmacenPropiedades.DORADA.getNombre()}, monedero.getMonedas(), nombreEmpresa);
+        Recompensas.hacerCarpeta();
     }
 
     /**
