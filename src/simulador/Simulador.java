@@ -1,5 +1,6 @@
 package simulador;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -15,7 +16,6 @@ import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import recompensas.Recompensas;
-import registros.Transcripciones;
 import registros.Registros;
 import tanque.Tanque;
 
@@ -57,6 +57,7 @@ public class Simulador {
     /**Objeto de la calse Registros */
     private Registros registros=null;
 
+    
     /**
      * Constructor vacío de la clase simulador.
      */
@@ -88,7 +89,7 @@ public class Simulador {
                                                           AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
                                                           AlmacenPropiedades.DORADA.getNombre()}, monedero.getMonedas(), nombreEmpresa);
         ErrorHelper.createErrorFile();
-        ErrorHelper.writeError("prueba de error");
+        Recompensas.hacerCarpeta();
     }
 
     /**
@@ -107,6 +108,7 @@ public class Simulador {
                                             "Limpiar tanques.",
                                             "Vaciar tanque.",
                                             "Mejorar.",
+                                            "Canjear recompensa.",
                                             "Pasar varios días.",
                                             "Salir."},
                                              false);
@@ -990,6 +992,13 @@ public class Simulador {
         System.out.println("Añadidas 1000 monedas");
     }
 
+    public void truco97(String nombreArchivo, int nivel){
+        if(new File("rewards/"+nombreArchivo).exists()){
+            Recompensas.addQuantity(nombreArchivo);
+        } else {
+            Recompensas.algaXml(nivel);;  
+        }
+    }
     /**
      * Ejecuta toda la lógica del programa.
      * @param args
@@ -1002,7 +1011,7 @@ public class Simulador {
                 try {
                     do {
                 sim.menu();
-                opcion=InputHelper.getIntRanges(14,1, new int[] {98,99});
+                opcion=InputHelper.getIntRanges(15,1, new int[] {97,98,99});
                     switch (opcion) {
                         case 1:
                             sim.showGeneralStatus();
@@ -1041,13 +1050,19 @@ public class Simulador {
                             sim.upgrade();
                             break;
                         case 13:
+                            
+                            break;
+                        case 14:
                             System.out.println("Elige los dias que quieres pasar");
                             int numDias=InputHelper.getIntRanges(Integer.MAX_VALUE,1);
                             for (int i = 0; i < numDias; i++) {
                                 sim.nextDay();
                             }
                             break;
-                        case 14:
+                        case 15:
+                            break;
+                        case 97:
+                            sim.truco97("algas_2.xml",2);
                             break;
                         case 98:
                             sim.truco98();
