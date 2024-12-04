@@ -1028,6 +1028,8 @@ public class Simulador {
         }
     }
 
+    
+
     /**
      * Ejecuta toda la lógica del programa.
      * 
@@ -1079,7 +1081,7 @@ public class Simulador {
                         sim.upgrade();
                         break;
                     case 13:
-
+                        Recompensas.listRecompensas();
                         break;
                     case 14:
                         System.out.println("Elige los dias que quieres pasar");

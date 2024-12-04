@@ -3,6 +3,8 @@ package recompensas;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
+
 import org.dom4j.*;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
@@ -31,7 +33,7 @@ public class Recompensas {
         switch (nivel) {
             case 1:
                 root.addElement("name")
-                    .addText("alga I");
+                    .addText("Algas I");
                 root.addElement("origin")
                     .addText("Adrián");
                 root.addElement("desc")
@@ -50,7 +52,7 @@ public class Recompensas {
             break;
             case 2: 
                 root.addElement("name")
-                    .addText("alga II");
+                    .addText("Algas II");
                 root.addElement("origin")
                     .addText("Adrián");
                 root.addElement("desc")
@@ -69,7 +71,7 @@ public class Recompensas {
                 break;
             case 3: 
                 root.addElement("name")
-                    .addText("alga III");
+                    .addText("Algas III");
                 root.addElement("origin")
                     .addText("Adrián");
                 root.addElement("desc")
@@ -89,7 +91,7 @@ public class Recompensas {
 
             case 4: 
                 root.addElement("name")
-                    .addText("alga IV");
+                    .addText("Algas IV");
                 root.addElement("origin")
                     .addText("Adrián");
                 root.addElement("desc")
@@ -108,7 +110,7 @@ public class Recompensas {
                 break;
             case 5: 
                 root.addElement("name")
-                    .addText("alga V");
+                    .addText("Algas V");
                 root.addElement("origin")
                     .addText("Adrián");
                 root.addElement("desc")
@@ -728,6 +730,32 @@ public class Recompensas {
             save(nombreArchivo);
         } catch (NumberFormatException | DocumentException e) {
             ErrorHelper.writeError("Error al acceder al archivo XML "+ruta);   
+        }
+    }
+
+    public static void listRecompensas(){
+        File folder = new File("rewards");
+        File[] archivos = folder.listFiles();
+        
+        if(archivos != null){
+            System.out.println("==== Recompensas disponibles =====");
+            System.out.println("");
+            for (File file : archivos) {
+
+                // TODO cambiar a fori, poner descripcion y canjear recompensas
+                try {
+                    SAXReader reader = new SAXReader();
+                    Document document = reader.read(file);
+                    List<Element> elementos = document.getRootElement().elements("name");
+                    for (Element elemento : elementos) {
+                        System.out.println(elemento.getText());
+                    }
+                } catch (DocumentException e) {
+                    ErrorHelper.writeError("No existen documentos.");
+                }
+            }
+        } else {
+            ErrorHelper.writeError("No hay documentos en el directorio");
         }
     }
 }
