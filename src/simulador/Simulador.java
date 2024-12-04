@@ -1014,6 +1014,15 @@ public class Simulador {
         System.out.println("Añadidas 1000 monedas");
     }
 
+    public void selectRecompensa(){
+        Recompensas.listRecompensas();
+        File f = new File("rewards/");
+        File[] files = f.listFiles();
+        int opcion = InputHelper.getIntRanges(files.length);
+        Recompensas.reclamar(files[opcion-1]);
+    }
+
+
     /**
      * Metodo que permite crear una recompensa.
      * @param nombreArchivo Nombre de la recompensa.
@@ -1021,7 +1030,7 @@ public class Simulador {
      */
     public void truco97(String nombreArchivo, int nivel) {
         if (new File("rewards/" + nombreArchivo).exists()) {
-            Recompensas.addQuantity(nombreArchivo);
+            Recompensas.restQuantity(nombreArchivo);
         } else {
             Recompensas.algaXml(nivel);
             this.registros.recompensaCreada(nombreArchivo);
@@ -1081,7 +1090,7 @@ public class Simulador {
                         sim.upgrade();
                         break;
                     case 13:
-                        Recompensas.listRecompensas();
+                        sim.selectRecompensa();
                         break;
                     case 14:
                         System.out.println("Elige los dias que quieres pasar");

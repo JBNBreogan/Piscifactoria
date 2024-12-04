@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.ErrorManager;
 
 import org.dom4j.*;
 import org.dom4j.io.OutputFormat;
@@ -733,6 +734,28 @@ public class Recompensas {
         }
     }
 
+    public static void restQuantity(String nombreArchivo){
+        try {
+            SAXReader sr = new SAXReader();
+            Document doc = sr.read(new File("rewards/" + nombreArchivo));
+            Element root = doc.getRootElement();
+            int valor = Integer.parseInt(root.element("quantity").getText());
+            valor--;
+            if (valor == 0) {
+                File archivo = new File("rewards/" + nombreArchivo);
+                if (!archivo.delete()) {
+                    ErrorHelper.writeError("No se puedo borrar el archivo "+nombreArchivo);
+                } 
+            } else {
+                // Actualizar el valor en el XML
+                root.element("quantity").setText(String.valueOf(valor));
+                save(nombreArchivo);  // Guarda el archivo actualizado
+            }
+        } catch (NumberFormatException | DocumentException e) {
+            ErrorHelper.writeError("Error al acceder al archivo XML " + nombreArchivo);
+        }
+    }
+
     public static void listRecompensas(){
         File folder = new File("rewards");
         File[] archivos = folder.listFiles();
@@ -740,22 +763,57 @@ public class Recompensas {
         if(archivos != null){
             System.out.println("==== Recompensas disponibles =====");
             System.out.println("");
-            for (File file : archivos) {
-
-                // TODO cambiar a fori, poner descripcion y canjear recompensas
+            
+            for (int i = 0; i < archivos.length; i++) {
                 try {
                     SAXReader reader = new SAXReader();
-                    Document document = reader.read(file);
+                    Document document = reader.read(archivos[i]);
                     List<Element> elementos = document.getRootElement().elements("name");
-                    for (Element elemento : elementos) {
-                        System.out.println(elemento.getText());
+                    
+                    // Iterar sobre cada "name"
+                    for (int j = 0; j < elementos.size(); j++) {
+                        Element nombreElemento = elementos.get(j);
+                        String nombre = nombreElemento.getText();
+                        
+                        // Obtener la etiqueta "desc"
+                        Element descElemento = document.getRootElement().element("desc");
+                        String desc = descElemento.getText();
+            
+                        // Mostrar nombre junto con la descripción
+                        System.out.println(i + 1 + ".- " + nombre + " - " + desc);
                     }
                 } catch (DocumentException e) {
-                    ErrorHelper.writeError("No existen documentos.");
+                    ErrorHelper.writeError("Error al leer el documento XML");
                 }
             }
-        } else {
-            ErrorHelper.writeError("No hay documentos en el directorio");
         }
     }
+
+
+    public static int reclamar(File file) {
+        Element root;
+        try {
+            SAXReader reader = new SAXReader();
+            Document doc = reader.read(file);
+            root = doc.getRootElement();
+            Element give = root.element("give");
+            if(give.element("food") != null){
+                 String tipoComida = give.element("food").attributeValue("type");
+                if(tipoComida == "algae"){
+                    String cantidad = give.element("food").getText();
+                //    return Integer.parseInt(cantidad);
+                } else if (tipoComida == "animal"){
+
+                } else if (tipoComida == "animal"){
+
+                }
+            }
+            
+        } catch (DocumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+      
+        }
 }
+
