@@ -1,7 +1,6 @@
 package simulador;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
@@ -961,7 +960,8 @@ public class Simulador {
         if(new File("rewards/"+nombreArchivo).exists()){
             Recompensas.addQuantity(nombreArchivo);
         } else {
-            Recompensas.algaXml(nivel);;  
+            Recompensas.algaXml(nivel);  
+            this.registros.recompensaCreada(nombreArchivo);
         }
     }
     /**
@@ -969,7 +969,6 @@ public class Simulador {
      * @param args
      */
     public static void main(String[] args){
-        Monedero monedero=Monedero.getInstance();
         Simulador sim=new Simulador();
         sim.init();
         int opcion=0;
@@ -1039,7 +1038,7 @@ public class Simulador {
                             System.out.println("Esta opción no es válida");
                             break;
                         }
-                    } while (opcion!=14);
+                    } while (opcion!=15);
                     sim.registros.salir();
                 } catch (InputMismatchException e) {
                     System.out.println("Has introducido un tipo de dato incorrecto, introduce un número");

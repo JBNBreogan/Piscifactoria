@@ -16,12 +16,12 @@ import piscifactoria.Piscifactoria;
 import propiedades.CriaTipo;
 
 /**
- * Clase encargada de hacer las transacciones del sistema
+ * Clase encargada de hacer los logs del sistema
  * 
  * @author Cristian
  */
 public class Logs {
-    //**Instancia del objeto de Transacciones. */
+    //**Instancia del objeto de Logs. */
     private static Logs instance;
     //**Nombre de la carpeta de guardado */
     private static String ruta= "logs";
@@ -29,7 +29,7 @@ public class Logs {
     private static BufferedWriter bw=null;
 
     /**
-     * Constructor vacío de la clase Transacciones.
+     * Constructor vacío de la clase Logs.
      */
     private Logs() {
     }
@@ -78,7 +78,7 @@ public class Logs {
     }
 
     /**
-     * Método que registrar en el archivo la hora del inicio del programa.
+     * Método que registra en el archivo la hora del inicio del programa.
      * @param primeraPisc Nombre de la piscifactoria.
      * @param extras Extras implementados.
      * @param pecesImplementasdos Peces implementados en el sistema.
@@ -89,7 +89,7 @@ public class Logs {
     }
 
     /**
-     * Método que registrar en el archivo la hora de las compras de comida.
+     * Método que registra en el archivo la hora de las compras de comida.
      * @param cantComida Cantidad de comida.
      * @param tipoCom Tipo de comida.
      * @param lugarGuardado Lugar donde se guardo.
@@ -104,7 +104,7 @@ public class Logs {
     }
     
     /**
-     * Método que registrar en el archivo la hora de las compras de los peces.
+     * Método que registra en el archivo la hora de las compras de los peces.
      * @param pez Pez que se compra.
      * @param sexo Sexo de pez comprado.
      * @param tanque Tanque en el que se añade el pez.
@@ -116,7 +116,7 @@ public class Logs {
     }
 
     /**
-     * Método que registrar en el archivo la hora de las ventas manuales de los peces.
+     * Método que registra en el archivo la hora de las ventas manuales de los peces.
      * @param cantPeces Numero de peces vendidos.
      * @param pisc Piscifactoria de la que se vendieron los peces.
      */
@@ -126,7 +126,7 @@ public class Logs {
     }
 
     /**
-     * Método que registrar en el archivo la hora de la limpieza de un tanque.
+     * Método que registra en el archivo la hora de la limpieza de un tanque.
      * @param tanque Tanque limpiado.
      * @param pisc Piscifactoria a la que pertenece el tanque.
      */
@@ -136,7 +136,7 @@ public class Logs {
     }
 
     /**
-     * Método que registrar en el archivo la hora del vaciado de los peces del tanque.
+     * Método que registra en el archivo la hora del vaciado de los peces del tanque.
      * @param tanque Tanque vaciado.
      * @param pisc Piscifactoria a la que pertenece el tanque.
      */
@@ -146,7 +146,7 @@ public class Logs {
     }
 
     /**
-     * Método que registrar en el archivo la hora de la compra de algun edificio.
+     * Método que registra en el archivo la hora de la compra de algun edificio.
      * @param pisc Edificio comprado.
      */
     public void comprarEdificio(Piscifactoria pisc){
@@ -163,7 +163,7 @@ public class Logs {
     }
 
     /**
-     * Método que registrar en el archivo la hora de las mejoras de los edificios.
+     * Método que registra en el archivo la hora de las mejoras de los edificios.
      * @param pisc Piscifactoria mejorada (en caso de mejorar un piscifactoria).
      * @param tanque Tanque de la piscifactoria añadido (en caso de añadir un tanque).
      */
@@ -182,7 +182,7 @@ public class Logs {
     }
 
     /**
-     * Método que registrar en el archivo la hora de en la que se paso un día.
+     * Método que registra en el archivo la hora de en la que se paso un día.
      * @param numDia Dia terminado.
      */
     public void pasarDia(int numDia){
@@ -190,7 +190,7 @@ public class Logs {
     }
 
     /**
-     * Método que registrar en el archivo la hora del uso de las opciones ocultas del programa
+     * Método que registra en el archivo la hora del uso de las opciones ocultas del programa
      * @param pisc Piscifactoria a la que se añaden los peces
      */
     public void ocultas(Piscifactoria pisc){
@@ -202,10 +202,35 @@ public class Logs {
     }
 
     /**
-     * Método que registrar en el archivo la hora de finalización de la partida
+     * Método que registra en el archivo la hora de la creacion de recompensas del programa.
+     * @param nombreRec Nombre de la recompensa.
+     */
+    public void recompensaCreada(String nombreRec){
+        this.escribirArchivo(this.fechaActual()+"Recompensa creada.\n");
+    }
+
+    /**
+     * Método que registra en el archivo la hora del uso de recompensas del programa.
+     * @param nombreRec Nombre de la recompensa.
+     */
+    public void recompensaUsada(String nombreRec){
+        this.escribirArchivo("Recompensa " + nombreRec + " usada.\n");
+    }
+
+    /**
+     * Método que registra en el archivo la hora de finalización de la partida
      */
     public void salir(){
         this.escribirArchivo(this.fechaActual()+"Cierre de la partida.\n");
+    }
+
+    /**
+     * Método que cierra el buffererWriter.
+     */
+    public void close(){
+        try {
+            bw.close();
+        } catch (Exception e) {}
     }
 
     /**
@@ -218,5 +243,7 @@ public class Logs {
         String fechaAc = "["+fechaActual.format(formato)+"] ";
         return fechaAc;
     }
+
+
 }
 
