@@ -190,7 +190,6 @@ public class Simulador {
                     + almacenCentral.getCapacidadComidaVegetal() + "]");
         }
 
-        // Mostrar el estado de cada piscifactoría
         for (Piscifactoria pisc : piscifactorias) {
             pisc.showStatus();
         }
@@ -873,8 +872,8 @@ public class Simulador {
      * Método que añade al almacén central la cantidad del tipo de comida pasado por
      * parámetro.
      * 
-     * @param cant           Número de comida a añadir
-     * @param tipo           Tipo de comida a añadir
+     * @param cant Número de comida a añadir
+     * @param tipo Tipo de comida a añadir
      * @param almacenCentral
      */
     private void anadirComidaAlm() {
@@ -1007,7 +1006,7 @@ public class Simulador {
     }
 
     /**
-     * Metodo qe permite añadir 100 monedas la monedero
+     * Metodo que permite añadir 100 monedas la monedero
      */
     public void truco99() {
         monedero.setMonedas(monedero.getMonedas() + 1000);
@@ -1015,6 +1014,11 @@ public class Simulador {
         System.out.println("Añadidas 1000 monedas");
     }
 
+    /**
+     * Metodo que permite crear una recompensa.
+     * @param nombreArchivo Nombre de la recompensa.
+     * @param nivel Nivel de la recompensa.
+     */
     public void truco97(String nombreArchivo, int nivel) {
         if (new File("rewards/" + nombreArchivo).exists()) {
             Recompensas.addQuantity(nombreArchivo);
