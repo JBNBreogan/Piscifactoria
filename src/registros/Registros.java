@@ -158,6 +158,20 @@ public class Registros {
     }
 
     /**
+     * Método que llama al metodos registrarGuardado de la clase logs.
+     */
+    public void registrarGuardado(){
+        this.logs.registrarGuardado();
+    }
+
+    /**
+     * Método que llama al metodos registrarCarga de la clase logs.
+     */
+    public void registrarCarga(){
+        this.logs.registrarCarga();
+    }
+
+    /**
      * Metodo que llama al metodo salir de logs y al método close de logs y transcripciones.
      */
     public void salir(){

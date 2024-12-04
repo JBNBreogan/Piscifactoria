@@ -214,7 +214,21 @@ public class Logs {
      * @param nombreRec Nombre de la recompensa.
      */
     public void recompensaUsada(String nombreRec){
-        this.escribirArchivo("Recompensa " + nombreRec + " usada.\n");
+        this.escribirArchivo(this.fechaActual()+"Recompensa " + nombreRec + " usada.\n");
+    }
+
+    /**
+     * Método que registra en el archivo la hora de guardado del programa.
+     */
+    public void registrarGuardado(){
+        this.escribirArchivo(this.fechaActual()+"Sistema guardado.\n");
+    }
+
+    /**
+     * Método que registra en el archivo la hora de cargado del programa.
+     */
+    public void registrarCarga(){
+        this.escribirArchivo(this.fechaActual()+"Sistema cargado.\n");
     }
 
     /**
