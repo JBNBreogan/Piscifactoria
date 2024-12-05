@@ -1,5 +1,4 @@
 package piscifactoria;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import comun.*;

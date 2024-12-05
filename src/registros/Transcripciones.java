@@ -16,7 +16,7 @@ import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 
 /**
- * Clase encargada de hacer las transacciones del sistema
+ * Clase encargada de hacer las transcripciones del sistema
  * 
  * @author Cristian
  */
@@ -258,5 +258,30 @@ public class Transcripciones {
         }else{
             this.escribirArchivo("Añadidos peces mediante la opción oculta a la piscifactoría " + pisc.getNombre() + ".\n");
         }
+    }
+
+    /**
+     * Método que escribe en el archivo la informacion de la creacion de recompensas del programa.
+     * @param nombreRec Nombre de la recompensa.
+     */
+    public void recompensaCreada(String nombreRec){
+        this.escribirArchivo("Recompensa " + nombreRec + "creada.\n");
+    }
+
+    /**
+     * Método que escribe en el archivo la informacion del uso de recompensas del programa.
+     * @param nombreRec Nombre de la recompensa.
+     */
+    public void recompensaUsada(String nombreRec){
+        this.escribirArchivo("Recompensa " + nombreRec + " usada.\n");
+    }
+
+    /**
+     * Método que cierra el buffererWriter.
+     */
+    public void close(){
+        try {
+            bw.close();
+        } catch (Exception e) {}
     }
 }
