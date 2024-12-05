@@ -3,6 +3,8 @@ package recompensas;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.ErrorManager;
 
@@ -11,7 +13,11 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
+import comun.Monedero;
 import helpers.ErrorHelper;
+import piscifactoria.Piscifactoria;
+import propiedades.CriaTipo;
+import tanque.Tanque;
 
 
 public class Recompensas {
@@ -790,14 +796,73 @@ public class Recompensas {
     }
 
 
-    public static int reclamar(File file) {
-        Element root;
+    public static void reclamar(File file, ArrayList<Piscifactoria> piscifactorias) { 
+        Element root=null;
         try {
             SAXReader reader = new SAXReader();
             Document doc = reader.read(file);
             root = doc.getRootElement();
             Element give = root.element("give");
-            if(give.element("food") != null){
+            Iterator<Element> it = give.elementIterator();
+            while(it.hasNext()){
+                Element elem =it.next();
+                if(elem.getName().equals("food")){
+                    if(elem.attributeValue("type").equals("algae")){
+                        int comidaRecompensa=Integer.parseInt(elem.getText());
+                        int repartoVegetal = comidaRecompensa/piscifactorias.size();
+                        for (Piscifactoria piscifactoria : piscifactorias) {
+                            piscifactoria.repartirPiscifactoriaRecompensa(0, repartoVegetal);
+                        }
+                    }else if(elem.attributeValue("type").equals("general")){
+                        int comidaRecompensa=Integer.parseInt(elem.getText());
+                        int repartoVegetal = comidaRecompensa/piscifactorias.size();
+                        int repartoAnimal = comidaRecompensa/piscifactorias.size();
+                        for (Piscifactoria piscifactoria : piscifactorias) {
+                            piscifactoria.repartirPiscifactoriaRecompensa(repartoAnimal, repartoVegetal);
+                        }
+                    }else if(elem.attributeValue("type").equals("animal")){
+                        int comidaRecompensa=Integer.parseInt(elem.getText());
+                        int repartoAnimal = comidaRecompensa/piscifactorias.size();
+                        for (Piscifactoria piscifactoria : piscifactorias) {
+                            piscifactoria.repartirPiscifactoriaRecompensa(repartoAnimal, 0);
+                        }
+                    }
+                }else if(elem.getName().equals("buildings")){
+                    if(elem.attributeValue("code").equals("0")){
+                        
+                    }else if(elem.attributeValue("code").equals("1")){
+
+                    }else if(elem.attributeValue("code").equals("2")){
+                        for (Piscifactoria piscifactoria : piscifactorias) {
+                            if(piscifactoria.getTipo()==CriaTipo.RIO && piscifactoria.getTanques().size() <10){
+                                piscifactoria.getTanques().add(new Tanque(25, piscifactoria.getTipo()));
+                            }
+                        }
+                    }else if(elem.attributeValue("code").equals("3")){
+                        for (Piscifactoria piscifactoria : piscifactorias) {
+                            if(piscifactoria.getTipo()==CriaTipo.MAR && piscifactoria.getTanques().size() <10){
+                                piscifactoria.getTanques().add(new Tanque(100, piscifactoria.getTipo()));
+                            }
+                        }
+                    }else if(elem.attributeValue("code").equals("4")){
+
+                    }
+
+                }else if(elem.getName().equals("coins")){
+                    Monedero monedero=Monedero.getInstance();
+                    int recompensaCoins = Integer.parseInt(elem.getText());
+                    monedero.setMonedas(monedero.getMonedas()+recompensaCoins);
+                }
+            }
+
+            //No se como enviar el nombre del archivo embez del file para borrar el archivo de recompensa
+            //Recompensas.restQuantity(file);
+
+
+
+
+
+            /*if(give.element("food") != null){
                  String tipoComida = give.element("food").attributeValue("type");
                 if(tipoComida == "algae"){
                     String cantidad = give.element("food").getText();
@@ -807,7 +872,7 @@ public class Recompensas {
                 } else if (tipoComida == "animal"){
 
                 }
-            }
+            }*/
             
         } catch (DocumentException e) {
             // TODO Auto-generated catch block

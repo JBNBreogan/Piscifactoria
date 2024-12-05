@@ -1019,7 +1019,7 @@ public class Simulador {
         File f = new File("rewards/");
         File[] files = f.listFiles();
         int opcion = InputHelper.getIntRanges(files.length);
-        Recompensas.reclamar(files[opcion-1]);
+        Recompensas.reclamar(files[opcion-1],piscifactorias);
     }
 
 

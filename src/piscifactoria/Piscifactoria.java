@@ -475,5 +475,15 @@ public class Piscifactoria {
         }
     }
 
+    public void repartirPiscifactoriaRecompensa(int repartoAnimal, int repartoVegetal) {
+        while (repartoAnimal != 0 && !comidaAnimalLlena())  {
+            this.comidaAnimal++;
+            repartoAnimal--;
+        }
+        while (repartoVegetal != 0 && !comidaVegetalLlena())  {
+            this.comidaVegetal++;
+            repartoVegetal--;
+        }
+    }
     
 }
