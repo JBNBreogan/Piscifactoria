@@ -13,10 +13,12 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
+import comun.AlmacenCentral;
 import comun.Monedero;
 import helpers.ErrorHelper;
 import piscifactoria.Piscifactoria;
 import propiedades.CriaTipo;
+import registros.Registros;
 import tanque.Tanque;
 
 
@@ -729,7 +731,7 @@ public class Recompensas {
     public static void addQuantity(String nombreArchivo){
         try {
             SAXReader sr = new SAXReader();
-            doc = sr.read(new File("rewards/"+nombreArchivo));
+            Document doc = sr.read(new File("rewards/"+nombreArchivo));
             Element root = doc.getRootElement();
             int valor = Integer.parseInt(root.element("quantity").getText());
             valor++;
@@ -796,7 +798,7 @@ public class Recompensas {
     }
 
 
-    public static void reclamar(File file, ArrayList<Piscifactoria> piscifactorias) { 
+    public static void reclamar(Registros registros, File file, ArrayList<Piscifactoria> piscifactorias) { 
         Element root=null;
         try {
             SAXReader reader = new SAXReader();
@@ -807,20 +809,21 @@ public class Recompensas {
             while(it.hasNext()){
                 Element elem =it.next();
                 if(elem.getName().equals("food")){
-                    if(elem.attributeValue("type").equals("algae")){
+                    if(elem.element("give").element("food").attributeValue("type").equals("algae")){
                         int comidaRecompensa=Integer.parseInt(elem.getText());
                         int repartoVegetal = comidaRecompensa/piscifactorias.size();
                         for (Piscifactoria piscifactoria : piscifactorias) {
                             piscifactoria.repartirPiscifactoriaRecompensa(0, repartoVegetal);
                         }
-                    }else if(elem.attributeValue("type").equals("general")){
+                        //Falta lo del registro (eso lo hago yo)
+                    }else if(elem.element("give").element("food").attributeValue("type").equals("general")){
                         int comidaRecompensa=Integer.parseInt(elem.getText());
                         int repartoVegetal = comidaRecompensa/piscifactorias.size();
                         int repartoAnimal = comidaRecompensa/piscifactorias.size();
                         for (Piscifactoria piscifactoria : piscifactorias) {
                             piscifactoria.repartirPiscifactoriaRecompensa(repartoAnimal, repartoVegetal);
                         }
-                    }else if(elem.attributeValue("type").equals("animal")){
+                    }else if(elem.element("give").element("food").attributeValue("type").equals("animal")){
                         int comidaRecompensa=Integer.parseInt(elem.getText());
                         int repartoAnimal = comidaRecompensa/piscifactorias.size();
                         for (Piscifactoria piscifactoria : piscifactorias) {
@@ -828,24 +831,45 @@ public class Recompensas {
                         }
                     }
                 }else if(elem.getName().equals("buildings")){
-                    if(elem.attributeValue("code").equals("0")){
-                        
-                    }else if(elem.attributeValue("code").equals("1")){
-
-                    }else if(elem.attributeValue("code").equals("2")){
+                    if(elem.element("give").element("buildings").attributeValue("code").equals("0")){
+                        String partes="";
+                        partes = partes + elem.element("part").getText();
+                        if(partes.equals(elem.element("total").getText())){
+                            //Añadir una piscifactoria de rio
+                            System.out.println("Recompensa adquirida");
+                        }else{
+                            System.out.println("Recompensa incompleta");
+                        }
+                    }else if(elem.element("give").element("buildings").attributeValue("code").equals("1")){
+                        String partes="";
+                        partes = partes + elem.element("part").getText();
+                        if(partes.equals(elem.element("total").getText())){
+                            //Añadir una piscifactoria de mar
+                            System.out.println("Recompensa adquirida");
+                        }else{
+                            System.out.println("Recompensa incompleta");
+                        }
+                    }else if(elem.element("give").element("buildings").attributeValue("code").equals("2")){
                         for (Piscifactoria piscifactoria : piscifactorias) {
                             if(piscifactoria.getTipo()==CriaTipo.RIO && piscifactoria.getTanques().size() <10){
                                 piscifactoria.getTanques().add(new Tanque(25, piscifactoria.getTipo()));
                             }
                         }
-                    }else if(elem.attributeValue("code").equals("3")){
+                    }else if(elem.element("give").element("buildings").attributeValue("code").equals("3")){
                         for (Piscifactoria piscifactoria : piscifactorias) {
                             if(piscifactoria.getTipo()==CriaTipo.MAR && piscifactoria.getTanques().size() <10){
                                 piscifactoria.getTanques().add(new Tanque(100, piscifactoria.getTipo()));
                             }
                         }
-                    }else if(elem.attributeValue("code").equals("4")){
-
+                    }else if(elem.element("give").element("buildings").attributeValue("code").equals("4")){
+                        String partes="";
+                        partes = partes + elem.element("part").getText();
+                        if(partes.equals(elem.element("total").getText())){
+                            System.out.println("Recompensa adquirida");
+                            //AlmacenCentral almacenCentral = AlmacenCentral.getInstance();
+                        }else{
+                            System.out.println("Recompensa incompleta");
+                        }
                     }
 
                 }else if(elem.getName().equals("coins")){
@@ -879,6 +903,14 @@ public class Recompensas {
             e.printStackTrace();
         }
       
+        }
+
+        private static boolean comprobarAlmacenCen(boolean a,boolean b, boolean c,boolean d){
+            if (a==true && b==true && c==true && d==true) {
+                return true;
+            }else{
+                return false;
+            }
         }
 }
 

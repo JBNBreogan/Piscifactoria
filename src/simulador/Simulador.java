@@ -1019,7 +1019,7 @@ public class Simulador {
         File f = new File("rewards/");
         File[] files = f.listFiles();
         int opcion = InputHelper.getIntRanges(files.length);
-        Recompensas.reclamar(files[opcion-1],piscifactorias);
+        Recompensas.reclamar(registros,files[opcion-1],piscifactorias);
     }
 
 
@@ -1030,14 +1030,16 @@ public class Simulador {
      */
     public void truco97(String nombreArchivo, int nivel) {
         if (new File("rewards/" + nombreArchivo).exists()) {
-            Recompensas.restQuantity(nombreArchivo);
+            Recompensas.addQuantity(nombreArchivo);
         } else {
-            Recompensas.algaXml(nivel);
+            Recompensas.almacenXml(nivel);
+            Recompensas.almacenXml(nivel);
+            Recompensas.almacenXml(nivel);
+            Recompensas.almacenXml(nivel);
             this.registros.recompensaCreada(nombreArchivo);
         }
     }
 
-    
 
     /**
      * Ejecuta toda la lógica del programa.
@@ -1102,7 +1104,11 @@ public class Simulador {
                     case 15:
                         break;
                     case 97:
-                        sim.truco97("algas_2.xml", 2);
+                        //sim.truco97("algas_2.xml", 2);
+                        sim.truco97("almacen_a.xml", 1);
+                        sim.truco97("almacen_b.xml", 2);
+                        sim.truco97("almacen_c.xml", 3);
+                        sim.truco97("almacen_d.xml", 4);
                         break;
                     case 98:
                         sim.truco98();
