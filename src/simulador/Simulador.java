@@ -1,5 +1,6 @@
 package simulador;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
@@ -14,6 +15,8 @@ import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import registros.Transcripciones;
+import saves.DTOPiscifactoria;
+import saves.SaveLoad;
 import tanque.Tanque;
 
 import java.util.Random;
@@ -917,7 +920,7 @@ public class Simulador {
                 try {
                     do {
                 sim.menu();
-                opcion=InputHelper.getIntRanges(13,1, new int[] {98,99});
+                opcion=InputHelper.getIntRanges(13,1, new int[] {98,99,100});
                     switch (opcion) {
                         case 1:
                             sim.showGeneralStatus();
@@ -970,6 +973,9 @@ public class Simulador {
                         case 99:
                             monedero.setMonedas(monedero.getMonedas()+1000);
                             System.out.println("Añadidas 1000 monedas");
+                            break;
+                        case 100:
+                            SaveLoad.save(new DTOPiscifactoria(piscifactorias.get(0)), new File("prueba.json"));
                             break;
                         default:
                             System.out.println("Esta opción no es válida");
