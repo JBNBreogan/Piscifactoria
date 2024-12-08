@@ -21,12 +21,28 @@ import propiedades.CriaTipo;
 import registros.Registros;
 import tanque.Tanque;
 
-
+/**
+ * La clase Recompensas permite la gestión de recompensas en formato XML. 
+ * Proporciona métodos para generar recompensas, modificar su cantidad, 
+ * listar las disponibles y realizar operaciones específicas según el tipo.
+ *
+ */
 public class Recompensas {
 
+    /**
+     * Ruta donde se almacenan los archivos XML de recompensas.
+     */
     private static String ruta= "rewards";
+
+    /**
+    * Documento XML en el que se trabaja durante las operaciones.
+    */
     private static Document doc = null;
 
+    /**
+     * Crea la carpeta base donde se almacenarán los archivos XML de recompensas
+     * si no existe.
+     */
     public static void hacerCarpeta() {
         File carpeta= new File(ruta);
         if(!carpeta.exists()){
@@ -34,7 +50,11 @@ public class Recompensas {
         }  
     }
 
-
+    /**
+     * Genera un archivo XML con información sobre recompensas de tipo "alga".
+     * 
+     * @param nivel Nivel de la recompensa (1 a 5), que define los valores específicos.
+     */
     public static void algaXml(int nivel){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -140,6 +160,12 @@ public class Recompensas {
       
     }
 
+    /**
+    * Genera un archivo XML con información sobre recompensas relacionadas con 
+    * la construcción de un almacén central.
+    * 
+    * @param nivel Nivel de la recompensa, representando partes (A, B, C o D).
+    */
     public static void almacenXml(int nivel){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -250,6 +276,11 @@ public class Recompensas {
         
     }
 
+    /**
+    * Genera un archivo XML con información sobre recompensas de comida general.
+    * 
+    * @param nivel Nivel de la recompensa (1 a 5), que define los valores específicos.
+    */
     public static void comidaXml(int nivel){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -354,6 +385,11 @@ public class Recompensas {
     }
 }
 
+    /**
+     * Genera un archivo XML con información sobre recompensas de monedas.
+     * 
+     * @param nivel Nivel de la recompensa (1 a 5), que define los valores específicos.
+     */
     public static void monedasXml(int nivel){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -447,6 +483,11 @@ public class Recompensas {
         
     }
 
+     /**
+     * Genera un archivo XML con información sobre recompensas de pienso animal.
+     * 
+     * @param nivel Nivel de la recompensa (1 a 5), que define los valores específicos.
+     */
     public static void piensoXml(int nivel){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -545,6 +586,12 @@ public class Recompensas {
         }
     }
 
+     /**
+     * Genera un archivo XML con información sobre recompensas para construir 
+     * piscifactorías de mar.
+     * 
+     * @param parte Parte de la recompensa (A o B).
+     */
     public static void pisciMarXml(int parte){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -601,6 +648,12 @@ public class Recompensas {
         }
     }
 
+    /**
+    * Genera un archivo XML con información sobre recompensas para construir 
+    * piscifactorías de río.
+    * 
+    * @param parte Parte de la recompensa (A o B).
+    */
     public static void pisciRioXml(int parte){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -659,6 +712,11 @@ public class Recompensas {
         }
     }
 
+     /**
+     * Genera un archivo XML con información sobre recompensas para construir tanques.
+     * 
+     * @param tipo Tipo del tanque: 1 para río, 2 para mar.
+     */
     public static void tanqueXml(int tipo){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -713,6 +771,11 @@ public class Recompensas {
         }
     }
 
+    /**
+     * Guarda el archivo XML actual en la ruta especificada.
+     * 
+     * @param nombreArchivo Nombre del archivo donde se guardará el documento.
+     */
     public static void save(String nombreArchivo){
         XMLWriter writer = null;
         try {
@@ -728,6 +791,11 @@ public class Recompensas {
         }
     }
 
+     /**
+     * Incrementa la cantidad en el archivo XML especificado en 1.
+     * 
+     * @param nombreArchivo Nombre del archivo a modificar.
+     */
     public static void addQuantity(String nombreArchivo){
         try {
             SAXReader sr = new SAXReader();
@@ -742,6 +810,12 @@ public class Recompensas {
         }
     }
 
+     /**
+     * Reduce la cantidad en el archivo XML especificado en 1. Si llega a 0, 
+     * el archivo se elimina.
+     * 
+     * @param nombreArchivo Nombre del archivo a modificar o eliminar.
+     */
     public static void restQuantity(String nombreArchivo){
         try {
             SAXReader sr = new SAXReader();
@@ -764,6 +838,10 @@ public class Recompensas {
         }
     }
 
+    /**
+     * Lista todas las recompensas disponibles leyendo los archivos en la carpeta
+     * de recompensas.
+     */
     public static void listRecompensas(){
         File folder = new File("rewards");
         File[] archivos = folder.listFiles();
@@ -797,7 +875,14 @@ public class Recompensas {
         }
     }
 
-
+    /**
+     * Reclama una recompensa, aplicándola a un conjunto de piscifactorías, 
+     * y realiza las acciones necesarias según el tipo de recompensa.
+     * 
+     * @param registros Objeto Registros para gestionar operaciones relacionadas.
+     * @param file Archivo XML de la recompensa a reclamar.
+     * @param piscifactorias Lista de piscifactorías para distribuir la recompensa.
+     */
     public static void reclamar(Registros registros, File file, ArrayList<Piscifactoria> piscifactorias) { 
         Element root=null;
         try {
@@ -905,6 +990,15 @@ public class Recompensas {
       
         }
 
+    /**
+     * Comprueba si todas las partes de un almacén central están disponibles.
+     * 
+     * @param a Parte A disponible.
+     * @param b Parte B disponible.
+     * @param c Parte C disponible.
+     * @param d Parte D disponible.
+     * @return true si todas las partes están disponibles; de lo contrario, false.
+     */
         private static boolean comprobarAlmacenCen(boolean a,boolean b, boolean c,boolean d){
             if (a==true && b==true && c==true && d==true) {
                 return true;

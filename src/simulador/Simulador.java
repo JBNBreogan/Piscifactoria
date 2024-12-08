@@ -1014,6 +1014,9 @@ public class Simulador {
         System.out.println("Añadidas 1000 monedas");
     }
 
+    /**
+     * Permite seleccionar una recompensa disponible, primero las lista y el usuario elige la que quiere.
+     */
     public void selectRecompensa(){
         Recompensas.listRecompensas();
         File f = new File("rewards/");
@@ -1036,6 +1039,7 @@ public class Simulador {
             Recompensas.almacenXml(nivel);
             Recompensas.almacenXml(nivel);
             Recompensas.almacenXml(nivel);
+            Recompensas.comidaXml(2);
             this.registros.recompensaCreada(nombreArchivo);
         }
     }
