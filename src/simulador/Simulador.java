@@ -16,6 +16,7 @@ import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import registros.Transcripciones;
 import saves.DTOPiscifactoria;
+import saves.DTOSimulador;
 import saves.SaveLoad;
 import tanque.Tanque;
 
@@ -60,6 +61,26 @@ public class Simulador {
      * Constructor vacío de la clase simulador.
      */
     public Simulador() {
+    }
+
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    public int getDias() {
+        return dias;
+    }
+
+    public Monedero getMonedero() {
+        return monedero;
+    }
+
+    public ArrayList<Piscifactoria> getPiscifactorias() {
+        return piscifactorias;
+    }
+
+    public AlmacenCentral getAlmacenCentral() {
+        return almacenCentral;
     }
 
     /**
@@ -908,6 +929,14 @@ public class Simulador {
     }
 
     /**
+     * Metodo que guarda la partida
+     */
+    public void save(){
+        SaveLoad saves = new SaveLoad();
+        saves.save(new DTOSimulador(this), new File("prueba.json"));
+    }
+
+    /**
      * Ejecuta toda la lógica del programa.
      * @param args
      */
@@ -975,7 +1004,7 @@ public class Simulador {
                             System.out.println("Añadidas 1000 monedas");
                             break;
                         case 100:
-                            SaveLoad.save(new DTOPiscifactoria(piscifactorias.get(0)), new File("prueba.json"));
+                            sim.save();
                             break;
                         default:
                             System.out.println("Esta opción no es válida");

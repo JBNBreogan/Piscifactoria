@@ -14,7 +14,12 @@ public class DTOTanque {
     private List<DTOPez> peces;
 
     public DTOTanque(Tanque tanque) {
-        //this.pez = tanque.getTipoPez().getNombre();
+        if (!tanque.getPeces().isEmpty()){
+            this.pez = tanque.getPeces().get(0).getName();
+        } else {
+            this.pez = "Vacío";
+        }
+
         this.num = tanque.pecesEnTanque();
         
         this.datos = new HashMap<>();

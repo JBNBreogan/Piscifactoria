@@ -11,7 +11,7 @@ import helpers.ErrorHelper;
 
 public class SaveLoad {
     
-     public static void save(DTOSimulador sim, File archivo) {
+     public void save(DTOSimulador sim, File archivo) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (FileWriter writer = new FileWriter(archivo)) {
             gson.toJson(sim, writer);
