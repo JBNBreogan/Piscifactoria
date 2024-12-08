@@ -1028,18 +1028,15 @@ public class Simulador {
 
     /**
      * Metodo que permite crear una recompensa.
-     * @param nombreArchivo Nombre de la recompensa.
+     * @param nombreArchivo nombre del archivo.
      * @param nivel Nivel de la recompensa.
      */
     public void truco97(String nombreArchivo, int nivel) {
         if (new File("rewards/" + nombreArchivo).exists()) {
             Recompensas.addQuantity(nombreArchivo);
         } else {
-            Recompensas.almacenXml(nivel);
-            Recompensas.almacenXml(nivel);
-            Recompensas.almacenXml(nivel);
-            Recompensas.almacenXml(nivel);
-            Recompensas.comidaXml(2);
+            Recompensas.algaXml(2);
+            Recompensas.monedasXml(3);
             this.registros.recompensaCreada(nombreArchivo);
         }
     }
