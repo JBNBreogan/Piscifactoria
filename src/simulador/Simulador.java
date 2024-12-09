@@ -15,8 +15,6 @@ import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import recompensas.Recompensas;
-import registros.Transcripciones;
-import saves.DTOPiscifactoria;
 import saves.DTOSimulador;
 import saves.SaveLoad;
 import tanque.Tanque;
