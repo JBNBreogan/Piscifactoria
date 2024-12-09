@@ -947,9 +947,15 @@ public class Simulador {
         Recompensas.listRecompensas();
         File f = new File("rewards/");
         File[] files = f.listFiles();
+        System.out.println("0. Salir");
         int opcion = InputHelper.getIntRanges(files.length);
+        if (opcion == 0){
+            return;
+        } else {
         Recompensas.reclamar(registros,files[opcion-1],piscifactorias);
+        }
     }
+
 
 
     /**
