@@ -108,6 +108,8 @@ public class Simulador {
                                               AlmacenPropiedades.SARGO.getNombre(),
                                               AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
                                               AlmacenPropiedades.DORADA.getNombre()}, monedero.getMonedas(), nombreEmpresa);
+            Recompensas.hacerCarpeta();
+            SaveLoad.saveDirCreate();
             ErrorHelper.createErrorFile();
             ErrorHelper.writeError("prueba de error");
         }
@@ -968,7 +970,7 @@ public class Simulador {
      */
     public void save(){
         SaveLoad saves = new SaveLoad();
-        saves.save(new DTOSimulador(this), new File("prueba.json"));
+        saves.save(new DTOSimulador(this), new File("saves/" + nombreEmpresa), this.registros);
     }
 
 
@@ -977,7 +979,6 @@ public class Simulador {
      * @param args
      */
     public static void main(String[] args){
-        Monedero monedero=Monedero.getInstance();
         Simulador sim=new Simulador();
         sim.init();
         int opcion=0;
