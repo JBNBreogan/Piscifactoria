@@ -1,4 +1,4 @@
-package peces.Propiedades;
+package peces.propiedades;
 
 import java.util.Random;
 
@@ -6,23 +6,23 @@ import peces.Pez;
 import propiedades.PecesDatos;
 
 /**
- * Clase para peces filtradores
+ * Clase para peces omnivoros
  * @author Breogan
  */
-public abstract class Filtrador extends Pez{
-    
+public abstract class Omnivoro extends Pez{
+
     /**
-     * Cosntructor paraetrizado
-     * @param data datos del pez
+     * Constructor parametrizado
+     * @param data Datos del pez
      */
-    public Filtrador(PecesDatos data){
+    protected Omnivoro(PecesDatos data) {
         super(data);
     }
 
     @Override
     public int comer(int cantidad) {
         Random comer = new Random();
-        if (comer.nextInt(2) != 0){
+        if (comer.nextInt(4) != 0){
             this.Comido = true;
             return 0;
         } else if (cantidad >= 1){
@@ -31,4 +31,5 @@ public abstract class Filtrador extends Pez{
         }
         return 0;
     }
+    
 }

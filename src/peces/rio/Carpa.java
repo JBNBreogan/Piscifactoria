@@ -1,9 +1,9 @@
-package peces.Rio;
+package peces.rio;
 
 import java.util.Random;
 
 import peces.Pez;
-import peces.Propiedades.Omnivoro;
+import peces.propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
 
 /**

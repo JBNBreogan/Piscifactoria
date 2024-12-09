@@ -1,7 +1,7 @@
-package peces.Rio;
+package peces.rio;
 
 import peces.Pez;
-import peces.Propiedades.Filtrador;
+import peces.propiedades.Filtrador;
 import propiedades.AlmacenPropiedades;
 
 /**

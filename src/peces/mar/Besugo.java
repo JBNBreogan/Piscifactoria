@@ -1,7 +1,7 @@
-package peces.Mar;
+package peces.mar;
 
 import peces.Pez;
-import peces.Propiedades.Carnivoro;
+import peces.propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
 
 /**
