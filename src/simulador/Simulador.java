@@ -1014,30 +1014,32 @@ public class Simulador {
         System.out.println("Añadidas 1000 monedas");
     }
 
+    /**
+     * Permite seleccionar una recompensa disponible, primero las lista y el usuario elige la que quiere.
+     */
     public void selectRecompensa(){
         Recompensas.listRecompensas();
         File f = new File("rewards/");
         File[] files = f.listFiles();
         int opcion = InputHelper.getIntRanges(files.length);
-        Recompensas.reclamar(files[opcion-1]);
+        Recompensas.reclamar(registros,files[opcion-1],piscifactorias);
     }
 
 
     /**
      * Metodo que permite crear una recompensa.
-     * @param nombreArchivo Nombre de la recompensa.
+     * @param nombreArchivo nombre del archivo.
      * @param nivel Nivel de la recompensa.
      */
     public void truco97(String nombreArchivo, int nivel) {
         if (new File("rewards/" + nombreArchivo).exists()) {
-            Recompensas.restQuantity(nombreArchivo);
+            Recompensas.addQuantity(nombreArchivo);
         } else {
-            Recompensas.algaXml(nivel);
+            Recompensas.monedasXml(2);
             this.registros.recompensaCreada(nombreArchivo);
         }
     }
 
-    
 
     /**
      * Ejecuta toda la lógica del programa.
@@ -1102,7 +1104,7 @@ public class Simulador {
                     case 15:
                         break;
                     case 97:
-                        sim.truco97("algas_2.xml", 2);
+                        sim.truco97("monedas_2.xml", 2);
                         break;
                     case 98:
                         sim.truco98();

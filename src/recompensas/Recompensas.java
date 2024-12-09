@@ -3,22 +3,44 @@ package recompensas;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.logging.ErrorManager;
-
 import org.dom4j.*;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
-
+import comun.AlmacenCentral;
+import comun.Monedero;
 import helpers.ErrorHelper;
+import helpers.InputHelper;
+import piscifactoria.Piscifactoria;
+import propiedades.CriaTipo;
+import registros.Registros;
+import tanque.Tanque;
 
-
+/**
+ * La clase Recompensas permite la gestión de recompensas en formato XML. 
+ * Proporciona métodos para generar recompensas, modificar su cantidad, 
+ * listar las disponibles y realizar operaciones específicas según el tipo.
+ *
+ */
 public class Recompensas {
 
+    /**
+     * Ruta donde se almacenan los archivos XML de recompensas.
+     */
     private static String ruta= "rewards";
+
+    /**
+    * Documento XML en el que se trabaja durante las operaciones.
+    */
     private static Document doc = null;
 
+    /**
+     * Crea la carpeta base donde se almacenarán los archivos XML de recompensas
+     * si no existe.
+     */
     public static void hacerCarpeta() {
         File carpeta= new File(ruta);
         if(!carpeta.exists()){
@@ -26,7 +48,11 @@ public class Recompensas {
         }  
     }
 
-
+    /**
+     * Genera un archivo XML con información sobre recompensas de tipo "alga".
+     * 
+     * @param nivel Nivel de la recompensa (1 a 5), que define los valores específicos.
+     */
     public static void algaXml(int nivel){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -132,6 +158,12 @@ public class Recompensas {
       
     }
 
+    /**
+    * Genera un archivo XML con información sobre recompensas relacionadas con 
+    * la construcción de un almacén central.
+    * 
+    * @param nivel Nivel de la recompensa, representando partes (A, B, C o D).
+    */
     public static void almacenXml(int nivel){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -242,6 +274,11 @@ public class Recompensas {
         
     }
 
+    /**
+    * Genera un archivo XML con información sobre recompensas de comida general.
+    * 
+    * @param nivel Nivel de la recompensa (1 a 5), que define los valores específicos.
+    */
     public static void comidaXml(int nivel){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -346,6 +383,11 @@ public class Recompensas {
     }
 }
 
+    /**
+     * Genera un archivo XML con información sobre recompensas de monedas.
+     * 
+     * @param nivel Nivel de la recompensa (1 a 5), que define los valores específicos.
+     */
     public static void monedasXml(int nivel){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -439,6 +481,11 @@ public class Recompensas {
         
     }
 
+     /**
+     * Genera un archivo XML con información sobre recompensas de pienso animal.
+     * 
+     * @param nivel Nivel de la recompensa (1 a 5), que define los valores específicos.
+     */
     public static void piensoXml(int nivel){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -537,6 +584,12 @@ public class Recompensas {
         }
     }
 
+     /**
+     * Genera un archivo XML con información sobre recompensas para construir 
+     * piscifactorías de mar.
+     * 
+     * @param parte Parte de la recompensa (A o B).
+     */
     public static void pisciMarXml(int parte){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -593,6 +646,12 @@ public class Recompensas {
         }
     }
 
+    /**
+    * Genera un archivo XML con información sobre recompensas para construir 
+    * piscifactorías de río.
+    * 
+    * @param parte Parte de la recompensa (A o B).
+    */
     public static void pisciRioXml(int parte){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -651,6 +710,11 @@ public class Recompensas {
         }
     }
 
+     /**
+     * Genera un archivo XML con información sobre recompensas para construir tanques.
+     * 
+     * @param tipo Tipo del tanque: 1 para río, 2 para mar.
+     */
     public static void tanqueXml(int tipo){
         doc = DocumentHelper.createDocument();
         Element root = doc.addElement("reward");
@@ -705,6 +769,11 @@ public class Recompensas {
         }
     }
 
+    /**
+     * Guarda el archivo XML actual en la ruta especificada.
+     * 
+     * @param nombreArchivo Nombre del archivo donde se guardará el documento.
+     */
     public static void save(String nombreArchivo){
         XMLWriter writer = null;
         try {
@@ -720,10 +789,15 @@ public class Recompensas {
         }
     }
 
+     /**
+     * Incrementa la cantidad en el archivo XML especificado en 1.
+     * 
+     * @param nombreArchivo Nombre del archivo a modificar.
+     */
     public static void addQuantity(String nombreArchivo){
         try {
             SAXReader sr = new SAXReader();
-            doc = sr.read(new File("rewards/"+nombreArchivo));
+            Document doc = sr.read(new File("rewards/"+nombreArchivo));
             Element root = doc.getRootElement();
             int valor = Integer.parseInt(root.element("quantity").getText());
             valor++;
@@ -734,6 +808,12 @@ public class Recompensas {
         }
     }
 
+     /**
+     * Reduce la cantidad en el archivo XML especificado en 1. Si llega a 0, 
+     * el archivo se elimina.
+     * 
+     * @param nombreArchivo Nombre del archivo a modificar o eliminar.
+     */
     public static void restQuantity(String nombreArchivo){
         try {
             SAXReader sr = new SAXReader();
@@ -756,6 +836,10 @@ public class Recompensas {
         }
     }
 
+    /**
+     * Lista todas las recompensas disponibles leyendo los archivos en la carpeta
+     * de recompensas.
+     */
     public static void listRecompensas(){
         File folder = new File("rewards");
         File[] archivos = folder.listFiles();
@@ -789,31 +873,199 @@ public class Recompensas {
         }
     }
 
+    /**
+     * Reclama una recompensa, aplicándola a un conjunto de piscifactorías, 
+     * y realiza las acciones necesarias según el tipo de recompensa.
+     * 
+     * @param registros Objeto Registros para gestionar operaciones relacionadas.
+     * @param file Archivo XML de la recompensa a reclamar.
+     * @param piscifactorias Lista de piscifactorías para distribuir la recompensa.
+     */
+    public static void reclamar(Registros registros, File file, ArrayList<Piscifactoria> piscifactorias) { 
 
-    public static int reclamar(File file) {
-        Element root;
         try {
             SAXReader reader = new SAXReader();
             Document doc = reader.read(file);
-            root = doc.getRootElement();
+            Element root = doc.getRootElement();
+            
             Element give = root.element("give");
-            if(give.element("food") != null){
-                 String tipoComida = give.element("food").attributeValue("type");
-                if(tipoComida == "algae"){
-                    String cantidad = give.element("food").getText();
-                //    return Integer.parseInt(cantidad);
-                } else if (tipoComida == "animal"){
-
-                } else if (tipoComida == "animal"){
-
+            if (give == null) {
+                System.out.println("El elemento 'give' no existe en el archivo XML.");
+                return;
+            }
+    
+            Iterator<Element> it = give.elementIterator();
+            while (it.hasNext()) {
+                Element elem = it.next();
+                
+                // Procesar recompensas de tipo "food"
+                if ("food".equals(elem.getName())) {
+                    processFoodReward(elem, piscifactorias);
+                }
+                // Procesar recompensas de tipo "buildings"
+                else if ("buildings".equals(elem.getName())) {
+                    processBuildingsReward(elem, piscifactorias);
+                }
+                // Procesar recompensas de tipo "coins"
+                else if ("coins".equals(elem.getName())) {
+                    processCoinsReward(elem);
                 }
             }
-            
-        } catch (DocumentException e) {
-            // TODO Auto-generated catch block
+            String nombreArchivo = file.getName();
+            restQuantity(nombreArchivo);
+        } catch (Exception e) {
             e.printStackTrace();
+            ErrorHelper.writeError("Error al reclamar recompensas");
         }
-      
+
+    }
+
+        /**
+         * Procesa las recompensas de tipo "food" del archivo XML y las distribuye
+         * entre las piscifactorías según el tipo de comida.
+         *
+         * @param foodElement Elemento XML que representa una recompensa de comida.
+         * @param piscifactorias Lista de piscifactorías donde se distribuirá la recompensa.
+         */
+        public static void processFoodReward(Element foodElement, ArrayList<Piscifactoria> piscifactorias) {
+            try {
+                String type = foodElement.attributeValue("type");
+                if (type == null) {
+                    System.out.println("El atributo 'type' de 'food' no existe.");
+                    return;
+                }
+        
+                int comidaRecompensa = Integer.parseInt(foodElement.getText().trim());
+                int repartoVegetal = comidaRecompensa / piscifactorias.size();
+                int repartoAnimal = comidaRecompensa / piscifactorias.size();
+        
+                for (Piscifactoria piscifactoria : piscifactorias) {
+                    switch (type) {
+                        case "algae":
+                            piscifactoria.repartirPiscifactoriaRecompensa(0, repartoVegetal);
+                            break;
+                        case "general":
+                            piscifactoria.repartirPiscifactoriaRecompensa(repartoAnimal, repartoVegetal);
+                            break;
+                        case "animal":
+                            piscifactoria.repartirPiscifactoriaRecompensa(repartoAnimal, 0);
+                            break;
+                        default:
+                            System.out.println("Tipo de comida no reconocido: " + type);
+                    }
+                }
+            } catch (Exception e) {
+                ErrorHelper.writeError("Error al procesar la recompensas de comida");
+            }
+        }
+
+        /**
+         * Procesa las recompensas de tipo "buildings" del archivo XML y realiza
+         * las acciones correspondientes, como añadir nuevas piscifactorías o tanques.
+         *
+         * @param buildingElement Elemento XML que representa una recompensa de construcción.
+         * @param piscifactorias Lista de piscifactorías donde se aplicarán las recompensas.
+         */
+        public static void processBuildingsReward(Element buildingElement, ArrayList<Piscifactoria> piscifactorias) {
+            try {
+                String code = buildingElement.attributeValue("code");
+                if (code == null) {
+                    System.out.println("El atributo 'code' de 'buildings' no existe.");
+                    return;
+                }
+        
+                switch (code) {
+                    case "0":
+                        String partesRio = buildingElement.elementText("part");
+                        String totalRio = buildingElement.elementText("total");
+                        if (partesRio != null && totalRio != null && partesRio.equals(totalRio)) {
+                            String nombrePisc = InputHelper.readStringWithBuffRead();
+                            piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.RIO));
+                        } else {
+                            System.out.println("Recompensa incompleta para la piscifactoría de río.");
+                        }
+                    break;
+                    case "1":
+                        String partesMar = buildingElement.elementText("part");
+                        String totalMar = buildingElement.elementText("total");
+                        if (partesMar != null && totalMar != null && partesMar.equals(totalMar)) {
+                            String nombrePisc = InputHelper.readStringWithBuffRead();
+                            piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.MAR));
+                        } else {
+                            System.out.println("Recompensa incompleta para la piscifactoría de mar.");
+                        }
+                    break;
+                    case "4": // Almacén central
+                        String partes = buildingElement.elementText("part");
+                        String total = buildingElement.elementText("total");
+                        if (partes != null && total != null && partes.equals(total)) {
+                            if(AlmacenCentral.getInstance() == null){
+                                AlmacenCentral.getInstance();
+                            }
+                        } else {
+                            System.out.println("Recompensa incompleta");
+                        }
+                        break;
+        
+                    case "2": // Añadir tanque en piscifactoría de río
+                        for (Piscifactoria piscifactoria : piscifactorias) {
+                            if (piscifactoria.getTipo() == CriaTipo.RIO && piscifactoria.getTanques().size() < 10) {
+                                piscifactoria.getTanques().add(new Tanque(25, piscifactoria.getTipo()));
+                            }
+                        }
+                        break;
+        
+                    case "3": // Añadir tanque en piscifactoría de mar
+                        for (Piscifactoria piscifactoria : piscifactorias) {
+                            if (piscifactoria.getTipo() == CriaTipo.MAR && piscifactoria.getTanques().size() < 10) {
+                                piscifactoria.getTanques().add(new Tanque(100, piscifactoria.getTipo()));
+                            }
+                        }
+                        break;
+        
+                    default:
+                        System.out.println("Código de building no reconocido: " + code);
+                }
+            } catch (Exception e) {
+                ErrorHelper.writeError("Error al procesar la recompensas de edificio");
+
+            }
+        }
+
+        /**
+        * Procesa las recompensas de tipo "coins" del archivo XML y añade la cantidad
+        * correspondiente al monedero del jugador.
+        *
+        * @param coinsElement Elemento XML que representa una recompensa de monedas.
+        */
+        public static void processCoinsReward(Element coinsElement) {
+            try {
+                Monedero monedero = Monedero.getInstance();
+                int recompensaCoins = Integer.parseInt(coinsElement.getText().trim());
+                monedero.setMonedas(monedero.getMonedas() + recompensaCoins);
+            } catch (Exception e) {
+                ErrorHelper.writeError("Error al procesar la recompensas de monedas");
+            }
+        }
+        
+
+
+
+    /**
+     * Comprueba si todas las partes de un almacén central están disponibles.
+     * 
+     * @param a Parte A disponible.
+     * @param b Parte B disponible.
+     * @param c Parte C disponible.
+     * @param d Parte D disponible.
+     * @return true si todas las partes están disponibles; de lo contrario, false.
+     */
+        private static boolean comprobarAlmacenCen(boolean a,boolean b, boolean c,boolean d){
+            if (a==true && b==true && c==true && d==true) {
+                return true;
+            }else{
+                return false;
+            }
         }
 }
 
