@@ -128,6 +128,7 @@ public class Simulador {
                                                 "Limpiar tanques.",
                                                 "Vaciar tanque.",
                                                 "Mejorar.",
+                                                "Canjear recompensas",
                                                 "Pasar varios días.",
                                                 "Salir."},
                                                  false);
@@ -1036,7 +1037,7 @@ public class Simulador {
                     case 15:
                         break;
                     case 97:
-                        sim.truco97("algas_2.xml", 2);
+                        sim.truco97("monedas_2.xml", 2);
                         break;
                     case 98:
                         sim.truco98();
