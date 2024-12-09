@@ -901,14 +901,18 @@ public class Recompensas {
                 // Procesar recompensas de tipo "food"
                 if ("food".equals(elem.getName())) {
                     processFoodReward(elem, piscifactorias);
+                    registros.recompensaUsada(root.element("name").getText());
                 }
                 // Procesar recompensas de tipo "buildings"
                 else if ("buildings".equals(elem.getName())) {
                     processBuildingsReward(elem, piscifactorias);
+                    registros.recompensaUsada(root.element("name").getText());
+
                 }
                 // Procesar recompensas de tipo "coins"
                 else if ("coins".equals(elem.getName())) {
                     processCoinsReward(elem);
+                    registros.recompensaUsada(root.element("name").getText());
                 }
             }
             String nombreArchivo = file.getName();
