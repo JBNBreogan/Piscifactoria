@@ -14,6 +14,7 @@ import peces.rio.*;
 import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
+import recompensas.Recompensas;
 import registros.Transcripciones;
 import saves.DTOPiscifactoria;
 import saves.DTOSimulador;
@@ -928,13 +929,46 @@ public class Simulador {
         }
     }
 
+    
+    public void truco99() {
+        monedero.setMonedas(monedero.getMonedas() + 1000);
+        this.registros.ocultas(null, 1000, monedero.getMonedas());
+        System.out.println("Añadidas 1000 monedas");
+    }
+
+    /**
+     * Permite seleccionar una recompensa disponible, primero las lista y el usuario elige la que quiere.
+     */
+    public void selectRecompensa(){
+        Recompensas.listRecompensas();
+        File f = new File("rewards/");
+        File[] files = f.listFiles();
+        int opcion = InputHelper.getIntRanges(files.length);
+        Recompensas.reclamar(registros,files[opcion-1],piscifactorias);
+    }
+
+
+    /**
+     * Metodo que permite crear una recompensa.
+     * @param nombreArchivo nombre del archivo.
+     * @param nivel Nivel de la recompensa.
+     */
+    public void truco97(String nombreArchivo, int nivel) {
+        if (new File("rewards/" + nombreArchivo).exists()) {
+            Recompensas.addQuantity(nombreArchivo);
+        } else {
+            Recompensas.monedasXml(2);
+            this.registros.recompensaCreada(nombreArchivo);
+        }
+    
+    }
     /**
      * Metodo que guarda la partida
      */
     public void save(){
         SaveLoad saves = new SaveLoad();
         saves.save(new DTOSimulador(this), new File("prueba.json"));
-    }
+
 
     /**
      * Ejecuta toda la lógica del programa.
@@ -949,73 +983,78 @@ public class Simulador {
                 try {
                     do {
                 sim.menu();
-                opcion=InputHelper.getIntRanges(13,1, new int[] {98,99,100});
-                    switch (opcion) {
-                        case 1:
-                            sim.showGeneralStatus();
-                            break;
-                        case 2:
-                            sim.showSpecificStatus();
-                            break;
-                        case 3:
-                            sim.showTankStatus();
-                            break;
-                        case 4:
-                            sim.showStats();
-                            break;
-                        case 5:
-                            sim.showIctio();
-                            break;
-                        case 6:
+                opcion = InputHelper.getIntRanges(15, 1, new int[] { 97, 98, 99, 100 });
+                switch (opcion) {
+                    case 1:
+                        sim.showGeneralStatus();
+                        break;
+                    case 2:
+                        sim.showSpecificStatus();
+                        break;
+                    case 3:
+                        sim.showTankStatus();
+                        break;
+                    case 4:
+                        sim.showStats();
+                        break;
+                    case 5:
+                        sim.showIctio();
+                        break;
+                    case 6:
+                        sim.nextDay();
+                        break;
+                    case 7:
+                        sim.addFood();
+                        break;
+                    case 8:
+                        sim.addFish();
+                        break;
+                    case 9:
+                        sim.sell();
+                        break;
+                    case 10:
+                        sim.cleanTank();
+                        break;
+                    case 11:
+                        sim.emptyTank();
+                        break;
+                    case 12:
+                        sim.upgrade();
+                        break;
+                    case 13:
+                        sim.selectRecompensa();
+                        break;
+                    case 14:
+                        System.out.println("Elige los dias que quieres pasar");
+                        int numDias = InputHelper.getIntRanges(Integer.MAX_VALUE, 1);
+                        for (int i = 0; i < numDias; i++) {
                             sim.nextDay();
-                            break;
-                        case 7:
-                            sim.addFood();
-                            break;
-                        case 8:
-                            sim.addFish();
-                            break;
-                        case 9:
-                            sim.sell();
-                            break;
-                        case 10:
-                            sim.cleanTank();
-                            break;
-                        case 11:
-                            sim.emptyTank();
-                            break;
-                        case 12:
-                            sim.upgrade();
-                            break;
-                        case 13:
-                            System.out.println("Elige los dias que quieres pasar");
-                            int numDias=InputHelper.getIntRanges(Integer.MAX_VALUE,1);
-                            for (int i = 0; i < numDias; i++) {
-                                sim.nextDay();
-                            }
-                            break;
-                        case 14:
-                            break;
-                        case 98:
-                            sim.truco98();
-                            break;
-                        case 99:
-                            monedero.setMonedas(monedero.getMonedas()+1000);
-                            System.out.println("Añadidas 1000 monedas");
-                            break;
-                        case 100:
-                            sim.save();
-                            break;
-                        default:
-                            System.out.println("Esta opción no es válida");
-                            break;
                         }
-                    } while (opcion!=14);
-                } catch (InputMismatchException e) {
-                    System.out.println("Has introducido un tipo de dato incorrecto, introduce un número");
-                } finally {
-                    InputHelper.closeBuffReader();
+                        break;
+                    case 15:
+                        break;
+                    case 97:
+                        sim.truco97("algas_2.xml", 2);
+                        break;
+                    case 98:
+                        sim.truco98();
+                        break;
+                    case 99:
+                        sim.truco99();
+                        break;
+                    case 100:
+                        sim.save();
+                        break;
+                    default:
+                        System.out.println("Esta opción no es válida");
+                        break;
                 }
-        
+            } while (opcion != 15);
+        } catch (InputMismatchException e) {
+            System.out.println("Has introducido un tipo de dato incorrecto, introduce un número");
+        } finally {
+            InputHelper.closeBuffReader();
+            sim.registros.salir();
+        }
     }
 }

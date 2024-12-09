@@ -265,7 +265,7 @@ public class Transcripciones {
      * @param nombreRec Nombre de la recompensa.
      */
     public void recompensaCreada(String nombreRec){
-        this.escribirArchivo("Recompensa " + nombreRec + "creada.\n");
+        this.escribirArchivo("Recompensa " + nombreRec + " creada.\n");
     }
 
     /**
