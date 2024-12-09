@@ -1035,8 +1035,7 @@ public class Simulador {
         if (new File("rewards/" + nombreArchivo).exists()) {
             Recompensas.addQuantity(nombreArchivo);
         } else {
-            Recompensas.algaXml(2);
-            Recompensas.monedasXml(3);
+            Recompensas.monedasXml(2);
             this.registros.recompensaCreada(nombreArchivo);
         }
     }
@@ -1105,11 +1104,7 @@ public class Simulador {
                     case 15:
                         break;
                     case 97:
-                        //sim.truco97("algas_2.xml", 2);
-                        sim.truco97("almacen_a.xml", 1);
-                        sim.truco97("almacen_b.xml", 2);
-                        sim.truco97("almacen_c.xml", 3);
-                        sim.truco97("almacen_d.xml", 4);
+                        sim.truco97("comida_2.xml", 2);
                         break;
                     case 98:
                         sim.truco98();

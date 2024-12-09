@@ -911,114 +911,14 @@ public class Recompensas {
                     processCoinsReward(elem);
                 }
             }
+            String nombreArchivo = file.getName();
+            restQuantity(nombreArchivo);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error al procesar las recompensas: " + e.getMessage());
         }
 
-
-      /*   Element root=null;
-        try {
-            SAXReader reader = new SAXReader();
-            Document doc = reader.read(file);
-            root = doc.getRootElement();
-            Element give = root.element("give");
-            Iterator<Element> it = give.elementIterator();
-            while(it.hasNext()){
-                Element elem =it.next();
-                if(elem.getName().equals("food")){
-                    if(elem.element("give").element("food").attributeValue("type").equals("algae")){
-                        int comidaRecompensa=Integer.parseInt(elem.getText());
-                        int repartoVegetal = comidaRecompensa/piscifactorias.size();
-                        for (Piscifactoria piscifactoria : piscifactorias) {
-                            piscifactoria.repartirPiscifactoriaRecompensa(0, repartoVegetal);
-                        }
-                        //Falta lo del registro (eso lo hago yo)
-                    }else if(elem.element("give").element("food").attributeValue("type").equals("general")){
-                        int comidaRecompensa=Integer.parseInt(elem.getText());
-                        int repartoVegetal = comidaRecompensa/piscifactorias.size();
-                        int repartoAnimal = comidaRecompensa/piscifactorias.size();
-                        for (Piscifactoria piscifactoria : piscifactorias) {
-                            piscifactoria.repartirPiscifactoriaRecompensa(repartoAnimal, repartoVegetal);
-                        }
-                    }else if(elem.element("give").element("food").attributeValue("type").equals("animal")){
-                        int comidaRecompensa=Integer.parseInt(elem.getText());
-                        int repartoAnimal = comidaRecompensa/piscifactorias.size();
-                        for (Piscifactoria piscifactoria : piscifactorias) {
-                            piscifactoria.repartirPiscifactoriaRecompensa(repartoAnimal, 0);
-                        }
-                    }
-                }else if(elem.getName().equals("buildings")){
-                    if(elem.element("give").element("buildings").attributeValue("code").equals("0")){
-                        String partes="";
-                        partes = partes + elem.element("part").getText();
-                        if(partes.equals(elem.element("total").getText())){
-                            //Añadir una piscifactoria de rio
-                            System.out.println("Recompensa adquirida");
-                        }else{
-                            System.out.println("Recompensa incompleta");
-                        }
-                    }else if(elem.element("give").element("buildings").attributeValue("code").equals("1")){
-                        String partes="";
-                        partes = partes + elem.element("part").getText();
-                        if(partes.equals(elem.element("total").getText())){
-                            //Añadir una piscifactoria de mar
-                            System.out.println("Recompensa adquirida");
-                        }else{
-                            System.out.println("Recompensa incompleta");
-                        }
-                    }else if(elem.element("give").element("buildings").attributeValue("code").equals("2")){
-                        for (Piscifactoria piscifactoria : piscifactorias) {
-                            if(piscifactoria.getTipo()==CriaTipo.RIO && piscifactoria.getTanques().size() <10){
-                                piscifactoria.getTanques().add(new Tanque(25, piscifactoria.getTipo()));
-                            }
-                        }
-                    }else if(elem.element("give").element("buildings").attributeValue("code").equals("3")){
-                        for (Piscifactoria piscifactoria : piscifactorias) {
-                            if(piscifactoria.getTipo()==CriaTipo.MAR && piscifactoria.getTanques().size() <10){
-                                piscifactoria.getTanques().add(new Tanque(100, piscifactoria.getTipo()));
-                            }
-                        }
-                    }else if(elem.element("give").element("buildings").attributeValue("code").equals("4")){
-                        String partes="";
-                        partes = partes + elem.element("part").getText();
-                        if(partes.equals(elem.element("total").getText())){
-                            System.out.println("Recompensa adquirida");
-                            //AlmacenCentral almacenCentral = AlmacenCentral.getInstance();
-                        }else{
-                            System.out.println("Recompensa incompleta");
-                        }
-                    }
-
-                }else if(elem.getName().equals("coins")){
-                    Monedero monedero=Monedero.getInstance();
-                    int recompensaCoins = Integer.parseInt(elem.getText());
-                    monedero.setMonedas(monedero.getMonedas()+recompensaCoins);
-                }
-            }
-            
-
-            //No se como enviar el nombre del archivo embez del file para borrar el archivo de recompensa
-            //Recompensas.restQuantity(file);
-
-
-
-
-
-            if(give.element("food") != null){
-                 String tipoComida = give.element("food").attributeValue("type");
-                if(tipoComida == "algae"){
-                    String cantidad = give.element("food").getText();
-                //    return Integer.parseInt(cantidad);
-                } else if (tipoComida == "animal"){
-
-                } else if (tipoComida == "animal"){
-
-                }
-            }*/
-            
-       
-        }
+    }
 
         /**
          * Procesa las recompensas de tipo "food" del archivo XML y las distribuye
