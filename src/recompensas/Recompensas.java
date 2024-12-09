@@ -915,7 +915,7 @@ public class Recompensas {
             restQuantity(nombreArchivo);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error al procesar las recompensas: " + e.getMessage());
+            ErrorHelper.writeError("Error al reclamar recompensas");
         }
 
     }
@@ -955,7 +955,7 @@ public class Recompensas {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                ErrorHelper.writeError("Error al procesar la recompensas de comida");
             }
         }
 
@@ -1027,7 +1027,8 @@ public class Recompensas {
                         System.out.println("Código de building no reconocido: " + code);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                ErrorHelper.writeError("Error al procesar la recompensas de edificio");
+
             }
         }
 
@@ -1043,7 +1044,7 @@ public class Recompensas {
                 int recompensaCoins = Integer.parseInt(coinsElement.getText().trim());
                 monedero.setMonedas(monedero.getMonedas() + recompensaCoins);
             } catch (Exception e) {
-                e.printStackTrace();
+                ErrorHelper.writeError("Error al procesar la recompensas de monedas");
             }
         }
         

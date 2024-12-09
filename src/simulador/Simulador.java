@@ -1104,7 +1104,7 @@ public class Simulador {
                     case 15:
                         break;
                     case 97:
-                        sim.truco97("comida_2.xml", 2);
+                        sim.truco97("monedas_2.xml", 2);
                         break;
                     case 98:
                         sim.truco98();
