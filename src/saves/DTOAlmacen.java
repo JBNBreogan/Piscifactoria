@@ -32,5 +32,9 @@ public class DTOAlmacen {
     public Map<String, Integer> getComida() {
         return comida;
     }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
     
 }

@@ -17,6 +17,7 @@ public class DTOSimulador {
     private Map<String, Object> edificios;
     private List<DTOPiscifactoria> piscifactorias;
     
+    
     public DTOSimulador(Simulador sim){
         this.empresa = sim.getNombreEmpresa();
         this.dia = sim.getDias();
