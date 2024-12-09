@@ -75,7 +75,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");
-                save("algas_1.xml");
+                save(doc,"algas_1.xml");
             break;
             case 2: 
                 root.addElement("name")
@@ -94,7 +94,7 @@ public class Recompensas {
     
                 root.addElement("quantity")
                     .addText("1");
-                save("algas_2.xml");
+                save(doc,"algas_2.xml");
                 break;
             case 3: 
                 root.addElement("name")
@@ -113,7 +113,7 @@ public class Recompensas {
     
                 root.addElement("quantity")
                     .addText("1");
-                    save("algas_3.xml");
+                    save(doc,"algas_3.xml");
                 break;
 
             case 4: 
@@ -133,7 +133,7 @@ public class Recompensas {
     
                 root.addElement("quantity")
                     .addText("1");
-                save("algas_4.xml");
+                save(doc,"algas_4.xml");
                 break;
             case 5: 
                 root.addElement("name")
@@ -152,7 +152,7 @@ public class Recompensas {
     
                 root.addElement("quantity")
                     .addText("1");
-                save("algas_5.xml");
+                save(doc,"algas_5.xml");
                 break;
         }
       
@@ -193,7 +193,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");
-                save("almacen_a.xml");                
+                save(doc,"almacen_a.xml");                
                 break;
             case 2: 
                 root.addElement("name")
@@ -218,7 +218,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");
-                save("almacen_b.xml");    
+                save(doc,"almacen_b.xml");    
                 break;            
             case 3: 
                 root.addElement("name")
@@ -243,7 +243,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");
-                save("almacen_c.xml");               
+                save(doc,"almacen_c.xml");               
             break;
             case 4: 
                 root.addElement("name")
@@ -268,7 +268,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");
-                save("almacen_d.xml");                
+                save(doc,"almacen_d.xml");                
                 break;
         }
         
@@ -301,7 +301,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");  
-                save("comida_1.xml");                
+                save(doc,"comida_1.xml");                
             break;
             case 2:
                 root.addElement("name")
@@ -320,7 +320,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");   
-                save("comida_2.xml");                
+                save(doc,"comida_2.xml");                
             break;
             case 3:
                 root.addElement("name")
@@ -339,7 +339,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");   
-                save("comida_3.xml");                
+                save(doc,"comida_3.xml");                
             break;
             case 4:
                 root.addElement("name")
@@ -358,7 +358,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");   
-                save("comida_4.xml");                
+                save(doc,"comida_4.xml");                
 
             break;
             case 5:
@@ -378,7 +378,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");   
-                save("comida_5.xml");                
+                save(doc,"comida_5.xml");                
             break;
     }
 }
@@ -408,7 +408,7 @@ public class Recompensas {
                     .addText("100");            
                 root.addElement("quantity")
                     .addText("1");
-                save("monedas_1.xml");
+                save(doc,"monedas_1.xml");
             break;
             case 2: 
                 root.addElement("name")
@@ -424,7 +424,7 @@ public class Recompensas {
                     .addText("300");            
                 root.addElement("quantity")
                     .addText("1");
-                save("monedas_2.xml");
+                save(doc,"monedas_2.xml");
             break;
             case 3: 
                 root.addElement("name")
@@ -440,7 +440,7 @@ public class Recompensas {
                     .addText("500");            
                 root.addElement("quantity")
                     .addText("1");
-                    save("monedas_3.xml");
+                    save(doc,"monedas_3.xml");
 
             break;
             case 4: 
@@ -457,7 +457,7 @@ public class Recompensas {
                     .addText("750");            
                 root.addElement("quantity")
                     .addText("1");
-                    save("monedas_4.xml");
+                    save(doc,"monedas_4.xml");
 
             break;
             case 5: 
@@ -474,7 +474,7 @@ public class Recompensas {
                     .addText("1000");            
                 root.addElement("quantity")
                     .addText("1");
-                    save("monedas_5.xml");
+                    save(doc,"monedas_5.xml");
 
             break;
         }
@@ -506,7 +506,7 @@ public class Recompensas {
                     .addText("100");               
                 root.addElement("quantity")
                     .addText("1");
-                    save("pienso_1.xml");
+                    save(doc,"pienso_1.xml");
 
             break;
             case 2:
@@ -524,7 +524,7 @@ public class Recompensas {
                     .addText("200");               
                 root.addElement("quantity")
                     .addText("1");
-                    save("pienso_2.xml");
+                    save(doc,"pienso_2.xml");
 
             break;
             case 3:
@@ -542,7 +542,7 @@ public class Recompensas {
                     .addText("500");               
                 root.addElement("quantity")
                     .addText("1");
-                    save("pienso_3.xml");
+                    save(doc,"pienso_3.xml");
 
             break;
             case 4:
@@ -560,7 +560,7 @@ public class Recompensas {
                     .addText("1000");               
                 root.addElement("quantity")
                     .addText("1");
-                    save("pienso_4.xml");
+                    save(doc,"pienso_4.xml");
 
             break;
             case 5:
@@ -578,7 +578,7 @@ public class Recompensas {
                     .addText("2000");               
                 root.addElement("quantity")
                     .addText("1");
-                    save("pienso_5.xml");
+                    save(doc,"pienso_5.xml");
 
             break;
         }
@@ -614,7 +614,7 @@ public class Recompensas {
                     .addText("AB");
                 root.addElement("quantity")
                     .addText("1");
-                    save("pisci_m_a.xml");
+                    save(doc,"pisci_m_a.xml");
             break;
             case 2:
                 root.addElement("name")
@@ -639,7 +639,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");
-                    save("pisci_m_b.xml");
+                    save(doc,"pisci_m_b.xml");
 
             break;
 
@@ -677,7 +677,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");
-                    save("pisci_r_a.xml");
+                    save(doc,"pisci_r_a.xml");
 
             break;
             case 2:
@@ -703,7 +703,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");
-                    save("pisci_r_b.xml");
+                    save(doc,"pisci_r_b.xml");
 
             break;
 
@@ -740,7 +740,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");
-                    save("tanque_a.xml");
+                    save(doc,"tanque_a.xml");
 
             break;
             case 2:
@@ -763,7 +763,7 @@ public class Recompensas {
                                     
                 root.addElement("quantity")
                     .addText("1");
-                    save("tanque_b.xml");
+                    save(doc,"tanque_b.xml");
 
             break;
         }
@@ -774,10 +774,10 @@ public class Recompensas {
      * 
      * @param nombreArchivo Nombre del archivo donde se guardará el documento.
      */
-    public static void save(String nombreArchivo){
+    public static void save(Document doc, String nombreArchivo){
         XMLWriter writer = null;
         try {
-            writer = new XMLWriter(new FileWriter(new File("rewards/"+nombreArchivo)),OutputFormat.createPrettyPrint());
+            writer = new XMLWriter(new FileWriter("rewards/"+nombreArchivo), OutputFormat.createPrettyPrint());
             writer.write(doc);
             writer.flush();
         } catch (IOException e) {
@@ -797,14 +797,15 @@ public class Recompensas {
     public static void addQuantity(String nombreArchivo){
         try {
             SAXReader sr = new SAXReader();
-            Document doc = sr.read(new File("rewards/"+nombreArchivo));
+            doc = sr.read(new File("rewards/" + nombreArchivo));
             Element root = doc.getRootElement();
-            int valor = Integer.parseInt(root.element("quantity").getText());
-            valor++;
-            root.element("quantity").setText(String.valueOf(valor));
-            save(nombreArchivo);
+            Element quant = root.element("quantity");
+            int valor = Integer.parseInt(quant.getText());
+            valor++; 
+            quant.setText(String.valueOf(valor));
+            save(doc,nombreArchivo);  // Guarda el archivo actualizado
         } catch (NumberFormatException | DocumentException e) {
-            ErrorHelper.writeError("Error al acceder al archivo XML "+ruta);   
+            ErrorHelper.writeError("Error al acceder al archivo XML: " + e.getMessage());
         }
     }
 
@@ -817,7 +818,7 @@ public class Recompensas {
     public static void restQuantity(String nombreArchivo){
         try {
             SAXReader sr = new SAXReader();
-            Document doc = sr.read(new File("rewards/" + nombreArchivo));
+            doc = sr.read(new File("rewards/" + nombreArchivo));
             Element root = doc.getRootElement();
             int valor = Integer.parseInt(root.element("quantity").getText());
             valor--;
@@ -829,7 +830,7 @@ public class Recompensas {
             } else {
                 // Actualizar el valor en el XML
                 root.element("quantity").setText(String.valueOf(valor));
-                save(nombreArchivo);  // Guarda el archivo actualizado
+                save(doc,nombreArchivo);  // Guarda el archivo actualizado
             }
         } catch (NumberFormatException | DocumentException e) {
             ErrorHelper.writeError("Error al acceder al archivo XML " + nombreArchivo);
@@ -901,25 +902,21 @@ public class Recompensas {
                 // Procesar recompensas de tipo "food"
                 if ("food".equals(elem.getName())) {
                     processFoodReward(elem, piscifactorias);
-                    registros.recompensaUsada(root.element("name").getText());
                 }
                 // Procesar recompensas de tipo "buildings"
                 else if ("buildings".equals(elem.getName())) {
                     processBuildingsReward(elem, piscifactorias);
-                    registros.recompensaUsada(root.element("name").getText());
-
                 }
                 // Procesar recompensas de tipo "coins"
                 else if ("coins".equals(elem.getName())) {
                     processCoinsReward(elem);
-                    registros.recompensaUsada(root.element("name").getText());
                 }
             }
             String nombreArchivo = file.getName();
             restQuantity(nombreArchivo);
         } catch (Exception e) {
             e.printStackTrace();
-            ErrorHelper.writeError("Error al reclamar recompensas");
+            ErrorHelper.writeError("Error al reclamar recompensas ");
         }
 
     }
