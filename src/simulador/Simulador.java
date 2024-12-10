@@ -130,6 +130,7 @@ public class Simulador {
                                                 "Limpiar tanques.",
                                                 "Vaciar tanque.",
                                                 "Mejorar.",
+                                                "Canjear recompensas",
                                                 "Pasar varios días.",
                                                 "Salir."},
                                                  false);
@@ -947,9 +948,15 @@ public class Simulador {
         Recompensas.listRecompensas();
         File f = new File("rewards/");
         File[] files = f.listFiles();
+        System.out.println("0. Salir");
         int opcion = InputHelper.getIntRanges(files.length);
+        if (opcion == 0){
+            return;
+        } else {
         Recompensas.reclamar(registros,files[opcion-1],piscifactorias);
+        }
     }
+
 
 
     /**
@@ -961,7 +968,7 @@ public class Simulador {
         if (new File("rewards/" + nombreArchivo).exists()) {
             Recompensas.addQuantity(nombreArchivo);
         } else {
-            Recompensas.monedasXml(2);
+            Recompensas.algaXml(nivel);
             this.registros.recompensaCreada(nombreArchivo);
         }
     
@@ -1039,7 +1046,7 @@ public class Simulador {
                         sim.save();
                         break;
                     case 97:
-                        sim.truco97("algas_2.xml", 2);
+                        sim.truco97("algas_4.xml", 4);
                         break;
                     case 98:
                         sim.truco98();
