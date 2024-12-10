@@ -15,8 +15,6 @@ import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import recompensas.Recompensas;
-import registros.Transcripciones;
-import saves.DTOPiscifactoria;
 import saves.DTOSimulador;
 import saves.SaveLoad;
 import tanque.Tanque;
@@ -56,6 +54,7 @@ public class Simulador {
         AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
         AlmacenPropiedades.DORADA.getNombre()
     });
+    
     /**Objeto de la clase Transcripciones */
     private Registros registros=null;
     
@@ -108,6 +107,9 @@ public class Simulador {
                                               AlmacenPropiedades.SARGO.getNombre(),
                                               AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
                                               AlmacenPropiedades.DORADA.getNombre()}, monedero.getMonedas(), nombreEmpresa);
+            Recompensas.hacerCarpeta();
+            SaveLoad.saveDirCreate();
+            this.save();
             ErrorHelper.createErrorFile();
             ErrorHelper.writeError("prueba de error");
         }
@@ -316,6 +318,7 @@ public class Simulador {
             }
     
             System.out.println("Total piscifactorias: "+pecesVendidos + " peces óptimos vendidos por un total de "+monedasObtenidas+ " monedas");
+            this.save();
         }
     
         /**
@@ -968,7 +971,7 @@ public class Simulador {
      */
     public void save(){
         SaveLoad saves = new SaveLoad();
-        saves.save(new DTOSimulador(this), new File("prueba.json"));
+        saves.save(new DTOSimulador(this), new File("saves/" + nombreEmpresa +".save"), this.registros);
     }
 
 
@@ -977,7 +980,6 @@ public class Simulador {
      * @param args
      */
     public static void main(String[] args){
-        Monedero monedero=Monedero.getInstance();
         Simulador sim=new Simulador();
         sim.init();
         int opcion=0;
@@ -1034,6 +1036,7 @@ public class Simulador {
                         }
                         break;
                     case 15:
+                        sim.save();
                         break;
                     case 97:
                         sim.truco97("algas_2.xml", 2);
