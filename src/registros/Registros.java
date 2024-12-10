@@ -15,7 +15,7 @@ public class Registros {
     Logs logs=null;
 
     /**
-     * Contructor que inicializa las instancias de las clases logs y transcripciones
+     * Constructor que inicializa las instancias de las clases logs y transcripciones.
      * @param nombrePartida Nombre de los archivos
      */
     public Registros(String nombrePartida) {

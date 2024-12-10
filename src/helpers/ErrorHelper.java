@@ -40,7 +40,7 @@ public class ErrorHelper {
             wr.append(formattedTime + " " + error);
             wr.flush();
         } catch (IOException e){
-            writeError("Error escribiendo en el log de errores");
+            writeError("Error escribiendo en el log de errores\n");
         }
     }
 }

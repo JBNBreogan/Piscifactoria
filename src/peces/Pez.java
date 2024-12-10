@@ -191,6 +191,15 @@ public abstract class Pez {
     }
 
     /**
+     * Devuelve la cantidad de dias desde la ultima
+     * reproduccion.
+     * @return Dias de la ultima puesta de huevos.
+     */
+    public int getUltimaPuesta() {
+        return UltimaPuesta;
+    }
+
+    /**
      * Hace que el pez deje de ser fertil
      */
     public void notFertil(){
