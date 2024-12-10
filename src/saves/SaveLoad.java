@@ -20,7 +20,7 @@ public class SaveLoad {
     static File saveDir = new File("saves");
         
     /**
-     * Guarda la partida, dejando constrancia de ello en el registro
+     * Guarda la partida, dejando constancia de ello en el registro
      * @param sim Datos del simulador
      * @param archivo Archivo de guardado
      * @param reg Objeto de registros
