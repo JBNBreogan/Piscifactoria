@@ -73,8 +73,11 @@ public class Logs {
             bw.flush();
         } catch (IOException e) {
             ErrorHelper.writeError("No se ha podido escribir en el archivo de logs");
+        } finally{
+            try {
+                bw.close();
+            } catch (Exception e) {}
         }
-        
     }
 
     /**
@@ -236,15 +239,6 @@ public class Logs {
      */
     public void salir(){
         this.escribirArchivo(this.fechaActual()+"Cierre de la partida.\n");
-    }
-
-    /**
-     * Método que cierra el buffererWriter.
-     */
-    public void close(){
-        try {
-            bw.close();
-        } catch (Exception e) {}
     }
 
     /**

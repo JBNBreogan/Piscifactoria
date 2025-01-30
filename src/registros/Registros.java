@@ -176,7 +176,5 @@ public class Registros {
      */
     public void salir(){
         this.logs.salir();
-        this.transcripciones.close();
-        this.logs.close();
     }
 }

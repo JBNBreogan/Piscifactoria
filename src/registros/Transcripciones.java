@@ -73,6 +73,10 @@ public class Transcripciones {
             bw.flush();
         } catch (IOException e) {
             ErrorHelper.writeError("No se ha podido escribir en el archivo de transcripciones");
+        } finally{
+            try {
+                bw.close();
+            } catch (Exception e) {}
         }
         
     }
@@ -274,14 +278,5 @@ public class Transcripciones {
      */
     public void recompensaUsada(String nombreRec){
         this.escribirArchivo("Recompensa " + nombreRec + " usada.\n");
-    }
-
-    /**
-     * Método que cierra el buffererWriter.
-     */
-    public void close(){
-        try {
-            bw.close();
-        } catch (Exception e) {}
     }
 }
