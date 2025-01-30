@@ -27,6 +27,8 @@ public class Logs {
     private static String ruta= "logs";
     /**Objeto BuffererWriter para poder escribir en el archivo */
     private static BufferedWriter bw=null;
+    /**Objeto File para crear el archivo de guardado */
+    private static File archivo = null;
 
     /**
      * Constructor vacío de la clase Logs.
@@ -44,19 +46,13 @@ public class Logs {
             if(!carpeta.exists()){
                 carpeta.mkdir();
             }
-            File archivo =new File(ruta + "/" + nombrePartida + ".log");
+            archivo =new File(ruta + "/" + nombrePartida + ".log");
             if(!archivo.exists()){
                 try {
                     archivo.createNewFile();
                 } catch (IOException e) {
-                    ErrorHelper.writeError("No se ha podido crear el archivo de logs");
+                    ErrorHelper.writeError("No se ha podido crear el archivo de logs.");
                 }
-            }
-
-            try {
-                bw=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(archivo, true),"UTF-8"));
-            } catch (UnsupportedEncodingException | FileNotFoundException e) {
-                ErrorHelper.writeError("Error la escritura en el archivo");
             }
 
         }
@@ -69,10 +65,11 @@ public class Logs {
      */
     private void escribirArchivo(String texto){
         try {
+            bw=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(archivo, true),"UTF-8"));
             bw.write(texto);
             bw.flush();
         } catch (IOException e) {
-            ErrorHelper.writeError("No se ha podido escribir en el archivo de logs");
+            ErrorHelper.writeError("Error en la escritura del archivo de logs.");
         } finally{
             try {
                 bw.close();
