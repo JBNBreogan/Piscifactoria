@@ -118,9 +118,9 @@ public class Registros {
     /**
      * Metodo que llama a los metodos pasarDia de la clase transcripciones y logs.
      * @param numDia Día terminado.
-     * @param pecesRio Peces de rio vendidos de forma automatica.
-     * @param pecesMar Peces de mar vendidos de forma automatica.
-     * @param monedasObtenidas Monedas obtenidas con la venta.
+     * @param pecesRio Peces de rio actuales en el sistema.
+     * @param pecesMar Peces de mar actuales en el sistema.
+     * @param monedasObtenidas Monedas obtenidas con la venta automatica.
      * @param monedasTotales Monedas totales de la simulación.
      */
     public void pasarDia(int numDia, int pecesRio, int pecesMar, int monedasObtenidas, int monedasTotales){
