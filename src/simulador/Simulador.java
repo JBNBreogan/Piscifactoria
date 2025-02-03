@@ -1,6 +1,7 @@
 package simulador;
 
 import java.io.File;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -26,6 +27,7 @@ import java.util.Random;
 
 import comun.AlmacenCentral;
 import comun.Monedero;
+import conexion.Conexion;
 /**
  * Clase simulador
  * @author Cristian
@@ -57,6 +59,8 @@ public class Simulador {
         AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
         AlmacenPropiedades.DORADA.getNombre()
     });
+    /**Objeto para la conexion a la base de datos. */
+    private Connection conn=null;
     
     /**Objeto de la clase Transcripciones */
     private Registros registros=null;
@@ -158,10 +162,9 @@ public class Simulador {
           
             for (Piscifactoria piscifactoria : piscifactorias) {
                 i+=1;
-                System.out.println(i + ".- " + piscifactoria.getNombre() + " [" + pecesVivosEnSist() + "/" + pecesTotalesEnSist() + "/" + espacioEnPisci(piscifactoria)+"]");
+                System.out.println(i + ".- " + piscifactoria.getNombre() + " [" + piscifactoria.pecesVivosPiscifactoria() + "/" + piscifactoria.pecesEnPiscifactoria() + "/" + espacioEnPisci(piscifactoria)+"]");
             }
     
-            
         }     
     
         /**
@@ -316,7 +319,6 @@ public class Simulador {
          * en todo el sistema y las monedas obtenidas con ello.
          */
         public void nextDay(){
-            dias++;
             if (almacenCentral!=null) {
                 almacenCentral.repartir(piscifactorias);
             }
@@ -330,7 +332,12 @@ public class Simulador {
             }
     
             System.out.println("Total piscifactorias: "+pecesVendidos + " peces óptimos vendidos por un total de "+monedasObtenidas+ " monedas");
+
+            int pecesRio=pecesRioMarSist()[0];
+            int pecesMar=pecesRioMarSist()[1];
+            this.registros.pasarDia(dias, pecesRio, pecesMar, monedasObtenidas, monedero.getMonedas());
             this.save();
+            dias++;
         }
     
         /**
@@ -685,6 +692,29 @@ public class Simulador {
             }
             return espacioTotal;
         }
+
+        /**
+         * Método que devuelve el numero de peces de rio y de mar que hay en el sistema.
+         * @return Array con el numero de peces de rio[0] y de mar[1] 
+         */
+        public int[] pecesRioMarSist(){
+            int pecesRio=0;
+            int pecesMar=0;
+            int[] peces=new int[]{pecesRio,pecesMar};
+
+            for (Piscifactoria piscifactoria : piscifactorias) {
+                if (piscifactoria.getTipo()==CriaTipo.RIO){
+                    for (Tanque tank : piscifactoria.getTanques()) {
+                        peces[0]+=tank.getPeces().size();
+                    }
+                }else if(piscifactoria.getTipo()==CriaTipo.MAR){
+                    for (Tanque tank : piscifactoria.getTanques()) {
+                        peces[1]+=tank.getPeces().size();
+                    }
+                }
+            }
+            return peces;
+        }
     
         /**
          * Metodo que permite elegir el tipo de comida y la cantidad que quieres añadir.
@@ -967,8 +997,6 @@ public class Simulador {
         }
     }
 
-
-
     /**
      * Metodo que permite crear una recompensa.
      * @param nombreArchivo nombre del archivo.
@@ -1090,6 +1118,7 @@ public class Simulador {
         } finally {
             InputHelper.closeBuffReader();
             sim.registros.salir();
+            Conexion.close();
         }
     }
 }

@@ -2,11 +2,9 @@ package registros;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 
 import comun.AlmacenCentral;
 import helpers.ErrorHelper;
@@ -27,6 +25,8 @@ public class Transcripciones {
     private static String ruta= "transacciones";
     /**objeto BuffererWriter para poder escribir en el archivo */
     private static BufferedWriter bw=null;
+    /**Objeto File para crear el archivo de guardado */
+    private static File archivo = null;
 
     /**
      * Constructor vacío de la clase Transacciones.
@@ -44,19 +44,13 @@ public class Transcripciones {
             if(!carpeta.exists()){
                 carpeta.mkdir();
             }
-            File archivo =new File(ruta + "/" + nombrePartida + ".tr");
+            archivo =new File(ruta + "/" + nombrePartida + ".tr");
             if(!archivo.exists()){
                 try {
                     archivo.createNewFile();
                 } catch (IOException e) {
-                    ErrorHelper.writeError("No se ha podido crear el archivo de transacciones");
+                    ErrorHelper.writeError("No se ha podido crear el archivo de transcripciones.");
                 }
-            }
-
-            try {
-                bw=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(archivo, true),"UTF-8"));
-            } catch (UnsupportedEncodingException | FileNotFoundException e) {
-                ErrorHelper.writeError("Error la escritura en el archivo");
             }
 
         }
@@ -69,10 +63,15 @@ public class Transcripciones {
      */
     private void escribirArchivo(String texto){
         try {
+            bw=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(archivo, true),"UTF-8"));
             bw.write(texto);
             bw.flush();
         } catch (IOException e) {
-            ErrorHelper.writeError("No se ha podido escribir en el archivo de transcripciones");
+            ErrorHelper.writeError("Error en la escritura del archivo de transcripciones.");
+        } finally{
+            try {
+                bw.close();
+            } catch (Exception e) {}
         }
         
     }
@@ -277,11 +276,29 @@ public class Transcripciones {
     }
 
     /**
-     * Método que cierra el buffererWriter.
+     * Método que escribe en el archivo la informacion de cada pedido generado.
+     * @param numRef Numero de referencia del pedido.
      */
-    public void close(){
-        try {
-            bw.close();
-        } catch (Exception e) {}
+    public void generarPedido(int numRef){
+        this.escribirArchivo("Generado el pedido con referencia " + numRef + ".");
+    }
+
+    /**
+     * Método que escribe en el archivo la informacion de cada pedido terminado.
+     * @param nombrePez Nombre del pez del pedido.
+     * @param numRef Numero de referencia del pedido.
+     */
+    public void terminarPedido(String nombrePez, int numRef){
+        this.escribirArchivo("Pedido de " + nombrePez + " con referencia " + numRef + " enviado.");
+    }
+
+    /**
+     * Método que escribe en el archivo la informacion de los peces enviados en el pedido.
+     * @param nombrePez Nombre del pez enviado en el pedido.
+     * @param numPeces Numero de peces enviados en el pedido.
+     * @param numRef Numero de referencia del pedido.
+     */
+    public void enviarPeces(String nombrePez, int numPeces, int numRef){
+        this.escribirArchivo("Enviados " + numPeces + " peces al pedido de " + nombrePez + " con referencia " + numRef + ".");
     }
 }
