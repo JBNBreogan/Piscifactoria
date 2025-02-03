@@ -1,6 +1,7 @@
 package simulador;
 
 import java.io.File;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
@@ -24,6 +25,7 @@ import java.util.Random;
 
 import comun.AlmacenCentral;
 import comun.Monedero;
+import conexion.Conexion;
 /**
  * Clase simulador
  * @author Cristian
@@ -54,6 +56,8 @@ public class Simulador {
         AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
         AlmacenPropiedades.DORADA.getNombre()
     });
+    /**Objeto para la conexion a la base de datos. */
+    private Connection conn=null;
     
     /**Objeto de la clase Transcripciones */
     private Registros registros=null;
@@ -1090,6 +1094,7 @@ public class Simulador {
         } finally {
             InputHelper.closeBuffReader();
             sim.registros.salir();
+            Conexion.close();
         }
     }
 }
