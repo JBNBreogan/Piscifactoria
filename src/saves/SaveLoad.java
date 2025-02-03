@@ -53,7 +53,7 @@ public class SaveLoad {
      * 
      * @param json El fichero
      */
-    public DTOSimulador cargar(File json) {
+    public static DTOSimulador cargar(File json, Registros reg) {
         Gson gson = new Gson();
 
         if (json.exists() && json.isFile()) {
@@ -61,6 +61,7 @@ public class SaveLoad {
                 DTOSimulador sim = gson.fromJson(reader, DTOSimulador.class);
                 if (sim != null) {
                     System.out.println("Carga exitosa.");
+                    reg.registrarCarga();
                 } else {
                     System.out.println("Error: El archivo JSON no contiene datos válidos.");
                 }

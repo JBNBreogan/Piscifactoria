@@ -77,24 +77,10 @@ public class Simulador {
 
     /**
      * Constructor para el sistema de carga
+     * 
      * @param sim DTO del simulador
      */
     public Simulador(DTOSimulador sim) {
-        this.nombreEmpresa = sim.getEmpresa();
-        this.dias = sim.getDia();
-        DTOAlmacen alm = sim.getEdificios().get("Almacen");
-        if (alm.isDisponible()) {
-            this.almacenCentral = AlmacenCentral.getInstance();
-            almacenCentral.load(alm);
-        }
-
-        monedero.setMonedas(sim.getMonedas());
-        
-        List<DTOPiscifactoria> piscis = sim.getPiscifactorias();
-        for (DTOPiscifactoria piscifactoria : piscis) {
-            piscifactorias.add(new Piscifactoria(piscifactoria));
-        }
-
 
     }
 
@@ -123,38 +109,59 @@ public class Simulador {
      * una piscifactoria y añadiendo 100 monedas.
      */
     public void init() {
+        registros = new Registros(nombreEmpresa);
         File savedir = new File("saves");
 
-        if (!(savedir.exists() && savedir.isDirectory() && savedir.listFiles().length ==0)){
-
-        } else {
+        if ((savedir.exists() && savedir.isDirectory() && savedir.listFiles().length != 0)) {
             File[] saves = savedir.listFiles();
             System.out.println("Escoja archivo de guardado. ");
             for (int i = 0; i < saves.length; i++) {
-                System.out.println( i + ". " + saves[i].getName());
+                System.out.println(i + 1 + ". " + saves[i].getName().substring(0, saves[i].getName().lastIndexOf('.')));
             }
             System.out.println("0. Nueva partida");
+
+            int option = InputHelper.getIntRanges(saves.length);
+            if (option != 0) {
+                DTOSimulador sim = SaveLoad.cargar(saves[option - 1], registros);
+                this.nombreEmpresa = sim.getEmpresa();
+                this.dias = sim.getDia();
+                DTOAlmacen alm = sim.getEdificios().get("Almacen");
+                if (alm.isDisponible()) {
+                    this.almacenCentral = AlmacenCentral.getInstance();
+                    almacenCentral.load(alm);
+                }
+
+                monedero.setMonedas(sim.getMonedas());
+
+                List<DTOPiscifactoria> piscis = sim.getPiscifactorias();
+                for (DTOPiscifactoria piscifactoria : piscis) {
+                    piscifactorias.add(new Piscifactoria(piscifactoria));
+                }
+                
+
+            }
+
+        } else {
+            System.out.println("Nombre de la empresa:");
+            nombreEmpresa = InputHelper.readStringWithBuffRead();
+            System.out.println("Nombre de la piscifactoria");
+            String npisc = InputHelper.readStringWithBuffRead();
+            piscifactorias.add(new Piscifactoria(npisc, true));
+            Monedero.getInstance().setMonedas(100);
+            registros.inicio(npisc, null, new String[] { AlmacenPropiedades.LUCIO_NORTE.getNombre(),
+                    AlmacenPropiedades.CARPA_PLATEADA.getNombre(),
+                    AlmacenPropiedades.CARPA.getNombre(),
+                    AlmacenPropiedades.TILAPIA_NILO.getNombre(),
+                    AlmacenPropiedades.PEJERREY.getNombre(),
+                    AlmacenPropiedades.RODABALLO.getNombre(),
+                    AlmacenPropiedades.CABALLA.getNombre(),
+                    AlmacenPropiedades.BESUGO.getNombre(),
+                    AlmacenPropiedades.ABADEJO.getNombre(),
+                    AlmacenPropiedades.SARGO.getNombre(),
+                    AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
+                    AlmacenPropiedades.DORADA.getNombre() }, monedero.getMonedas(), nombreEmpresa);
         }
 
-        System.out.println("Nombre de la empresa:");
-        nombreEmpresa = InputHelper.readStringWithBuffRead();
-        System.out.println("Nombre de la piscifactoria");
-        String npisc = InputHelper.readStringWithBuffRead();
-        piscifactorias.add(new Piscifactoria(npisc, true));
-        Monedero.getInstance().setMonedas(100);
-        registros = new Registros(nombreEmpresa);
-        registros.inicio(npisc, null, new String[] { AlmacenPropiedades.LUCIO_NORTE.getNombre(),
-                AlmacenPropiedades.CARPA_PLATEADA.getNombre(),
-                AlmacenPropiedades.CARPA.getNombre(),
-                AlmacenPropiedades.TILAPIA_NILO.getNombre(),
-                AlmacenPropiedades.PEJERREY.getNombre(),
-                AlmacenPropiedades.RODABALLO.getNombre(),
-                AlmacenPropiedades.CABALLA.getNombre(),
-                AlmacenPropiedades.BESUGO.getNombre(),
-                AlmacenPropiedades.ABADEJO.getNombre(),
-                AlmacenPropiedades.SARGO.getNombre(),
-                AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
-                AlmacenPropiedades.DORADA.getNombre() }, monedero.getMonedas(), nombreEmpresa);
         Recompensas.hacerCarpeta();
         SaveLoad.saveDirCreate();
         this.save();

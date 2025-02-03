@@ -3,7 +3,6 @@ package peces.rio;
 import peces.Pez;
 import peces.propiedades.Filtrador;
 import propiedades.AlmacenPropiedades;
-import propiedades.PecesDatos;
 import saves.DTOPez;
 
 /**

@@ -41,10 +41,10 @@ public class ErrorHelper {
 
         try{
             wr = new BufferedWriter(new FileWriter(errorFile,true));
-            wr.append(formattedTime + " " + error);
+            wr.append(formattedTime + " " + error + "\n");
             wr.flush();
         } catch (IOException e){
-            writeError("Error escribiendo en el log de errores\n");
+            writeError("Error escribiendo en el log de errores");
         }
     }
 
