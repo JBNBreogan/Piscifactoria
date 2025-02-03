@@ -2,8 +2,10 @@ package simulador;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Iterator;
+import java.util.Map;
 
 import estadisticas.Estadisticas;
 import helpers.*;
@@ -29,6 +31,7 @@ import comun.Monedero;
  * @author Cristian
  */
 public class Simulador {
+    private static Simulador sim;
     //**Días avanzados en el sistema */
     private int dias = 1;
     /**Nombre con el que se inicia el sistema */
@@ -63,6 +66,14 @@ public class Simulador {
          */
         public Simulador() {
         }
+
+        public static Simulador getInstance() {
+            if (sim == null) {
+                sim = new Simulador();
+            }
+            return sim;
+        }
+
     
         public String getNombreEmpresa() {
             return nombreEmpresa;
@@ -522,7 +533,7 @@ public class Simulador {
                                     break;
                                 case 2:
                                     if(Monedero.monedasSuficientes(2000)){
-                                        almacenCentral=AlmacenCentral.getInstance();
+                                        crearAlmacen();
                                         monedero.setMonedas(monedero.getMonedas()-2000);
                                         System.out.println("Almacén central adquirido.");
                                     }
@@ -945,15 +956,14 @@ public class Simulador {
      * Permite seleccionar una recompensa disponible, primero las lista y el usuario elige la que quiere.
      */
     public void selectRecompensa(){
-        Recompensas.listRecompensas();
-        File f = new File("rewards/");
-        File[] files = f.listFiles();
+        Map<Integer, File> recompensaMap = new HashMap<>();
+        Recompensas.listRecompensas(recompensaMap);
         System.out.println("0. Salir");
-        int opcion = InputHelper.getIntRanges(files.length);
-        if (opcion == 0){
+        int opcion = InputHelper.getIntRanges(recompensaMap.size());
+        if (opcion == 0) {
             return;
         } else {
-        Recompensas.reclamar(registros,files[opcion-1],piscifactorias);
+            Recompensas.reclamar(registros, recompensaMap.get(opcion), piscifactorias);
         }
     }
 
@@ -968,7 +978,9 @@ public class Simulador {
         if (new File("rewards/" + nombreArchivo).exists()) {
             Recompensas.addQuantity(nombreArchivo);
         } else {
-            Recompensas.algaXml(nivel);
+            Recompensas.almacenXml(nivel);
+            Recompensas.algaXml(1);
+            Recompensas.monedasXml(2);
             this.registros.recompensaCreada(nombreArchivo);
         }
     
@@ -981,6 +993,10 @@ public class Simulador {
         saves.save(new DTOSimulador(this), new File("saves/" + nombreEmpresa +".save"), this.registros);
     }
 
+
+    public void crearAlmacen(){
+        almacenCentral=AlmacenCentral.getInstance();
+    }
 
     /**
      * Ejecuta toda la lógica del programa.
@@ -1046,7 +1062,14 @@ public class Simulador {
                         sim.save();
                         break;
                     case 97:
-                        sim.truco97("algas_4.xml", 4);
+                        sim.truco97("alga_1.xml", 1);
+                        sim.truco97("monedas_2.xml", 2);
+                        sim.truco97("almacen_a.xml", 1);
+                        sim.truco97("almacen_b.xml", 2);
+                        sim.truco97("almacen_c.xml", 3);
+                        sim.truco97("almacen_d.xml", 4);
+
+
                         break;
                     case 98:
                         sim.truco98();
