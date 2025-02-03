@@ -172,6 +172,35 @@ public class Registros {
     }
 
     /**
+     * Método que llama a los metodos generarPedido de la clase logs y transcripcicones.
+     * @param numRef Numero de referencia del pedido generado
+     */
+    public void generarPedido(int numRef){
+        this.logs.generarPedido(numRef);
+        this.transcripciones.generarPedido(numRef);
+    }
+
+    /**
+     * Método que llama a los metodo terminarPedido de la clase logs y transcripciones.
+     * @param nombrePez Nombre del pez enviado en el pedido.
+     * @param numRef Numero de referencia del pedido.
+     */
+    public void terminarPedido(String nombrePez, int numRef){
+        this.logs.terminarPedido(nombrePez, numRef);
+        this.transcripciones.terminarPedido(nombrePez, numRef);
+    }
+
+    /**
+     * Método que llama al metodo enviarPeces de la clase transcripciones.
+     * @param nombrePez Nombre del pez enviado.
+     * @param numPeces Numero de peces enviados.
+     * @param numRef Numero de referencia del pedido.
+     */
+    public void enviarPeces(String nombrePez, int numPeces, int numRef){
+        this.transcripciones.enviarPeces(nombrePez, numPeces, numRef);
+    }
+
+    /**
      * Metodo que llama al metodo salir de logs y al método close de logs y transcripciones.
      */
     public void salir(){

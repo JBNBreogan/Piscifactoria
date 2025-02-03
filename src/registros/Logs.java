@@ -230,6 +230,23 @@ public class Logs {
     }
 
     /**
+     * Método que registra en el archivo la hora en la que se genero cada pedido.
+     * @param numRef Numero de referencia del pedido.
+     */
+    public void generarPedido(int numRef){
+        this.escribirArchivo(this.fechaActual()+"Generado el pedido con referencia " + numRef + ".");
+    }
+
+    /**
+     * Método que registra en el archivo la hora en la que se termino cada pedido.
+     * @param nombrePez Nombre del pez enviado en el pedido.
+     * @param numRef Numero de referencia del pedido.
+     */
+    public void terminarPedido(String nombrePez, int numRef){
+        this.escribirArchivo(this.fechaActual()+"Pedido de " + nombrePez + " con referencia " + numRef + " enviado.");
+    }
+
+    /**
      * Método que registra en el archivo la hora de finalización de la partida
      */
     public void salir(){

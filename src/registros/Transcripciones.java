@@ -274,4 +274,31 @@ public class Transcripciones {
     public void recompensaUsada(String nombreRec){
         this.escribirArchivo("Recompensa " + nombreRec + " usada.\n");
     }
+
+    /**
+     * Método que escribe en el archivo la informacion de cada pedido generado.
+     * @param numRef Numero de referencia del pedido.
+     */
+    public void generarPedido(int numRef){
+        this.escribirArchivo("Generado el pedido con referencia " + numRef + ".");
+    }
+
+    /**
+     * Método que escribe en el archivo la informacion de cada pedido terminado.
+     * @param nombrePez Nombre del pez del pedido.
+     * @param numRef Numero de referencia del pedido.
+     */
+    public void terminarPedido(String nombrePez, int numRef){
+        this.escribirArchivo("Pedido de " + nombrePez + " con referencia " + numRef + " enviado.");
+    }
+
+    /**
+     * Método que escribe en el archivo la informacion de los peces enviados en el pedido.
+     * @param nombrePez Nombre del pez enviado en el pedido.
+     * @param numPeces Numero de peces enviados en el pedido.
+     * @param numRef Numero de referencia del pedido.
+     */
+    public void enviarPeces(String nombrePez, int numPeces, int numRef){
+        this.escribirArchivo("Enviados " + numPeces + " peces al pedido de " + nombrePez + " con referencia " + numRef + ".");
+    }
 }
