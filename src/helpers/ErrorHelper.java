@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -12,8 +13,10 @@ import java.time.format.DateTimeFormatter;
  * @author Breogan
  */
 public class ErrorHelper {
-    
+
     private static File errorFile = new File("logs/0_errors.log"); 
+
+    private static BufferedWriter wr = null;
 
     /**
      * Crea el fichero log de errores
@@ -36,11 +39,18 @@ public class ErrorHelper {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedTime = "[" + now.format(format) + "]";
 
-        try (BufferedWriter wr = new BufferedWriter(new FileWriter(errorFile,true))) {
+        try{
+            wr = new BufferedWriter(new FileWriter(errorFile,true));
             wr.append(formattedTime + " " + error);
             wr.flush();
         } catch (IOException e){
             writeError("Error escribiendo en el log de errores\n");
         }
+    }
+
+    public static void closeError(){
+        try {
+            wr.close();
+        } catch (IOException e) {}
     }
 }

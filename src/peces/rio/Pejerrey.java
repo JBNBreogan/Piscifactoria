@@ -3,6 +3,7 @@ package peces.rio;
 import peces.Pez;
 import peces.propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
+import saves.DTOPez;
 
 /**
  * Clase que representa al Pejerrey
@@ -17,6 +18,10 @@ public class Pejerrey extends Carnivoro{
     public Pejerrey(boolean hembra){
         super(AlmacenPropiedades.PEJERREY);
         this.Sexo = hembra;
+    }
+
+    public Pejerrey(DTOPez pes){
+        super(pes, AlmacenPropiedades.PEJERREY);
     }
 
     @Override

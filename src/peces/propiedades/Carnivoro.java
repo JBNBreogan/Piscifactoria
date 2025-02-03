@@ -2,6 +2,7 @@ package peces.propiedades;
 
 import peces.Pez;
 import propiedades.PecesDatos;
+import saves.DTOPez;
 
 /**
  * Clase para peces carnívoros
@@ -15,6 +16,14 @@ public abstract class Carnivoro extends Pez{
      */
     protected Carnivoro(PecesDatos data) {
         super(data);
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    protected Carnivoro(DTOPez pes, PecesDatos data){
+        super(pes, data);
     }
 
     @Override

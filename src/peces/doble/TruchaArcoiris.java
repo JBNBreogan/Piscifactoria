@@ -3,6 +3,7 @@ package peces.doble;
 import peces.Pez;
 import peces.propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
+import saves.DTOPez;
 
 /**
  * Clase que representa a la Trucha Arcoíris
@@ -17,6 +18,14 @@ public class TruchaArcoiris extends Carnivoro{
     public TruchaArcoiris(boolean hembra){
         super(AlmacenPropiedades.TRUCHA_ARCOIRIS);
         this.Sexo = hembra;
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    public TruchaArcoiris(DTOPez pes){
+        super(pes, AlmacenPropiedades.TRUCHA_ARCOIRIS);
     }
 
     @Override

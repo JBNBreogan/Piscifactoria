@@ -3,6 +3,8 @@ package peces.rio;
 import peces.Pez;
 import peces.propiedades.Filtrador;
 import propiedades.AlmacenPropiedades;
+import propiedades.PecesDatos;
+import saves.DTOPez;
 
 /**
  * Clase que representa a la Tilapia del Nilo
@@ -17,6 +19,14 @@ public class TilapiaDelNilo extends Filtrador{
     public TilapiaDelNilo(boolean hembra){
         super(AlmacenPropiedades.TILAPIA_NILO);
         this.Sexo = hembra;
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    public TilapiaDelNilo(DTOPez pes){
+        super(pes, AlmacenPropiedades.TILAPIA_NILO);
     }
 
     @Override

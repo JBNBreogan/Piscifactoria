@@ -4,6 +4,7 @@ import java.util.Random;
 
 import peces.Pez;
 import propiedades.PecesDatos;
+import saves.DTOPez;
 
 /**
  * Clase para peces filtradores
@@ -15,9 +16,18 @@ public abstract class Filtrador extends Pez{
      * Cosntructor paraetrizado
      * @param data datos del pez
      */
-    public Filtrador(PecesDatos data){
+    protected Filtrador(PecesDatos data){
         super(data);
     }
+    
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    protected Filtrador(DTOPez pes, PecesDatos data){
+        super(pes, data);
+    }
+    
 
     @Override
     public int comer(int cantidad) {

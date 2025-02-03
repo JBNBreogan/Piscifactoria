@@ -5,6 +5,7 @@ import java.util.Random;
 import peces.Pez;
 import peces.propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
+import saves.DTOPez;
 
 /**
  * Clase que representa al Lucio del Norte
@@ -19,6 +20,14 @@ public class LucioDelNorte extends Carnivoro{
     public LucioDelNorte(boolean hembra){
         super(AlmacenPropiedades.LUCIO_NORTE);
         this.Sexo = hembra;
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    public LucioDelNorte(DTOPez pes){
+        super(pes, AlmacenPropiedades.LUCIO_NORTE);
     }
 
     @Override

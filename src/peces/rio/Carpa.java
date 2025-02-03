@@ -5,6 +5,7 @@ import java.util.Random;
 import peces.Pez;
 import peces.propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
+import saves.DTOPez;
 
 /**
  * Clase que representa a la Carpa comun
@@ -19,6 +20,14 @@ public class Carpa extends Omnivoro{
     public Carpa(boolean hembra){
         super(AlmacenPropiedades.CARPA);
         this.Sexo = hembra;
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    public Carpa(DTOPez pes){
+        super(pes, AlmacenPropiedades.CARPA);
     }
 
     @Override

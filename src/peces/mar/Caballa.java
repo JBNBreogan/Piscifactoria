@@ -3,6 +3,7 @@ package peces.mar;
 import peces.Pez;
 import peces.propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
+import saves.DTOPez;
 
 /**
  * Clase que representa a la Caballa
@@ -17,6 +18,14 @@ public class Caballa extends Carnivoro{
     public Caballa(boolean hembra){
         super(AlmacenPropiedades.CABALLA);
         this.Sexo = hembra;
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    public Caballa(DTOPez pes){
+        super(pes, AlmacenPropiedades.CABALLA);
     }
 
     @Override

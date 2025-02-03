@@ -21,7 +21,7 @@ public class DTOPiscifactoria {
     /** Tipo de piscifactoría (Mar, Rio) */
     private int tipo;
 
-    /** Capacidad de los peces de la piscifactoría */
+    /** Capacidad de comida */
     private int capacidad;
 
     /** Cantidades de comida en clave-valor */
@@ -43,7 +43,7 @@ public class DTOPiscifactoria {
             this.tipo = 1;
         }
 
-        this.capacidad = pisci.pecesMaxPiscifactoria();
+        this.capacidad = pisci.getMaxComidaAnimal();
 
         this.comida = new HashMap<>();
         this.comida.put("vegetal", pisci.getComidaVegetal());
@@ -56,8 +56,8 @@ public class DTOPiscifactoria {
     }
 
     /**
-     * Getter de capacidad de los peces
-     * @return Capacidad de peces de la piscifactoría
+     * Getter de capacidad de la comida
+     * @return Capacidad de comida de la piscifactoría
      */
     public int getCapacidad() {
         return capacidad;
