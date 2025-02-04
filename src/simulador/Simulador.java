@@ -1,9 +1,12 @@
 package simulador;
 
 import java.io.File;
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Iterator;
+import java.util.Map;
 
 import estadisticas.Estadisticas;
 import helpers.*;
@@ -24,11 +27,13 @@ import java.util.Random;
 
 import comun.AlmacenCentral;
 import comun.Monedero;
+import conexion.Conexion;
 /**
  * Clase simulador
  * @author Cristian
  */
 public class Simulador {
+    private static Simulador sim;
     //**Días avanzados en el sistema */
     private int dias = 1;
     /**Nombre con el que se inicia el sistema */
@@ -54,6 +59,8 @@ public class Simulador {
         AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
         AlmacenPropiedades.DORADA.getNombre()
     });
+    /**Objeto para la conexion a la base de datos. */
+    private Connection conn=null;
     
     /**Objeto de la clase Transcripciones */
     private Registros registros=null;
@@ -63,6 +70,14 @@ public class Simulador {
          */
         public Simulador() {
         }
+
+        public static Simulador getInstance() {
+            if (sim == null) {
+                sim = new Simulador();
+            }
+            return sim;
+        }
+
     
         public String getNombreEmpresa() {
             return nombreEmpresa;
@@ -147,10 +162,9 @@ public class Simulador {
           
             for (Piscifactoria piscifactoria : piscifactorias) {
                 i+=1;
-                System.out.println(i + ".- " + piscifactoria.getNombre() + " [" + pecesVivosEnSist() + "/" + pecesTotalesEnSist() + "/" + espacioEnPisci(piscifactoria)+"]");
+                System.out.println(i + ".- " + piscifactoria.getNombre() + " [" + piscifactoria.pecesVivosPiscifactoria() + "/" + piscifactoria.pecesEnPiscifactoria() + "/" + espacioEnPisci(piscifactoria)+"]");
             }
     
-            
         }     
     
         /**
@@ -305,7 +319,6 @@ public class Simulador {
          * en todo el sistema y las monedas obtenidas con ello.
          */
         public void nextDay(){
-            dias++;
             if (almacenCentral!=null) {
                 almacenCentral.repartir(piscifactorias);
             }
@@ -319,7 +332,12 @@ public class Simulador {
             }
     
             System.out.println("Total piscifactorias: "+pecesVendidos + " peces óptimos vendidos por un total de "+monedasObtenidas+ " monedas");
+
+            int pecesRio=pecesRioMarSist()[0];
+            int pecesMar=pecesRioMarSist()[1];
+            this.registros.pasarDia(dias, pecesRio, pecesMar, monedasObtenidas, monedero.getMonedas());
             this.save();
+            dias++;
         }
     
         /**
@@ -522,7 +540,7 @@ public class Simulador {
                                     break;
                                 case 2:
                                     if(Monedero.monedasSuficientes(2000)){
-                                        almacenCentral=AlmacenCentral.getInstance();
+                                        crearAlmacen();
                                         monedero.setMonedas(monedero.getMonedas()-2000);
                                         System.out.println("Almacén central adquirido.");
                                     }
@@ -673,6 +691,29 @@ public class Simulador {
                 espacioTotal += piscifactoria.pecesMaxPiscifactoria();
             }
             return espacioTotal;
+        }
+
+        /**
+         * Método que devuelve el numero de peces de rio y de mar que hay en el sistema.
+         * @return Array con el numero de peces de rio[0] y de mar[1] 
+         */
+        public int[] pecesRioMarSist(){
+            int pecesRio=0;
+            int pecesMar=0;
+            int[] peces=new int[]{pecesRio,pecesMar};
+
+            for (Piscifactoria piscifactoria : piscifactorias) {
+                if (piscifactoria.getTipo()==CriaTipo.RIO){
+                    for (Tanque tank : piscifactoria.getTanques()) {
+                        peces[0]+=tank.getPeces().size();
+                    }
+                }else if(piscifactoria.getTipo()==CriaTipo.MAR){
+                    for (Tanque tank : piscifactoria.getTanques()) {
+                        peces[1]+=tank.getPeces().size();
+                    }
+                }
+            }
+            return peces;
         }
     
         /**
@@ -944,31 +985,35 @@ public class Simulador {
     /**
      * Permite seleccionar una recompensa disponible, primero las lista y el usuario elige la que quiere.
      */
-    public void selectRecompensa(){
-        Recompensas.listRecompensas();
-        File f = new File("rewards/");
-        File[] files = f.listFiles();
+    public void selectRecompensa() {
+        Map<Integer, File> recompensaMap = new HashMap<>();
+        Recompensas.listRecompensas(recompensaMap);
         System.out.println("0. Salir");
-        int opcion = InputHelper.getIntRanges(files.length);
-        if (opcion == 0){
+        int opcion = InputHelper.getIntRanges(recompensaMap.size());
+        if (opcion == 0) {
             return;
         } else {
-        Recompensas.reclamar(registros,files[opcion-1],piscifactorias);
+            Recompensas.reclamar(registros, recompensaMap.get(opcion), piscifactorias);
         }
     }
-
-
 
     /**
      * Metodo que permite crear una recompensa.
      * @param nombreArchivo nombre del archivo.
      * @param nivel Nivel de la recompensa.
      */
-    public void truco97(String nombreArchivo, int nivel) {
+    public void truco97(String nombreArchivo) {
         if (new File("rewards/" + nombreArchivo).exists()) {
             Recompensas.addQuantity(nombreArchivo);
         } else {
-            Recompensas.algaXml(nivel);
+            Recompensas.almacenXml(1);
+            Recompensas.almacenXml(2);
+            Recompensas.almacenXml(3);
+            Recompensas.almacenXml(4);
+            Recompensas.algaXml(1);
+            Recompensas.algaXml(2);
+            Recompensas.monedasXml(1);
+            Recompensas.monedasXml(2);
             this.registros.recompensaCreada(nombreArchivo);
         }
     
@@ -982,12 +1027,17 @@ public class Simulador {
     }
 
 
+    public void crearAlmacen(){
+        almacenCentral=AlmacenCentral.getInstance();
+        System.out.println("Almacen creado.");
+    }
+
     /**
      * Ejecuta toda la lógica del programa.
      * @param args
      */
     public static void main(String[] args){
-        Simulador sim=new Simulador();
+        Simulador sim= Simulador.getInstance();
         sim.init();
         int opcion=0;
            
@@ -1046,7 +1096,7 @@ public class Simulador {
                         sim.save();
                         break;
                     case 97:
-                        sim.truco97("algas_4.xml", 4);
+                       sim.truco97("algas_1.xml");
                         break;
                     case 98:
                         sim.truco98();
@@ -1067,6 +1117,7 @@ public class Simulador {
         } finally {
             InputHelper.closeBuffReader();
             sim.registros.salir();
+            Conexion.close();
         }
     }
 }
