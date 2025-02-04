@@ -985,7 +985,7 @@ public class Simulador {
     /**
      * Permite seleccionar una recompensa disponible, primero las lista y el usuario elige la que quiere.
      */
-    public void selectRecompensa(){
+    public void selectRecompensa() {
         Map<Integer, File> recompensaMap = new HashMap<>();
         Recompensas.listRecompensas(recompensaMap);
         System.out.println("0. Salir");
@@ -1002,12 +1002,17 @@ public class Simulador {
      * @param nombreArchivo nombre del archivo.
      * @param nivel Nivel de la recompensa.
      */
-    public void truco97(String nombreArchivo, int nivel) {
+    public void truco97(String nombreArchivo) {
         if (new File("rewards/" + nombreArchivo).exists()) {
             Recompensas.addQuantity(nombreArchivo);
         } else {
-            Recompensas.almacenXml(nivel);
+            Recompensas.almacenXml(1);
+            Recompensas.almacenXml(2);
+            Recompensas.almacenXml(3);
+            Recompensas.almacenXml(4);
             Recompensas.algaXml(1);
+            Recompensas.algaXml(2);
+            Recompensas.monedasXml(1);
             Recompensas.monedasXml(2);
             this.registros.recompensaCreada(nombreArchivo);
         }
@@ -1024,6 +1029,7 @@ public class Simulador {
 
     public void crearAlmacen(){
         almacenCentral=AlmacenCentral.getInstance();
+        System.out.println("Almacen creado.");
     }
 
     /**
@@ -1031,7 +1037,7 @@ public class Simulador {
      * @param args
      */
     public static void main(String[] args){
-        Simulador sim=new Simulador();
+        Simulador sim= Simulador.getInstance();
         sim.init();
         int opcion=0;
            
@@ -1090,14 +1096,7 @@ public class Simulador {
                         sim.save();
                         break;
                     case 97:
-                        sim.truco97("alga_1.xml", 1);
-                        sim.truco97("monedas_2.xml", 2);
-                        sim.truco97("almacen_a.xml", 1);
-                        sim.truco97("almacen_b.xml", 2);
-                        sim.truco97("almacen_c.xml", 3);
-                        sim.truco97("almacen_d.xml", 4);
-
-
+                       sim.truco97("algas_1.xml");
                         break;
                     case 98:
                         sim.truco98();

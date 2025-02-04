@@ -43,7 +43,6 @@ public class Recompensas {
      */
     private static Document doc = null;
 
-    private static Simulador sim = Simulador.getInstance();
         /**
          * Crea la carpeta base donde se almacenarán los archivos XML de recompensas
          * si no existe.
@@ -870,69 +869,71 @@ public class Recompensas {
          * de recompensas.
          */
         public static void listRecompensas(Map<Integer, File> recompensaMap) {
-            File folder = new File("rewards");
-            File[] archivos = folder.listFiles();
-            Map<String, List<String>> materialesEdificios = new HashMap<>();
-            Map<String, String> descripciones = new HashMap<>();
-            Map<String, String> totalPartes = new HashMap<>();
-    
-            if (archivos != null) {
-                System.out.println("==== Recompensas disponibles =====\n");
-    
-                int rewardIndex = 1;
-                for (File archivo : archivos) {
-                    try {
-                        SAXReader reader = new SAXReader();
-                        Document document = reader.read(archivo);
-                        Element root = document.getRootElement();
-    
-                        String nombre = root.elementText("name");
-                        String desc = root.elementText("desc");
-                        Element giveElement = root.element("give");
-    
-                        if (giveElement != null && giveElement.element("building") != null) {
-                            String buildingName = giveElement.elementText("building");
-                            String part = giveElement.elementText("part");
-                            String total = giveElement.elementText("total");
-    
-                            if (!materialesEdificios.containsKey(buildingName)) {
-                                materialesEdificios.put(buildingName, new ArrayList<>());
+                File folder = new File("rewards");
+                File[] archivos = folder.listFiles();
+                Map<String, List<String>> materialesEdificios = new HashMap<>();
+                Map<String, String> descripciones = new HashMap<>();
+                Map<String, String> totalPartes = new HashMap<>();
+            
+                if (archivos != null) {
+                    System.out.println("==== Recompensas disponibles =====\n");
+            
+                    int rewardIndex = 1; // Índice para las recompensas no agrupadas
+                    for (File archivo : archivos) {
+                        try {
+                            SAXReader reader = new SAXReader();
+                            Document document = reader.read(archivo);
+                            Element root = document.getRootElement();
+            
+                            String nombre = root.elementText("name");
+                            String desc = root.elementText("desc");
+                            Element giveElement = root.element("give");
+            
+                            if (giveElement != null && giveElement.element("building") != null) {
+                                // Es una recompensa de edificio
+                                String buildingName = giveElement.elementText("building");
+                                String part = giveElement.elementText("part");
+                                String total = giveElement.elementText("total");
+            
+                                if (!materialesEdificios.containsKey(buildingName)) {
+                                    materialesEdificios.put(buildingName, new ArrayList<>());
+                                }
+                                materialesEdificios.get(buildingName).add(part);
+                                descripciones.put(buildingName, desc);
+                                totalPartes.put(buildingName, total);
+                            } else {
+                                // Es una recompensa normal
+                                System.out.println(rewardIndex + ".- " + nombre + " - " + desc);
+                                recompensaMap.put(rewardIndex, archivo);
+                                rewardIndex++;
                             }
-                            materialesEdificios.get(buildingName).add(part);
-                            descripciones.put(buildingName, desc);
-                            totalPartes.put(buildingName, total);
-                        } else {
-                            System.out.println(rewardIndex + ".- " + nombre + " - " + desc);
-                            recompensaMap.put(rewardIndex, archivo);
-                            rewardIndex++;
-                        }
-                    } catch (DocumentException e) {
-                        System.out.println("Error al leer el documento XML");
-                    }
-                }
-    
-                int index = rewardIndex;
-                for (Map.Entry<String, List<String>> entry : materialesEdificios.entrySet()) {
-                    String building = entry.getKey();
-                    String total = totalPartes.get(building);
-                    char[] partesArray = total.toCharArray();
-                    Arrays.fill(partesArray, 'x');
-    
-                    for (String parte : entry.getValue()) {
-                        int pos = total.indexOf(parte);
-                        if (pos != -1) {
-                            partesArray[pos] = parte.charAt(0);
+                        } catch (DocumentException e) {
+                            System.out.println("Error al leer el documento XML");
                         }
                     }
-                    String partesDisponibles = new String(partesArray);
-    
-                    System.out.println(index + ".- " + building + " - " + descripciones.get(building) + " [Partes: "
-                            + partesDisponibles + "]");
-                    recompensaMap.put(index, archivos[index - 1]);
-                    index++;
+            
+                    // Mostrar recompensas de edificios agrupadas
+                    for (Map.Entry<String, List<String>> entry : materialesEdificios.entrySet()) {
+                        String building = entry.getKey();
+                        String total = totalPartes.get(building);
+                        char[] partesArray = total.toCharArray();
+                        Arrays.fill(partesArray, 'x');
+            
+                        for (String parte : entry.getValue()) {
+                            int pos = total.indexOf(parte);
+                            if (pos != -1) {
+                                partesArray[pos] = parte.charAt(0);
+                            }
+                        }
+                        String partesDisponibles = new String(partesArray);
+            
+                        System.out.println(rewardIndex + ".- " + building + " - " + descripciones.get(building) + " [Partes: "
+                                + partesDisponibles + "]");
+                        recompensaMap.put(rewardIndex, archivos[rewardIndex - 1]); // Asignar el archivo correcto
+                        rewardIndex++;
+                    }
                 }
             }
-        }
     
         /**
          * Reclama una recompensa, aplicándola a un conjunto de piscifactorías,
@@ -968,12 +969,23 @@ public class Recompensas {
                     // Procesar recompensas de tipo "building"
                     else if ("building".equals(elem.getName())) {
                         processBuildingsReward(elem, piscifactorias);
-                        //restQuantity("almacen_a.xml");
-                        //restQuantity("almacen_b.xml");
-                        //restQuantity("almacen_c.xml");
-                        //restQuantity("almacen_d.xml");
-                        restQuantity(nombreArchivo);
+                        if(nombreArchivo.startsWith("almacen")){
+                                restQuantity("almacen_a.xml");
+                                restQuantity("almacen_b.xml");
+                                restQuantity("almacen_c.xml");
+                                restQuantity("almacen_d.xml");
+                        }  else if(nombreArchivo.startsWith("pisci_m")){
+                                restQuantity("pisci_m_a.xml");
+                                restQuantity("pisci_m_b.xml");
+                        } else if(nombreArchivo.startsWith("pisci_r")){
+                                restQuantity("pisci_r_a.xml");
+                                restQuantity("pisci_r_b.xml");
+                        } else if(nombreArchivo.startsWith("tanque_m")){
+                                restQuantity("tanque_m.xml");
+                        } else if(nombreArchivo.startsWith("tanque_r")){
+                                restQuantity("tanque_r.xml");
                     }
+                }
                     // Procesar recompensas de tipo "coins"
                     else if ("coins".equals(elem.getName())) {
                         processCoinsReward(elem);
@@ -998,6 +1010,7 @@ public class Recompensas {
         public static void processFoodReward(Element foodElement, ArrayList<Piscifactoria> piscifactorias) {
             try {
                 String type = foodElement.attributeValue("type");
+                Simulador sim = Simulador.getInstance();
                 if (type == null) {
                     System.out.println("El atributo 'type' de 'food' no existe.");
                     return;
@@ -1076,6 +1089,7 @@ public class Recompensas {
     public static void processBuildingsReward(Element buildingElement, ArrayList<Piscifactoria> piscifactorias) {
         try {
             String code = buildingElement.attributeValue("code");
+            Simulador sim = Simulador.getInstance();
             if (code == null) {
                 System.out.println("El atributo 'code' de 'buildings' no existe.");
                 return;
@@ -1132,7 +1146,7 @@ public class Recompensas {
                             && partesEncontradas.contains("C") && partesEncontradas.contains("D")) {
                         if (sim.getAlmacenCentral() == null) {
                             sim.crearAlmacen();
-                            System.out.println("Almacén central creado correctamente.");
+                            //System.out.println("Almacén central creado correctamente.");
                         }
                     } else {
                         System.out.println("Recompensa incompleta: faltan partes del Almacén central.");
