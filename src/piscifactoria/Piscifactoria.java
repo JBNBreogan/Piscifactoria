@@ -81,6 +81,7 @@ public class Piscifactoria {
         this.maxComidaAnimal = pis.getCapacidad();
         this.maxComidaVegetal = pis.getCapacidad();
         this.nombre = pis.getNombre();
+        this.tanques = new ArrayList<>();
         List<DTOTanque> tankes = pis.getTanques();
         for (DTOTanque tnk : tankes) {
             tanques.add(new Tanque(tnk, this.tipo));

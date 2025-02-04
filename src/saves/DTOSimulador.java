@@ -10,6 +10,8 @@ import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import simulador.Simulador;
 
+
+
 /**
  * Clase que guarda la información del simulador
  * @author Breogan

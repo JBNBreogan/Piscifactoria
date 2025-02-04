@@ -53,7 +53,8 @@ public class SaveLoad {
      * 
      * @param json El fichero
      */
-    public static DTOSimulador cargar(File json, Registros reg) {
+    public static DTOSimulador cargar(File json) {
+        Registros reg = new Registros(json.getName().substring(0, json.getName().lastIndexOf('.')));
         Gson gson = new Gson();
 
         if (json.exists() && json.isFile()) {

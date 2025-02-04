@@ -109,9 +109,9 @@ public class Simulador {
      * una piscifactoria y añadiendo 100 monedas.
      */
     public void init() {
-        registros = new Registros(nombreEmpresa);
+        
         File savedir = new File("saves");
-
+    
         if ((savedir.exists() && savedir.isDirectory() && savedir.listFiles().length != 0)) {
             File[] saves = savedir.listFiles();
             System.out.println("Escoja archivo de guardado. ");
@@ -119,36 +119,59 @@ public class Simulador {
                 System.out.println(i + 1 + ". " + saves[i].getName().substring(0, saves[i].getName().lastIndexOf('.')));
             }
             System.out.println("0. Nueva partida");
-
+    
             int option = InputHelper.getIntRanges(saves.length);
             if (option != 0) {
-                DTOSimulador sim = SaveLoad.cargar(saves[option - 1], registros);
+                DTOSimulador sim = SaveLoad.cargar(saves[option - 1]);
                 this.nombreEmpresa = sim.getEmpresa();
+                registros = new Registros(nombreEmpresa);
                 this.dias = sim.getDia();
                 DTOAlmacen alm = sim.getEdificios().get("Almacen");
                 if (alm.isDisponible()) {
                     this.almacenCentral = AlmacenCentral.getInstance();
                     almacenCentral.load(alm);
                 }
-
+    
                 monedero.setMonedas(sim.getMonedas());
-
+    
                 List<DTOPiscifactoria> piscis = sim.getPiscifactorias();
                 for (DTOPiscifactoria piscifactoria : piscis) {
                     piscifactorias.add(new Piscifactoria(piscifactoria));
                 }
-                
-
+            } else {
+                registros = new Registros(nombreEmpresa);
+                System.out.println("Nombre de la empresa:");
+                nombreEmpresa = InputHelper.readStringWithBuffRead();
+                System.out.println("Nombre de la piscifactoria:");
+                String npisc = InputHelper.readStringWithBuffRead();
+                piscifactorias.add(new Piscifactoria(npisc, true));
+                Monedero.getInstance().setMonedas(100);
+                registros.inicio(npisc, null, new String[] {
+                        AlmacenPropiedades.LUCIO_NORTE.getNombre(),
+                        AlmacenPropiedades.CARPA_PLATEADA.getNombre(),
+                        AlmacenPropiedades.CARPA.getNombre(),
+                        AlmacenPropiedades.TILAPIA_NILO.getNombre(),
+                        AlmacenPropiedades.PEJERREY.getNombre(),
+                        AlmacenPropiedades.RODABALLO.getNombre(),
+                        AlmacenPropiedades.CABALLA.getNombre(),
+                        AlmacenPropiedades.BESUGO.getNombre(),
+                        AlmacenPropiedades.ABADEJO.getNombre(),
+                        AlmacenPropiedades.SARGO.getNombre(),
+                        AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
+                        AlmacenPropiedades.DORADA.getNombre()
+                }, monedero.getMonedas(), nombreEmpresa);
             }
-
+    
         } else {
             System.out.println("Nombre de la empresa:");
-            nombreEmpresa = InputHelper.readStringWithBuffRead();
-            System.out.println("Nombre de la piscifactoria");
+            this.nombreEmpresa = InputHelper.readStringWithBuffRead();
+            System.out.println("Nombre de la piscifactoria:");
             String npisc = InputHelper.readStringWithBuffRead();
             piscifactorias.add(new Piscifactoria(npisc, true));
             Monedero.getInstance().setMonedas(100);
-            registros.inicio(npisc, null, new String[] { AlmacenPropiedades.LUCIO_NORTE.getNombre(),
+            registros = new Registros(nombreEmpresa);
+            registros.inicio(npisc, null, new String[] {
+                    AlmacenPropiedades.LUCIO_NORTE.getNombre(),
                     AlmacenPropiedades.CARPA_PLATEADA.getNombre(),
                     AlmacenPropiedades.CARPA.getNombre(),
                     AlmacenPropiedades.TILAPIA_NILO.getNombre(),
@@ -159,16 +182,16 @@ public class Simulador {
                     AlmacenPropiedades.ABADEJO.getNombre(),
                     AlmacenPropiedades.SARGO.getNombre(),
                     AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
-                    AlmacenPropiedades.DORADA.getNombre() }, monedero.getMonedas(), nombreEmpresa);
+                    AlmacenPropiedades.DORADA.getNombre()
+            }, monedero.getMonedas(), nombreEmpresa);
         }
-
+        
         Recompensas.hacerCarpeta();
         SaveLoad.saveDirCreate();
         this.save();
         ErrorHelper.createErrorFile();
-        ErrorHelper.writeError("prueba de error");
     }
-
+    
     /**
      * Método que muestra un menú con las opciones a realizar en el sistema.
      */
@@ -1187,7 +1210,10 @@ public class Simulador {
         } finally {
             InputHelper.closeBuffReader();
             sim.registros.salir();
-            ErrorHelper.closeError();
+            try {
+                ErrorHelper.closeError();
+            } catch (Exception e) {}
+            
         }
     }
 }
