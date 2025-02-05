@@ -109,9 +109,9 @@ public class Simulador {
      * una piscifactoria y añadiendo 100 monedas.
      */
     public void init() {
-        
+
         File savedir = new File("saves");
-    
+
         if ((savedir.exists() && savedir.isDirectory() && savedir.listFiles().length != 0)) {
             File[] saves = savedir.listFiles();
             System.out.println("Escoja archivo de guardado. ");
@@ -119,7 +119,7 @@ public class Simulador {
                 System.out.println(i + 1 + ". " + saves[i].getName().substring(0, saves[i].getName().lastIndexOf('.')));
             }
             System.out.println("0. Nueva partida");
-    
+
             int option = InputHelper.getIntRanges(saves.length);
             if (option != 0) {
                 DTOSimulador sim = SaveLoad.cargar(saves[option - 1]);
@@ -131,9 +131,9 @@ public class Simulador {
                     this.almacenCentral = AlmacenCentral.getInstance();
                     almacenCentral.load(alm);
                 }
-    
+
                 monedero.setMonedas(sim.getMonedas());
-    
+
                 List<DTOPiscifactoria> piscis = sim.getPiscifactorias();
                 for (DTOPiscifactoria piscifactoria : piscis) {
                     piscifactorias.add(new Piscifactoria(piscifactoria));
@@ -161,7 +161,7 @@ public class Simulador {
                         AlmacenPropiedades.DORADA.getNombre()
                 }, monedero.getMonedas(), nombreEmpresa);
             }
-    
+
         } else {
             System.out.println("Nombre de la empresa:");
             this.nombreEmpresa = InputHelper.readStringWithBuffRead();
@@ -185,13 +185,13 @@ public class Simulador {
                     AlmacenPropiedades.DORADA.getNombre()
             }, monedero.getMonedas(), nombreEmpresa);
         }
-        
+
         Recompensas.hacerCarpeta();
         SaveLoad.saveDirCreate();
         this.save();
         ErrorHelper.createErrorFile();
     }
-    
+
     /**
      * Método que muestra un menú con las opciones a realizar en el sistema.
      */
@@ -1208,12 +1208,13 @@ public class Simulador {
         } catch (InputMismatchException e) {
             System.out.println("Has introducido un tipo de dato incorrecto, introduce un número");
         } finally {
-            InputHelper.closeBuffReader();
-            sim.registros.salir();
             try {
                 ErrorHelper.closeError();
-            } catch (Exception e) {}
-            
+                InputHelper.closeBuffReader();
+                sim.registros.salir();
+            } catch (Exception e) {
+            }
+
         }
     }
 }
