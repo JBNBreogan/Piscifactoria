@@ -19,9 +19,6 @@ import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import recompensas.Recompensas;
-import saves.DTOAlmacen;
-import saves.DTOPiscifactoria;
-import saves.DTOSimulador;
 import saves.SaveLoad;
 import tanque.Tanque;
 import registros.Registros;
@@ -31,6 +28,9 @@ import java.util.Random;
 import comun.AlmacenCentral;
 import comun.Monedero;
 import conexion.Conexion;
+import dtos.DTOAlmacen;
+import dtos.DTOPiscifactoria;
+import dtos.DTOSimulador;
 /**
  * Clase simulador
  * 

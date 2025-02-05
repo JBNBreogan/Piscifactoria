@@ -2,8 +2,8 @@ package comun;
 
 import java.util.ArrayList;
 
+import dtos.DTOAlmacen;
 import piscifactoria.Piscifactoria;
-import saves.DTOAlmacen;
 
 /**
  * Clase singleton que representa un almacén central para el manejo de comida animal

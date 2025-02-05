@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import comun.*;
+import dtos.DTOPez;
+import dtos.DTOTanque;
 import peces.Pez;
 import peces.doble.*;
 import peces.mar.*;
@@ -15,8 +17,6 @@ import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
-import saves.DTOPez;
-import saves.DTOTanque;
 import helpers.InputHelper;
 import helpers.MenuHelper;
 

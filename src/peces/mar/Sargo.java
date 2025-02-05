@@ -1,9 +1,9 @@
 package peces.mar;
 
+import dtos.DTOPez;
 import peces.Pez;
 import peces.propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
-import saves.DTOPez;
 
 /**
  * Clase que representa al Sargo

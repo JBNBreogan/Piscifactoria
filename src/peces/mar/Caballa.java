@@ -1,9 +1,9 @@
 package peces.mar;
 
+import dtos.DTOPez;
 import peces.Pez;
 import peces.propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
-import saves.DTOPez;
 
 /**
  * Clase que representa a la Caballa

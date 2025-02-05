@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import dtos.DTOSimulador;
 import helpers.ErrorHelper;
 import registros.Registros;
 

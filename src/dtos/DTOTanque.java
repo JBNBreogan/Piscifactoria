@@ -1,4 +1,4 @@
-package saves;
+package dtos;
 
 import java.util.List;
 import java.util.Map;

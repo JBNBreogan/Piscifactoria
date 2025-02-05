@@ -2,10 +2,10 @@ package peces.rio;
 
 import java.util.Random;
 
+import dtos.DTOPez;
 import peces.Pez;
 import peces.propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
-import saves.DTOPez;
 
 /**
  * Clase que representa a la Carpa comun

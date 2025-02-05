@@ -3,10 +3,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import comun.*;
+import dtos.DTOPiscifactoria;
+import dtos.DTOTanque;
 import peces.Pez;
 import propiedades.CriaTipo;
-import saves.DTOPiscifactoria;
-import saves.DTOTanque;
 import tanque.Tanque;
 import helpers.*;
 

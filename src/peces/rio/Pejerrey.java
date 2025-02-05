@@ -1,9 +1,9 @@
 package peces.rio;
 
+import dtos.DTOPez;
 import peces.Pez;
 import peces.propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
-import saves.DTOPez;
 
 /**
  * Clase que representa al Pejerrey

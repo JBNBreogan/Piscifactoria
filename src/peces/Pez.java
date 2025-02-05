@@ -2,10 +2,10 @@ package peces;
 
 import java.util.Random;
 
+import dtos.DTOPez;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
 import propiedades.PecesTipo;
-import saves.DTOPez;
 
 /**
  * Clase padre de los peces

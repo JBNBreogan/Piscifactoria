@@ -1,9 +1,9 @@
 package peces.rio;
 
+import dtos.DTOPez;
 import peces.Pez;
 import peces.propiedades.Filtrador;
 import propiedades.AlmacenPropiedades;
-import saves.DTOPez;
 
 /**
  * Clase que representa a una Carpa Plateada

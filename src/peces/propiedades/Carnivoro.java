@@ -1,8 +1,8 @@
 package peces.propiedades;
 
+import dtos.DTOPez;
 import peces.Pez;
 import propiedades.PecesDatos;
-import saves.DTOPez;
 
 /**
  * Clase para peces carnívoros
