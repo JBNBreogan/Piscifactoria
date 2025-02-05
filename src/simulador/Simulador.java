@@ -1,9 +1,12 @@
 package simulador;
 
 import java.io.File;
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.List;
 
 import estadisticas.Estadisticas;
@@ -27,14 +30,15 @@ import java.util.Random;
 
 import comun.AlmacenCentral;
 import comun.Monedero;
-
+import conexion.Conexion;
 /**
  * Clase simulador
  * 
  * @author Cristian
  */
 public class Simulador {
-    // **Días avanzados en el sistema */
+    private static Simulador sim;
+    //**Días avanzados en el sistema */
     private int dias = 1;
     /** Nombre con el que se inicia el sistema */
     private String nombreEmpresa;
@@ -65,6 +69,8 @@ public class Simulador {
             AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
             AlmacenPropiedades.DORADA.getNombre()
     });
+    /**Objeto para la conexion a la base de datos. */
+    private Connection conn=null;
 
     /** Objeto de la clase Transcripciones */
     private Registros registros = null;
@@ -74,6 +80,14 @@ public class Simulador {
      */
     public Simulador() {
     }
+
+        public static Simulador getInstance() {
+            if (sim == null) {
+                sim = new Simulador();
+            }
+            return sim;
+        }
+
 
     /**
      * Constructor para el sistema de carga
@@ -1087,16 +1101,15 @@ public class Simulador {
      * Permite seleccionar una recompensa disponible, primero las lista y el usuario
      * elige la que quiere.
      */
-    public void selectRecompensa() {
-        Recompensas.listRecompensas();
-        File f = new File("rewards/");
-        File[] files = f.listFiles();
+    public void selectRecompensa()  {
+        Map<Integer, File> recompensaMap = new HashMap<>();
+        Recompensas.listRecompensas(recompensaMap);
         System.out.println("0. Salir");
-        int opcion = InputHelper.getIntRanges(files.length);
-        if (opcion == 0) {
+        int opcion = InputHelper.getIntRanges(recompensaMap.size());
+        if (opcion == 0)  {
             return;
         } else {
-            Recompensas.reclamar(registros, files[opcion - 1], piscifactorias);
+            Recompensas.reclamar(registros, recompensaMap.get(opcion), piscifactorias);
         }
     }
 
@@ -1106,11 +1119,18 @@ public class Simulador {
      * @param nombreArchivo nombre del archivo.
      * @param nivel         Nivel de la recompensa.
      */
-    public void truco97(String nombreArchivo, int nivel) {
+    public void truco97(String nombreArchivo) {
         if (new File("rewards/" + nombreArchivo).exists()) {
             Recompensas.addQuantity(nombreArchivo);
         } else {
-            Recompensas.algaXml(nivel);
+            Recompensas.almacenXml(1);
+            Recompensas.almacenXml(2);
+            Recompensas.almacenXml(3);
+            Recompensas.almacenXml(4);
+            Recompensas.algaXml(1);
+            Recompensas.algaXml(2);
+            Recompensas.monedasXml(1);
+            Recompensas.monedasXml(2);
             this.registros.recompensaCreada(nombreArchivo);
         }
 
@@ -1124,13 +1144,19 @@ public class Simulador {
         saves.save(new DTOSimulador(this), new File("saves/" + nombreEmpresa + ".save"), this.registros);
     }
 
+
+    public void crearAlmacen(){
+        almacenCentral=AlmacenCentral.getInstance();
+        System.out.println("Almacen creado.");
+    }
+
     /**
      * Ejecuta toda la lógica del programa.
      * 
      * @param args
      */
-    public static void main(String[] args) {
-        Simulador sim = new Simulador();
+    public static void main(String[] args){
+        Simulador sim= Simulador.getInstance();
         sim.init();
         int opcion = 0;
 
@@ -1189,7 +1215,7 @@ public class Simulador {
                         sim.save();
                         break;
                     case 97:
-                        sim.truco97("algas_4.xml", 4);
+                       sim.truco97("algas_1.xml");
                         break;
                     case 98:
                         sim.truco98();
@@ -1212,9 +1238,11 @@ public class Simulador {
                 ErrorHelper.closeError();
                 InputHelper.closeBuffReader();
                 sim.registros.salir();
+                Conexion.close();
             } catch (Exception e) {
             }
 
+            
         }
     }
 }
