@@ -153,9 +153,10 @@ public class Simulador {
                     piscifactorias.add(new Piscifactoria(piscifactoria));
                 }
             } else {
-                registros = new Registros(nombreEmpresa);
+                
                 System.out.println("Nombre de la empresa:");
                 nombreEmpresa = InputHelper.readStringWithBuffRead();
+                registros = new Registros(nombreEmpresa);
                 System.out.println("Nombre de la piscifactoria:");
                 String npisc = InputHelper.readStringWithBuffRead();
                 piscifactorias.add(new Piscifactoria(npisc, true));
@@ -1241,8 +1242,6 @@ public class Simulador {
                 Conexion.close();
             } catch (Exception e) {
             }
-
-            
         }
     }
 }
