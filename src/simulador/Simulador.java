@@ -1235,13 +1235,10 @@ public class Simulador {
         } catch (InputMismatchException e) {
             System.out.println("Has introducido un tipo de dato incorrecto, introduce un número");
         } finally {
-            try {
-                ErrorHelper.closeError();
-                InputHelper.closeBuffReader();
-                sim.registros.salir();
-                Conexion.close();
-            } catch (Exception e) {
-            }
+            ErrorHelper.closeError();
+            InputHelper.closeBuffReader();
+            Conexion.close();
+            sim.registros.salir();
         }
     }
 }
