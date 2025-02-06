@@ -2,6 +2,7 @@ package peces.propiedades;
 
 import java.util.Random;
 
+import dtos.DTOPez;
 import peces.Pez;
 import propiedades.PecesDatos;
 
@@ -17,6 +18,14 @@ public abstract class Omnivoro extends Pez{
      */
     protected Omnivoro(PecesDatos data) {
         super(data);
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    protected Omnivoro(DTOPez pes, PecesDatos data){
+        super(pes, data);
     }
 
     @Override

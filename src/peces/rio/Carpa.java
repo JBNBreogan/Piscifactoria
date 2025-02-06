@@ -2,6 +2,7 @@ package peces.rio;
 
 import java.util.Random;
 
+import dtos.DTOPez;
 import peces.Pez;
 import peces.propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
@@ -19,6 +20,14 @@ public class Carpa extends Omnivoro{
     public Carpa(boolean hembra){
         super(AlmacenPropiedades.CARPA);
         this.Sexo = hembra;
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    public Carpa(DTOPez pes){
+        super(pes, AlmacenPropiedades.CARPA);
     }
 
     @Override

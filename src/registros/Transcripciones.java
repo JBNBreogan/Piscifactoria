@@ -19,17 +19,17 @@ import propiedades.CriaTipo;
  * @author Cristian
  */
 public class Transcripciones {
-    //**Instancia del objeto de Transacciones. */
+    //**Instancia del objeto de Transcripciones. */
     private static Transcripciones instance;
     //**Nombre de la carpeta de guardado */
-    private static String ruta= "transacciones";
+    private static String ruta= "transcripciones";
     /**objeto BuffererWriter para poder escribir en el archivo */
     private static BufferedWriter bw=null;
     /**Objeto File para crear el archivo de guardado */
     private static File archivo = null;
 
     /**
-     * Constructor vacío de la clase Transacciones.
+     * Constructor vacío de la clase Transcripciones.
      */
     private Transcripciones() {
     }
