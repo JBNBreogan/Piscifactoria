@@ -41,7 +41,8 @@ public class Conexion {
                                 "jdbc:mysql://" + 
                                 SERVER + 
                                 ":" + PORT_NUMBER + "/" + 
-                                DATABASE,
+                                DATABASE + 
+                                "?rewriteBatchedStatements=true",
                                 connectionProps);
             } catch (SQLException e) {
                 System.out.println("Error al crear la conexion a la base de datos");
