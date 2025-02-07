@@ -765,7 +765,7 @@ public class Recompensas {
     
                     root.addElement("quantity")
                             .addText("1");
-                    save(doc, "tanque_a.xml");
+                    save(doc, "tanque_r.xml");
     
                     break;
                 case 2:
@@ -789,7 +789,7 @@ public class Recompensas {
     
                     root.addElement("quantity")
                             .addText("1");
-                    save(doc, "tanque_b.xml");
+                    save(doc, "tanque_m.xml");
     
                     break;
             }
@@ -968,23 +968,8 @@ public class Recompensas {
                     }
                     // Procesar recompensas de tipo "building"
                     else if ("building".equals(elem.getName())) {
-                        processBuildingsReward(elem, piscifactorias);
-                        if(nombreArchivo.startsWith("almacen")){
-                                restQuantity("almacen_a.xml");
-                                restQuantity("almacen_b.xml");
-                                restQuantity("almacen_c.xml");
-                                restQuantity("almacen_d.xml");
-                        }  else if(nombreArchivo.startsWith("pisci_m")){
-                                restQuantity("pisci_m_a.xml");
-                                restQuantity("pisci_m_b.xml");
-                        } else if(nombreArchivo.startsWith("pisci_r")){
-                                restQuantity("pisci_r_a.xml");
-                                restQuantity("pisci_r_b.xml");
-                        } else if(nombreArchivo.startsWith("tanque_m")){
-                                restQuantity("tanque_m.xml");
-                        } else if(nombreArchivo.startsWith("tanque_r")){
-                                restQuantity("tanque_r.xml");
-                    }
+                        processBuildingsReward(elem, piscifactorias,nombreArchivo);
+                      
                 }
                     // Procesar recompensas de tipo "coins"
                     else if ("coins".equals(elem.getName())) {
@@ -1086,7 +1071,7 @@ public class Recompensas {
      * @param piscifactorias  Lista de piscifactorías donde se aplicarán las
      *                        recompensas.
      */
-    public static void processBuildingsReward(Element buildingElement, ArrayList<Piscifactoria> piscifactorias) {
+    public static void processBuildingsReward(Element buildingElement, ArrayList<Piscifactoria> piscifactorias, String nombreArchivo) {
         try {
             String code = buildingElement.attributeValue("code");
             Simulador sim = Simulador.getInstance();
@@ -1094,28 +1079,83 @@ public class Recompensas {
                 System.out.println("El atributo 'code' de 'buildings' no existe.");
                 return;
             }
-
             switch (code) {
                 case "0":
-                    String partesRio = buildingElement.elementText("part");
-                    String totalRio = buildingElement.elementText("total");
-                    if (partesRio != null && totalRio != null && partesRio.equals(totalRio)) {
-                        String nombrePisc = InputHelper.readStringWithBuffRead();
-                        piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.RIO));
-                    } else {
-                        System.out.println("Recompensa incompleta para la piscifactoría de río.");
-                    }
-                    break;
+                        File folderRio = new File("rewards");
+                        File[] archivosRio = folderRio.listFiles();
+                        Set<String> partesRioEncontradas = new HashSet<>();
+                
+                        if (archivosRio != null) {
+                        for (File archivo : archivosRio) {
+                                try {
+                                SAXReader reader = new SAXReader();
+                                Document document = reader.read(archivo);
+                                Element root = document.getRootElement();
+                                Element giveElement = root.element("give");
+                
+                                if (giveElement != null && giveElement.element("building") != null) {
+                                        String buildingName = giveElement.elementText("building");
+                                        String part = giveElement.elementText("part");
+                
+                                        if ("Piscifactoría de río".equals(buildingName)) {
+                                        partesRioEncontradas.add(part);
+                                        }
+                                }
+                                } catch (DocumentException e) {
+                                System.out.println("Error al leer el documento XML");
+                                }
+                        }
+                        }
+                
+                        if (partesRioEncontradas.contains("A") && partesRioEncontradas.contains("B")) {
+                                System.out.println("Nombre de la piscifactoría: ");
+                                String nombrePisc = InputHelper.readStringWithBuffRead();
+                                piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.RIO));
+                                System.out.println("Piscifactoría de río creada correctamente.");
+                                restQuantity("pisci_r_a.xml");
+                                restQuantity("pisci_r_b.xml");
+                        } else {
+                        System.out.println("Recompensa incompleta: faltan partes para la piscifactoría de rio.");
+                        }
+                break;
                 case "1":
-                    String partesMar = buildingElement.elementText("part");
-                    String totalMar = buildingElement.elementText("total");
-                    if (partesMar != null && totalMar != null && partesMar.equals(totalMar)) {
-                        String nombrePisc = InputHelper.readStringWithBuffRead();
-                        piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.MAR));
-                    } else {
-                        System.out.println("Recompensa incompleta para la piscifactoría de mar.");
-                    }
-                    break;
+                        File folderMar = new File("rewards");
+                        File[] archivosMar = folderMar.listFiles();
+                        Set<String> partesMarEncontradas = new HashSet<>();
+                
+                        if (archivosMar != null) {
+                        for (File archivo : archivosMar) {
+                                try {
+                                SAXReader reader = new SAXReader();
+                                Document document = reader.read(archivo);
+                                Element root = document.getRootElement();
+                                Element giveElement = root.element("give");
+                
+                                if (giveElement != null && giveElement.element("building") != null) {
+                                        String buildingName = giveElement.elementText("building");
+                                        String part = giveElement.elementText("part");
+                
+                                        if ("Piscifactoría de mar".equals(buildingName)) {
+                                        partesMarEncontradas.add(part);
+                                        }
+                                }
+                                } catch (DocumentException e) {
+                                System.out.println("Error al leer el documento XML");
+                                }
+                        }
+                        }
+                
+                        if (partesMarEncontradas.contains("A") && partesMarEncontradas.contains("B")) {
+                                System.out.println("Nombre de la piscifactoría: ");
+                                String nombrePisc = InputHelper.readStringWithBuffRead();
+                                piscifactorias.add(new Piscifactoria(nombrePisc, CriaTipo.MAR));
+                                System.out.println("Piscifactoría de mar creada correctamente.");
+                                restQuantity("pisci_m_a.xml");
+                                restQuantity("pisci_m_b.xml");
+                        } else {
+                        System.out.println("Recompensa incompleta: faltan partes para la piscifactoría de mar.");
+                        }
+                break;
                 case "4": // Almacén central
                     File folder = new File("rewards");
                     File[] archivos = folder.listFiles();
@@ -1146,7 +1186,11 @@ public class Recompensas {
                             && partesEncontradas.contains("C") && partesEncontradas.contains("D")) {
                         if (sim.getAlmacenCentral() == null) {
                             sim.crearAlmacen();
-                            //System.out.println("Almacén central creado correctamente.");
+                            System.out.println("Almacén central reclamado correctamente.");
+                            restQuantity("almacen_a.xml");
+                            restQuantity("almacen_b.xml");
+                            restQuantity("almacen_c.xml");
+                            restQuantity("almacen_d.xml");
                         }
                     } else {
                         System.out.println("Recompensa incompleta: faltan partes del Almacén central.");
@@ -1157,18 +1201,21 @@ public class Recompensas {
                     for (Piscifactoria piscifactoria : piscifactorias) {
                         if (piscifactoria.getTipo() == CriaTipo.RIO && piscifactoria.getTanques().size() < 10) {
                             piscifactoria.getTanques().add(new Tanque(25, piscifactoria.getTipo()));
+
                         }
                     }
-                    break;
+                    System.out.println("Tanque de río añadido a las piscifactorías de río.");
+                    restQuantity("tanque_r.xml");
 
+                break;
                 case "3": // Añadir tanque en piscifactoría de mar
-                    for (Piscifactoria piscifactoria : piscifactorias) {
-                        if (piscifactoria.getTipo() == CriaTipo.MAR && piscifactoria.getTanques().size() < 10) {
-                            piscifactoria.getTanques().add(new Tanque(100, piscifactoria.getTipo()));
-                        }
-                    }
-                    break;
+                        Piscifactoria pisc =piscifactorias.get(sim.selectPisc());
+                        pisc.getTanques().add(new Tanque(100, pisc.getTipo()));
+                        restQuantity("tanque_m.xml");
 
+                    System.out.println("Tanque de mar añadido a las piscifactorías de mar.");
+
+                break;
                 default:
                     System.out.println("Código de building no reconocido: " + code);
             }

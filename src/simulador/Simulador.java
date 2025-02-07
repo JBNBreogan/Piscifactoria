@@ -1010,6 +1010,10 @@ public class Simulador {
             Recompensas.almacenXml(2);
             Recompensas.almacenXml(3);
             Recompensas.almacenXml(4);
+          //  Recompensas.pisciRioXml(1);
+           // Recompensas.pisciRioXml(2);
+            Recompensas.tanqueXml(1);
+            Recompensas.tanqueXml(2);
             Recompensas.algaXml(1);
             Recompensas.algaXml(2);
             Recompensas.monedasXml(1);
@@ -1029,7 +1033,6 @@ public class Simulador {
 
     public void crearAlmacen(){
         almacenCentral=AlmacenCentral.getInstance();
-        System.out.println("Almacen creado.");
     }
 
     /**
