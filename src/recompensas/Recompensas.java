@@ -871,7 +871,7 @@ public class Recompensas {
         public static void listRecompensas(Map<Integer, File> recompensaMap) {
                 File folder = new File("rewards");
                 File[] archivos = folder.listFiles();
-                Map<String, List<String>> materialesEdificios = new HashMap<>();
+                Map<String, List<File>> materialesEdificios = new HashMap<>(); // Cambio: Guardar los archivos de cada parte
                 Map<String, String> descripciones = new HashMap<>();
                 Map<String, String> totalPartes = new HashMap<>();
             
@@ -898,7 +898,7 @@ public class Recompensas {
                                 if (!materialesEdificios.containsKey(buildingName)) {
                                     materialesEdificios.put(buildingName, new ArrayList<>());
                                 }
-                                materialesEdificios.get(buildingName).add(part);
+                                materialesEdificios.get(buildingName).add(archivo); // Guardar el archivo correspondiente
                                 descripciones.put(buildingName, desc);
                                 totalPartes.put(buildingName, total);
                             } else {
@@ -913,23 +913,35 @@ public class Recompensas {
                     }
             
                     // Mostrar recompensas de edificios agrupadas
-                    for (Map.Entry<String, List<String>> entry : materialesEdificios.entrySet()) {
+                    for (Map.Entry<String, List<File>> entry : materialesEdificios.entrySet()) {
                         String building = entry.getKey();
                         String total = totalPartes.get(building);
                         char[] partesArray = total.toCharArray();
                         Arrays.fill(partesArray, 'x');
             
-                        for (String parte : entry.getValue()) {
-                            int pos = total.indexOf(parte);
-                            if (pos != -1) {
-                                partesArray[pos] = parte.charAt(0);
+                        for (File archivo : entry.getValue()) {
+                            try {
+                                SAXReader reader = new SAXReader();
+                                Document document = reader.read(archivo);
+                                Element root = document.getRootElement();
+                                Element giveElement = root.element("give");
+                                String part = giveElement.elementText("part");
+            
+                                int pos = total.indexOf(part);
+                                if (pos != -1) {
+                                    partesArray[pos] = part.charAt(0);
+                                }
+                            } catch (DocumentException e) {
+                                System.out.println("Error al leer el documento XML");
                             }
                         }
                         String partesDisponibles = new String(partesArray);
             
                         System.out.println(rewardIndex + ".- " + building + " - " + descripciones.get(building) + " [Partes: "
                                 + partesDisponibles + "]");
-                        recompensaMap.put(rewardIndex, archivos[rewardIndex - 1]); // Asignar el archivo correcto
+            
+                        // Asignar el primer archivo de la lista de partes como representante de la recompensa agrupada
+                        recompensaMap.put(rewardIndex, entry.getValue().get(0)); // Asignar el primer archivo de la lista
                         rewardIndex++;
                     }
                 }
@@ -1198,23 +1210,25 @@ public class Recompensas {
                     break;
 
                 case "2": // Añadir tanque en piscifactoría de río
-                    for (Piscifactoria piscifactoria : piscifactorias) {
-                        if (piscifactoria.getTipo() == CriaTipo.RIO && piscifactoria.getTanques().size() < 10) {
-                            piscifactoria.getTanques().add(new Tanque(25, piscifactoria.getTipo()));
-
+                Piscifactoria piscr =piscifactorias.get(sim.selectPisc());
+                        if(piscr.getTipo() == CriaTipo.RIO){
+                                piscr.getTanques().add(new Tanque(25, piscr.getTipo()));
+                                restQuantity("tanque_r.xml");
+                                System.out.println("Tanque de rio añadido.");
+                        } else {
+                                System.out.println("Esta piscifactoría no es de río.");
                         }
-                    }
-                    System.out.println("Tanque de río añadido a las piscifactorías de río.");
-                    restQuantity("tanque_r.xml");
 
                 break;
                 case "3": // Añadir tanque en piscifactoría de mar
-                        Piscifactoria pisc =piscifactorias.get(sim.selectPisc());
-                        pisc.getTanques().add(new Tanque(100, pisc.getTipo()));
-                        restQuantity("tanque_m.xml");
-
-                    System.out.println("Tanque de mar añadido a las piscifactorías de mar.");
-
+                        Piscifactoria piscm =piscifactorias.get(sim.selectPisc());
+                        if(piscm.getTipo() == CriaTipo.MAR){
+                                piscm.getTanques().add(new Tanque(100, piscm.getTipo()));
+                                restQuantity("tanque_m.xml");
+                                System.out.println("Tanque de mar añadido.");
+                        } else {
+                                System.out.println("Esta piscifactoría no es de mar.");
+                        }
                 break;
                 default:
                     System.out.println("Código de building no reconocido: " + code);

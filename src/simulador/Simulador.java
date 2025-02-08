@@ -987,13 +987,17 @@ public class Simulador {
      */
     public void selectRecompensa() {
         Map<Integer, File> recompensaMap = new HashMap<>();
-        Recompensas.listRecompensas(recompensaMap);
+        Recompensas.listRecompensas(recompensaMap); 
         System.out.println("0. Salir");
         int opcion = InputHelper.getIntRanges(recompensaMap.size());
+    
         if (opcion == 0) {
-            return;
-        } else {
+            return; 
+        } else if (recompensaMap.containsKey(opcion)) {
+           
             Recompensas.reclamar(registros, recompensaMap.get(opcion), piscifactorias);
+        } else {
+            System.out.println("Opción no válida. Por favor, seleccione una opción correcta.");
         }
     }
 
