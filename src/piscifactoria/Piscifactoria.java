@@ -81,16 +81,17 @@ public class Piscifactoria {
         this.maxComidaAnimal = pis.getCapacidad();
         this.maxComidaVegetal = pis.getCapacidad();
         this.nombre = pis.getNombre();
+        if (pis.getTipo() == 0) {
+            this.tipo = CriaTipo.RIO;
+        } else {
+            this.tipo = CriaTipo.MAR;
+        }
         this.tanques = new ArrayList<>();
         List<DTOTanque> tankes = pis.getTanques();
         for (DTOTanque tnk : tankes) {
             tanques.add(new Tanque(tnk, this.tipo));
         }
-        if (pis.getTipo() == 0) {
-            this.tipo = CriaTipo.RIO;
-        } else if (pis.getTipo() == 1){
-            this.tipo = CriaTipo.MAR;
-        }
+
     }
    
     /**
@@ -224,6 +225,16 @@ public class Piscifactoria {
     public int selectTank(){
         for (Tanque tanque : tanques) {
             System.out.println("Tanque "+(tanques.indexOf(tanque)+1)+": "+tipo);
+        }
+        int opcion = InputHelper.getIntRanges(tanques.size(),1);
+        return opcion-1;
+    }
+
+    public int selectTankSpecific(String nombrePez){
+        for (Tanque tanque : tanques) {
+            if(nombrePez==tanque.getPeces().get(0).getName()){
+                System.out.println("Tanque "+(tanques.indexOf(tanque)+1)+": "+tipo);
+            }
         }
         int opcion = InputHelper.getIntRanges(tanques.size(),1);
         return opcion-1;
