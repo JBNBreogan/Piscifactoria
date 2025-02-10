@@ -1235,6 +1235,7 @@ public class Simulador {
                         break;
                     case 77:
                         daoPedidos.borrarPedidos();
+                    case 
                     default:
                         System.out.println("Esta opción no es válida");
                         break;
