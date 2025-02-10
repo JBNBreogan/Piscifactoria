@@ -25,6 +25,7 @@ import registros.Registros;
 
 import java.util.Random;
 
+import bd.GeneradorBD;
 import comun.AlmacenCentral;
 import comun.Monedero;
 import conexion.Conexion;
@@ -203,6 +204,8 @@ public class Simulador {
 
         Recompensas.hacerCarpeta();
         SaveLoad.saveDirCreate();
+        GeneradorBD generadorBD = new GeneradorBD();
+        generadorBD.iniciarBD();
         this.save();
         ErrorHelper.createErrorFile();
     }
@@ -1107,17 +1110,10 @@ public class Simulador {
         Recompensas.listRecompensas(recompensaMap); 
         System.out.println("0. Salir");
         int opcion = InputHelper.getIntRanges(recompensaMap.size());
-<<<<<<< HEAD
-    
         if (opcion == 0) {
             return; 
         } else if (recompensaMap.containsKey(opcion)) {
            
-=======
-        if (opcion == 0)  {
-            return;
-        } else {
->>>>>>> 5d68467d5afdef88ac496654147c7ba09fcfd141
             Recompensas.reclamar(registros, recompensaMap.get(opcion), piscifactorias);
         } else {
             System.out.println("Opción no válida. Por favor, seleccione una opción correcta.");

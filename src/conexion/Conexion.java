@@ -9,11 +9,11 @@ public class Conexion {
     /**Objeto para la conexion a la base de datos*/
     public static Connection conn;
     /**Nombre de usuario de la base de datos */
-    private static String USERNAME="cjuvino";
+    private static String USERNAME="niglesias0";
     /**Contraseña del usuario para la base de datos */
     private static String PASSWORD="abc123.";
     /**Direccion ip del servidor donde esta la base de datos */
-    private static String SERVER="213.32.47.55";
+    private static String SERVER="213.32.47.44";
     /**Puerto de la base de datos */
     private static String PORT_NUMBER="3306";
     /**Nombre de la base de datos */
@@ -41,7 +41,7 @@ public class Conexion {
                                 "jdbc:mysql://" + 
                                 SERVER + 
                                 ":" + PORT_NUMBER + "/" + 
-                                DATABASE + 
+                                DATABASE +
                                 "?rewriteBatchedStatements=true",
                                 connectionProps);
             } catch (SQLException e) {
