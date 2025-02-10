@@ -25,6 +25,7 @@ import registros.Registros;
 
 import java.util.Random;
 
+import bd.GeneradorBD;
 import comun.AlmacenCentral;
 import comun.Monedero;
 import conexion.Conexion;
@@ -205,6 +206,8 @@ public class Simulador {
 
         Recompensas.hacerCarpeta();
         SaveLoad.saveDirCreate();
+        GeneradorBD generadorBD = new GeneradorBD();
+        generadorBD.iniciarBD();
         this.save();
         ErrorHelper.createErrorFile();
     }
@@ -1109,13 +1112,16 @@ public class Simulador {
      */
     public void selectRecompensa()  {
         Map<Integer, File> recompensaMap = new HashMap<>();
-        Recompensas.listRecompensas(recompensaMap);
+        Recompensas.listRecompensas(recompensaMap); 
         System.out.println("0. Salir");
         int opcion = InputHelper.getIntRanges(recompensaMap.size());
-        if (opcion == 0)  {
-            return;
-        } else {
+        if (opcion == 0) {
+            return; 
+        } else if (recompensaMap.containsKey(opcion)) {
+           
             Recompensas.reclamar(registros, recompensaMap.get(opcion), piscifactorias);
+        } else {
+            System.out.println("Opción no válida. Por favor, seleccione una opción correcta.");
         }
     }
 
@@ -1133,6 +1139,10 @@ public class Simulador {
             Recompensas.almacenXml(2);
             Recompensas.almacenXml(3);
             Recompensas.almacenXml(4);
+          //  Recompensas.pisciRioXml(1);
+           // Recompensas.pisciRioXml(2);
+            Recompensas.tanqueXml(1);
+            Recompensas.tanqueXml(2);
             Recompensas.algaXml(1);
             Recompensas.algaXml(2);
             Recompensas.monedasXml(1);
@@ -1153,7 +1163,6 @@ public class Simulador {
 
     public void crearAlmacen(){
         almacenCentral=AlmacenCentral.getInstance();
-        System.out.println("Almacen creado.");
     }
 
     /**
