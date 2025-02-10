@@ -232,7 +232,7 @@ public class Piscifactoria {
 
     public int selectTankSpecific(String nombrePez){
         for (Tanque tanque : tanques) {
-            if(nombrePez==tanque.getPeces().get(0).getName()){
+            if(!tanque.getPeces().isEmpty() && nombrePez==tanque.getPeces().get(0).getName()){
                 System.out.println("Tanque "+(tanques.indexOf(tanque)+1)+": "+tipo);
             }
         }

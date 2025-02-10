@@ -1133,19 +1133,20 @@ public class Simulador {
         Scanner sc = new Scanner(System.in);
         int opcion;
         do {
-            int indice = 1;
             String nombrePezPedido="";
             for (DTOPedido pedido : pedidos) {
-                System.out.println(indice + ".[" + pedido.getReferencia() + "]"
+                System.out.println("[" + pedido.getReferencia() + "]"
                         + pedido.getNombreCliente() + ": " + pedido.getNombrePez() + " "
                         + pedido.getCantidadEnviada() + "/" + pedido.getCantidadPedida()
                         + " (" + (pedido.getCantidadEnviada() * 100) / pedido.getCantidadPedida() + "%)");
-                indice++;
                 int numeroPecesPedidos = pedido.getCantidadPedida();
                 nombrePezPedido=pedido.getNombrePez();
             }
-            System.out.println("0. Salir");
+            System.out.println("[0]Salir");
             opcion = sc.nextInt();
+            if(opcion==0){
+                break;
+            }
             ArrayList<Pez> pecesAdultos = new ArrayList<>();
             int monedasOb = 0;
 
@@ -1154,7 +1155,7 @@ public class Simulador {
             Tanque tank = null;
 
             int indiceTanque=pisc.selectTankSpecific(nombrePezPedido);
-            if(indiceTanque==0){
+            if(indiceTanque<=0){
                 System.out.println("No hay tanques compatibles con el pez de este pedido");
                 break;
             }else{
