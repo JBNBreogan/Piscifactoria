@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import helpers.ErrorHelper;
+
 public class Conexion {
     /**Objeto para la conexion a la base de datos*/
     public static Connection conn;
@@ -45,12 +47,13 @@ public class Conexion {
                                 "?rewriteBatchedStatements=true",
                                 connectionProps);
             } catch (SQLException e) {
-                System.out.println("Error al crear la conexion a la base de datos");
+                ErrorHelper.writeError("Error al crear la conexion a la base de datos");
             }
         }
         return conn;
     }
 
+    
     /**
      * Método que cierra la conexion a la base de datos.
      */
@@ -58,9 +61,8 @@ public class Conexion {
         if (conn != null) {
             try {
                 conn.close();
-                System.out.println("Conexión cerrada correctamente.");
             } catch(SQLException e) {
-                System.out.println("Error al cerrar la conexión: " + e.getMessage());
+                ErrorHelper.writeError("Error al cerrar la conexion: " + e.getMessage());
             }
         }
     }
