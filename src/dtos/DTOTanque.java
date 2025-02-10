@@ -1,4 +1,4 @@
-package saves;
+package dtos;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +12,7 @@ import tanque.Tanque;
  * @author Breogan
  */
 public class DTOTanque {
+
     /**Nombre del pez que hay en el tanque*/
     private String pez;
 

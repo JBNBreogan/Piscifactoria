@@ -1,5 +1,6 @@
 package peces.rio;
 
+import dtos.DTOPez;
 import peces.Pez;
 import peces.propiedades.Filtrador;
 import propiedades.AlmacenPropiedades;
@@ -17,6 +18,14 @@ public class CarpaPlateada extends Filtrador{
     public CarpaPlateada(boolean hembra){
         super(AlmacenPropiedades.CARPA_PLATEADA);
         this.Sexo = hembra;
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    public CarpaPlateada(DTOPez pes){
+        super(pes, AlmacenPropiedades.CARPA_PLATEADA);
     }
 
     @Override

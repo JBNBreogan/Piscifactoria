@@ -2,6 +2,7 @@ package peces.mar;
 
 import java.util.Random;
 
+import dtos.DTOPez;
 import peces.Pez;
 import peces.propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
@@ -19,6 +20,14 @@ public class Abadejo extends Carnivoro{
     public Abadejo(boolean hembra){
         super(AlmacenPropiedades.ABADEJO);
         this.Sexo = hembra;
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    public Abadejo(DTOPez pes){
+        super(pes, AlmacenPropiedades.ABADEJO);
     }
 
     @Override

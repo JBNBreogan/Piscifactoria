@@ -1,7 +1,10 @@
 package piscifactoria;
 import java.util.ArrayList;
+import java.util.List;
 
 import comun.*;
+import dtos.DTOPiscifactoria;
+import dtos.DTOTanque;
 import peces.Pez;
 import propiedades.CriaTipo;
 import tanque.Tanque;
@@ -66,6 +69,28 @@ public class Piscifactoria {
         this.maxComidaAnimal = 25;
         this.comidaAnimal = 25;
         this.comidaVegetal = 25; 
+    }
+
+    /**
+     * Constructor para carga de datos
+     * @param pis DTO de piscifactoria
+     */
+    public Piscifactoria(DTOPiscifactoria pis){
+        this.comidaAnimal = pis.getComida().get("animal");
+        this.comidaVegetal = pis.getComida().get("vegetal");
+        this.maxComidaAnimal = pis.getCapacidad();
+        this.maxComidaVegetal = pis.getCapacidad();
+        this.nombre = pis.getNombre();
+        this.tanques = new ArrayList<>();
+        List<DTOTanque> tankes = pis.getTanques();
+        for (DTOTanque tnk : tankes) {
+            tanques.add(new Tanque(tnk, this.tipo));
+        }
+        if (pis.getTipo() == 0) {
+            this.tipo = CriaTipo.RIO;
+        } else if (pis.getTipo() == 1){
+            this.tipo = CriaTipo.MAR;
+        }
     }
    
     /**

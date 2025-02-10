@@ -1,5 +1,6 @@
 package peces.mar;
 
+import dtos.DTOPez;
 import peces.Pez;
 import peces.propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
@@ -17,6 +18,14 @@ public class Rodaballo extends Carnivoro{
     public Rodaballo(boolean hembra){
         super(AlmacenPropiedades.RODABALLO);
         this.Sexo = hembra;
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    public Rodaballo(DTOPez pes){
+        super(pes, AlmacenPropiedades.RODABALLO);
     }
     
     @Override

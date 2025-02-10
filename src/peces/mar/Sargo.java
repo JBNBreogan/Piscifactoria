@@ -1,5 +1,6 @@
 package peces.mar;
 
+import dtos.DTOPez;
 import peces.Pez;
 import peces.propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
@@ -17,6 +18,14 @@ public class Sargo extends Omnivoro{
     public Sargo(boolean hembra){
         super(AlmacenPropiedades.SARGO);
         this.Sexo = hembra;
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    public Sargo(DTOPez pes){
+        super(pes, AlmacenPropiedades.SARGO);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package peces.doble;
 
+import dtos.DTOPez;
 import peces.Pez;
 import peces.propiedades.Omnivoro;
 import propiedades.AlmacenPropiedades;
@@ -17,6 +18,14 @@ public class Dorada extends Omnivoro{
     public Dorada(boolean hembra){
         super(AlmacenPropiedades.DORADA);
         this.Sexo = hembra;
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    public Dorada(DTOPez pes){
+        super(pes, AlmacenPropiedades.DORADA);
     }
 
     @Override
