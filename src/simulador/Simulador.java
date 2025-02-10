@@ -28,6 +28,7 @@ import java.util.Random;
 import comun.AlmacenCentral;
 import comun.Monedero;
 import conexion.Conexion;
+import conexion.DAOPedidos;
 import dtos.DTOAlmacen;
 import dtos.DTOPiscifactoria;
 import dtos.DTOSimulador;
@@ -69,11 +70,12 @@ public class Simulador {
             AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),
             AlmacenPropiedades.DORADA.getNombre()
     });
-    /**Objeto para la conexion a la base de datos. */
-    private Connection conn=null;
 
     /** Objeto de la clase Transcripciones */
     private Registros registros = null;
+
+    /** */
+    private DAOPedidos daoPedidos=new DAOPedidos();
 
     /**
      * Constructor vacío de la clase simulador.
@@ -417,6 +419,9 @@ public class Simulador {
      */
     public void nextDay() {
         dias++;
+
+        daoPedidos.addPedido();
+
         if (almacenCentral != null) {
             almacenCentral.repartir(piscifactorias);
         }
