@@ -81,16 +81,17 @@ public class Piscifactoria {
         this.maxComidaAnimal = pis.getCapacidad();
         this.maxComidaVegetal = pis.getCapacidad();
         this.nombre = pis.getNombre();
+        if (pis.getTipo() == 0) {
+            this.tipo = CriaTipo.RIO;
+        } else {
+            this.tipo = CriaTipo.MAR;
+        }
         this.tanques = new ArrayList<>();
         List<DTOTanque> tankes = pis.getTanques();
         for (DTOTanque tnk : tankes) {
             tanques.add(new Tanque(tnk, this.tipo));
         }
-        if (pis.getTipo() == 0) {
-            this.tipo = CriaTipo.RIO;
-        } else if (pis.getTipo() == 1){
-            this.tipo = CriaTipo.MAR;
-        }
+
     }
    
     /**

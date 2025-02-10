@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import dtos.DTOPedido;
 
@@ -23,6 +24,11 @@ public class DAOPedidos {
 
     /** Sentencia preparada para editar los pedidos */
     private PreparedStatement pstNuevo;
+
+    /** Sentencia preparada para conseguir las cantidades de un pedido */
+    private PreparedStatement pstPedido;
+
+    private PreparedStatement pstUpdatePedido;
 
     /**
      * Constructor que prepara todas las sentencias sql
@@ -41,13 +47,26 @@ public class DAOPedidos {
                     "SELECT p.id_referencia as ref, c.nombre as nombre_cl, pe.nombre_pez as nombre_pe, p.enviados as enviados, p.solicitados as solicitados "
                             +
                             "FROM Pedido p" +
-                            "JOIN Cliente c ON p.usuario_id = c.id " +
+                            "JOIN Cliente c ON p.cliente_id = c.id " +
                             "JOIN Pez pe ON p.pez_id = pe.id " +
                             "WHERE enviados = solicitados");
 
             pstNuevo = conn.prepareStatement(
                     "INSERT INTO Pedido (cliente_id, pez_id, cantidad, enviados)" +
                             "VALUES (?, ?, ?, 0)");
+
+            pstPedido = conn.prepareStatement(
+                "SELECT cantidad, enviados" +   
+                "FROM Pedido" +
+                "WHERE numero_referencia = ?"
+            );
+
+            pstUpdatePedido = conn.prepareStatement(
+                "UPDATE Pedido SET enviados = enviados + ? WHERE numero_referencia = ?"
+            );
+
+
+
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -112,7 +131,48 @@ public class DAOPedidos {
      * Añade un nuevo pedido a la base de datos
      */
     public void addPedido(){
-        
+        Random rand = new Random();
+        try {
+            pstNuevo.setInt(1, rand.nextInt(10)+1);
+            pstNuevo.setInt(2, rand.nextInt(12)+1);
+            pstNuevo.setInt(3, rand.nextInt(41)+10);
+            pstNuevo.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Añade cierta cantidad de peces a un pedido en concreto.
+     * @return true si el pedido se ha completado.
+     */
+    public boolean progresarPedido(int id, int cantidad){
+        try {
+            pstUpdatePedido.setInt(1, cantidad);
+            pstUpdatePedido.setInt(2, id);
+
+            int affected = pstUpdatePedido.executeUpdate();
+            return affected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    public DTOPedido getCantidadPedido(int id){
+        DTOPedido pedido = null;
+        try {
+            pstPedido.setInt(1, id);
+            try (ResultSet rs = this.pstPedido.executeQuery()) {
+                rs.next();
+                pedido = new DTOPedido(id, null, rs.getInt("cantidad"), rs.getInt("enviados"), null);
+            } catch (SQLException e) {}
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+        return pedido;
     }
 
 }
