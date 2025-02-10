@@ -13,9 +13,9 @@ public class Conexion {
     /**Contraseña del usuario para la base de datos */
     private static String PASSWORD="abc123.";
     /**Direccion ip del servidor donde esta la base de datos */
-    private static String SERVER="";
+    private static String SERVER="213.32.47.55";
     /**Puerto de la base de datos */
-    private static String PORT_NUMBER="";
+    private static String PORT_NUMBER="3306";
     /**Nombre de la base de datos */
     private static String DATABASE="pescaditos";
 
@@ -41,7 +41,8 @@ public class Conexion {
                                 "jdbc:mysql://" + 
                                 SERVER + 
                                 ":" + PORT_NUMBER + "/" + 
-                                DATABASE,
+                                DATABASE + 
+                                "?rewriteBatchedStatements=true",
                                 connectionProps);
             } catch (SQLException e) {
                 System.out.println("Error al crear la conexion a la base de datos");
