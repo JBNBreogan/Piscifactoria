@@ -3,16 +3,20 @@ package bd;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import conexion.Conexion;
+import helpers.ErrorHelper;
 import propiedades.AlmacenPropiedades;
 
 public class GeneradorBD {
 
+    private Connection con = Conexion.getConexion();
+
     public void crearTablas() {
-        String crear = "CREATE DATABASE niglesias0";
-        String borrar = "DROP DATABASE niglesias0;";
-        String usar = "USE niglesias0";
+        String crear = "CREATE DATABASE IF NOT EXISTS pescaditos";
+        String borrar = "DROP DATABASE pescaditos;";
+        String usar = "USE pescaditos";
 
         String tablaClientes = "CREATE TABLE IF NOT EXISTS Cliente (" +
                 "id INT AUTO_INCREMENT PRIMARY KEY, " +
@@ -36,12 +40,30 @@ public class GeneradorBD {
                 "nombre VARCHAR(255) NOT NULL, " +
                 "nombre_cientifico VARCHAR(255) NOT NULL" +
                 ");";
+    
+        Statement stmt = null;
+
+        try {
+            stmt = con.createStatement();
+            stmt.execute(borrar);
+            stmt.execute(crear);
+            stmt.execute(usar);
+
+            stmt.execute(tablaClientes);
+            stmt.execute(tablaPez);
+            stmt.execute(tablaPedidos);
+        } catch (SQLException e) {
+            ErrorHelper.writeError("Error al crear las tablas");
+        } finally {
+            try {
+                if(stmt != null) stmt.close();} catch (Exception e) {}
+        }
     }
 
-    public void insertarClientes(Connection conn) throws SQLException {
+    public void insertarClientes( ){
         String sql = "INSERT INTO Cliente (nombre, nif, telefono) VALUES (?, ?, ?)";
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             // Clientes fijos con valores preestablecidos
             String[][] clientes = {
                     { "Rosario Porto Ortega", "12345678A", "600111222" },
@@ -53,7 +75,7 @@ public class GeneradorBD {
                     { "Joaquín Ferrándiz Ventura", "78901234G", "600778899" },
                     { "Ana Julia Quezada", "89012345H", "600889900" },
                     { "José Bretón", "90123456I", "600990011" },
-                    { "José Enrique Abuín Gey (El Chicle)", "01234567J", "600101112" }
+                    { "José Enrique Abuín Gey", "01234567J", "600101112" }
             };
 
             // Añadir cada cliente a la base de datos
@@ -69,14 +91,13 @@ public class GeneradorBD {
             System.out.println("Clientes insertados correctamente.");
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new SQLException("Error al insertar los clientes.");
         }
     }
 
-    public void insertarPeces(Connection conn) throws SQLException {
+    public void insertarPeces( ) {
         String sql = "INSERT INTO Pez (nombre, nombre_cientifico) VALUES (?, ?)";
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
             // Peces fijos con valores preestablecidos
             String[][] peces = {
                     { AlmacenPropiedades.LUCIO_NORTE.getNombre(), AlmacenPropiedades.LUCIO_NORTE.getCientifico() },
@@ -106,7 +127,12 @@ public class GeneradorBD {
             System.out.println("Peces insertados correctamente.");
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new SQLException("Error al insertar los peces.");
         }
+    }
+
+    public void iniciarBD(){
+        crearTablas();
+        insertarClientes();
+        insertarPeces();
     }
 }
