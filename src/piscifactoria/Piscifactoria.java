@@ -230,6 +230,16 @@ public class Piscifactoria {
         return opcion-1;
     }
 
+    public int selectTankSpecific(String nombrePez){
+        for (Tanque tanque : tanques) {
+            if(nombrePez==tanque.getPeces().get(0).getName()){
+                System.out.println("Tanque "+(tanques.indexOf(tanque)+1)+": "+tipo);
+            }
+        }
+        int opcion = InputHelper.getIntRanges(tanques.size(),1);
+        return opcion-1;
+    }
+
     /**
      * Muestra el estado de cada tanque de la piscifactoría.
      */

@@ -24,6 +24,7 @@ import tanque.Tanque;
 import registros.Registros;
 
 import java.util.Random;
+import java.util.Scanner;
 
 import bd.GeneradorBD;
 import comun.AlmacenCentral;
@@ -31,8 +32,10 @@ import comun.Monedero;
 import conexion.Conexion;
 import conexion.DAOPedidos;
 import dtos.DTOAlmacen;
+import dtos.DTOPedido;
 import dtos.DTOPiscifactoria;
 import dtos.DTOSimulador;
+
 /**
  * Clase simulador
  * 
@@ -40,7 +43,7 @@ import dtos.DTOSimulador;
  */
 public class Simulador {
     private static Simulador sim;
-    //**Días avanzados en el sistema */
+    // **Días avanzados en el sistema */
     private int dias = 1;
     /** Nombre con el que se inicia el sistema */
     private String nombreEmpresa;
@@ -76,7 +79,7 @@ public class Simulador {
     private Registros registros = null;
 
     /** */
-    private DAOPedidos daoPedidos=new DAOPedidos();
+    private DAOPedidos daoPedidos = new DAOPedidos();
 
     /**
      * Constructor vacío de la clase simulador.
@@ -84,13 +87,12 @@ public class Simulador {
     public Simulador() {
     }
 
-        public static Simulador getInstance() {
-            if (sim == null) {
-                sim = new Simulador();
-            }
-            return sim;
+    public static Simulador getInstance() {
+        if (sim == null) {
+            sim = new Simulador();
         }
-
+        return sim;
+    }
 
     /**
      * Constructor para el sistema de carga
@@ -156,7 +158,7 @@ public class Simulador {
                     piscifactorias.add(new Piscifactoria(piscifactoria));
                 }
             } else {
-                
+
                 System.out.println("Nombre de la empresa:");
                 nombreEmpresa = InputHelper.readStringWithBuffRead();
                 registros = new Registros(nombreEmpresa);
@@ -230,6 +232,7 @@ public class Simulador {
                 "Mejorar.",
                 "Canjear recompensas",
                 "Pasar varios días.",
+                "Listar pedidos",
                 "Salir." },
                 false);
     }
@@ -1110,19 +1113,65 @@ public class Simulador {
      * Permite seleccionar una recompensa disponible, primero las lista y el usuario
      * elige la que quiere.
      */
-    public void selectRecompensa()  {
+    public void selectRecompensa() {
         Map<Integer, File> recompensaMap = new HashMap<>();
-        Recompensas.listRecompensas(recompensaMap); 
+        Recompensas.listRecompensas(recompensaMap);
         System.out.println("0. Salir");
         int opcion = InputHelper.getIntRanges(recompensaMap.size());
         if (opcion == 0) {
-            return; 
+            return;
         } else if (recompensaMap.containsKey(opcion)) {
-           
+
             Recompensas.reclamar(registros, recompensaMap.get(opcion), piscifactorias);
         } else {
             System.out.println("Opción no válida. Por favor, seleccione una opción correcta.");
         }
+    }
+
+    public void listarPedidos() {
+        List<DTOPedido> pedidos = daoPedidos.listarPedidosNoComp();
+        Scanner sc = new Scanner(System.in);
+        int opcion;
+        do {
+            int indice = 1;
+            String nombrePezPedido="";
+            for (DTOPedido pedido : pedidos) {
+                System.out.println(indice + ".[" + pedido.getReferencia() + "]"
+                        + pedido.getNombreCliente() + ": " + pedido.getNombrePez() + " "
+                        + pedido.getCantidadEnviada() + "/" + pedido.getCantidadPedida()
+                        + " (" + (pedido.getCantidadEnviada() * 100) / pedido.getCantidadPedida() + "%)");
+                indice++;
+                int numeroPecesPedidos = pedido.getCantidadPedida();
+                nombrePezPedido=pedido.getNombrePez();
+            }
+            System.out.println("0. Salir");
+            opcion = sc.nextInt();
+            ArrayList<Pez> pecesAdultos = new ArrayList<>();
+            int monedasOb = 0;
+
+            Piscifactoria pisc = piscifactorias.get(selectPisc());
+
+            Tanque tank = null;
+
+            int indiceTanque=pisc.selectTankSpecific(nombrePezPedido);
+            if(indiceTanque==0){
+                System.out.println("No hay tanques compatibles con el pez de este pedido");
+                break;
+            }else{
+                tank = pisc.getTanques().get(indiceTanque);
+            }
+
+            for (Pez pez : tank.getPeces()) {
+                if (pez.isAdulto()) {
+                    monedasOb += pez.getMonedas();
+                    pecesAdultos.add(pez);
+                }
+            }
+            monedero.setMonedas(monedero.getMonedas() + monedasOb);
+
+            daoPedidos.progresarPedido(opcion, pecesAdultos.size());
+        } while (opcion != 0);
+
     }
 
     /**
@@ -1139,8 +1188,8 @@ public class Simulador {
             Recompensas.almacenXml(2);
             Recompensas.almacenXml(3);
             Recompensas.almacenXml(4);
-          //  Recompensas.pisciRioXml(1);
-           // Recompensas.pisciRioXml(2);
+            // Recompensas.pisciRioXml(1);
+            // Recompensas.pisciRioXml(2);
             Recompensas.tanqueXml(1);
             Recompensas.tanqueXml(2);
             Recompensas.algaXml(1);
@@ -1160,9 +1209,8 @@ public class Simulador {
         saves.save(new DTOSimulador(this), new File("saves/" + nombreEmpresa + ".save"), this.registros);
     }
 
-
-    public void crearAlmacen(){
-        almacenCentral=AlmacenCentral.getInstance();
+    public void crearAlmacen() {
+        almacenCentral = AlmacenCentral.getInstance();
     }
 
     /**
@@ -1170,15 +1218,15 @@ public class Simulador {
      * 
      * @param args
      */
-    public static void main(String[] args){
-        Simulador sim= Simulador.getInstance();
+    public static void main(String[] args) {
+        Simulador sim = Simulador.getInstance();
         sim.init();
         int opcion = 0;
 
         try {
             do {
                 sim.menu();
-                opcion = InputHelper.getIntRanges(15, 1, new int[] { 97, 98, 99, 100 });
+                opcion = InputHelper.getIntRanges(16, 1, new int[] { 97, 98, 99, 100 });
                 switch (opcion) {
                     case 1:
                         sim.showGeneralStatus();
@@ -1227,10 +1275,13 @@ public class Simulador {
                         }
                         break;
                     case 15:
+                        sim.listarPedidos();
+                        break;
+                    case 16:
                         sim.save();
                         break;
                     case 97:
-                       sim.truco97("algas_1.xml");
+                        sim.truco97("algas_1.xml");
                         break;
                     case 98:
                         sim.truco98();
@@ -1245,11 +1296,14 @@ public class Simulador {
                         System.out.println("Esta opción no es válida");
                         break;
                 }
-            } while (opcion != 15);
+            } while (opcion != 16);
         } catch (InputMismatchException e) {
             System.out.println("Has introducido un tipo de dato incorrecto, introduce un número");
         } finally {
-            ErrorHelper.closeError();
+            try {
+                ErrorHelper.closeError();
+            } catch (Exception e) {
+            }
             InputHelper.closeBuffReader();
             Conexion.close();
             sim.registros.salir();
