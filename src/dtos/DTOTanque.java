@@ -19,6 +19,7 @@ public class DTOTanque {
     /**Numero de peces en el tanque */
     private int num;
 
+
     /**Datos de los peces del tanque */
     private Map<String, Integer> datos;
 
