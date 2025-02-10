@@ -1,4 +1,4 @@
-package saves;
+package dtos;
 
 import peces.Pez;
 

@@ -2,6 +2,7 @@ package peces.rio;
 
 import java.util.Random;
 
+import dtos.DTOPez;
 import peces.Pez;
 import peces.propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
@@ -19,6 +20,14 @@ public class LucioDelNorte extends Carnivoro{
     public LucioDelNorte(boolean hembra){
         super(AlmacenPropiedades.LUCIO_NORTE);
         this.Sexo = hembra;
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    public LucioDelNorte(DTOPez pes){
+        super(pes, AlmacenPropiedades.LUCIO_NORTE);
     }
 
     @Override

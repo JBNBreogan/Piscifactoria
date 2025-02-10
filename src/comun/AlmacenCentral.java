@@ -2,6 +2,7 @@ package comun;
 
 import java.util.ArrayList;
 
+import dtos.DTOAlmacen;
 import piscifactoria.Piscifactoria;
 
 /**
@@ -153,5 +154,12 @@ public class AlmacenCentral {
         this.capacidadcomidaanimal += capacidad;
         this.capacidadcomidavegetal += capacidad;
         System.out.println("Capacidad aumentada en "+capacidad+". Capacidad total: "+capacidadcomidaanimal);
+    }
+
+    public void load(DTOAlmacen alm){
+        this.capacidadcomidaanimal = alm.getCapacidad();
+        this.capacidadcomidavegetal = alm.getCapacidad();
+        this.comidaVegetal = alm.getComida().get("vegetal");
+        this.comidaAnimal = alm.getComida().get("animal");
     }
 }
