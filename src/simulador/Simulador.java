@@ -1233,9 +1233,8 @@ public class Simulador {
                     case 99:
                         sim.truco99();
                         break;
-                    case 100:
-                        sim.save();
-                        break;
+                    case 77:
+                        daoPedidos.borrarPedidos();
                     default:
                         System.out.println("Esta opción no es válida");
                         break;

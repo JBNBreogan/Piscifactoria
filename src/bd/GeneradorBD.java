@@ -15,8 +15,8 @@ public class GeneradorBD {
     private Connection con = Conexion.getConexion();
 
     public void crearTablas() {
-        String crear = "CREATE DATABASE IF NOT EXISTS pescaditos";
-        String borrar = "DROP DATABASE pescaditos;";
+       // String crear = "CREATE DATABASE IF NOT EXISTS pescaditos";
+       // String borrar = "DROP DATABASE pescaditos;";
         String usar = "USE pescaditos";
 
         String tablaClientes = "CREATE TABLE IF NOT EXISTS Cliente (" +
