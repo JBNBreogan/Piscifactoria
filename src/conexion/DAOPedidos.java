@@ -179,4 +179,16 @@ public class DAOPedidos {
         return pedido;
     }
 
+    public void closePST(){
+        try {
+            pstListarComp.close();
+            pstListarNoComp.close();
+            pstNuevo.close();
+            pstPedido.close();
+            pstUpdatePedido.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

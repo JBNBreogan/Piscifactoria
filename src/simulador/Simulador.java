@@ -1,7 +1,6 @@
 package simulador;
 
 import java.io.File;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -24,7 +23,6 @@ import tanque.Tanque;
 import registros.Registros;
 
 import java.util.Random;
-import java.util.Scanner;
 
 import bd.GeneradorBD;
 import comun.AlmacenCentral;
@@ -1135,7 +1133,6 @@ public class Simulador {
      */
     public void listarPedidos() {
         List<DTOPedido> pedidos = daoPedidos.listarPedidosNoComp();
-        Scanner sc = new Scanner(System.in);
         int op;
     
         do {
@@ -1149,7 +1146,7 @@ public class Simulador {
                         + " (" + (pedido.getCantidadEnviada() * 100) / pedido.getCantidadPedida() + "%)");
             }
             System.out.println("Introduce el número de referencia del pedido (0 para salir):");
-            op = sc.nextInt();
+            op = InputHelper.getIntRanges(Integer.MAX_VALUE, 0);
     
             if (op != 0) {
                 boolean encontrado = false;
