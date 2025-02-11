@@ -309,11 +309,11 @@ public class Piscifactoria {
      */
     public void upgradeFood(){
         if(tipo == CriaTipo.RIO){
-            this.maxComidaAnimal=+25;
-            this.maxComidaVegetal=+25;
+            this.maxComidaAnimal+=25;
+            this.maxComidaVegetal+=25;
         } else if(tipo == CriaTipo.MAR){
-            this.maxComidaAnimal=+100;
-            this.maxComidaVegetal=+100;
+            this.maxComidaAnimal+=100;
+            this.maxComidaVegetal+=100;
         }
         System.out.println("Almacén de comida de la piscifactoría "+this.nombre+" mejorado. Su capacidad ha aumentado en "+ ((tipo == CriaTipo.RIO) ? "25" : "100") +" hasta un total de "+maxComidaAnimal);
     }

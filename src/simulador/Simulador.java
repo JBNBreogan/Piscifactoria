@@ -701,8 +701,7 @@ public class Simulador {
                                                 "Elige la piscifactoria a la que le quieres aumentar el almacen de comida");
                                         Piscifactoria pisc2 = piscifactorias.get(selectPisc());
                                         if (Monedero.monedasSuficientes(50)) {
-                                            pisc2.addFood(25, "Vegetal");
-                                            pisc2.addFood(25, "Animal");
+                                            pisc2.upgradeFood();
                                         }
                                         break;
                                     default:
@@ -1133,12 +1132,12 @@ public class Simulador {
      */
     public void listarPedidos() {
         int op;
-    
+
         do {
             List<DTOPedido> pedidos = daoPedidos.listarPedidosNoComp();
             String nombrePezPedido = "";
             int numeroPecesAEnviar = 0;
-    
+
             for (DTOPedido pedido : pedidos) {
                 System.out.println("[" + pedido.getReferencia() + "]"
                         + pedido.getNombreCliente() + ": " + pedido.getNombrePez() + " "
@@ -1147,7 +1146,7 @@ public class Simulador {
             }
             System.out.println("Introduce el número de referencia del pedido (0 para salir):");
             op = InputHelper.getIntRanges(Integer.MAX_VALUE, 0);
-    
+
             if (op != 0) {
                 boolean encontrado = false;
                 for (DTOPedido pedido : pedidos) {
@@ -1166,41 +1165,17 @@ public class Simulador {
         } while (op != 0);
     }
 
-    public void listarPedidosNoComp(){
-        int op;
-    
-        do {
-            List<DTOPedido> pedidos = daoPedidos.listarPedidosComp();
-            String nombrePezPedido = "";
-            int numeroPecesAEnviar = 0;
-    
-            for (DTOPedido pedido : pedidos) {
-                System.out.println("[" + pedido.getReferencia() + "]"
-                        + pedido.getNombreCliente() + ": " + pedido.getNombrePez() + " "
-                        + pedido.getCantidadEnviada() + "/" + pedido.getCantidadPedida()
-                        + " (" + (pedido.getCantidadEnviada() * 100) / pedido.getCantidadPedida() + "%)");
-            }
-            System.out.println("Introduce el número de referencia del pedido (0 para salir):");
-            op = InputHelper.getIntRanges(Integer.MAX_VALUE, 0);
-    
-            if (op != 0) {
-                boolean encontrado = false;
-                for (DTOPedido pedido : pedidos) {
-                    if (pedido.getReferencia() == op) {
-                        nombrePezPedido = pedido.getNombrePez();
-                        numeroPecesAEnviar = pedido.getCantidadPedida() - pedido.getCantidadEnviada();
-                        this.selecTankForPedidos(op, nombrePezPedido, numeroPecesAEnviar);
-                        encontrado = true;
-                        break;
-                    }
-                }
-                if (!encontrado) {
-                    System.out.println("Número de referencia no válido.");
-                }
-            }
-        } while (op != 0);
+    public void listarPedidosNoComp() {
+
+        List<DTOPedido> pedidos = daoPedidos.listarPedidosComp();
+        System.out.println("Pedidos completados: ");
+        for (DTOPedido pedido : pedidos) {
+            System.out.println("[" + pedido.getReferencia() + "]"
+                    + pedido.getNombreCliente() + ": " + pedido.getNombrePez() + " "
+                    + pedido.getCantidadEnviada() + "/" + pedido.getCantidadPedida()
+                    + " (" + (pedido.getCantidadEnviada() * 100) / pedido.getCantidadPedida() + "%)");
+        }
     }
-    
 
     /**
      * Método que permite seleccionar los tanques disponibles para hacer el pedido.
@@ -1249,19 +1224,19 @@ public class Simulador {
                 iter.remove();
                 enviados++;
                 System.out.println("Pez eliminado");
-                if (enviados == numeroPecesAEnviar){
+                if (enviados == numeroPecesAEnviar) {
                     Recompensas.generar();
                 }
             }
-            
+
         }
 
         monedero.setMonedas(monedero.getMonedas() + monedasOb);
         registros.enviarPeces(nombrePezPedido, numeroPecesAEnviar, numRef);
 
-        DTOPedido pedido=daoPedidos.getCantidadPedido(numRef);
+        DTOPedido pedido = daoPedidos.getCantidadPedido(numRef);
 
-        System.out.println("numero de peces pedidos"+pedido.getCantidadPedida());
+        System.out.println("numero de peces pedidos" + pedido.getCantidadPedida());
         System.out.println("pedido " + pedido.getReferencia());
 
         // Hasta aqui va bien, elimina los peces de los tanques.
@@ -1385,10 +1360,10 @@ public class Simulador {
                         break;
                     case 77:
                         sim.daoPedidos.borrarPedidos();
-                    break;
+                        break;
                     case 78:
                         sim.listarPedidosNoComp();
-                    break;
+                        break;
                     default:
                         System.out.println("Esta opción no es válida");
                         break;
