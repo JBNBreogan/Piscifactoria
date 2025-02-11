@@ -232,8 +232,16 @@ public class Piscifactoria {
 
     public int selectTankSpecific(String nombrePez){
         for (Tanque tanque : tanques) {
-            if(!tanque.getPeces().isEmpty() && nombrePez==tanque.getPeces().get(0).getName()){
-                System.out.println("Tanque "+(tanques.indexOf(tanque)+1)+": "+tipo);
+            if(!tanque.getPeces().isEmpty()) {
+                if(tanque.getPeces().get(0).getName().equals(nombrePez)){
+                    System.out.println("Tanque "+(tanques.indexOf(tanque)+1)+": "+tipo);
+                }else{
+                    System.out.println("No hay tanques compatibles con el pez de este pedido\n");
+                    return 0;
+                }
+            }else{
+                System.out.println("Todos los tanques estan vacios\n");
+                return 0;
             }
         }
         int opcion = InputHelper.getIntRanges(tanques.size(),1);

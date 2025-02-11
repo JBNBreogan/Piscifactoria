@@ -1129,22 +1129,78 @@ public class Simulador {
     }
 
     public void listarPedidos() {
+        //Informes hay que guardarlos?
+
+        //Cuando se meten en la lista se meten con el id de la lista por orden, no por el num de ref del pedido
+        List<DTOPedido> pedidos = daoPedidos.listarPedidosNoComp();
+        Scanner sc = new Scanner(System.in);
+        int op;
+        int opcionMenu=1;
+        
+        do {
+            String nombrePezPedido = "";
+            int numeroPecesPedidos = 0;
+            //Numero de los pedidos esta cambiado
+            for (DTOPedido pedido : pedidos) {
+                System.out.println(opcionMenu + ".[" + pedido.getReferencia() + "]"
+                        + pedido.getNombreCliente() + ": " + pedido.getNombrePez() + " "
+                        + pedido.getCantidadEnviada() + "/" + pedido.getCantidadPedida()
+                        + " (" + (pedido.getCantidadEnviada() * 100) / pedido.getCantidadPedida() + "%)");
+                opcionMenu++;
+            }
+            System.out.println("0. Salir");
+            op = sc.nextInt();
+            if(op!=0){
+                nombrePezPedido = pedidos.get(op-1).getNombrePez();
+                numeroPecesPedidos = pedidos.get(op-1).getCantidadPedida();
+                this.selecTankForPedidos(op, nombrePezPedido, numeroPecesPedidos);
+            }
+        } while (op != 0);
+    }
+
+    public void selecTankForPedidos(int numRef, String nombrePezPedido, int numeroPecesPedidos) {
+        Piscifactoria pisc = piscifactorias.get(selectPisc());
+        Tanque tank = null;
+        int indiceTanque = pisc.selectTankSpecific(nombrePezPedido);
+        if(indiceTanque>0){
+            tank = pisc.getTanques().get(indiceTanque);
+            this.procesarPedido(numRef, tank);
+        }
+    }
+
+    public void procesarPedido(int numRef, Tanque tanque){
+        ArrayList<Pez> pecesAdultos = new ArrayList<>();
+        int monedasOb = 0;
+
+        for (Pez pez : tanque.getPeces()) {
+            if (pez.isAdulto()) {
+                monedasOb += pez.getMonedas();
+                pecesAdultos.add(pez);
+            }
+        }
+        monedero.setMonedas(monedero.getMonedas() + monedasOb);
+
+        //Hasta aqui bien
+        daoPedidos.progresarPedido(numRef, pecesAdultos.size());
+    }
+
+    public void listarPedidosg() {
         List<DTOPedido> pedidos = daoPedidos.listarPedidosNoComp();
         Scanner sc = new Scanner(System.in);
         int opcion;
         do {
-            String nombrePezPedido="";
+            String nombrePezPedido = "";
             for (DTOPedido pedido : pedidos) {
                 System.out.println("[" + pedido.getReferencia() + "]"
                         + pedido.getNombreCliente() + ": " + pedido.getNombrePez() + " "
                         + pedido.getCantidadEnviada() + "/" + pedido.getCantidadPedida()
                         + " (" + (pedido.getCantidadEnviada() * 100) / pedido.getCantidadPedida() + "%)");
                 int numeroPecesPedidos = pedido.getCantidadPedida();
-                nombrePezPedido=pedido.getNombrePez();
+                nombrePezPedido = pedido.getNombrePez();
             }
             System.out.println("[0]Salir");
             opcion = sc.nextInt();
-            if(opcion==0){
+            if (opcion == 0) {
                 break;
             }
             ArrayList<Pez> pecesAdultos = new ArrayList<>();
@@ -1154,11 +1210,11 @@ public class Simulador {
 
             Tanque tank = null;
 
-            int indiceTanque=pisc.selectTankSpecific(nombrePezPedido);
-            if(indiceTanque<=0){
+            int indiceTanque = pisc.selectTankSpecific(nombrePezPedido);
+            if (indiceTanque <= 0) {
                 System.out.println("No hay tanques compatibles con el pez de este pedido");
                 break;
-            }else{
+            } else {
                 tank = pisc.getTanques().get(indiceTanque);
             }
 
