@@ -1219,8 +1219,8 @@ public class Simulador {
         monedero.setMonedas(monedero.getMonedas() + monedasOb);
         registros.enviarPeces(nombrePezPedido, numeroPecesAEnviar, numRef);
 
-        // Hasta aqui va bien
-        daoPedidos.progresarPedido(numRef, pecesAdultos.size());
+        // Hasta aqui va bien, elimina los peces de los tanques.
+        daoPedidos.progresarPedido(numRef, numeroPecesAEnviar);
     }
 
     /**
