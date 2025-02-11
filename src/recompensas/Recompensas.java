@@ -1258,7 +1258,7 @@ public class Recompensas {
     /**
      * Genera una recompensa aleatoria entre una de comida, monedas o tanques.
      */
-    public void generar(){
+    public static void generar(){
         Random random = new Random();
 
         int odds = random.nextInt(10)+1;
