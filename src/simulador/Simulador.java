@@ -24,11 +24,11 @@ import registros.Registros;
 
 import java.util.Random;
 
+import bd.Conexion;
+import bd.DAOPedidos;
 import bd.GeneradorBD;
 import comun.AlmacenCentral;
 import comun.Monedero;
-import conexion.Conexion;
-import conexion.DAOPedidos;
 import dtos.DTOAlmacen;
 import dtos.DTOPedido;
 import dtos.DTOPiscifactoria;
