@@ -10,10 +10,20 @@ import conexion.Conexion;
 import helpers.ErrorHelper;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase encargada de la generación y manipulación de la base de datos.
+ * Contiene métodos para crear tablas e insertar datos iniciales.
+ */
 public class GeneradorBD {
 
+    /**
+     * Atributo para almacenar la conexión.
+     */
     private Connection con = Conexion.getConexion();
 
+     /**
+     * Crea las tablas Cliente, Pez y Pedido en la base de datos si no existen.
+     */
     public void crearTablas() {
        // String crear = "CREATE DATABASE IF NOT EXISTS pescaditos";
        // String borrar = "DROP DATABASE pescaditos;";
@@ -64,6 +74,9 @@ public class GeneradorBD {
         }
     }
 
+     /**
+     * Inserta clientes en la tabla Cliente si no existen previamente.
+     */
     public void insertarClientes() {
         String sqlCheck = "SELECT COUNT(*) FROM Cliente WHERE nif = ?";
         String sqlInsert = "INSERT INTO Cliente (nombre, nif, telefono) VALUES (?, ?, ?)";
@@ -109,6 +122,9 @@ public class GeneradorBD {
         }
     }
 
+    /**
+     * Inserta peces en la tabla Pez si no existen previamente.
+     */
     public void insertarPeces() {
         String sqlCheck = "SELECT COUNT(*) FROM Pez WHERE nombre = ? AND nombre_cientifico = ?";
         String sqlInsert = "INSERT INTO Pez (nombre, nombre_cientifico) VALUES (?, ?)";
@@ -157,7 +173,9 @@ public class GeneradorBD {
         }
     }
     
-
+    /**
+     * Inicia la base de datos creando las tablas e insertando los datos iniciales.
+     */
     public void iniciarBD() {
         crearTablas();
         insertarClientes();
