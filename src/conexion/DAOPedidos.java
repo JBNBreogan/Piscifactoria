@@ -60,8 +60,8 @@ public class DAOPedidos {
                             "VALUES (?, ?, ?, 0)");
 
             pstPedido = conn.prepareStatement(
-                "SELECT cantidad, enviados" +   
-                "FROM Pedido" +
+                "SELECT cantidad, enviados " +   
+                "FROM Pedido " +
                 "WHERE numero_referencia = ?"
             );
 
@@ -83,7 +83,7 @@ public class DAOPedidos {
      */
     public void borrarPedidos() {
         try (Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate("DELETE * FROM pedidos");
+            stmt.executeUpdate("DELETE FROM Pedido");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -170,7 +170,7 @@ public class DAOPedidos {
             pstPedido.setInt(1, id);
             try (ResultSet rs = this.pstPedido.executeQuery()) {
                 rs.next();
-                pedido = new DTOPedido(id, null, rs.getInt("cantidad"), rs.getInt("enviados"), null);
+                pedido = new DTOPedido(id, null, rs.getInt(1), rs.getInt(2), null);
             } catch (SQLException e) {}
         } catch (SQLException e) {
 
