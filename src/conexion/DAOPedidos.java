@@ -48,12 +48,16 @@ public class DAOPedidos {
                          "ORDER BY pe.nombre");
                          
             pstListarComp = conn.prepareStatement(
-                    "SELECT p.id_referencia as ref, c.nombre as nombre_cl, pe.nombre_pez as nombre_pe, p.enviados as enviados, p.solicitados as solicitados "
-                            +
-                            "FROM Pedido p" +
-                            "JOIN Cliente c ON p.cliente_id = c.id " +
-                            "JOIN Pez pe ON p.pez_id = pe.id " +
-                            "WHERE enviados = solicitados");
+                    "SELECT p.numero_referencia AS ref, " +
+                         "c.nombre AS nombre_cl, " +
+                         "pe.nombre AS nombre_pe, " +
+                         "p.enviados AS enviados, " +
+                         "p.cantidad AS solicitados " +
+                         "FROM Pedido p " +
+                         "JOIN Cliente c ON p.cliente_id = c.id " +
+                         "JOIN Pez pe ON p.pez_id = pe.id " +
+                         "WHERE p.enviados = p.cantidad " +
+                         "ORDER BY pe.nombre");
 
             pstNuevo = conn.prepareStatement(
                     "INSERT INTO Pedido (cliente_id, pez_id, cantidad, enviados)" +

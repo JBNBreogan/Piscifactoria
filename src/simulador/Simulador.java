@@ -1165,6 +1165,41 @@ public class Simulador {
             }
         } while (op != 0);
     }
+
+    public void listarPedidosNoComp(){
+        int op;
+    
+        do {
+            List<DTOPedido> pedidos = daoPedidos.listarPedidosComp();
+            String nombrePezPedido = "";
+            int numeroPecesAEnviar = 0;
+    
+            for (DTOPedido pedido : pedidos) {
+                System.out.println("[" + pedido.getReferencia() + "]"
+                        + pedido.getNombreCliente() + ": " + pedido.getNombrePez() + " "
+                        + pedido.getCantidadEnviada() + "/" + pedido.getCantidadPedida()
+                        + " (" + (pedido.getCantidadEnviada() * 100) / pedido.getCantidadPedida() + "%)");
+            }
+            System.out.println("Introduce el número de referencia del pedido (0 para salir):");
+            op = InputHelper.getIntRanges(Integer.MAX_VALUE, 0);
+    
+            if (op != 0) {
+                boolean encontrado = false;
+                for (DTOPedido pedido : pedidos) {
+                    if (pedido.getReferencia() == op) {
+                        nombrePezPedido = pedido.getNombrePez();
+                        numeroPecesAEnviar = pedido.getCantidadPedida() - pedido.getCantidadEnviada();
+                        this.selecTankForPedidos(op, nombrePezPedido, numeroPecesAEnviar);
+                        encontrado = true;
+                        break;
+                    }
+                }
+                if (!encontrado) {
+                    System.out.println("Número de referencia no válido.");
+                }
+            }
+        } while (op != 0);
+    }
     
 
     /**
@@ -1215,7 +1250,7 @@ public class Simulador {
                 enviados++;
                 System.out.println("Pez eliminado");
                 if (enviados == numeroPecesAEnviar){
-                    Recompensas.generar();
+                    //Recompensas.generar();
                 }
             }
             
@@ -1285,7 +1320,7 @@ public class Simulador {
         try {
             do {
                 sim.menu();
-                opcion = InputHelper.getIntRanges(16, 1, new int[] { 77, 97, 98, 99, 100 });
+                opcion = InputHelper.getIntRanges(16, 1, new int[] { 77, 97, 98, 99, 77, 78 });
                 switch (opcion) {
                     case 1:
                         sim.showGeneralStatus();
@@ -1352,7 +1387,7 @@ public class Simulador {
                         sim.daoPedidos.borrarPedidos();
                     break;
                     case 78:
-                    
+                        sim.listarPedidosNoComp();
                     break;
                     default:
                         System.out.println("Esta opción no es válida");
