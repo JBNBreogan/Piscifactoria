@@ -1132,10 +1132,10 @@ public class Simulador {
      * Método que muestra la lista de pedidos no completados.
      */
     public void listarPedidos() {
-        List<DTOPedido> pedidos = daoPedidos.listarPedidosNoComp();
         int op;
     
         do {
+            List<DTOPedido> pedidos = daoPedidos.listarPedidosNoComp();
             String nombrePezPedido = "";
             int numeroPecesAEnviar = 0;
     
@@ -1214,7 +1214,11 @@ public class Simulador {
                 iter.remove();
                 enviados++;
                 System.out.println("Pez eliminado");
+                if (enviados == numeroPecesAEnviar){
+                    Recompensas.generar();
+                }
             }
+            
         }
 
         monedero.setMonedas(monedero.getMonedas() + monedasOb);
