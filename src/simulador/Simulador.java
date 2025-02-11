@@ -1135,35 +1135,46 @@ public class Simulador {
      */
     public void listarPedidos() {
         // Informes hay que guardarlos?
-
+    
         // Cuando se meten en la lista se meten con el id de la lista por orden, no por
         // el num de ref del pedido
         List<DTOPedido> pedidos = daoPedidos.listarPedidosNoComp();
         Scanner sc = new Scanner(System.in);
         int op;
-        int opcionMenu = 1;
-
+    
         do {
             String nombrePezPedido = "";
             int numeroPecesAEnviar = 0;
-            // Numero de los pedidos esta cambiado
+    
+            // Mostrar los pedidos con su número de referencia
             for (DTOPedido pedido : pedidos) {
-                System.out.println(opcionMenu + ".[" + pedido.getReferencia() + "]"
+                System.out.println("[" + pedido.getReferencia() + "]"
                         + pedido.getNombreCliente() + ": " + pedido.getNombrePez() + " "
                         + pedido.getCantidadEnviada() + "/" + pedido.getCantidadPedida()
                         + " (" + (pedido.getCantidadEnviada() * 100) / pedido.getCantidadPedida() + "%)");
-                opcionMenu++;
             }
-            opcionMenu = 1;
-            System.out.println("0. Salir");
+            System.out.println("Introduce el número de referencia del pedido (0 para salir):");
             op = sc.nextInt();
+    
             if (op != 0) {
-                nombrePezPedido = pedidos.get(op - 1).getNombrePez();
-                numeroPecesAEnviar = pedidos.get(op - 1).getCantidadPedida() - pedidos.get(op - 1).getCantidadEnviada();
-                this.selecTankForPedidos(op, nombrePezPedido, numeroPecesAEnviar);
+                // Buscar el pedido correspondiente al número de referencia
+                boolean encontrado = false;
+                for (DTOPedido pedido : pedidos) {
+                    if (pedido.getReferencia() == op) {
+                        nombrePezPedido = pedido.getNombrePez();
+                        numeroPecesAEnviar = pedido.getCantidadPedida() - pedido.getCantidadEnviada();
+                        this.selecTankForPedidos(op, nombrePezPedido, numeroPecesAEnviar);
+                        encontrado = true;
+                        break;
+                    }
+                }
+                if (!encontrado) {
+                    System.out.println("Número de referencia no válido.");
+                }
             }
         } while (op != 0);
     }
+    
 
     /**
      * Método que permite seleccionar los tanques disponibles para hacer el pedido.
@@ -1218,6 +1229,11 @@ public class Simulador {
 
         monedero.setMonedas(monedero.getMonedas() + monedasOb);
         registros.enviarPeces(nombrePezPedido, numeroPecesAEnviar, numRef);
+
+        DTOPedido pedido=daoPedidos.getCantidadPedido(numRef);
+
+        System.out.println("numero de peces pedidos"+pedido.getCantidadPedida());
+        System.out.println("pedido " + pedido.getReferencia());
 
         // Hasta aqui va bien, elimina los peces de los tanques.
         daoPedidos.progresarPedido(numRef, numeroPecesAEnviar);
