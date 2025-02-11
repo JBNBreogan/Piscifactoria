@@ -1250,7 +1250,7 @@ public class Simulador {
                 enviados++;
                 System.out.println("Pez eliminado");
                 if (enviados == numeroPecesAEnviar){
-                    //Recompensas.generar();
+                    Recompensas.generar();
                 }
             }
             

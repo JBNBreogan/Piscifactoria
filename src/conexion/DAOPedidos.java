@@ -28,6 +28,10 @@ public class DAOPedidos {
     /** Sentencia preparada para conseguir las cantidades de un pedido */
     private PreparedStatement pstPedido;
 
+    /** Sentencia preparada para para conseguir el numero de referencia del ultimo pedido */
+    private PreparedStatement pstUltimo;
+
+    /** Sentencia preparada para actualizar un pedido */
     private PreparedStatement pstUpdatePedido;
 
     /**
@@ -69,12 +73,16 @@ public class DAOPedidos {
                 "WHERE numero_referencia = ?"
             );
 
+            pstUltimo = conn.prepareStatement(
+                "SELECT numero_referencia " + 
+                "FROM pedido " + 
+                "ORDER BY numero_referrncia DESC " + 
+                "LIMIT 1"
+            );
+
             pstUpdatePedido = conn.prepareStatement(
                 "UPDATE Pedido SET enviados = enviados + ? WHERE numero_referencia = ?"
             );
-
-
-
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -147,6 +155,13 @@ public class DAOPedidos {
             pstNuevo.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        try (ResultSet rs = this.pstUltimo.executeQuery()) {
+            rs.next();
+            rs.getInt(1);
+        } catch (SQLException e) {
+            // TODO: handle exception
         }
     }
 
