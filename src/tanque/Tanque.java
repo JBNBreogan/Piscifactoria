@@ -168,7 +168,7 @@ public class Tanque {
      * Metodo que muestra información de la capacidad del tanque.
      */
     public void showCapacity(int numTanque) {
-        System.out.println("Tanque " + (numTanque+1) + " al " + ((pecesEnTanque()/maxPeces)*100)
+        System.out.println("Tanque " + (numTanque+1) + " al " + ((pecesEnTanque()*100)/maxPeces)
                 + "% de capacidad [" + pecesEnTanque() + "/" + maxPeces + "].");
     }
 

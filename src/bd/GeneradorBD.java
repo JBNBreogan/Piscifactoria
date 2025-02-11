@@ -2,17 +2,32 @@ package bd;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import conexion.Conexion;
+import helpers.ErrorHelper;
 import propiedades.AlmacenPropiedades;
 
+/**
+ * Clase encargada de la generación y manipulación de la base de datos.
+ * Contiene métodos para crear tablas e insertar datos iniciales.
+ */
 public class GeneradorBD {
 
+    /**
+     * Atributo para almacenar la conexión.
+     */
+    private Connection con = Conexion.getConexion();
+
+     /**
+     * Crea las tablas Cliente, Pez y Pedido en la base de datos si no existen.
+     */
     public void crearTablas() {
-        String crear = "CREATE DATABASE niglesias0";
-        String borrar = "DROP DATABASE niglesias0;";
-        String usar = "USE niglesias0";
+       // String crear = "CREATE DATABASE IF NOT EXISTS pescaditos";
+       // String borrar = "DROP DATABASE pescaditos;";
+        String usar = "USE pescaditos";
 
         String tablaClientes = "CREATE TABLE IF NOT EXISTS Cliente (" +
                 "id INT AUTO_INCREMENT PRIMARY KEY, " +
@@ -36,13 +51,39 @@ public class GeneradorBD {
                 "nombre VARCHAR(255) NOT NULL, " +
                 "nombre_cientifico VARCHAR(255) NOT NULL" +
                 ");";
+
+        Statement stmt = null;
+
+        try {
+            stmt = con.createStatement();
+           // stmt.execute(borrar);
+           // stmt.execute(crear);
+            stmt.execute(usar);
+
+            stmt.execute(tablaClientes);
+            stmt.execute(tablaPez);
+            stmt.execute(tablaPedidos);
+        } catch (SQLException e) {
+            ErrorHelper.writeError("Error al crear las tablas");
+        } finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (Exception e) {
+            }
+        }
     }
 
-    public void insertarClientes(Connection conn) throws SQLException {
-        String sql = "INSERT INTO Cliente (nombre, nif, telefono) VALUES (?, ?, ?)";
+     /**
+     * Inserta clientes en la tabla Cliente si no existen previamente.
+     */
+    public void insertarClientes() {
+        String sqlCheck = "SELECT COUNT(*) FROM Cliente WHERE nif = ?";
+        String sqlInsert = "INSERT INTO Cliente (nombre, nif, telefono) VALUES (?, ?, ?)";
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            // Clientes fijos con valores preestablecidos
+        try (PreparedStatement stmtCheck = con.prepareStatement(sqlCheck);
+                PreparedStatement stmtInsert = con.prepareStatement(sqlInsert)) {
+
             String[][] clientes = {
                     { "Rosario Porto Ortega", "12345678A", "600111222" },
                     { "Tomás Gimeno", "23456789B", "600223344" },
@@ -53,34 +94,47 @@ public class GeneradorBD {
                     { "Joaquín Ferrándiz Ventura", "78901234G", "600778899" },
                     { "Ana Julia Quezada", "89012345H", "600889900" },
                     { "José Bretón", "90123456I", "600990011" },
-                    { "José Enrique Abuín Gey (El Chicle)", "01234567J", "600101112" }
+                    { "José Enrique Abuín Gey", "01234567J", "600101112" }
             };
 
-            // Añadir cada cliente a la base de datos
             for (String[] cliente : clientes) {
-                stmt.setString(1, cliente[0]); // Nombre
-                stmt.setString(2, cliente[1]); // NIF
-                stmt.setString(3, cliente[2]); // Teléfono
-                stmt.addBatch(); // Añadir a lote
+                String nif = cliente[1];
+
+                // Verificar si el NIF ya existe
+                stmtCheck.setString(1, nif);
+                ResultSet rs = stmtCheck.executeQuery();
+                rs.next();
+                int count = rs.getInt(1);
+                rs.close();
+
+                if (count == 0) { 
+                    stmtInsert.setString(1, cliente[0]); // Nombre
+                    stmtInsert.setString(2, cliente[1]); // NIF
+                    stmtInsert.setString(3, cliente[2]); // Teléfono
+                    stmtInsert.addBatch(); // Agregar al batch
+                }
             }
 
-            // Ejecutar el lote
-            stmt.executeBatch();
-            System.out.println("Clientes insertados correctamente.");
+            // Ejecutar solo si hay clientes nuevos
+            stmtInsert.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new SQLException("Error al insertar los clientes.");
         }
     }
 
-    public void insertarPeces(Connection conn) throws SQLException {
-        String sql = "INSERT INTO Pez (nombre, nombre_cientifico) VALUES (?, ?)";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            // Peces fijos con valores preestablecidos
+    /**
+     * Inserta peces en la tabla Pez si no existen previamente.
+     */
+    public void insertarPeces() {
+        String sqlCheck = "SELECT COUNT(*) FROM Pez WHERE nombre = ? AND nombre_cientifico = ?";
+        String sqlInsert = "INSERT INTO Pez (nombre, nombre_cientifico) VALUES (?, ?)";
+    
+        try (PreparedStatement stmtCheck = con.prepareStatement(sqlCheck);
+             PreparedStatement stmtInsert = con.prepareStatement(sqlInsert)) {
+    
             String[][] peces = {
                     { AlmacenPropiedades.LUCIO_NORTE.getNombre(), AlmacenPropiedades.LUCIO_NORTE.getCientifico() },
-                    { AlmacenPropiedades.CARPA_PLATEADA.getNombre(),AlmacenPropiedades.CARPA_PLATEADA.getCientifico() },
+                    { AlmacenPropiedades.CARPA_PLATEADA.getNombre(), AlmacenPropiedades.CARPA_PLATEADA.getCientifico() },
                     { AlmacenPropiedades.CARPA.getNombre(), AlmacenPropiedades.CARPA.getCientifico() },
                     { AlmacenPropiedades.TILAPIA_NILO.getNombre(), AlmacenPropiedades.TILAPIA_NILO.getCientifico() },
                     { AlmacenPropiedades.PEJERREY.getNombre(), AlmacenPropiedades.PEJERREY.getCientifico() },
@@ -89,24 +143,42 @@ public class GeneradorBD {
                     { AlmacenPropiedades.BESUGO.getNombre(), AlmacenPropiedades.BESUGO.getCientifico() },
                     { AlmacenPropiedades.ABADEJO.getNombre(), AlmacenPropiedades.ABADEJO.getCientifico() },
                     { AlmacenPropiedades.SARGO.getNombre(), AlmacenPropiedades.SARGO.getCientifico() },
-                    { AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(),AlmacenPropiedades.TRUCHA_ARCOIRIS.getCientifico() },
+                    { AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre(), AlmacenPropiedades.TRUCHA_ARCOIRIS.getCientifico() },
                     { AlmacenPropiedades.DORADA.getNombre(), AlmacenPropiedades.DORADA.getCientifico() }
-
             };
-
-            // Añadir cada pez a la base de datos
+    
             for (String[] pez : peces) {
-                stmt.setString(1, pez[0]); // Nombre
-                stmt.setString(2, pez[1]); // Nombre científico
-                stmt.addBatch(); // Añadir a lote
+                String nombre = pez[0];
+                String cientifico = pez[1];
+    
+                // Verificar si ya existe en la base de datos
+                stmtCheck.setString(1, nombre);
+                stmtCheck.setString(2, cientifico);
+                ResultSet rs = stmtCheck.executeQuery();
+                rs.next();
+                int count = rs.getInt(1);
+                rs.close();
+    
+                if (count == 0) { // Si no existe, agregar al batch
+                    stmtInsert.setString(1, nombre);
+                    stmtInsert.setString(2, cientifico);
+                    stmtInsert.addBatch();
+                }
             }
-
-            // Ejecutar el lote
-            stmt.executeBatch();
-            System.out.println("Peces insertados correctamente.");
+    
+            // Ejecutar solo si hay peces nuevos
+            stmtInsert.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new SQLException("Error al insertar los peces.");
         }
+    }
+    
+    /**
+     * Inicia la base de datos creando las tablas e insertando los datos iniciales.
+     */
+    public void iniciarBD() {
+        crearTablas();
+        insertarClientes();
+        insertarPeces();
     }
 }

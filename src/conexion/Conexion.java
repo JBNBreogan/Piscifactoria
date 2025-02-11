@@ -5,15 +5,17 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import helpers.ErrorHelper;
+
 public class Conexion {
     /**Objeto para la conexion a la base de datos*/
     public static Connection conn;
     /**Nombre de usuario de la base de datos */
-    private static String USERNAME="cjuvino";
+    private static String USERNAME="niglesias0";
     /**Contraseña del usuario para la base de datos */
     private static String PASSWORD="abc123.";
     /**Direccion ip del servidor donde esta la base de datos */
-    private static String SERVER="213.32.47.55";
+    private static String SERVER="213.32.47.44";
     /**Puerto de la base de datos */
     private static String PORT_NUMBER="3306";
     /**Nombre de la base de datos */
@@ -41,15 +43,17 @@ public class Conexion {
                                 "jdbc:mysql://" + 
                                 SERVER + 
                                 ":" + PORT_NUMBER + "/" + 
-                                DATABASE,
+                                DATABASE +
+                                "?rewriteBatchedStatements=true",
                                 connectionProps);
             } catch (SQLException e) {
-                System.out.println("Error al crear la conexion a la base de datos");
+                ErrorHelper.writeError("Error al crear la conexion a la base de datos");
             }
         }
         return conn;
     }
 
+    
     /**
      * Método que cierra la conexion a la base de datos.
      */
@@ -57,9 +61,8 @@ public class Conexion {
         if (conn != null) {
             try {
                 conn.close();
-                System.out.println("Conexión cerrada correctamente.");
             } catch(SQLException e) {
-                System.out.println("Error al cerrar la conexión: " + e.getMessage());
+                ErrorHelper.writeError("Error al cerrar la conexion: " + e.getMessage());
             }
         }
     }
