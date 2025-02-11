@@ -1255,7 +1255,10 @@ public class Recompensas {
     }
 
  
-    public void generar(){
+    /**
+     * Genera una recompensa aleatoria entre una de comida, monedas o tanques.
+     */
+    public static void generar(){
         Random random = new Random();
 
         int odds = random.nextInt(10)+1;
@@ -1263,27 +1266,52 @@ public class Recompensas {
         if (odds <= 5){
                 int odds2 = random.nextInt(10)+1;
                 if (odds2 <= 6){
-                        comidaXml(1);
+                        if (new File("rewards/" + "comida_1.xml").exists()) {
+                                addQuantity("comida_1.xml");
+                            } else {
+                                comidaXml(1);}
+
                 } else if (odds <= 9){
-                        comidaXml(2);           
+                        if (new File("rewards/" + "comida_2.xml").exists()) {
+                                addQuantity("comida_1.xml");
+                            } else {
+                                comidaXml(2); }        
                 } else {
-                        comidaXml(3);
+                        if (new File("rewards/" + "comida_3.xml").exists()) {
+                                addQuantity("comida_1.xml");
+                            } else {
+                                comidaXml(3);}
                 }
         } else if (odds <= 9){
                 int odds3 = random.nextInt(10)+1;
                 if (odds3 <= 6){
-                        monedasXml(1);
+                        if (new File("rewards/" + "monedas_1.xml").exists()) {
+                                addQuantity("monedas_1.xml");
+                            } else {
+                                monedasXml(1);}
                 } else if (odds <= 9){
-                        monedasXml(2);           
+                        if (new File("rewards/" + "monedas_2.xml").exists()) {
+                                addQuantity("monedas_2.xml");
+                            } else {
+                                monedasXml(2);}
                 } else {
-                        monedasXml(3);
+                        if (new File("rewards/" + "monedas_3.xml").exists()) {
+                                addQuantity("monedas_3.xml");
+                            } else {
+                                monedasXml(3);}
                 }
         } else {
                 int odds4 = random.nextInt(10)+1;
                 if (odds4 <= 6){
-                        tanqueXml(1);
+                        if (new File("rewards/" + "tanque_r.xml").exists()) {
+                                addQuantity("tanque_r.xml");
+                            } else {
+                                tanqueXml(1);}
                 } else {
-                        tanqueXml(2);
+                        if (new File("rewards/" + "tanque_m.xml").exists()) {
+                                addQuantity("tanque_m.xml");
+                            } else {
+                                tanqueXml(2);}
                 }
         }
     }
