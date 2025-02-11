@@ -10,12 +10,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import org.dom4j.*;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
-import comun.AlmacenCentral;
 import comun.Monedero;
 import helpers.ErrorHelper;
 import helpers.InputHelper;
@@ -1255,20 +1255,37 @@ public class Recompensas {
         }
     }
 
-    /**
-     * Comprueba si todas las partes de un almacén central están disponibles.
-     * 
-     * @param a Parte A disponible.
-     * @param b Parte B disponible.
-     * @param c Parte C disponible.
-     * @param d Parte D disponible.
-     * @return true si todas las partes están disponibles; de lo contrario, false.
-     */
-    private static boolean comprobarAlmacenCen(boolean a, boolean b, boolean c, boolean d) {
-        if (a == true && b == true && c == true && d == true) {
-            return true;
+ 
+    public void generar(){
+        Random random = new Random();
+
+        int odds = random.nextInt(10)+1;
+
+        if (odds <= 5){
+                int odds2 = random.nextInt(10)+1;
+                if (odds2 <= 6){
+                        comidaXml(1);
+                } else if (odds <= 9){
+                        comidaXml(2);           
+                } else {
+                        comidaXml(3);
+                }
+        } else if (odds <= 9){
+                int odds3 = random.nextInt(10)+1;
+                if (odds3 <= 6){
+                        monedasXml(1);
+                } else if (odds <= 9){
+                        monedasXml(2);           
+                } else {
+                        monedasXml(3);
+                }
         } else {
-            return false;
+                int odds4 = random.nextInt(10)+1;
+                if (odds4 <= 6){
+                        tanqueXml(1);
+                } else {
+                        tanqueXml(2);
+                }
         }
     }
 }
