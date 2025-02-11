@@ -427,6 +427,8 @@ public class Simulador {
         dias++;
 
         daoPedidos.addPedido();
+        // Necesito el numero de referencia del pedido
+        registros.generarPedido(dias);
 
         if (almacenCentral != null) {
             almacenCentral.repartir(piscifactorias);
@@ -1128,94 +1130,97 @@ public class Simulador {
         }
     }
 
+    /**
+     * Método que muestra la lista de pedidos no completados.
+     */
     public void listarPedidos() {
+        // Informes hay que guardarlos?
+
+        // Cuando se meten en la lista se meten con el id de la lista por orden, no por
+        // el num de ref del pedido
         List<DTOPedido> pedidos = daoPedidos.listarPedidosNoComp();
-        int opcion;
+        Scanner sc = new Scanner(System.in);
+        int op;
+        int opcionMenu = 1;
+
         do {
-            int indice = 1;
-            String nombrePezPedido="";
+            String nombrePezPedido = "";
+            int numeroPecesAEnviar = 0;
+            // Numero de los pedidos esta cambiado
             for (DTOPedido pedido : pedidos) {
-                System.out.println(indice + ".[" + pedido.getReferencia() + "]"
+                System.out.println(opcionMenu + ".[" + pedido.getReferencia() + "]"
                         + pedido.getNombreCliente() + ": " + pedido.getNombrePez() + " "
                         + pedido.getCantidadEnviada() + "/" + pedido.getCantidadPedida()
                         + " (" + (pedido.getCantidadEnviada() * 100) / pedido.getCantidadPedida() + "%)");
-                indice++;
-                int numeroPecesPedidos = pedido.getCantidadPedida();
-                nombrePezPedido=pedido.getNombrePez();
+                opcionMenu++;
             }
+            opcionMenu = 1;
             System.out.println("0. Salir");
-            opcion = InputHelper.getIntRanges(Integer.MAX_VALUE);
-            ArrayList<Pez> pecesAdultos = new ArrayList<>();
-            int monedasOb = 0;
-
-            Piscifactoria pisc = piscifactorias.get(selectPisc());
-
-            Tanque tank = null;
-
-            int indiceTanque=pisc.selectTankSpecific(nombrePezPedido);
-            if(indiceTanque==0){
-                System.out.println("No hay tanques compatibles con el pez de este pedido");
-                break;
-            }else{
-                tank = pisc.getTanques().get(indiceTanque);
+            op = sc.nextInt();
+            if (op != 0) {
+                nombrePezPedido = pedidos.get(op - 1).getNombrePez();
+                numeroPecesAEnviar = pedidos.get(op - 1).getCantidadPedida() - pedidos.get(op - 1).getCantidadEnviada();
+                this.selecTankForPedidos(op, nombrePezPedido, numeroPecesAEnviar);
             }
-
-            for (Pez pez : tank.getPeces()) {
-                if (pez.isAdulto()) {
-                    monedasOb += pez.getMonedas();
-                    pecesAdultos.add(pez);
-                }
-            }
-            monedero.setMonedas(monedero.getMonedas() + monedasOb);
-
-            daoPedidos.progresarPedido(opcion, pecesAdultos.size());
-        } while (opcion != 0);
-
+        } while (op != 0);
     }
 
-    public void listarPedidosComp() {
-        List<DTOPedido> pedidos = daoPedidos.listarPedidosComp();
-        int opcion;
-        do {
-            int indice = 1;
-            String nombrePezPedido="";
-            for (DTOPedido pedido : pedidos) {
-                System.out.println(indice + ".[" + pedido.getReferencia() + "]"
-                        + pedido.getNombreCliente() + ": " + pedido.getNombrePez() + " "
-                        + pedido.getCantidadEnviada() + "/" + pedido.getCantidadPedida()
-                        + " (" + (pedido.getCantidadEnviada() * 100) / pedido.getCantidadPedida() + "%)");
-                indice++;
-                int numeroPecesPedidos = pedido.getCantidadPedida();
-                nombrePezPedido=pedido.getNombrePez();
+    /**
+     * Método que permite seleccionar los tanques disponibles para hacer el pedido.
+     * 
+     * @param numRef             Numero de referencia del pedido.
+     * @param nombrePezPedido    Nombre del pez pedido.
+     * @param numeroPecesAEnviar Numero de peces pedidos.
+     */
+    public void selecTankForPedidos(int numRef, String nombrePezPedido, int numeroPecesAEnviar) {
+        Piscifactoria pisc = piscifactorias.get(selectPisc());
+        Tanque tank = null;
+        int indiceTanque = pisc.selectTankSpecific(nombrePezPedido);
+        // de aqui no pasa
+        if (indiceTanque >= 0) {
+            tank = pisc.getTanques().get(indiceTanque);
+            System.out.println("hola");
+            this.procesarPedido(numRef, tank, numeroPecesAEnviar, nombrePezPedido);
+        }
+    }
+
+    /**
+     * Método que envia los peces para el pedido.
+     * 
+     * @param numRef             Numero de referencia del pedido.
+     * @param tanque             Tanque del que sacar los peces.
+     * @param numeroPecesAEnviar Numero de peces a sacar del tanque.
+     * @param nombrePezPedido    Nombre del pez pedido.
+     */
+    public void procesarPedido(int numRef, Tanque tanque, int numeroPecesAEnviar, String nombrePezPedido) {
+        ArrayList<Pez> pecesAdultos = new ArrayList<>();
+        int monedasOb = 0;
+
+        for (Pez pez : tanque.getPeces()) {
+            if (pez.isAdulto()) {
+                monedasOb += pez.getMonedas();
+                pecesAdultos.add(pez);
+                System.out.println("Pez adulto");
             }
-            System.out.println("0. Salir");
-            opcion = InputHelper.getIntRanges(Integer.MAX_VALUE);
-            ArrayList<Pez> pecesAdultos = new ArrayList<>();
-            int monedasOb = 0;
+        }
 
-            Piscifactoria pisc = piscifactorias.get(selectPisc());
-
-            Tanque tank = null;
-
-            int indiceTanque=pisc.selectTankSpecific(nombrePezPedido);
-            if(indiceTanque==0){
-                System.out.println("No hay tanques compatibles con el pez de este pedido");
-                break;
-            }else{
-                tank = pisc.getTanques().get(indiceTanque);
+        Iterator<Pez> iter = tanque.getPeces().iterator();
+        int enviados = 0;
+        while (iter.hasNext() && enviados < numeroPecesAEnviar) {
+            Pez pez = iter.next();
+            if (pez.isAdulto()) {
+                monedasOb += pez.getMonedas();
+                iter.remove();
+                enviados++;
+                System.out.println("Pez eliminado");
             }
+        }
 
-            for (Pez pez : tank.getPeces()) {
-                if (pez.isAdulto()) {
-                    monedasOb += pez.getMonedas();
-                    pecesAdultos.add(pez);
-                }
-            }
-            monedero.setMonedas(monedero.getMonedas() + monedasOb);
+        monedero.setMonedas(monedero.getMonedas() + monedasOb);
+        registros.enviarPeces(nombrePezPedido, numeroPecesAEnviar, numRef);
 
-            daoPedidos.progresarPedido(opcion, pecesAdultos.size());
-        } while (opcion != 0);
-
+        // Hasta aqui va bien, elimina los peces de los tanques.
+        daoPedidos.progresarPedido(numRef, numeroPecesAEnviar);
     }
 
     /**
