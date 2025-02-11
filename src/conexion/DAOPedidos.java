@@ -83,7 +83,7 @@ public class DAOPedidos {
      */
     public void borrarPedidos() {
         try (Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate("DELETE * FROM pedidos");
+            stmt.executeUpdate("DELETE FROM Pedido");
         } catch (SQLException e) {
             e.printStackTrace();
         }

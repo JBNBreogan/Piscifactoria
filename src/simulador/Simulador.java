@@ -1134,10 +1134,6 @@ public class Simulador {
      * Método que muestra la lista de pedidos no completados.
      */
     public void listarPedidos() {
-        // Informes hay que guardarlos?
-    
-        // Cuando se meten en la lista se meten con el id de la lista por orden, no por
-        // el num de ref del pedido
         List<DTOPedido> pedidos = daoPedidos.listarPedidosNoComp();
         Scanner sc = new Scanner(System.in);
         int op;
@@ -1146,7 +1142,6 @@ public class Simulador {
             String nombrePezPedido = "";
             int numeroPecesAEnviar = 0;
     
-            // Mostrar los pedidos con su número de referencia
             for (DTOPedido pedido : pedidos) {
                 System.out.println("[" + pedido.getReferencia() + "]"
                         + pedido.getNombreCliente() + ": " + pedido.getNombrePez() + " "
@@ -1157,7 +1152,6 @@ public class Simulador {
             op = sc.nextInt();
     
             if (op != 0) {
-                // Buscar el pedido correspondiente al número de referencia
                 boolean encontrado = false;
                 for (DTOPedido pedido : pedidos) {
                     if (pedido.getReferencia() == op) {
@@ -1190,7 +1184,6 @@ public class Simulador {
         // de aqui no pasa
         if (indiceTanque >= 0) {
             tank = pisc.getTanques().get(indiceTanque);
-            System.out.println("hola");
             this.procesarPedido(numRef, tank, numeroPecesAEnviar, nombrePezPedido);
         }
     }
@@ -1236,7 +1229,7 @@ public class Simulador {
         System.out.println("pedido " + pedido.getReferencia());
 
         // Hasta aqui va bien, elimina los peces de los tanques.
-        daoPedidos.progresarPedido(numRef, numeroPecesAEnviar);
+        daoPedidos.progresarPedido(numRef, enviados);
     }
 
     /**
@@ -1291,7 +1284,7 @@ public class Simulador {
         try {
             do {
                 sim.menu();
-                opcion = InputHelper.getIntRanges(16, 1, new int[] { 97, 98, 99, 100 });
+                opcion = InputHelper.getIntRanges(16, 1, new int[] { 77, 97, 98, 99, 100 });
                 switch (opcion) {
                     case 1:
                         sim.showGeneralStatus();
