@@ -28,6 +28,10 @@ public class DAOPedidos {
     /** Sentencia preparada para conseguir las cantidades de un pedido */
     private PreparedStatement pstPedido;
 
+    /** Sentencia preparada para para conseguir el numero de referencia del ultimo pedido */
+    private PreparedStatement pstUltimo;
+
+    /** Sentencia preparada para actualizar un pedido */
     private PreparedStatement pstUpdatePedido;
 
     /**
@@ -48,12 +52,16 @@ public class DAOPedidos {
                          "ORDER BY pe.nombre");
                          
             pstListarComp = conn.prepareStatement(
-                    "SELECT p.id_referencia as ref, c.nombre as nombre_cl, pe.nombre_pez as nombre_pe, p.enviados as enviados, p.solicitados as solicitados "
-                            +
-                            "FROM Pedido p" +
-                            "JOIN Cliente c ON p.cliente_id = c.id " +
-                            "JOIN Pez pe ON p.pez_id = pe.id " +
-                            "WHERE enviados = solicitados");
+                    "SELECT p.numero_referencia AS ref, " +
+                         "c.nombre AS nombre_cl, " +
+                         "pe.nombre AS nombre_pe, " +
+                         "p.enviados AS enviados, " +
+                         "p.cantidad AS solicitados " +
+                         "FROM Pedido p " +
+                         "JOIN Cliente c ON p.cliente_id = c.id " +
+                         "JOIN Pez pe ON p.pez_id = pe.id " +
+                         "WHERE p.enviados = p.cantidad " +
+                         "ORDER BY pe.nombre");
 
             pstNuevo = conn.prepareStatement(
                     "INSERT INTO Pedido (cliente_id, pez_id, cantidad, enviados)" +
@@ -65,12 +73,16 @@ public class DAOPedidos {
                 "WHERE numero_referencia = ?"
             );
 
+            pstUltimo = conn.prepareStatement(
+                "SELECT numero_referencia " + 
+                "FROM pedido " + 
+                "ORDER BY numero_referrncia DESC " + 
+                "LIMIT 1"
+            );
+
             pstUpdatePedido = conn.prepareStatement(
                 "UPDATE Pedido SET enviados = enviados + ? WHERE numero_referencia = ?"
             );
-
-
-
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -133,8 +145,10 @@ public class DAOPedidos {
 
     /**
      * Añade un nuevo pedido a la base de datos
+     * 
+     * @return El numero del ultimo pedido añadido, 0 si ha fallado
      */
-    public void addPedido(){
+    public int addPedido(){
         Random rand = new Random();
         try {
             pstNuevo.setInt(1, rand.nextInt(10)+1);
@@ -144,6 +158,14 @@ public class DAOPedidos {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        try (ResultSet rs = this.pstUltimo.executeQuery()) {
+            rs.next();            
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            // TODO: handle exception
+        }
+        return 0;
     }
 
     /**
@@ -177,6 +199,18 @@ public class DAOPedidos {
             e.printStackTrace();
         }
         return pedido;
+    }
+
+    public void closePST(){
+        try {
+            pstListarComp.close();
+            pstListarNoComp.close();
+            pstNuevo.close();
+            pstPedido.close();
+            pstUpdatePedido.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
