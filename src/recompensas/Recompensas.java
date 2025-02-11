@@ -892,7 +892,6 @@ public class Recompensas {
                             if (giveElement != null && giveElement.element("building") != null) {
                                 // Es una recompensa de edificio
                                 String buildingName = giveElement.elementText("building");
-                                String part = giveElement.elementText("part");
                                 String total = giveElement.elementText("total");
             
                                 if (!materialesEdificios.containsKey(buildingName)) {
