@@ -145,8 +145,10 @@ public class DAOPedidos {
 
     /**
      * Añade un nuevo pedido a la base de datos
+     * 
+     * @return El numero del ultimo pedido añadido, 0 si ha fallado
      */
-    public void addPedido(){
+    public int addPedido(){
         Random rand = new Random();
         try {
             pstNuevo.setInt(1, rand.nextInt(10)+1);
@@ -158,11 +160,12 @@ public class DAOPedidos {
         }
 
         try (ResultSet rs = this.pstUltimo.executeQuery()) {
-            rs.next();
-            rs.getInt(1);
+            rs.next();            
+            return rs.getInt(1);
         } catch (SQLException e) {
             // TODO: handle exception
         }
+        return 0;
     }
 
     /**
