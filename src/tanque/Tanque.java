@@ -183,6 +183,8 @@ public class Tanque {
         int pecesHembraFertiles = 0;
         int pecesMachoFertiles = 0;
         Random enfermar=new Random();
+        Random morir=new Random();
+        Random curar=new Random();
 
         boolean vegetal = true;
         if (this.peces.size() != 0) {
@@ -291,7 +293,7 @@ public class Tanque {
         if(pecesEnfermos()){
             for (Pez pez : peces) {
                 if(!pez.isEnfermo()){
-                    if(enfermar.nextInt(100)<5){
+                    if(enfermar.nextInt(100)<10){
                         pez.enfermar();
                         System.out.println("Pez enfermo");
                     }
@@ -299,7 +301,29 @@ public class Tanque {
             }
         }
 
+        for (Pez pez : peces) {
+            if (pez.isEnfermo()) {
+                if(pez.isAdulto()){
+                    if(morir.nextInt(100)<10){
+                        pez.morir();
+                    }
+                }else{
+                    if(morir.nextInt(100)<25){
+                        pez.morir();
+                    }
+                }
+            }
+        }
 
+        for (Pez pez : peces) {
+            if(pez.isEnfermo()){
+                if(pez.isAlimentado()){
+                    if(curar.nextInt(100)<10){
+                        pez.curar();
+                    }
+                }
+            }
+        }
      
         return ventaPecesOptimos(stats);
     }
@@ -330,7 +354,7 @@ public class Tanque {
 
     /**
      * Método que devuelve si es posible que enferme un pez o no.
-     * @return 
+     * @return Si es posible enfermar o no
      */
     public boolean posibleEnfermar(){
         for (Pez pez : peces) {
@@ -338,6 +362,19 @@ public class Tanque {
                 return true;
             }else{
                 return false;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Método que devuelve si hay peces enfermos en el tanque o no.
+     * @return Si hay peces enfermos o no
+     */
+    public boolean pecesEnfermos(){
+        for (Pez pez : peces) {
+            if(pez.isEnfermo()){
+                return true;
             }
         }
         return false;

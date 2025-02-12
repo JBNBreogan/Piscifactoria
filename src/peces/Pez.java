@@ -353,4 +353,18 @@ public abstract class Pez {
         this.Comido = false;
     }
 
+    /**
+     * Hace que un pez muera
+     */
+    public void morir(){
+        this.Vivo=false;
+    }
+
+    /**
+     * Hace que el pez se cure
+     */
+    public void curar(){
+        this.Enfermo=false;
+    }
+
 }
