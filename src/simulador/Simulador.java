@@ -1253,13 +1253,14 @@ public class Simulador {
                 System.out.println("Pez eliminado");
                 if (enviados == numeroPecesAEnviar) {
                     Recompensas.generar();
+                    this.registros.terminarPedido(nombrePezPedido, numRef);
                 }
             }
 
         }
 
         monedero.setMonedas(monedero.getMonedas() + monedasOb);
-        registros.enviarPeces(nombrePezPedido, numeroPecesAEnviar, numRef);
+        this.registros.enviarPeces(nombrePezPedido, numeroPecesAEnviar, numRef);
 
         DTOPedido pedido = daoPedidos.getCantidadPedido(numRef);
 
