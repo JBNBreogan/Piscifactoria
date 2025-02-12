@@ -2,11 +2,9 @@ package registros;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -27,6 +25,8 @@ public class Logs {
     private static String ruta= "logs";
     /**Objeto BuffererWriter para poder escribir en el archivo */
     private static BufferedWriter bw=null;
+    /**Objeto File para crear el archivo de guardado */
+    private static File archivo = null;
 
     /**
      * Constructor vacío de la clase Logs.
@@ -44,19 +44,13 @@ public class Logs {
             if(!carpeta.exists()){
                 carpeta.mkdir();
             }
-            File archivo =new File(ruta + "/" + nombrePartida + ".log");
+            archivo =new File(ruta + "/" + nombrePartida + ".log");
             if(!archivo.exists()){
                 try {
                     archivo.createNewFile();
                 } catch (IOException e) {
-                    ErrorHelper.writeError("No se ha podido crear el archivo de logs");
+                    ErrorHelper.writeError("No se ha podido crear el archivo de logs.");
                 }
-            }
-
-            try {
-                bw=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(archivo, true),"UTF-8"));
-            } catch (UnsupportedEncodingException | FileNotFoundException e) {
-                ErrorHelper.writeError("Error la escritura en el archivo");
             }
 
         }
@@ -69,12 +63,16 @@ public class Logs {
      */
     private void escribirArchivo(String texto){
         try {
+            bw=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(archivo, true),"UTF-8"));
             bw.write(texto);
             bw.flush();
         } catch (IOException e) {
-            ErrorHelper.writeError("No se ha podido escribir en el archivo de logs");
+            ErrorHelper.writeError("Error en la escritura del archivo de logs.");
+        } finally{
+            try {
+                bw.close();
+            } catch (Exception e) {}
         }
-        
     }
 
     /**
@@ -232,19 +230,27 @@ public class Logs {
     }
 
     /**
+     * Método que registra en el archivo la hora en la que se genero cada pedido.
+     * @param numRef Numero de referencia del pedido.
+     */
+    public void generarPedido(int numRef){
+        this.escribirArchivo(this.fechaActual()+"Generado el pedido con referencia " + numRef + ".\n");
+    }
+
+    /**
+     * Método que registra en el archivo la hora en la que se termino cada pedido.
+     * @param nombrePez Nombre del pez enviado en el pedido.
+     * @param numRef Numero de referencia del pedido.
+     */
+    public void terminarPedido(String nombrePez, int numRef){
+        this.escribirArchivo(this.fechaActual()+"Pedido de " + nombrePez + " con referencia " + numRef + " enviado.\n");
+    }
+
+    /**
      * Método que registra en el archivo la hora de finalización de la partida
      */
     public void salir(){
         this.escribirArchivo(this.fechaActual()+"Cierre de la partida.\n");
-    }
-
-    /**
-     * Método que cierra el buffererWriter.
-     */
-    public void close(){
-        try {
-            bw.close();
-        } catch (Exception e) {}
     }
 
     /**

@@ -1,7 +1,10 @@
 package piscifactoria;
 import java.util.ArrayList;
+import java.util.List;
 
 import comun.*;
+import dtos.DTOPiscifactoria;
+import dtos.DTOTanque;
 import peces.Pez;
 import propiedades.CriaTipo;
 import tanque.Tanque;
@@ -66,6 +69,29 @@ public class Piscifactoria {
         this.maxComidaAnimal = 25;
         this.comidaAnimal = 25;
         this.comidaVegetal = 25; 
+    }
+
+    /**
+     * Constructor para carga de datos
+     * @param pis DTO de piscifactoria
+     */
+    public Piscifactoria(DTOPiscifactoria pis){
+        this.comidaAnimal = pis.getComida().get("animal");
+        this.comidaVegetal = pis.getComida().get("vegetal");
+        this.maxComidaAnimal = pis.getCapacidad();
+        this.maxComidaVegetal = pis.getCapacidad();
+        this.nombre = pis.getNombre();
+        if (pis.getTipo() == 0) {
+            this.tipo = CriaTipo.RIO;
+        } else {
+            this.tipo = CriaTipo.MAR;
+        }
+        this.tanques = new ArrayList<>();
+        List<DTOTanque> tankes = pis.getTanques();
+        for (DTOTanque tnk : tankes) {
+            tanques.add(new Tanque(tnk, this.tipo));
+        }
+
     }
    
     /**
@@ -205,6 +231,29 @@ public class Piscifactoria {
     }
 
     /**
+     * Permite al usuario seleccionar un tanque con un pez en especifico(pasado por parametro) de la piscifactoria.
+     * @param nombrePez Nombre del pez del cual te va a mostrar los tanques.
+     * @return El índice del tanque seleccionado.
+     */
+    public int selectTankSpecific(String nombrePez){
+        for (Tanque tanque : tanques) {
+            if(!tanque.getPeces().isEmpty()) {
+                if(tanque.getPeces().get(0).getName().equals(nombrePez)){
+                    System.out.println("Tanque "+(tanques.indexOf(tanque)+1)+": "+tipo);
+                }else{
+                    System.out.println("No hay tanques compatibles con el pez de este pedido\n");
+                    return 0;
+                }
+            }else{
+                System.out.println("Todos los tanques estan vacios\n");
+                return 0;
+            }
+        }
+        int opcion = InputHelper.getIntRanges(tanques.size(),1);
+        return opcion-1;
+    }
+
+    /**
      * Muestra el estado de cada tanque de la piscifactoría.
      */
     public void showTankStatus(){
@@ -265,11 +314,11 @@ public class Piscifactoria {
      */
     public void upgradeFood(){
         if(tipo == CriaTipo.RIO){
-            this.maxComidaAnimal=+25;
-            this.maxComidaVegetal=+25;
+            this.maxComidaAnimal+=25;
+            this.maxComidaVegetal+=25;
         } else if(tipo == CriaTipo.MAR){
-            this.maxComidaAnimal=+100;
-            this.maxComidaVegetal=+100;
+            this.maxComidaAnimal+=100;
+            this.maxComidaVegetal+=100;
         }
         System.out.println("Almacén de comida de la piscifactoría "+this.nombre+" mejorado. Su capacidad ha aumentado en "+ ((tipo == CriaTipo.RIO) ? "25" : "100") +" hasta un total de "+maxComidaAnimal);
     }

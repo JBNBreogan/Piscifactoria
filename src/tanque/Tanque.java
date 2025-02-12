@@ -3,8 +3,11 @@ package tanque;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
+import java.util.List;
 
 import comun.*;
+import dtos.DTOPez;
+import dtos.DTOTanque;
 import peces.Pez;
 import peces.doble.*;
 import peces.mar.*;
@@ -56,6 +59,74 @@ public class Tanque {
     }
 
     /**
+     * Constructor para el sistema de carga
+     * @param tnk
+     */
+    public Tanque(DTOTanque tnk, CriaTipo tipoT){
+        this.peces = new ArrayList<>(tnk.getNum());
+        this.tipoT = tipoT;
+        if (tipoT == CriaTipo.MAR){
+            this.maxPeces = 100;
+        } else {
+            this.maxPeces = 25;
+        }
+        List<DTOPez> fishes = tnk.getPeces();
+        
+
+        String nombrePez = tnk.getPez();
+
+        if (nombrePez.equals(AlmacenPropiedades.LUCIO_NORTE.getNombre())) {
+            for (DTOPez pez : fishes) {
+                peces.add(new LucioDelNorte(pez));
+            }
+        } else if (nombrePez.equals(AlmacenPropiedades.CARPA_PLATEADA.getNombre())) {
+            for (DTOPez pez : fishes) {
+                peces.add(new CarpaPlateada(pez));
+            }
+        } else if (nombrePez.equals(AlmacenPropiedades.CARPA.getNombre())) {
+            for (DTOPez pez : fishes) {
+                peces.add(new Carpa(pez));
+            }
+        } else if (nombrePez.equals(AlmacenPropiedades.TILAPIA_NILO.getNombre())) {
+            for (DTOPez pez : fishes) {
+                peces.add(new TilapiaDelNilo(pez));
+            }
+        } else if (nombrePez.equals(AlmacenPropiedades.PEJERREY.getNombre())) {
+            for (DTOPez pez : fishes) {
+                peces.add(new Pejerrey(pez));
+            }
+        } else if (nombrePez.equals(AlmacenPropiedades.RODABALLO.getNombre())) {
+            for (DTOPez pez : fishes) {
+                peces.add(new Rodaballo(pez));
+            }
+        } else if (nombrePez.equals(AlmacenPropiedades.CABALLA.getNombre())) {
+            for (DTOPez pez : fishes) {
+                peces.add(new Caballa(pez));
+            }
+        } else if (nombrePez.equals(AlmacenPropiedades.BESUGO.getNombre())) {
+            for (DTOPez pez : fishes) {
+                peces.add(new Besugo(pez));
+            }
+        } else if (nombrePez.equals(AlmacenPropiedades.ABADEJO.getNombre())) {
+            for (DTOPez pez : fishes) {
+                peces.add(new Abadejo(pez));
+            }
+        } else if (nombrePez.equals(AlmacenPropiedades.SARGO.getNombre())) {
+            for (DTOPez pez : fishes) {
+                peces.add(new Sargo(pez));
+            }
+        } else if (nombrePez.equals(AlmacenPropiedades.TRUCHA_ARCOIRIS.getNombre())) {
+            for (DTOPez pez : fishes) {
+                peces.add(new TruchaArcoiris(pez));
+            }
+        } else if (nombrePez.equals(AlmacenPropiedades.DORADA.getNombre())) {
+            for (DTOPez pez : fishes) {
+                peces.add(new Dorada(pez));
+            }
+        } 
+    }
+
+    /**
      * Metodo que muestra las estadísticas del tanque.
      */
     public void showStatus(int numTanque) {
@@ -97,7 +168,7 @@ public class Tanque {
      * Metodo que muestra información de la capacidad del tanque.
      */
     public void showCapacity(int numTanque) {
-        System.out.println("Tanque " + (numTanque+1) + " al " + ((pecesEnTanque()/maxPeces)*100)
+        System.out.println("Tanque " + (numTanque+1) + " al " + ((pecesEnTanque()*100)/maxPeces)
                 + "% de capacidad [" + pecesEnTanque() + "/" + maxPeces + "].");
     }
 

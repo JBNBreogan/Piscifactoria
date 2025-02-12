@@ -1,5 +1,6 @@
 package peces.mar;
 
+import dtos.DTOPez;
 import peces.Pez;
 import peces.propiedades.Carnivoro;
 import propiedades.AlmacenPropiedades;
@@ -17,6 +18,14 @@ public class Besugo extends Carnivoro{
     public Besugo(boolean hembra){
         super(AlmacenPropiedades.BESUGO);
         this.Sexo = hembra;
+    }
+
+    /**
+     * Constructor de carga
+     * @param pes DTO del pez
+     */
+    public Besugo(DTOPez pes){
+        super(pes, AlmacenPropiedades.BESUGO);
     }
 
     @Override
