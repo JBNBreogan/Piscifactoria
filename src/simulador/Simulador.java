@@ -423,11 +423,10 @@ public class Simulador {
      */
     public void nextDay() {
         dias++;
-
-        daoPedidos.addPedido();
-        // Necesito el numero de referencia del pedido
-        registros.generarPedido(dias);
-
+        if(dias%10==0){
+            daoPedidos.addPedido();
+            registros.generarPedido(dias);
+        }
         if (almacenCentral != null) {
             almacenCentral.repartir(piscifactorias);
         }
