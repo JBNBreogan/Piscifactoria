@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import comun.*;
 import dtos.DTOPez;
@@ -181,6 +182,7 @@ public class Tanque {
     public int[] nextDay(Piscifactoria pisci,estadisticas.Estadisticas stats) {
         int pecesHembraFertiles = 0;
         int pecesMachoFertiles = 0;
+        Random enfermar=new Random();
 
         boolean vegetal = true;
         if (this.peces.size() != 0) {
@@ -276,6 +278,28 @@ public class Tanque {
             }
         }
         peces.addAll(nuevosPeces);
+
+        if(posibleEnfermar()){
+            for (Pez pez : peces) {
+                if(enfermar.nextInt(100)<5){
+                    pez.enfermar();
+                    System.out.println("Pez enfermo");
+                }
+            }
+        }
+
+        if(pecesEnfermos()){
+            for (Pez pez : peces) {
+                if(!pez.isEnfermo()){
+                    if(enfermar.nextInt(100)<5){
+                        pez.enfermar();
+                        System.out.println("Pez enfermo");
+                    }
+                }
+            }
+        }
+
+
      
         return ventaPecesOptimos(stats);
     }
@@ -302,6 +326,21 @@ public class Tanque {
             }
         }
         return contadorPecesVivos;
+    }
+
+    /**
+     * Método que devuelve si es posible que enferme un pez o no.
+     * @return 
+     */
+    public boolean posibleEnfermar(){
+        for (Pez pez : peces) {
+            if(!pez.isAlive()){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
     }
 
     /**

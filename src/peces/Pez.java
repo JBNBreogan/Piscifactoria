@@ -59,6 +59,9 @@ public abstract class Pez {
     /** Estado del pez */
     protected boolean Vivo;
 
+    /** Estado del pez */
+    protected boolean Enfermo;
+
     /**
      * Ultimo ciclo de puesta (Empieza en el máximo para que la primera vez sea
      * fertil)
@@ -86,6 +89,7 @@ public abstract class Pez {
         this.Edad = 0;
         this.Comido = false;
         this.UltimaPuesta = data.getCiclo();
+        this.Enfermo = false;
     }
 
     /**
@@ -227,6 +231,14 @@ public abstract class Pez {
     }
 
     /**
+     * Devuelve si el pez esta enfermo o no.
+     * @return Si esta enfermo o no.
+     */
+    public boolean isEnfermo() {
+        return Enfermo;
+    }
+
+    /**
      * Devuelve la edad optima para vender el pez
      * 
      * @return La edad optima de venta
@@ -269,6 +281,13 @@ public abstract class Pez {
         System.out.println("Vivo: " + (this.Vivo ? "Si" : "No"));
         System.out.println("Alimentado: " + (this.Comido ? "Si" : "No"));
         System.out.println("Fértil: " + (this.Fertil ? "Si" : "No"));
+    }
+
+    /**
+     * Hace enfermar al pez.
+     */
+    public void enfermar(){
+        this.Enfermo=true;
     }
 
     /**
