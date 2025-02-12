@@ -1164,7 +1164,10 @@ public class Simulador {
         } while (op != 0);
     }
 
-    public void listarPedidosNoComp() {
+    /**
+     * Muestra la lista de pedidos completados
+     */
+    public void listarPedidosComp() {
 
         List<DTOPedido> pedidos = daoPedidos.listarPedidosComp();
         System.out.println("Pedidos completados: ");
@@ -1288,6 +1291,7 @@ public class Simulador {
      */
     public static void main(String[] args) {
         Simulador sim = Simulador.getInstance();
+        DAOPedidos ped = new DAOPedidos();
         sim.init();
         int opcion = 0;
 
@@ -1361,7 +1365,7 @@ public class Simulador {
                         sim.daoPedidos.borrarPedidos();
                         break;
                     case 78:
-                        sim.listarPedidosNoComp();
+                        sim.listarPedidosComp();
                         break;
                     default:
                         System.out.println("Esta opción no es válida");
@@ -1375,6 +1379,7 @@ public class Simulador {
                 ErrorHelper.closeError();
             } catch (Exception e) {
             }
+            ped.closePST();
             InputHelper.closeBuffReader();
             Conexion.close();
             sim.registros.salir();

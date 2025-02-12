@@ -22,10 +22,10 @@ public class DAOPedidos {
     /** Sentencia preparada para listar los pedidos completados */
     private PreparedStatement pstListarComp;
 
-    /** Sentencia preparada para editar los pedidos */
+    /** Sentencia preparada para crear un nuevo pedido */
     private PreparedStatement pstNuevo;
 
-    /** Sentencia preparada para conseguir las cantidades de un pedido */
+    /** Sentencia preparada para conseguir las cantidades solicitadas y enviadas de un pedido */
     private PreparedStatement pstPedido;
 
     /** Sentencia preparada para para conseguir el numero de referencia del ultimo pedido */
@@ -185,7 +185,11 @@ public class DAOPedidos {
         return false;
     }
 
-
+    /**
+     * Devuelve las cantidades y el id de un pedido en concreto
+     * @param id El id del pedido
+     * @return Devuelve un DTO con los valores de id, cantidad de peces enviados y cantidad solicitada
+     */
     public DTOPedido getCantidadPedido(int id){
         DTOPedido pedido = null;
         try {
@@ -201,6 +205,9 @@ public class DAOPedidos {
         return pedido;
     }
 
+    /**
+     * Cierra los preparedStatement.
+     */
     public void closePST(){
         try {
             pstListarComp.close();
