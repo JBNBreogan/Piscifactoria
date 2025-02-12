@@ -231,6 +231,7 @@ public class Simulador {
                 "Canjear recompensas",
                 "Pasar varios días.",
                 "Listar pedidos",
+                "Gestionar enfermedad",
                 "Salir." },
                 false);
     }
@@ -1272,6 +1273,19 @@ public class Simulador {
     }
 
     /**
+     * Método que muestra un menu con los peces enfermos en cada piscifactoria.
+     */
+    public void menuEnfermedades(){
+        int i=1;
+        System.out.println("=============== Enfermos ===============\n");
+        for (Piscifactoria piscifactoria : piscifactorias) {
+            System.out.println(i + ".- Piscifactoría " + piscifactoria.getNombre() + 
+            piscifactoria.pecesEnfermosTanques());
+            i++;
+        }
+    }
+
+    /**
      * Metodo que permite crear una recompensa.
      * 
      * @param nombreArchivo nombre del archivo.
@@ -1324,7 +1338,7 @@ public class Simulador {
         try {
             do {
                 sim.menu();
-                opcion = InputHelper.getIntRanges(16, 1, new int[] { 77, 97, 98, 99, 77, 78 });
+                opcion = InputHelper.getIntRanges(17, 1, new int[] { 77, 97, 98, 99, 77, 78 });
                 switch (opcion) {
                     case 1:
                         sim.showGeneralStatus();
@@ -1376,6 +1390,9 @@ public class Simulador {
                         sim.listarPedidos();
                         break;
                     case 16:
+                        sim.menuEnfermedades();
+                        break;
+                    case 17:
                         sim.save();
                         break;
                     case 97:

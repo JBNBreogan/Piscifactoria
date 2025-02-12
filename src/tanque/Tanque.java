@@ -353,6 +353,20 @@ public class Tanque {
     }
 
     /**
+     * Método que devuelve la cantidad de peces enfermos en el tanque.
+     * @return Número de peces enfermos.
+     */
+    public int numeroPecesEnfermos(){
+        int pecesEnf=0;
+        for (Pez pez : peces) {
+            if(pez.isEnfermo()){
+                pecesEnf++;
+            }
+        }
+        return pecesEnf;
+    }
+
+    /**
      * Método que devuelve si es posible que enferme un pez o no.
      * @return Si es posible enfermar o no
      */

@@ -534,5 +534,22 @@ public class Piscifactoria {
             repartoVegetal--;
         }
     }
+
+    /**
+     * Método que devuelve una cadena de texto con los peces muertos de los tanques.
+     * @return Cadena de texto.
+     */
+    public String pecesEnfermosTanques() {
+        String enfermos = "[";
+        for (int i = 0; i < tanques.size(); i++) {
+            enfermos += tanques.get(i).numeroPecesEnfermos();
+            if (i < tanques.size() - 1) {
+                enfermos += "|";
+            }
+        }
+        enfermos += "]";
+        return enfermos;
+    }
+    
     
 }
