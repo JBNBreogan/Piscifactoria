@@ -234,7 +234,7 @@ public class Logs {
      * @param numRef Numero de referencia del pedido.
      */
     public void generarPedido(int numRef){
-        this.escribirArchivo(this.fechaActual()+"Generado el pedido con referencia " + numRef + ".");
+        this.escribirArchivo(this.fechaActual()+"Generado el pedido con referencia " + numRef + ".\n");
     }
 
     /**
@@ -243,7 +243,7 @@ public class Logs {
      * @param numRef Numero de referencia del pedido.
      */
     public void terminarPedido(String nombrePez, int numRef){
-        this.escribirArchivo(this.fechaActual()+"Pedido de " + nombrePez + " con referencia " + numRef + " enviado.");
+        this.escribirArchivo(this.fechaActual()+"Pedido de " + nombrePez + " con referencia " + numRef + " enviado.\n");
     }
 
     /**
