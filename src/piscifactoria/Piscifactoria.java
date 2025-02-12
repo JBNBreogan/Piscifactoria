@@ -230,6 +230,11 @@ public class Piscifactoria {
         return opcion-1;
     }
 
+    /**
+     * Permite al usuario seleccionar un tanque con un pez en especifico(pasado por parametro) de la piscifactoria.
+     * @param nombrePez Nombre del pez del cual te va a mostrar los tanques.
+     * @return El índice del tanque seleccionado.
+     */
     public int selectTankSpecific(String nombrePez){
         for (Tanque tanque : tanques) {
             if(!tanque.getPeces().isEmpty()) {
