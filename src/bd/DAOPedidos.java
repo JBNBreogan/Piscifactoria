@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import dtos.DTOPedido;
+import helpers.ErrorHelper;
 
 public class DAOPedidos {
 
@@ -75,8 +76,8 @@ public class DAOPedidos {
 
             pstUltimo = conn.prepareStatement(
                 "SELECT numero_referencia " + 
-                "FROM pedido " + 
-                "ORDER BY numero_referrncia DESC " + 
+                "FROM Pedido " + 
+                "ORDER BY numero_referencia DESC " + 
                 "LIMIT 1"
             );
 
@@ -85,7 +86,7 @@ public class DAOPedidos {
             );
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+            ErrorHelper.writeError("Error al acceder a la base de datos");
             e.printStackTrace();
         }
     }
@@ -97,7 +98,7 @@ public class DAOPedidos {
         try (Statement stmt = conn.createStatement()) {
             stmt.executeUpdate("DELETE FROM Pedido");
         } catch (SQLException e) {
-            e.printStackTrace();
+            ErrorHelper.writeError("Error al acceder a la base de datos");
         }
     }
 
@@ -117,7 +118,7 @@ public class DAOPedidos {
             }
             return devolver;
         } catch (SQLException e) {
-            e.printStackTrace();
+            ErrorHelper.writeError("Error al acceder a la base de datos");
         }
         return null;
     }
@@ -138,7 +139,7 @@ public class DAOPedidos {
             }
             return devolver;
         } catch (SQLException e) {
-            e.printStackTrace();
+            ErrorHelper.writeError("Error al acceder a la base de datos");
         }
         return null;
     }
@@ -156,14 +157,14 @@ public class DAOPedidos {
             pstNuevo.setInt(3, rand.nextInt(41)+10);
             pstNuevo.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            ErrorHelper.writeError("Error al acceder a la base de datos");
         }
 
         try (ResultSet rs = this.pstUltimo.executeQuery()) {
             rs.next();            
             return rs.getInt(1);
         } catch (SQLException e) {
-            // TODO: handle exception
+            ErrorHelper.writeError("Error al acceder a la base de datos");
         }
         return 0;
     }
@@ -180,7 +181,7 @@ public class DAOPedidos {
             int affected = pstUpdatePedido.executeUpdate();
             return affected > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            ErrorHelper.writeError("Error al acceder a la base de datos");
         }
         return false;
     }
@@ -200,7 +201,7 @@ public class DAOPedidos {
             } catch (SQLException e) {}
         } catch (SQLException e) {
 
-            e.printStackTrace();
+            ErrorHelper.writeError("Error al acceder a la base de datos");
         }
         return pedido;
     }
@@ -216,7 +217,7 @@ public class DAOPedidos {
             pstPedido.close();
             pstUpdatePedido.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            ErrorHelper.writeError("Error al acceder a la base de datos");
         }
     }
 
