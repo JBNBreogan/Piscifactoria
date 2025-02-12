@@ -280,7 +280,7 @@ public class Transcripciones {
      * @param numRef Numero de referencia del pedido.
      */
     public void generarPedido(int numRef){
-        this.escribirArchivo("Generado el pedido con referencia " + numRef + ".");
+        this.escribirArchivo("Generado el pedido con referencia " + numRef + ".\n");
     }
 
     /**
@@ -289,7 +289,7 @@ public class Transcripciones {
      * @param numRef Numero de referencia del pedido.
      */
     public void terminarPedido(String nombrePez, int numRef){
-        this.escribirArchivo("Pedido de " + nombrePez + " con referencia " + numRef + " enviado.");
+        this.escribirArchivo("Pedido de " + nombrePez + " con referencia " + numRef + " enviado.\n");
     }
 
     /**
@@ -299,6 +299,6 @@ public class Transcripciones {
      * @param numRef Numero de referencia del pedido.
      */
     public void enviarPeces(String nombrePez, int numPeces, int numRef){
-        this.escribirArchivo("Enviados " + numPeces + " peces al pedido de " + nombrePez + " con referencia " + numRef + ".");
+        this.escribirArchivo("Enviados " + numPeces + " peces al pedido de " + nombrePez + " con referencia " + numRef + ".\n");
     }
 }
