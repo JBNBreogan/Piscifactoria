@@ -117,7 +117,7 @@ public class GeneradorBD {
             // Ejecutar solo si hay clientes nuevos
             stmtInsert.executeBatch();
         } catch (SQLException e) {
-            e.printStackTrace();
+            ErrorHelper.writeError("Error al acceder a la base de datos");
         }
     }
 
@@ -168,7 +168,7 @@ public class GeneradorBD {
             // Ejecutar solo si hay peces nuevos
             stmtInsert.executeBatch();
         } catch (SQLException e) {
-            e.printStackTrace();
+            ErrorHelper.writeError("Error al acceder a la base de datos");
         }
     }
     
