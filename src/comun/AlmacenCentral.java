@@ -123,9 +123,13 @@ public class AlmacenCentral {
     */
     public void addFood(int cantidad, String tipo) {
         if (tipo.equals("Animal")) {
-            comidaAnimal += cantidad;
+            int espacioDisponible = capacidadcomidaanimal - comidaAnimal;
+            int cantidadAAgregar = Math.min(cantidad, espacioDisponible);
+            comidaAnimal += cantidadAAgregar;
         } else if (tipo.equals("Vegetal")) {
-            comidaVegetal += cantidad;
+            int espacioDisponible = capacidadcomidavegetal - comidaVegetal;
+            int cantidadAAgregar = Math.min(cantidad, espacioDisponible);
+            comidaVegetal += cantidadAAgregar;
         }
     }
 

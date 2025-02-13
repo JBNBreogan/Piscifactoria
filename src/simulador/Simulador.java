@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.List;
 
 import estadisticas.Estadisticas;
+import granjas.GranjaFitoplancton;
 import helpers.*;
 import peces.doble.*;
 import peces.mar.*;
@@ -52,6 +53,10 @@ public class Simulador {
     private AlmacenCentral almacenCentral = null;
     /** Lista de las piscifactorias del sistema */
     private static ArrayList<Piscifactoria> piscifactorias = new ArrayList<>();
+
+    /** Granja de fitoplacton */
+
+    private GranjaFitoplancton granjaFitoplacton = null;
     /**
      * Objeto Monedero que se encarga de gestionar las monedas generadas por la
      * piscifactoría.
@@ -442,6 +447,9 @@ public class Simulador {
 
         int pecesRio=pecesRioMarSist()[0];
         int pecesMar=pecesRioMarSist()[1];
+        if(granjaFitoplacton != null){
+            almacenCentral.addFood(granjaFitoplacton.avanzarDia(), "Vegetal");
+        }
         this.registros.pasarDia(dias, pecesRio, pecesMar, monedasObtenidas, monedero.getMonedas());
         this.save();
         dias++;
@@ -624,8 +632,11 @@ public class Simulador {
                         System.out.println("1. Piscifactoría.");
                         if (almacenCentral == null) {
                             System.out.println("2. Almacén central.");
+                        } else {
+                            System.out.println("2. Granja de fitoplancton.");
+
                         }
-                        op2 = InputHelper.getIntRanges(2, 1);
+                        op2 = InputHelper.getIntRanges(3, 1);
                         switch (op2) {
                             case 1:
                                 System.out.println("Nombre de la piscifactoria: ");
@@ -657,10 +668,18 @@ public class Simulador {
                                 } while (!opcionValida);
                                 break;
                             case 2:
-                                if (Monedero.monedasSuficientes(2000)) {
-                                    almacenCentral = AlmacenCentral.getInstance();
-                                    monedero.setMonedas(monedero.getMonedas() - 2000);
-                                    System.out.println("Almacén central adquirido.");
+                                if (almacenCentral == null){
+                                    if (Monedero.monedasSuficientes(2000)) {
+                                            almacenCentral = AlmacenCentral.getInstance();
+                                            monedero.setMonedas(monedero.getMonedas() - 2000);
+                                            System.out.println("Almacén central adquirido.");
+                                        }
+                                } else {
+                                    if (Monedero.monedasSuficientes(5000)) {
+                                        granjaFitoplacton = new GranjaFitoplancton();
+                                        monedero.setMonedas(monedero.getMonedas() - 5000);
+                                        System.out.println("Granja de fitoplancton comprada.");
+                                    }
                                 }
                                 break;
                             default:
