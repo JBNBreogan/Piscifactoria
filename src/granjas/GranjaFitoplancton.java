@@ -12,8 +12,19 @@ public class GranjaFitoplancton {
     // Constructor: la granja no está disponible hasta que se compre.
     public GranjaFitoplancton() {
         this.disponible = false;
-        this.tanques = 1;
+        this.tanques = 0;
         this.ciclo = 0;
+    }
+
+    public void comprar() {
+        if (!disponible) {
+            disponible = true;
+            tanques = 1;
+            ciclo = 1;
+            System.out.println("Granja de fitoplancton comprada. Se ha iniciado con 1 tanque y el ciclo en 1.");
+        } else {
+            System.out.println("La granja ya está comprada.");
+        }
     }
 
     // Método para avanzar un día en el ciclo de reproducción.

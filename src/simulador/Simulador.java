@@ -677,8 +677,8 @@ public class Simulador {
                                 } else {
                                     if (Monedero.monedasSuficientes(5000)) {
                                         granjaFitoplacton = new GranjaFitoplancton();
+                                        granjaFitoplacton.comprar();
                                         monedero.setMonedas(monedero.getMonedas() - 5000);
-                                        System.out.println("Granja de fitoplancton comprada.");
                                     }
                                 }
                                 break;
