@@ -10,6 +10,7 @@ import java.util.List;
 
 import estadisticas.Estadisticas;
 import granjas.GranjaFitoplancton;
+import granjas.GranjaLangostinos;
 import helpers.*;
 import peces.doble.*;
 import peces.mar.*;
@@ -57,6 +58,7 @@ public class Simulador {
     /** Granja de fitoplacton */
 
     private GranjaFitoplancton granjaFitoplacton = null;
+    private GranjaLangostinos granjaLangostinos = null;
     /**
      * Objeto Monedero que se encarga de gestionar las monedas generadas por la
      * piscifactoría.
@@ -450,6 +452,12 @@ public class Simulador {
         if(granjaFitoplacton != null){
             almacenCentral.addFood(granjaFitoplacton.avanzarDia(), "Vegetal");
         }
+        if(granjaLangostinos != null){
+            granjaLangostinos.alimentarTanques(almacenCentral.cogerComidaVegetal(50));
+            if (dias >= 3) {
+                almacenCentral.addFood(granjaLangostinos.producirAlimento(), "Animal");
+            }
+        }
         this.registros.pasarDia(dias, pecesRio, pecesMar, monedasObtenidas, monedero.getMonedas());
         this.save();
         dias++;
@@ -634,6 +642,7 @@ public class Simulador {
                             System.out.println("2. Almacén central.");
                         } else {
                             System.out.println("2. Granja de fitoplancton.");
+                            System.out.println("3. Granja de langostinos.");
 
                         }
                         op2 = InputHelper.getIntRanges(3, 1);
@@ -680,6 +689,13 @@ public class Simulador {
                                         granjaFitoplacton.comprar();
                                         monedero.setMonedas(monedero.getMonedas() - 5000);
                                     }
+                                }
+                                break;
+                            case 3:
+                                if (Monedero.monedasSuficientes(3000)) {
+                                    granjaLangostinos = new GranjaLangostinos();
+                                    granjaLangostinos.comprar();
+                                    monedero.setMonedas(monedero.getMonedas() - 3000);
                                 }
                                 break;
                             default:
