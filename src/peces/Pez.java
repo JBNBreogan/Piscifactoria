@@ -305,6 +305,14 @@ public abstract class Pez {
         }
         return comidaConsumida;
     }
+    
+    public int generarComidaLangostinos() {
+        if (!isAlive()) {
+            // Cada pez muerto genera 50 unidades de comida vegetal para langostinos
+            return 50;
+        }
+        return 0;
+    }
 
     /**
      * Devuelve una cría del pez.

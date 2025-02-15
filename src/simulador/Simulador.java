@@ -452,15 +452,23 @@ public class Simulador {
         if(granjaFitoplacton != null){
             almacenCentral.addFood(granjaFitoplacton.avanzarDia(), "Vegetal");
         }
-        if(granjaLangostinos != null){
-            granjaLangostinos.alimentarTanques(almacenCentral.cogerComidaVegetal(50));
-            if (dias >= 3) {
-                almacenCentral.addFood(granjaLangostinos.producirAlimento(), "Animal");
+        if (granjaLangostinos != null) {
+            int comidaNecesaria = 50 * granjaLangostinos.getTanques().size(); 
+                if (almacenCentral.getComidaVegetal() >= comidaNecesaria) {
+                    int comidaObtenida = almacenCentral.cogerComidaVegetal(comidaNecesaria);
+                    granjaLangostinos.alimentarTanques(comidaObtenida);
+                if (dias >= 3) {
+                    int produccion = granjaLangostinos.producirAlimento();
+                    if (produccion > 0) {
+                        almacenCentral.addFood(produccion, "Animal"); // Añadir pienso para peces carnívoros/omnívoros
+                    }
+                }
             }
         }
         this.registros.pasarDia(dias, pecesRio, pecesMar, monedasObtenidas, monedero.getMonedas());
         this.save();
         dias++;
+
     }
 
     /**

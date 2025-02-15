@@ -39,41 +39,30 @@ public class GranjaLangostinos {
             return;
         }
 
-        for (TanqueLangostinos tanque : this.tanques) {
-            if (comidaDisponible >= 50) {
-                tanque.addComidaTanque(50);
+        int tanqueIndex = 0;
+        while (comidaDisponible >= 50 && !tanques.isEmpty()) {
+            TanqueLangostinos tanque = tanques.get(tanqueIndex % tanques.size());
+            if (tanque.getComidaAlmacenada() < 150) { // Verificar que no exceda el límite
+                tanque.addComidaTanque(50); // Añadir 50 unidades de comida
                 comidaDisponible -= 50;
-            } else {
-                tanque.incrementarDiasSinComer();
+            } else{
+                System.out.println("Almacen del tanque de la granja de langostinos lleno.");
+                break;
             }
+            tanqueIndex++;
         }
-    }
-
-    // Método para procesar la muerte de un pez
-    public void procesarMuertePez() {
-        if (!this.disponible) {
-            System.out.println("La granja de langostinos no está disponible.");
-            return;
-        }
-        this.muertos++;
-        System.out.println("Peces muertos almacenados: " + this.muertos);
     }
 
     // Método para producir alimento
     public int producirAlimento() {
-        int devolver = 0;
-        if (!this.disponible) {
-            System.out.println("La granja de langostinos no está disponible.");
-            return devolver;
-        } else {
-            for (TanqueLangostinos tanque : this.tanques) {
-                devolver += tanque.producir();
-            }
-            return devolver;
+        int produccionTotal = 0;
+        for (TanqueLangostinos tanque : this.tanques) {
+            produccionTotal += tanque.producir();
         }
+        return produccionTotal;
     }
 
-    // Getters y setters
+    // Getters
     public boolean isDisponible() {
         return disponible;
     }
@@ -85,63 +74,17 @@ public class GranjaLangostinos {
     public List<TanqueLangostinos> getTanques() {
         return tanques;
     }
-}
 
-class TanqueLangostinos {
-    private int comidaAlmacenada; // Cantidad de comida almacenada (0-3 días)
-    private int diasDescanso; // Días de descanso antes de volver a producir (0-3)
-    private int diasSinComer; // Días consecutivos sin comer
-
-    public TanqueLangostinos() {
-        this.comidaAlmacenada = 0;
-        this.diasDescanso = 0;
-        this.diasSinComer = 0;
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
     }
 
-    // Método para alimentar el tanque
-    public void addComidaTanque(int cantidadComida) {
-        if (cantidadComida >= 50) {
-            this.comidaAlmacenada++;
-            this.diasSinComer = 0; // Reinicia los días sin comer
-        }
+    public void setMuertos(int muertos) {
+        this.muertos = muertos;
     }
 
-    // Método para incrementar los días sin comer
-    public void incrementarDiasSinComer() {
-        this.diasSinComer++;
-        if (this.diasSinComer > 3) {
-            this.diasSinComer = 3; // Máximo 3 días sin comer
-        }
-    }
-
-    // Método para producir alimento
-    public int producir() {
-        if (this.diasDescanso > 0) {
-            this.diasDescanso--;
-            return 0;
-        }
-        if (this.comidaAlmacenada > 0) {
-            this.comidaAlmacenada--;
-            int produccion = (int) (Math.random() * 101) + 100; // Producción entre 100 y 200
-            System.out.println("Producción de alimento: " + produccion);
-            return produccion;
-        } else {
-            this.diasDescanso = this.diasSinComer; // Descansa los días que no comió
-            this.diasSinComer = 0;
-            return 0;
-        }
-    }
-
-    // Getters y setters
-    public int getComidaAlmacenada() {
-        return comidaAlmacenada;
-    }
-
-    public int getDiasDescanso() {
-        return diasDescanso;
-    }
-
-    public int getDiasSinComer() {
-        return diasSinComer;
+    public void setTanques(List<TanqueLangostinos> tanques) {
+        this.tanques = tanques;
     }
 }
+

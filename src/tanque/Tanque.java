@@ -8,6 +8,7 @@ import java.util.List;
 import comun.*;
 import dtos.DTOPez;
 import dtos.DTOTanque;
+import granjas.GranjaLangostinos;
 import peces.Pez;
 import peces.doble.*;
 import peces.mar.*;
@@ -178,7 +179,7 @@ public class Tanque {
      * 
      * @param comida Cantidad de comida disponible en la piscifactoria
      */
-    public int[] nextDay(Piscifactoria pisci,estadisticas.Estadisticas stats) {
+    public int[] nextDay(Piscifactoria pisci, estadisticas.Estadisticas stats) {
         int pecesHembraFertiles = 0;
         int pecesMachoFertiles = 0;
 
@@ -197,7 +198,9 @@ public class Tanque {
             }
         }
 
-        for (Pez pez : peces) {
+        Iterator<Pez> iterator = peces.iterator();
+        while (iterator.hasNext()) {
+            Pez pez = iterator.next();
             int comidaCons = pez.grow(vegetal ? pisci.getComidaVegetal() : pisci.getComidaAnimal());
             pisci.restFood(comidaCons, vegetal ? "Vegetal" : "Animal");
             if (vegetal && pisci.comidaVegetalVacia()) {
@@ -207,25 +210,36 @@ public class Tanque {
             }
 
             if (pez.isFemale() && pez.isFertile() && pez.isAlive()) {
-                pecesHembraFertiles ++;
+                pecesHembraFertiles++;
             } else if (!pez.isFemale() && pez.isFertile() && pez.isAlive()) {
-                pecesMachoFertiles ++;
+                pecesMachoFertiles++;
+            }
+
+            // Verificar si el pez ha muerto
+            if (!pez.isAlive()) {
+                GranjaLangostinos granjaLangostinos = new GranjaLangostinos();
+                granjaLangostinos.setMuertos(granjaLangostinos.getMuertos()+1);
+                int comidaLangostinos = pez.generarComidaLangostinos();
+                if (comidaLangostinos > 0) {
+                    granjaLangostinos.alimentarTanques(50);
+                }
+                iterator.remove(); // Eliminar el pez muerto del tanque
+             //   stats.registrarMuerte(pez.getName()); // Registrar la muerte en las estadísticas
             }
         }
 
         ArrayList<Pez> nuevosPeces = new ArrayList<>();
 
-        
         if (pecesHembra() > pecesMacho()) {
-            int pecesEnTanque=peces.size();
+            int pecesEnTanque = peces.size();
             if (pecesHembraFertiles >= 1 && pecesMachoFertiles >= 1) {
-                Iterator<Pez> iterator = peces.iterator();
+                iterator = peces.iterator();
                 while (iterator.hasNext()) {
                     Pez pez = iterator.next();
                     if (pez.isFemale() && pez.isFertile() && pez.isAlive()) {
                         for (int i = 0; i < pez.getHuevos(); i++) {
                             if (i % 2 == 0) {
-                                if(pecesEnTanque<maxPeces){
+                                if (pecesEnTanque < maxPeces) {
                                     nuevosPeces.add(pez.reproducirse(true));
                                     pecesEnTanque++;
                                     stats.registrarNacimiento(pez.getName());
@@ -233,7 +247,7 @@ public class Tanque {
                                     pez.resetPuesta();
                                 }
                             } else {
-                                if(pecesEnTanque<maxPeces){
+                                if (pecesEnTanque < maxPeces) {
                                     pecesEnTanque++;
                                     nuevosPeces.add(pez.reproducirse(false));
                                     stats.registrarNacimiento(pez.getName());
@@ -246,15 +260,15 @@ public class Tanque {
                 }
             }
         } else {
-            int pecesEnTanque=peces.size();
+            int pecesEnTanque = peces.size();
             if (pecesHembraFertiles >= 1 && pecesMachoFertiles >= 1) {
-                Iterator<Pez> iterator = peces.iterator();
+                iterator = peces.iterator();
                 while (iterator.hasNext()) {
                     Pez pez = iterator.next();
                     if (pez.isFemale() && pez.isFertile()) {
                         for (int i = 0; i < pez.getHuevos(); i++) {
                             if (i % 2 == 0) {
-                                if(pecesEnTanque<maxPeces){
+                                if (pecesEnTanque < maxPeces) {
                                     nuevosPeces.add(pez.reproducirse(true));
                                     pecesEnTanque++;
                                     stats.registrarNacimiento(pez.getName());
@@ -262,7 +276,7 @@ public class Tanque {
                                     pez.resetPuesta();
                                 }
                             } else {
-                                if(pecesEnTanque<maxPeces){
+                                if (pecesEnTanque < maxPeces) {
                                     pecesEnTanque++;
                                     nuevosPeces.add(pez.reproducirse(false));
                                     stats.registrarNacimiento(pez.getName());
@@ -276,7 +290,7 @@ public class Tanque {
             }
         }
         peces.addAll(nuevosPeces);
-     
+
         return ventaPecesOptimos(stats);
     }
 
