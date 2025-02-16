@@ -794,6 +794,27 @@ public class Recompensas {
                     break;
             }
         }
+
+        public static void granjasXml(String nombre, String parte, String codigoEdificio, String archivoSalida) {
+                Document doc = DocumentHelper.createDocument();
+                Element root = doc.addElement("reward");
+        
+                root.addElement("name").addText(nombre + " [" + parte + "]");
+                root.addElement("origin").addText("Adrián");
+                root.addElement("desc")
+                        .addText("Materiales para la construcción de " + nombre.toLowerCase() + ". Con la parte A, B, C y D, puedes obtenerlo de forma gratuita.");
+                root.addElement("rarity").addText("3");
+        
+                Element give = root.addElement("give");
+                give.addElement("building")
+                        .addAttribute("code", codigoEdificio)
+                        .addText(nombre);
+                give.addElement("part").addText(parte);
+                give.addElement("total").addText("ABCD");
+        
+                root.addElement("quantity").addText("1");
+                save(doc, archivoSalida);
+        }
     
         /**
          * Guarda el archivo XML actual en la ruta especificada.

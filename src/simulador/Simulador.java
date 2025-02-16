@@ -58,7 +58,11 @@ public class Simulador {
     /** Granja de fitoplacton */
 
     private GranjaFitoplancton granjaFitoplacton = null;
+    
+
     private GranjaLangostinos granjaLangostinos = null;
+
+
     /**
      * Objeto Monedero que se encarga de gestionar las monedas generadas por la
      * piscifactoría.
@@ -118,6 +122,14 @@ public class Simulador {
 
     public Monedero getMonedero() {
         return monedero;
+    }
+
+    public GranjaLangostinos getGranjaLangostinos() {
+        return granjaLangostinos;
+    }
+
+    public GranjaFitoplancton getGranjaFitoplacton() {
+        return granjaFitoplacton;
     }
 
     public ArrayList<Piscifactoria> getPiscifactorias() {
@@ -649,9 +661,15 @@ public class Simulador {
                         if (almacenCentral == null) {
                             System.out.println("2. Almacén central.");
                         } else {
-                            System.out.println("2. Granja de fitoplancton.");
-                            System.out.println("3. Granja de langostinos.");
+                            if(granjaFitoplacton == null && granjaLangostinos == null){
+                                System.out.println("2. Granja de fitoplancton.");
+                                System.out.println("3. Granja de langostinos.");
+                            } else if (granjaFitoplacton == null && granjaLangostinos != null){
+                                System.out.println("2. Granja de fitoplancton");
+                            } else if (granjaFitoplacton != null && granjaLangostinos == null){
+                                System.out.println("2. Granja de langostinos.");
 
+                            }
                         }
                         op2 = InputHelper.getIntRanges(3, 1);
                         switch (op2) {
@@ -692,10 +710,18 @@ public class Simulador {
                                             System.out.println("Almacén central adquirido.");
                                         }
                                 } else {
-                                    if (Monedero.monedasSuficientes(5000)) {
-                                        granjaFitoplacton = new GranjaFitoplancton();
-                                        granjaFitoplacton.comprar();
-                                        monedero.setMonedas(monedero.getMonedas() - 5000);
+                                    if(granjaFitoplacton == null && granjaLangostinos == null){
+                                        if (Monedero.monedasSuficientes(5000)) {
+                                            granjaFitoplacton = new GranjaFitoplancton();
+                                            granjaFitoplacton.comprar();
+                                            monedero.setMonedas(monedero.getMonedas() - 5000);
+                                        }
+                                    } else if (granjaFitoplacton != null && granjaLangostinos == null){
+                                        if (Monedero.monedasSuficientes(3000)) {
+                                            granjaLangostinos = new GranjaLangostinos();
+                                            granjaLangostinos.comprar();
+                                            monedero.setMonedas(monedero.getMonedas() - 3000);
+                                        }
                                     }
                                 }
                                 break;
@@ -717,8 +743,16 @@ public class Simulador {
                         System.out.println("1. Piscifactoria.");
                         if (almacenCentral != null) {
                             System.out.println("2. Almacén central.");
+                            if(granjaFitoplacton != null && granjaLangostinos == null){
+                            System.out.println("3. Granja fitoplancton.");
+                            } else if (granjaFitoplacton == null && granjaLangostinos != null){
+                                System.out.println("3. Granja langostinos.");
+                            } else if (granjaFitoplacton != null && granjaLangostinos != null){
+                                System.out.println("3. Granja fitoplancton.");
+                                System.out.println("4. Granja langostinos.");
+                            }
                         }
-                        op2 = InputHelper.getIntRanges(2, 1);
+                        op2 = InputHelper.getIntRanges(4, 1);
                         switch (op2) {
                             case 1:
                                 System.out.println("1. Comprar tanque.");
@@ -774,6 +808,22 @@ public class Simulador {
                                         break;
                                 }
                                 break;
+                            case 3:
+                                if(granjaFitoplacton != null && granjaLangostinos == null){
+                                    if(Monedero.monedasSuficientes(2500)){
+                                        granjaFitoplacton.mejorar();
+                                    }
+                                } else if ( granjaFitoplacton == null && granjaLangostinos != null){
+                                    if(Monedero.monedasSuficientes(1500)){
+                                        granjaLangostinos.mejorar();
+                                    }
+                                }
+                                break;
+                            case 4:
+                                if(Monedero.monedasSuficientes(1500)){
+                                    granjaLangostinos.mejorar();
+                                }
+                                break;
                             default:
                                 System.out.println("Esa opción no es válida.");
                                 op = 0;
@@ -781,8 +831,7 @@ public class Simulador {
                                 break;
                         }
                         break;
-                    case 3:
-                        break;
+                    
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Esta opción no es válida");

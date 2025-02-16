@@ -18,6 +18,7 @@ import piscifactoria.Piscifactoria;
 import propiedades.AlmacenPropiedades;
 import propiedades.CriaTipo;
 import propiedades.PecesDatos;
+import simulador.Simulador;
 import helpers.InputHelper;
 import helpers.MenuHelper;
 
@@ -180,6 +181,8 @@ public class Tanque {
      * @param comida Cantidad de comida disponible en la piscifactoria
      */
     public int[] nextDay(Piscifactoria pisci, estadisticas.Estadisticas stats) {
+        Simulador sim = Simulador.getInstance();
+
         int pecesHembraFertiles = 0;
         int pecesMachoFertiles = 0;
 
@@ -217,14 +220,16 @@ public class Tanque {
 
             // Verificar si el pez ha muerto
             if (!pez.isAlive()) {
-                GranjaLangostinos granjaLangostinos = new GranjaLangostinos();
-                granjaLangostinos.setMuertos(granjaLangostinos.getMuertos()+1);
-                int comidaLangostinos = pez.generarComidaLangostinos();
-                if (comidaLangostinos > 0) {
-                    granjaLangostinos.alimentarTanques(50);
+                GranjaLangostinos granjaLangostinos = sim.getGranjaLangostinos();
+                if (granjaLangostinos != null){
+                    granjaLangostinos.setMuertos(granjaLangostinos.getMuertos()+1);
+                    int comidaLangostinos = pez.generarComidaLangostinos();
+                    if (comidaLangostinos > 0) {
+                        granjaLangostinos.alimentarTanques(50);
+                    }
+                    iterator.remove(); // Eliminar el pez muerto del tanque
+                //   stats.registrarMuerte(pez.getName()); // Registrar la muerte en las estadísticas
                 }
-                iterator.remove(); // Eliminar el pez muerto del tanque
-             //   stats.registrarMuerte(pez.getName()); // Registrar la muerte en las estadísticas
             }
         }
 
