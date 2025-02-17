@@ -314,19 +314,25 @@ public class Tanque {
 
         if(pecesMuertos()!=0){
             for (Pez pez : peces) {
-                if(enfermar.nextInt(100)<5){
-                    System.out.println("Pez enfermo");
-                    pez.enfermar();
+                if(pez.isAlive()){
+                    if(!pez.isEnfermo()){
+                        if(enfermar.nextInt(100)<5){
+                            System.out.println("Pez enfermo");
+                            pez.enfermar();
+                        }
+                    }
                 }
             }
         }
 
         if(pecesEnfermos()!=0){
             for (Pez pez : peces) {
-                if(!pez.isEnfermo()){
-                    if(enfermar.nextInt(100)<10){
-                        System.out.println("Pez enfermo");
-                        pez.enfermar();
+                if(pez.isAlive()){
+                    if(!pez.isEnfermo()){
+                        if(enfermar.nextInt(100)<10){
+                            System.out.println("Pez enfermo");
+                            pez.enfermar();
+                        }
                     }
                 }
             }
