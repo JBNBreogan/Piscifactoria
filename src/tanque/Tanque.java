@@ -606,5 +606,25 @@ public class Tanque {
      */
     public CriaTipo getTipoT() {
         return tipoT;
-    }    
+    }
+    
+    /**
+     * Comprueba si el tanque está lleno
+     * @return La llenez del tanque
+     */
+    public Boolean isFull(){
+        if (getMaxPeces() == peces.size()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Añade un pez sin realizar comprobaciones al tanque, usado para el tanque de huevos
+     * @param peskau el pez
+     */
+    public void addPez(Pez peskau){
+        peces.add(peskau);
+    }
 }
