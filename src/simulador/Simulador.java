@@ -248,8 +248,8 @@ public class Simulador {
 
         for (Piscifactoria piscifactoria : piscifactorias) {
             i += 1;
-            System.out.println(i + ".- " + piscifactoria.getNombre() + " [" + piscifactoria.pecesVivosPiscifactoria() 
-            + "/" + piscifactoria.pecesEnPiscifactoria() + "/" + espacioEnPisci(piscifactoria)+"]");
+            System.out.println(i + ".- " + piscifactoria.getNombre() + " [" + piscifactoria.pecesVivosPiscifactoria()
+                    + "/" + piscifactoria.pecesEnPiscifactoria() + "/" + espacioEnPisci(piscifactoria) + "]");
         }
     }
 
@@ -422,8 +422,8 @@ public class Simulador {
      * en todo el sistema y las monedas obtenidas con ello.
      */
     public void nextDay() {
-        if(dias%10==0){
-            int numRef=daoPedidos.addPedido();
+        if (dias % 10 == 0) {
+            int numRef = daoPedidos.addPedido();
             registros.generarPedido(numRef);
         }
         if (almacenCentral != null) {
@@ -441,8 +441,8 @@ public class Simulador {
         System.out.println("Total piscifactorias: " + pecesVendidos + " peces óptimos vendidos por un total de "
                 + monedasObtenidas + " monedas");
 
-        int pecesRio=pecesRioMarSist()[0];
-        int pecesMar=pecesRioMarSist()[1];
+        int pecesRio = pecesRioMarSist()[0];
+        int pecesMar = pecesRioMarSist()[1];
         this.registros.pasarDia(dias, pecesRio, pecesMar, monedasObtenidas, monedero.getMonedas());
         this.save();
         dias++;
@@ -1112,26 +1112,27 @@ public class Simulador {
     }
 
     /**
-         * Método que devuelve el numero de peces de rio y de mar que hay en el sistema.
-         * @return Array con el numero de peces de rio[0] y de mar[1] 
-         */
-        public int[] pecesRioMarSist(){
-            int pecesRio=0;
-            int pecesMar=0;
-            int[] peces=new int[]{pecesRio,pecesMar};
-            for (Piscifactoria piscifactoria : piscifactorias) {
-                if (piscifactoria.getTipo()==CriaTipo.RIO){
-                    for (Tanque tank : piscifactoria.getTanques()) {
-                        peces[0]+=tank.getPeces().size();
-                    }
-                }else if(piscifactoria.getTipo()==CriaTipo.MAR){
-                    for (Tanque tank : piscifactoria.getTanques()) {
-                        peces[1]+=tank.getPeces().size();
-                    }
+     * Método que devuelve el numero de peces de rio y de mar que hay en el sistema.
+     * 
+     * @return Array con el numero de peces de rio[0] y de mar[1]
+     */
+    public int[] pecesRioMarSist() {
+        int pecesRio = 0;
+        int pecesMar = 0;
+        int[] peces = new int[] { pecesRio, pecesMar };
+        for (Piscifactoria piscifactoria : piscifactorias) {
+            if (piscifactoria.getTipo() == CriaTipo.RIO) {
+                for (Tanque tank : piscifactoria.getTanques()) {
+                    peces[0] += tank.getPeces().size();
+                }
+            } else if (piscifactoria.getTipo() == CriaTipo.MAR) {
+                for (Tanque tank : piscifactoria.getTanques()) {
+                    peces[1] += tank.getPeces().size();
                 }
             }
-            return peces;
         }
+        return peces;
+    }
 
     /**
      * Permite seleccionar una recompensa disponible, primero las lista y el usuario
@@ -1275,13 +1276,42 @@ public class Simulador {
     /**
      * Método que muestra un menu con los peces enfermos en cada piscifactoria.
      */
-    public void menuEnfermedades(){
-        int i=1;
-        System.out.println("=============== Enfermos ===============\n");
-        for (Piscifactoria piscifactoria : piscifactorias) {
-            System.out.println(i + ".- Piscifactoría " + piscifactoria.getNombre() + 
-            piscifactoria.pecesEnfermosTanques());
-            i++;
+    public void menuEnfermedades() {
+        String resp;
+        do {
+            int i = 1;
+
+            System.out.println("=============== Enfermos ===============\n");
+            for (Piscifactoria piscifactoria : piscifactorias) {
+                System.out.println(i + ".- Piscifactoría " + piscifactoria.getNombre() +
+                        piscifactoria.pecesEnfermosTanques());
+                i++;
+            }
+
+            System.out.println("Quieres curar los peces de alguna piscifactoria?(Si/No)");
+            resp = InputHelper.readStringWithBuffRead();
+            if (resp.equals("Si")) {
+                elegirPiscParaCurar();
+                break;
+            }
+        } while (!resp.equals("No"));
+    }
+
+    /**
+     * Método que permite elegir una piscifactoria de la que curar los peces.
+     */
+    public void elegirPiscParaCurar() {
+        System.out.println("De que piscifactoria?");
+        int op = InputHelper.getIntRanges(piscifactorias.size());
+        Piscifactoria pisc = piscifactorias.get(op - 1);
+        int monedasParaCurar=pisc.calcularMonedasCurar();
+        System.out.println("Para curar los peces de esta piscifactoria son necesarias " +
+        monedasParaCurar + " monedas.\nCurar a los peces? (Si/No)");
+        String curar=InputHelper.readStringWithBuffRead();
+        if(curar.equals("Si")){
+            pisc.curarPeces();
+            registros.curarPeces((monedasParaCurar/10), monedasParaCurar, pisc);
+            monedero.setMonedas(monedero.getMonedas()-monedasParaCurar);
         }
     }
 
@@ -1414,7 +1444,7 @@ public class Simulador {
                         System.out.println("Esta opción no es válida");
                         break;
                 }
-            } while (opcion != 16);
+            } while (opcion != 17);
         } catch (InputMismatchException e) {
             System.out.println("Has introducido un tipo de dato incorrecto, introduce un número");
         } finally {

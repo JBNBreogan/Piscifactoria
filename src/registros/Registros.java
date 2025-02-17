@@ -200,6 +200,10 @@ public class Registros {
         this.transcripciones.enviarPeces(nombrePez, numPeces, numRef);
     }
 
+    public void curarPeces(int pecesCurados, int monedas, Piscifactoria pisc){
+        this.transcripciones.curarPeces(pecesCurados, monedas, pisc);
+    }
+
     /**
      * Metodo que llama al metodo salir de logs y al método close de logs y transcripciones.
      */

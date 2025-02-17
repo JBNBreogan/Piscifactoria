@@ -301,4 +301,9 @@ public class Transcripciones {
     public void enviarPeces(String nombrePez, int numPeces, int numRef){
         this.escribirArchivo("Enviados " + numPeces + " peces al pedido de " + nombrePez + " con referencia " + numRef + ".\n");
     }
+
+    public void curarPeces(int pecesCurados, int monedas, Piscifactoria pisc){
+        this.escribirArchivo("Curados " + pecesCurados + " peces de la pisicfactoria " 
+        + pisc.getNombre() + " por " + monedas + ".\n");
+    }
 }

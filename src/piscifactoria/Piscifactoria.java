@@ -211,6 +211,8 @@ public class Piscifactoria {
     
         System.out.println("Fértiles: "+this.pecesFertilesPiscifactoria()+"/"+pecesVivosEnPisc);
     
+        System.out.println("Enfermos: "+this.pecesEnfermosPiscifactoria()+"/"+pecesVivosEnPisc);
+
         int comidaAnimalPorcentaje = (this.maxComidaAnimal != 0) ? ((this.comidaAnimal * 100) / this.maxComidaAnimal) : 0;
         System.out.println("Almacén de comida animal: "+ this.comidaAnimal+"/"+this.maxComidaAnimal+"("+comidaAnimalPorcentaje+"%)");
     
@@ -419,6 +421,17 @@ public class Piscifactoria {
         return pecesfertilestotales;
     }
 
+    /**
+     * Método que calcula el número de peces enfermos en la piscifactoría. 
+     * @return El número de peces enfermos.
+     */
+    public int pecesEnfermosPiscifactoria(){
+        int pecesEnfermos = 0;
+        for (Tanque tanque : tanques) {
+            pecesEnfermos += tanque.pecesEnfermos();
+        }
+        return pecesEnfermos;
+    }
 
     /**
      * Añade una cantidad de comida a la piscifactoría.
@@ -551,5 +564,24 @@ public class Piscifactoria {
         return enfermos;
     }
     
-    
+    /**
+     * Método que calcula las monedas necesarias para curar los peces de toda la pisicfactoria
+     * @return Numero de menodes necesarias
+     */
+    public int calcularMonedasCurar(){
+        int monedasParaCurar=0;
+        for (Tanque tank : tanques) {
+            monedasParaCurar+=tank.calcularMonedasCurar();
+        }
+        return monedasParaCurar;
+    }
+
+    /**
+     * Métod que cura a todos los peces de la piscifactoria.
+     */
+    public void curarPeces(){
+        for (Tanque tank : tanques) {
+            tank.curarPeces();
+        }
+    }
 }

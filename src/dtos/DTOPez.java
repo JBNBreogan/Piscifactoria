@@ -28,6 +28,9 @@ public class DTOPez {
 
     /** Alimentación del pez */
     private boolean alimentado;
+
+    /** Estado del pez */
+    private boolean enfermo;
     
     /**
      * Constructor
@@ -41,6 +44,7 @@ public class DTOPez {
         this.fertil = pez.isFertile();
         this.ciclo = pez.getUltimaPuesta();
         this.alimentado = pez.isAlimentado();
+        this.enfermo = pez.isEnfermo();
     }
 
     /**
@@ -97,5 +101,13 @@ public class DTOPez {
      */
     public int getEdad() {
         return edad;
+    }
+
+    /**
+     * Getter del estado  del pez
+     * @return Estado del pez
+     */
+    public boolean isEnfermo() {
+        return enfermo;
     }
 }

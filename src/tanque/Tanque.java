@@ -153,6 +153,8 @@ public class Tanque {
         System.out.println("H/M: " + pecesHembra() + "/" + pecesMacho());
     
         System.out.println("Fértiles: " + this.pecesFertiles() + "/" + pecesVivos);
+
+        System.out.println("Enfermos: " + this.pecesEnfermos() + "/" + pecesVivos);
     }
     
 
@@ -281,35 +283,19 @@ public class Tanque {
         }
         peces.addAll(nuevosPeces);
 
-        if(posibleEnfermar()){
-            for (Pez pez : peces) {
-                if(enfermar.nextInt(100)<5){
-                    pez.enfermar();
-                    System.out.println("Pez enfermo");
-                }
-            }
-        }
-
-        if(pecesEnfermos()){
-            for (Pez pez : peces) {
-                if(!pez.isEnfermo()){
-                    if(enfermar.nextInt(100)<10){
-                        pez.enfermar();
-                        System.out.println("Pez enfermo");
-                    }
-                }
-            }
-        }
-
         for (Pez pez : peces) {
-            if (pez.isEnfermo()) {
-                if(pez.isAdulto()){
-                    if(morir.nextInt(100)<10){
-                        pez.morir();
-                    }
-                }else{
-                    if(morir.nextInt(100)<25){
-                        pez.morir();
+            if(pez.isAlive()){
+                if (pez.isEnfermo()) {
+                    if(pez.isAdulto()){
+                        if(morir.nextInt(100)<10){
+                            pez.morir();
+                            pez.curar();
+                        }
+                    }else{
+                        if(morir.nextInt(100)<25){
+                            pez.morir();
+                            pez.curar();
+                        }
                     }
                 }
             }
@@ -320,6 +306,26 @@ public class Tanque {
                 if(pez.isAlimentado()){
                     if(curar.nextInt(100)<10){
                         pez.curar();
+                    }
+                }
+            }
+        }
+
+        if(pecesMuertos()!=0){
+            for (Pez pez : peces) {
+                if(enfermar.nextInt(100)<5){
+                    pez.enfermar();
+                    System.out.println("Pez enfermo");
+                }
+            }
+        }
+
+        if(pecesEnfermos()!=0){
+            for (Pez pez : peces) {
+                if(!pez.isEnfermo()){
+                    if(enfermar.nextInt(100)<10){
+                        pez.enfermar();
+                        System.out.println("Pez enfermo");
                     }
                 }
             }
@@ -370,28 +376,54 @@ public class Tanque {
      * Método que devuelve si es posible que enferme un pez o no.
      * @return Si es posible enfermar o no
      */
-    public boolean posibleEnfermar(){
+    public int pecesMuertos(){
+        int pecesmuertos=0;
         for (Pez pez : peces) {
             if(!pez.isAlive()){
-                return true;
-            }else{
-                return false;
+                pecesmuertos+=1;
             }
         }
-        return false;
+        return pecesmuertos;
     }
 
     /**
      * Método que devuelve si hay peces enfermos en el tanque o no.
      * @return Si hay peces enfermos o no
      */
-    public boolean pecesEnfermos(){
+    public int pecesEnfermos(){
+        int pecesEnfermos=0;
         for (Pez pez : peces) {
             if(pez.isEnfermo()){
-                return true;
+                pecesEnfermos+=1;
             }
         }
-        return false;
+        return pecesEnfermos;
+    }
+
+    /**
+     * Método que cura a todos los peces del tanque.
+     */
+    public void curarPeces(){
+        for (Pez pez : peces) {
+            if(pez.isEnfermo()){
+                pez.curar();
+            }
+        }
+    }
+
+    /**
+     * Método que calcula la cantidad de monedas necesarias para curar
+     * a los peces del tanque.
+     * @return Numero de monedas necesarias.
+     */
+    public int calcularMonedasCurar(){
+        int monedasParaCurar=0;
+        for (Pez pez : peces) {
+            if(pez.isEnfermo()){
+                monedasParaCurar+=10;
+            }
+        }
+        return monedasParaCurar;
     }
 
     /**

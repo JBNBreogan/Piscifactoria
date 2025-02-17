@@ -43,6 +43,7 @@ public class DTOTanque {
         this.datos.put("vivos", tanque.pecesVivos());
         this.datos.put("maduros", tanque.pecesAdultos());
         this.datos.put("fertiles", tanque.pecesFertiles());
+        this.datos.put("enfermos", tanque.pecesEnfermos());
 
         this.peces = new ArrayList<DTOPez>();
         for (Pez pescao : tanque.getPeces()) {

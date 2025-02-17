@@ -281,6 +281,7 @@ public abstract class Pez {
         System.out.println("Vivo: " + (this.Vivo ? "Si" : "No"));
         System.out.println("Alimentado: " + (this.Comido ? "Si" : "No"));
         System.out.println("Fértil: " + (this.Fertil ? "Si" : "No"));
+        System.out.println("Enfermo: " + (this.Enfermo ? "Si" : "No"));
     }
 
     /**
