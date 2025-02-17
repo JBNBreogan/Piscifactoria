@@ -305,6 +305,7 @@ public class Tanque {
             if(pez.isEnfermo()){
                 if(pez.isAlimentado()){
                     if(curar.nextInt(100)<10){
+                        System.out.println("Pez curado");
                         pez.curar();
                     }
                 }
@@ -314,8 +315,8 @@ public class Tanque {
         if(pecesMuertos()!=0){
             for (Pez pez : peces) {
                 if(enfermar.nextInt(100)<5){
-                    pez.enfermar();
                     System.out.println("Pez enfermo");
+                    pez.enfermar();
                 }
             }
         }
@@ -324,8 +325,8 @@ public class Tanque {
             for (Pez pez : peces) {
                 if(!pez.isEnfermo()){
                     if(enfermar.nextInt(100)<10){
-                        pez.enfermar();
                         System.out.println("Pez enfermo");
+                        pez.enfermar();
                     }
                 }
             }
