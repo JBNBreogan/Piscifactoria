@@ -148,7 +148,6 @@ public class Simulador {
                     this.almacenCentral = AlmacenCentral.getInstance();
                     almacenCentral.load(alm);
                 }
-
                 monedero.setMonedas(sim.getMonedas());
 
                 List<DTOPiscifactoria> piscis = sim.getPiscifactorias();

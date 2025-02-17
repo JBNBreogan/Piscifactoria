@@ -115,7 +115,7 @@ public abstract class Pez {
         this.Optimo = data.getOptimo(); 
         this.Piscifactoria = data.getPiscifactoria();
         this.Tipo = data.getTipo();
-
+        this.Enfermo = peskineitor.isEnfermo();
     }
 
     /**
@@ -355,14 +355,14 @@ public abstract class Pez {
     }
 
     /**
-     * Hace que un pez muera
+     * Método que hace que el pez muera
      */
     public void morir(){
         this.Vivo=false;
     }
 
     /**
-     * Hace que el pez se cure
+     * Método que hace que el pez se cure
      */
     public void curar(){
         this.Enfermo=false;
