@@ -1,6 +1,8 @@
 package registros;
 
 import comun.AlmacenCentral;
+import granjas.GranjaFitoplancton;
+import granjas.GranjaLangostinos;
 import peces.Pez;
 import piscifactoria.Piscifactoria;
 
@@ -198,6 +200,26 @@ public class Registros {
      */
     public void enviarPeces(String nombrePez, int numPeces, int numRef){
         this.transcripciones.enviarPeces(nombrePez, numPeces, numRef);
+    }
+
+    public void comprarGranja(GranjaFitoplancton granjaFitoplancton, GranjaLangostinos granjaLangostinos){
+        if(granjaFitoplancton != null && granjaLangostinos == null){
+            this.transcripciones.comprarGranjaFitoplancton();
+            this.logs.comprarGranjaFitoplancton();
+        } else if (granjaLangostinos != null){
+            this.transcripciones.comprarGranjaLagostinos();
+            this.logs.comprarGranjaLagostinos();
+        }
+    }
+
+    public void mejorarGranja(GranjaFitoplancton granjaFitoplancton, GranjaLangostinos granjaLangostinos){
+        if(granjaFitoplancton != null && granjaLangostinos == null){
+            this.transcripciones.mejorarGranjaFitoplancton(granjaFitoplancton.getTanques());
+            this.logs.mejorarGranjaFitoplancton(granjaFitoplancton.getTanques());
+        } else if (granjaFitoplancton == null && granjaLangostinos != null){
+            this.transcripciones.mejorarGranjaLagostinos(granjaLangostinos.getTanques().size());
+            this.logs.mejorarGranjaLagostinos(granjaLangostinos.getTanques().size());
+        }
     }
 
     /**

@@ -1,5 +1,8 @@
 package granjas;
 
+import dtos.DTOAlmacen;
+import dtos.DTOGranjaFitoplancton;
+
 public class GranjaFitoplancton {
 
     private static final int CICLO_DIAS = 5; // Duración del ciclo (al sexto día se produce)
@@ -74,5 +77,10 @@ public class GranjaFitoplancton {
                 ", tanques=" + tanques +
                 ", ciclo=" + ciclo +
                 '}';
+    }
+
+    public void load(DTOGranjaFitoplancton gfp){
+        this.tanques = gfp.getTanques();
+        this.ciclo = gfp.getCiclo();
     }
 }

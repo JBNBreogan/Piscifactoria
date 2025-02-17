@@ -2,6 +2,9 @@ package granjas;
 import java.util.ArrayList;
 import java.util.List;
 
+import dtos.DTOGranjaLangostinos;
+import dtos.DTOTanqueLangostinos;
+
 
 public class GranjaLangostinos {
     private boolean disponible;
@@ -85,6 +88,16 @@ public class GranjaLangostinos {
 
     public void setTanques(List<TanqueLangostinos> tanques) {
         this.tanques = tanques;
+    }
+
+    public void load(DTOGranjaLangostinos granjal) {
+        this.muertos = granjal.getMuertos();
+        List<DTOTanqueLangostinos> aux = granjal.getTanques();
+        for (DTOTanqueLangostinos dtoTanqueLangostinos : aux) {
+            TanqueLangostinos tnkLa = new TanqueLangostinos();
+            tnkLa.load(dtoTanqueLangostinos);
+            this.tanques.add(tnkLa);
+        }
     }
 }
 

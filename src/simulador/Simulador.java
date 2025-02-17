@@ -32,6 +32,9 @@ import bd.GeneradorBD;
 import comun.AlmacenCentral;
 import comun.Monedero;
 import dtos.DTOAlmacen;
+import dtos.DTOEdificios;
+import dtos.DTOGranjaFitoplancton;
+import dtos.DTOGranjaLangostinos;
 import dtos.DTOPedido;
 import dtos.DTOPiscifactoria;
 import dtos.DTOSimulador;
@@ -162,11 +165,43 @@ public class Simulador {
                 this.nombreEmpresa = sim.getEmpresa();
                 registros = new Registros(nombreEmpresa);
                 this.dias = sim.getDia();
-                DTOAlmacen alm = sim.getEdificios().get("Almacen");
-                if (alm.isDisponible()) {
+                
+                DTOEdificios edificioAlmacen = sim.getEdificios().get("Almacen");
+                if (edificioAlmacen instanceof DTOAlmacen) {
+                    DTOAlmacen alm = (DTOAlmacen) edificioAlmacen;
+                    System.out.println("Almacén cargado con capacidad: " + alm.getCapacidad());
+                } else {
+                    System.out.println("Error: El objeto 'Almacen' no es un DTOAlmacen.");
+                }
+    
+                DTOEdificios edificioFitoplancton = sim.getEdificios().get("Fitoplancton");
+                if (edificioFitoplancton instanceof DTOGranjaFitoplancton) {
+                    DTOGranjaFitoplancton gfp = (DTOGranjaFitoplancton) edificioFitoplancton;
+                    System.out.println("Granja Fitoplancton con " + gfp.getTanques() + "tanques.");
+                } else {
+                    System.out.println("Error: El objeto 'Fitoplancton' no es un DTOGranjaFitoplancton.");
+                }
+    
+                DTOEdificios edificioLangostinos = sim.getEdificios().get("Langostinos");
+                if (edificioLangostinos instanceof DTOGranjaLangostinos) {
+                    DTOGranjaLangostinos gla = (DTOGranjaLangostinos) edificioLangostinos;
+                    System.out.println("Granja Langostinos con cantidad: " + gla.getTanques());
+                } else {
+                    System.out.println("Error: El objeto 'Langostinos' no es un DTOGranjaLangostinos.");
+                }
+
+               /*  if (alm.isDisponible()) {
                     this.almacenCentral = AlmacenCentral.getInstance();
                     almacenCentral.load(alm);
                 }
+                if (gfp.isDisponible()) {
+                    this.granjaFitoplacton = new GranjaFitoplancton();
+                    granjaFitoplacton.load(gfp);
+                }
+                if (gla.isDisponible()) {
+                    this.granjaLangostinos = new GranjaLangostinos();
+                    granjaLangostinos.load(gla);
+                }*/
 
                 monedero.setMonedas(sim.getMonedas());
 
@@ -710,16 +745,18 @@ public class Simulador {
                                             System.out.println("Almacén central adquirido.");
                                         }
                                 } else {
-                                    if(granjaFitoplacton == null && granjaLangostinos == null){
+                                    if(granjaFitoplacton == null){
                                         if (Monedero.monedasSuficientes(5000)) {
                                             granjaFitoplacton = new GranjaFitoplancton();
                                             granjaFitoplacton.comprar();
+                                            this.registros.comprarGranja(granjaFitoplacton, null);
                                             monedero.setMonedas(monedero.getMonedas() - 5000);
                                         }
                                     } else if (granjaFitoplacton != null && granjaLangostinos == null){
                                         if (Monedero.monedasSuficientes(3000)) {
                                             granjaLangostinos = new GranjaLangostinos();
                                             granjaLangostinos.comprar();
+                                            this.registros.comprarGranja(null, granjaLangostinos);
                                             monedero.setMonedas(monedero.getMonedas() - 3000);
                                         }
                                     }
@@ -729,6 +766,7 @@ public class Simulador {
                                 if (Monedero.monedasSuficientes(3000)) {
                                     granjaLangostinos = new GranjaLangostinos();
                                     granjaLangostinos.comprar();
+                                    this.registros.comprarGranja(null, granjaLangostinos);
                                     monedero.setMonedas(monedero.getMonedas() - 3000);
                                 }
                                 break;
@@ -809,19 +847,22 @@ public class Simulador {
                                 }
                                 break;
                             case 3:
-                                if(granjaFitoplacton != null && granjaLangostinos == null){
+                                if(granjaFitoplacton != null){
                                     if(Monedero.monedasSuficientes(2500)){
                                         granjaFitoplacton.mejorar();
+                                        registros.mejorarGranja(granjaFitoplacton, null);
                                     }
-                                } else if ( granjaFitoplacton == null && granjaLangostinos != null){
+                                } else if (granjaFitoplacton == null && granjaLangostinos != null){
                                     if(Monedero.monedasSuficientes(1500)){
                                         granjaLangostinos.mejorar();
+                                        registros.mejorarGranja(null, granjaLangostinos);
                                     }
                                 }
                                 break;
                             case 4:
                                 if(Monedero.monedasSuficientes(1500)){
                                     granjaLangostinos.mejorar();
+                                    registros.mejorarGranja(null, granjaLangostinos);
                                 }
                                 break;
                             default:

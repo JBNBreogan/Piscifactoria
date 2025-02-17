@@ -53,7 +53,7 @@ public class DTOSimulador {
     private String orca;
 
     /** Edificios disponibles */
-    private Map<String, DTOAlmacen> edificios;
+    private Map<String, DTOEdificios> edificios;
 
     /** Piscifactorías de la partida */
     private List<DTOPiscifactoria> piscifactorias;
@@ -67,8 +67,11 @@ public class DTOSimulador {
         this.dia = sim.getDias();
         this.monedas = sim.getMonedero().getMonedas();
         this.orca = stats.exportarDatos(nombres);
-        this.edificios = new HashMap<String,DTOAlmacen>();
+        this.edificios = new HashMap<String,DTOEdificios>();
         this.edificios.put("Almacen", new DTOAlmacen(sim.getAlmacenCentral()));
+        this.edificios.put("Fitoplancton", new DTOGranjaFitoplancton(sim.getGranjaFitoplacton()));
+        this.edificios.put("Langostinos", new DTOGranjaLangostinos(sim.getGranjaLangostinos()));
+
         
         this.piscifactorias = new ArrayList<DTOPiscifactoria>();
         for (Piscifactoria pisc : sim.getPiscifactorias()) {
@@ -88,7 +91,7 @@ public class DTOSimulador {
      * Getter de edificios
      * @return Edificios en formato clave-valor
      */
-    public Map<String, DTOAlmacen> getEdificios() {
+    public Map<String, DTOEdificios> getEdificios() {
        return edificios;
     }
 

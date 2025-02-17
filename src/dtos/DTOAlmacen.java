@@ -9,10 +9,9 @@ import comun.AlmacenCentral;
  * Clase que guarda la información del almacen central
  * @author Breogan
  */
-public class DTOAlmacen {
+public class DTOAlmacen extends DTOEdificios{
 
-    /** Disponibilidad del almacen */
-    private boolean disponible;
+  
 
     /** Capacidad de comida del almacen */
     private int capacidad;
@@ -25,14 +24,13 @@ public class DTOAlmacen {
      * @param alm Almacen de donde sacar información
      */
     public DTOAlmacen(AlmacenCentral alm){
+        super(alm != null);
         this.comida = new HashMap<>();
         if (alm == null){
-            disponible = false;
             capacidad = 0;
             comida.put("vegetal", 0);
             comida.put("animal", 0);
         } else {
-            disponible = true;
             capacidad = alm.getCapacidadComidaAnimal();
             comida.put("vegetal", alm.getComidaVegetal());
             comida.put("animal", alm.getComidaAnimal());
@@ -55,12 +53,6 @@ public class DTOAlmacen {
         return comida;
     }
 
-    /**
-     * Getter de la disponibilidad del almacen central
-     * @return Si se dispone de él
-     */
-    public boolean isDisponible() {
-        return disponible;
-    }
+  
     
 }

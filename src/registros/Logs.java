@@ -253,6 +253,21 @@ public class Logs {
         this.escribirArchivo(this.fechaActual()+"Cierre de la partida.\n");
     }
 
+    public void comprarGranjaFitoplancton(){
+        this.escribirArchivo(this.fechaActual()+"Comprada la granja de fitonplancton.\n");
+    }
+
+    public void comprarGranjaLagostinos(){
+        this.escribirArchivo(this.fechaActual()+"Comprada la granja de langostino.\n");
+    }
+
+    public void mejorarGranjaFitoplancton(int tanque) {
+        this.escribirArchivo(this.fechaActual()+"Mejorada la granja de fitoplancton añadiendo un tanque por un total de "+ tanque +"  tanques.\n");
+    }
+    
+    public void mejorarGranjaLagostinos(int tanque) {
+        this.escribirArchivo(this.fechaActual()+"Mejorada la granja de langostinos añadiendo un tanque por un total de "+ tanque +"  tanques.\n");
+    }
     /**
      * Método que obtiene la fecha actual
      * @return Fecha 

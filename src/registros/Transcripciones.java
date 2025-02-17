@@ -292,6 +292,21 @@ public class Transcripciones {
         this.escribirArchivo("Pedido de " + nombrePez + " con referencia " + numRef + " enviado.\n");
     }
 
+    public void comprarGranjaFitoplancton(){
+        this.escribirArchivo("Comprada la granja de fitoplancton.\n");
+    }
+
+    public void comprarGranjaLagostinos(){
+        this.escribirArchivo("Comprada la granja de langostinos.\n");
+    }
+
+    public void mejorarGranjaFitoplancton(int tanque) {
+        this.escribirArchivo("Mejorada la granja de fitoplancton añadiendo un tanque por un total de "+ tanque +"  tanques.\n");
+    }
+    
+    public void mejorarGranjaLagostinos(int tanque) {
+        this.escribirArchivo("Mejorada la granja de fitoplancton añadiendo un tanque por un total de "+ tanque +"  tanques.\n");
+    }
     /**
      * Método que escribe en el archivo la informacion de los peces enviados en el pedido.
      * @param nombrePez Nombre del pez enviado en el pedido.
@@ -301,4 +316,6 @@ public class Transcripciones {
     public void enviarPeces(String nombrePez, int numPeces, int numRef){
         this.escribirArchivo("Enviados " + numPeces + " peces al pedido de " + nombrePez + " con referencia " + numRef + ".\n");
     }
+
+   
 }

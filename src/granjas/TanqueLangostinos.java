@@ -1,5 +1,7 @@
 package granjas;
 
+import dtos.DTOTanqueLangostinos;
+
 public class TanqueLangostinos {
     private int comidaAlmacenada; // Cantidad de comida almacenada (máximo 150 unidades)
     private int diasDescanso; // Días de descanso antes de volver a producir (0-3)
@@ -60,5 +62,11 @@ public class TanqueLangostinos {
 
     public int getDiasSinComer() {
         return diasSinComer;
+    }
+
+    public void load(DTOTanqueLangostinos tla){
+        this.comidaAlmacenada = tla.getComida();
+        this.diasDescanso = tla.getDescanso();
+    
     }
 }
