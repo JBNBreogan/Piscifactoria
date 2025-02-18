@@ -225,7 +225,7 @@ public class Tanque {
                     granjaLangostinos.setMuertos(granjaLangostinos.getMuertos()+1);
                     int comidaLangostinos = pez.generarComidaLangostinos();
                     if (comidaLangostinos > 0) {
-                        granjaLangostinos.alimentarTanques(50);
+                        granjaLangostinos.alimentarTanques(AlmacenCentral.getInstance());
                     }
                     iterator.remove(); // Eliminar el pez muerto del tanque
                 //   stats.registrarMuerte(pez.getName()); // Registrar la muerte en las estadísticas

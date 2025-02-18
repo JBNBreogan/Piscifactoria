@@ -501,21 +501,22 @@ public class Simulador {
         }
         if (granjaLangostinos != null) {
             // Calcular la comida necesaria para todos los tanques
-            int comidaNecesaria = 50 * granjaLangostinos.getTanques().size();
+            // int comidaNecesaria = 50 * granjaLangostinos.getTanques().size();
 
             // Verificar si hay suficiente comida en el almacén central
-            if (almacenCentral.getComidaVegetal() >= comidaNecesaria) {
-                // Coger la comida del almacén central
-                int comidaObtenida = almacenCentral.cogerComidaVegetal(comidaNecesaria);
+            // if (almacenCentral.getComidaVegetal() >= comidaNecesaria) {
+            // Coger la comida del almacén central
+            // int comidaObtenida = almacenCentral.cogerComidaVegetal(comidaNecesaria);
 
-                // Alimentar los tanques con la comida obtenida
-                granjaLangostinos.alimentarTanques(comidaObtenida);
-            }
+            // Alimentar los tanques con la comida obtenida
+            // granjaLangostinos.alimentarTanques(AlmacenCentral.getInstance());
+            // }
 
-            // Simular el consumo diario de comida en los tanques
-            // granjaLangostinos.consumirComidaDiaria();
+            // Alimentar los tanques con comida del almacén central
+            granjaLangostinos.alimentarTanques(almacenCentral);
 
-            // Producir alimento después de 3 días
+
+            // Después de ciertos días, producir alimento
             if (dias >= 3) {
                 int produccion = granjaLangostinos.producirAlimento();
                 if (produccion > 0) {
@@ -524,12 +525,9 @@ public class Simulador {
 
                     if (capacidadActual + produccion > capacidadMaxima) {
                         int cantidadAñadir = capacidadMaxima - capacidadActual;
-
                         if (cantidadAñadir > 0) {
-                            almacenCentral.addFood(cantidadAñadir, "Animal"); // Añadir solo lo necesario
+                            almacenCentral.addFood(cantidadAñadir, "Animal");
                             System.out.println("Se añadió " + cantidadAñadir + " unidades de alimento. Almacén lleno.");
-                        } else {
-                            System.out.println("Se produjo " + produccion +" unidades pero el almacén ya está lleno. No se puede añadir más alimento.");
                         }
                     } else {
                         almacenCentral.addFood(produccion, "Animal");

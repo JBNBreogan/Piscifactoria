@@ -56,18 +56,18 @@ public class TanqueLangostinos {
      */
     public boolean consumirComida() {
         if (this.comidaAlmacenada >= 50) {
-            this.comidaAlmacenada -= 50;
-            this.diasSinComer = 0; // Reiniciar el contador de días sin comer
+            this.comidaAlmacenada -= 50; // Consumir 50 unidades
+            this.diasSinComer = 0; // Reiniciar días sin comer
             return true;
         } else {
-            this.diasSinComer++; // Aumenta los días sin comer
+            this.diasSinComer++; // Incrementar días sin comer
             if (this.diasSinComer > 3) {
                 this.diasDescanso = Math.min(this.diasSinComer - 3, 3); // Máximo 3 días de descanso
             }
             return false;
         }
     }
-
+    
     /**
      * Calcula la producción de alimento del tanque.
      * La producción solo ocurre si el tanque no está en periodo de descanso y ha sido alimentado recientemente.
@@ -80,16 +80,16 @@ public class TanqueLangostinos {
             this.diasDescanso--; // Reducir días de descanso
             return 0; // No se produce alimento en días de descanso
         }
-
-        // Si ha sido alimentado y no está en descanso, genera producción aleatoria entre 100 y 200
-        if (this.diasSinComer == 0) {
-            int produccion = (int) (Math.random() * 101) + 100;
-            //System.out.println("Producción de alimento: " + produccion);
-            return produccion;
+    
+        // Consumir 50 unidades de comida para producir
+        if (this.consumirComida()) {
+            // Generar producción aleatoria entre 100 y 200 unidades
+            return (int) (Math.random() * 101) + 100;
         } else {
-            return 0; // No se produce alimento si no ha sido alimentado
+            return 0; // No se produce alimento si no hay suficiente comida
         }
     }
+    
 
     /**
      * Obtiene la cantidad de comida almacenada en el tanque.
