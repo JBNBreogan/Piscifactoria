@@ -8,6 +8,7 @@ import dtos.DTOTanque;
 import peces.Pez;
 import propiedades.CriaTipo;
 import tanque.Tanque;
+import tanque.TanqueHuevos;
 import helpers.*;
 
 /**
@@ -30,6 +31,12 @@ public class Piscifactoria {
      * Tanques de la piscifactoría
      */
     private ArrayList<Tanque> tanques;
+
+    /**
+     * Tanques de huevos de la piscifactoría
+     */
+    private ArrayList<TanqueHuevos> tanquesHuevos;
+
     /**
      * Cantidad de comidad vegetal
      */
@@ -321,6 +328,13 @@ public class Piscifactoria {
             this.maxComidaVegetal+=100;
         }
         System.out.println("Almacén de comida de la piscifactoría "+this.nombre+" mejorado. Su capacidad ha aumentado en "+ ((tipo == CriaTipo.RIO) ? "25" : "100") +" hasta un total de "+maxComidaAnimal);
+    }
+
+    /**
+     * Añade un tanque de huevos a la piscifactoría
+     */
+    public void comprarTanqueHuevos(){
+        this.tanquesHuevos.add(new TanqueHuevos());
     }
 
     /**

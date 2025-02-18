@@ -680,6 +680,7 @@ public class Simulador {
                             case 1:
                                 System.out.println("1. Comprar tanque.");
                                 System.out.println("2. Aumentar almacén comida.");
+                                System.out.println("3. Comprar tanque de huevos.");
                                 op3 = InputHelper.getIntRanges(2, 1);
                                 switch (op3) {
                                     case 1:
@@ -706,6 +707,12 @@ public class Simulador {
                                             pisc2.upgradeFood();
                                         }
                                         break;
+                                    case 3:
+                                        System.out.println("Elige la piscifactoria a la que le quieres añadir un tanque de huevos");
+                                        Piscifactoria pisc3 = piscifactorias.get(selectPisc());
+                                        if (Monedero.monedasSuficientes(1500)){
+                                            pisc3.comprarTanqueHuevos();
+                                        }
                                     default:
                                         System.out.println("Esa opción no es válida.");
                                         op = 0;

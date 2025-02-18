@@ -307,6 +307,25 @@ public abstract class Pez {
     }
 
     /**
+     * Crece el pez sin tener en cuenta muertes y consumiendo
+     * solo 2 de comida
+     * @param comida comida disponible
+     */
+    public boolean growInBreed(int comida){
+        if (comida>=2){
+            this.Edad++;
+            this.UltimaPuesta++;
+            if (isAdulto() && this.UltimaPuesta >= this.Ciclo){
+                this.Fertil = true;
+            }
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+
+    /**
      * Devuelve una cría del pez.
      * 
      * @param hembra Si el pez es hembra.

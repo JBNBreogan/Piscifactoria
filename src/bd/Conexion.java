@@ -61,6 +61,7 @@ public class Conexion {
         if (conn != null) {
             try {
                 conn.close();
+                conn = null;
             } catch(SQLException e) {
                 ErrorHelper.writeError("Error al cerrar la conexion: " + e.getMessage());
             }

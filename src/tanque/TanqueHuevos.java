@@ -7,7 +7,16 @@ import peces.Pez;
 public class TanqueHuevos {
 
     /** Huevos de peces */
-    Pez[] huevos = new Pez[25];
+    Pez[] huevos;
+
+    /**
+     * Constructor genérico
+     */
+    public TanqueHuevos(){
+        this.huevos = new Pez[25];
+    }
+
+
 
     /**
      * Al pasar el día, comprueba todos los huevos del tanque, y los tanques de la piscifactoría, añadiendo
@@ -41,7 +50,6 @@ public class TanqueHuevos {
         }
     }
 
-
     /**
      * Añade un huevo al tanque de huevos si hay espacio
      * @param webo El huevo de pez
@@ -57,5 +65,6 @@ public class TanqueHuevos {
         System.out.println("No hay espacio en el tanque de huevos");
         return false;
     }
+
     
 }

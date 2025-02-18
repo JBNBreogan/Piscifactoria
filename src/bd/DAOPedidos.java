@@ -113,7 +113,7 @@ public class DAOPedidos {
 
         try (ResultSet rs = this.pstListarNoComp.executeQuery()) {
             while (rs.next()) {
-                devolver.add(new DTOPedido(rs.getInt("ref"), rs.getString("nombre_cl"), rs.getInt("solicitados"),
+                devolver.add(new DTOPedido(rs.getInt(1), rs.getString("nombre_cl"), rs.getInt("solicitados"),
                         rs.getInt("enviados"), rs.getString("nombre_pe")));
             }
             return devolver;
