@@ -555,7 +555,7 @@ public class Piscifactoria {
     public String pecesEnfermosTanques() {
         String enfermos = "[";
         for (int i = 0; i < tanques.size(); i++) {
-            enfermos += tanques.get(i).numeroPecesEnfermos();
+            enfermos += tanques.get(i).pecesEnfermos();
             if (i < tanques.size() - 1) {
                 enfermos += "|";
             }

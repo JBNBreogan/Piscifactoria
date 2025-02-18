@@ -176,8 +176,8 @@ public class Tanque {
     }
 
     /**
-     * Método que avanza un día, alimenta los peces del tanque, reproduce los peces
-     * y vende los peces que estén en su estado óptimo.
+     * Método que avanza un día, alimenta los peces del tanque, reproduce los peces, 
+     * vende los peces que estén en su estado óptimo y gestiona las enfermedades de los peces.
      * 
      * @param comida Cantidad de comida disponible en la piscifactoria
      */
@@ -305,7 +305,6 @@ public class Tanque {
             if(pez.isEnfermo()){
                 if(pez.isAlimentado()){
                     if(curar.nextInt(100)<10){
-                        System.out.println("Pez curado");
                         pez.curar();
                     }
                 }
@@ -317,7 +316,6 @@ public class Tanque {
                 if(pez.isAlive()){
                     if(!pez.isEnfermo()){
                         if(enfermar.nextInt(100)<5){
-                            System.out.println("Pez enfermo");
                             pez.enfermar();
                         }
                     }
@@ -330,7 +328,6 @@ public class Tanque {
                 if(pez.isAlive()){
                     if(!pez.isEnfermo()){
                         if(enfermar.nextInt(100)<10){
-                            System.out.println("Pez enfermo");
                             pez.enfermar();
                         }
                     }
@@ -366,20 +363,6 @@ public class Tanque {
     }
 
     /**
-     * Método que devuelve la cantidad de peces enfermos en el tanque.
-     * @return Número de peces enfermos.
-     */
-    public int numeroPecesEnfermos(){
-        int pecesEnf=0;
-        for (Pez pez : peces) {
-            if(pez.isEnfermo()){
-                pecesEnf++;
-            }
-        }
-        return pecesEnf;
-    }
-
-    /**
      * Método que devuelve si es posible que enferme un pez o no.
      * @return Si es posible enfermar o no
      */
@@ -401,7 +384,7 @@ public class Tanque {
         int pecesEnfermos=0;
         for (Pez pez : peces) {
             if(pez.isEnfermo()){
-                pecesEnfermos+=1;
+                pecesEnfermos++;
             }
         }
         return pecesEnfermos;
