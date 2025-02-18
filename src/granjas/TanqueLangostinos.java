@@ -84,7 +84,7 @@ public class TanqueLangostinos {
         // Si ha sido alimentado y no está en descanso, genera producción aleatoria entre 100 y 200
         if (this.diasSinComer == 0) {
             int produccion = (int) (Math.random() * 101) + 100;
-            System.out.println("Producción de alimento: " + produccion);
+            //System.out.println("Producción de alimento: " + produccion);
             return produccion;
         } else {
             return 0; // No se produce alimento si no ha sido alimentado

@@ -61,10 +61,8 @@ public class Simulador {
     /** Granja de fitoplacton */
 
     private GranjaFitoplancton granjaFitoplacton = null;
-    
 
     private GranjaLangostinos granjaLangostinos = null;
-
 
     /**
      * Objeto Monedero que se encarga de gestionar las monedas generadas por la
@@ -165,7 +163,7 @@ public class Simulador {
                 this.nombreEmpresa = sim.getEmpresa();
                 registros = new Registros(nombreEmpresa);
                 this.dias = sim.getDia();
-                
+
                 DTOEdificios edificioAlmacen = sim.getEdificios().get("Almacen");
                 if (edificioAlmacen instanceof DTOAlmacen) {
                     DTOAlmacen alm = (DTOAlmacen) edificioAlmacen;
@@ -173,7 +171,7 @@ public class Simulador {
                 } else {
                     System.out.println("Error: El objeto 'Almacen' no es un DTOAlmacen.");
                 }
-    
+
                 DTOEdificios edificioFitoplancton = sim.getEdificios().get("Fitoplancton");
                 if (edificioFitoplancton instanceof DTOGranjaFitoplancton) {
                     DTOGranjaFitoplancton gfp = (DTOGranjaFitoplancton) edificioFitoplancton;
@@ -181,7 +179,7 @@ public class Simulador {
                 } else {
                     System.out.println("Error: El objeto 'Fitoplancton' no es un DTOGranjaFitoplancton.");
                 }
-    
+
                 DTOEdificios edificioLangostinos = sim.getEdificios().get("Langostinos");
                 if (edificioLangostinos instanceof DTOGranjaLangostinos) {
                     DTOGranjaLangostinos gla = (DTOGranjaLangostinos) edificioLangostinos;
@@ -190,18 +188,20 @@ public class Simulador {
                     System.out.println("Error: El objeto 'Langostinos' no es un DTOGranjaLangostinos.");
                 }
 
-               /*  if (alm.isDisponible()) {
-                    this.almacenCentral = AlmacenCentral.getInstance();
-                    almacenCentral.load(alm);
-                }
-                if (gfp.isDisponible()) {
-                    this.granjaFitoplacton = new GranjaFitoplancton();
-                    granjaFitoplacton.load(gfp);
-                }
-                if (gla.isDisponible()) {
-                    this.granjaLangostinos = new GranjaLangostinos();
-                    granjaLangostinos.load(gla);
-                }*/
+                /*
+                 * if (alm.isDisponible()) {
+                 * this.almacenCentral = AlmacenCentral.getInstance();
+                 * almacenCentral.load(alm);
+                 * }
+                 * if (gfp.isDisponible()) {
+                 * this.granjaFitoplacton = new GranjaFitoplancton();
+                 * granjaFitoplacton.load(gfp);
+                 * }
+                 * if (gla.isDisponible()) {
+                 * this.granjaLangostinos = new GranjaLangostinos();
+                 * granjaLangostinos.load(gla);
+                 * }
+                 */
 
                 monedero.setMonedas(sim.getMonedas());
 
@@ -301,8 +301,8 @@ public class Simulador {
 
         for (Piscifactoria piscifactoria : piscifactorias) {
             i += 1;
-            System.out.println(i + ".- " + piscifactoria.getNombre() + " [" + piscifactoria.pecesVivosPiscifactoria() 
-            + "/" + piscifactoria.pecesEnPiscifactoria() + "/" + espacioEnPisci(piscifactoria)+"]");
+            System.out.println(i + ".- " + piscifactoria.getNombre() + " [" + piscifactoria.pecesVivosPiscifactoria()
+                    + "/" + piscifactoria.pecesEnPiscifactoria() + "/" + espacioEnPisci(piscifactoria) + "]");
         }
     }
 
@@ -475,8 +475,8 @@ public class Simulador {
      * en todo el sistema y las monedas obtenidas con ello.
      */
     public void nextDay() {
-        if(dias%10==0){
-            int numRef=daoPedidos.addPedido();
+        if (dias % 10 == 0) {
+            int numRef = daoPedidos.addPedido();
             registros.generarPedido(numRef);
         }
         if (almacenCentral != null) {
@@ -494,32 +494,47 @@ public class Simulador {
         System.out.println("Total piscifactorias: " + pecesVendidos + " peces óptimos vendidos por un total de "
                 + monedasObtenidas + " monedas");
 
-        int pecesRio=pecesRioMarSist()[0];
-        int pecesMar=pecesRioMarSist()[1];
-        if(granjaFitoplacton != null){
+        int pecesRio = pecesRioMarSist()[0];
+        int pecesMar = pecesRioMarSist()[1];
+        if (granjaFitoplacton != null) {
             almacenCentral.addFood(granjaFitoplacton.avanzarDia(), "Vegetal");
         }
         if (granjaLangostinos != null) {
             // Calcular la comida necesaria para todos los tanques
             int comidaNecesaria = 50 * granjaLangostinos.getTanques().size();
-        
+
             // Verificar si hay suficiente comida en el almacén central
             if (almacenCentral.getComidaVegetal() >= comidaNecesaria) {
                 // Coger la comida del almacén central
                 int comidaObtenida = almacenCentral.cogerComidaVegetal(comidaNecesaria);
-        
+
                 // Alimentar los tanques con la comida obtenida
                 granjaLangostinos.alimentarTanques(comidaObtenida);
             }
-        
+
             // Simular el consumo diario de comida en los tanques
-          //  granjaLangostinos.consumirComidaDiaria();
-        
+            // granjaLangostinos.consumirComidaDiaria();
+
             // Producir alimento después de 3 días
             if (dias >= 3) {
                 int produccion = granjaLangostinos.producirAlimento();
                 if (produccion > 0) {
-                    almacenCentral.addFood(produccion, "Animal"); // Añadir pienso para peces carnívoros/omnívoros
+                    int capacidadActual = almacenCentral.getComidaAnimal();
+                    int capacidadMaxima = almacenCentral.getCapacidadComidaAnimal();
+
+                    if (capacidadActual + produccion > capacidadMaxima) {
+                        int cantidadAñadir = capacidadMaxima - capacidadActual;
+
+                        if (cantidadAñadir > 0) {
+                            almacenCentral.addFood(cantidadAñadir, "Animal"); // Añadir solo lo necesario
+                            System.out.println("Se añadió " + cantidadAñadir + " unidades de alimento. Almacén lleno.");
+                        } else {
+                            System.out.println("Se produjo " + produccion +" unidades pero el almacén ya está lleno. No se puede añadir más alimento.");
+                        }
+                    } else {
+                        almacenCentral.addFood(produccion, "Animal");
+                        System.out.println("Se añadió " + produccion + " unidades de alimento.");
+                    }
                 }
             }
         }
@@ -707,12 +722,12 @@ public class Simulador {
                         if (almacenCentral == null) {
                             System.out.println("2. Almacén central.");
                         } else {
-                            if(granjaFitoplacton == null && granjaLangostinos == null){
+                            if (granjaFitoplacton == null && granjaLangostinos == null) {
                                 System.out.println("2. Granja de fitoplancton.");
                                 System.out.println("3. Granja de langostinos.");
-                            } else if (granjaFitoplacton == null && granjaLangostinos != null){
+                            } else if (granjaFitoplacton == null && granjaLangostinos != null) {
                                 System.out.println("2. Granja de fitoplancton");
-                            } else if (granjaFitoplacton != null && granjaLangostinos == null){
+                            } else if (granjaFitoplacton != null && granjaLangostinos == null) {
                                 System.out.println("2. Granja de langostinos.");
 
                             }
@@ -749,21 +764,21 @@ public class Simulador {
                                 } while (!opcionValida);
                                 break;
                             case 2:
-                                if (almacenCentral == null){
+                                if (almacenCentral == null) {
                                     if (Monedero.monedasSuficientes(2000)) {
-                                            almacenCentral = AlmacenCentral.getInstance();
-                                            monedero.setMonedas(monedero.getMonedas() - 2000);
-                                            System.out.println("Almacén central adquirido.");
-                                        }
+                                        almacenCentral = AlmacenCentral.getInstance();
+                                        monedero.setMonedas(monedero.getMonedas() - 2000);
+                                        System.out.println("Almacén central adquirido.");
+                                    }
                                 } else {
-                                    if(granjaFitoplacton == null){
+                                    if (granjaFitoplacton == null) {
                                         if (Monedero.monedasSuficientes(5000)) {
                                             granjaFitoplacton = new GranjaFitoplancton();
                                             granjaFitoplacton.comprar();
                                             this.registros.comprarGranja(granjaFitoplacton, null);
                                             monedero.setMonedas(monedero.getMonedas() - 5000);
                                         }
-                                    } else if (granjaFitoplacton != null && granjaLangostinos == null){
+                                    } else if (granjaFitoplacton != null && granjaLangostinos == null) {
                                         if (Monedero.monedasSuficientes(3000)) {
                                             granjaLangostinos = new GranjaLangostinos();
                                             granjaLangostinos.comprar();
@@ -792,11 +807,11 @@ public class Simulador {
                         System.out.println("1. Piscifactoria.");
                         if (almacenCentral != null) {
                             System.out.println("2. Almacén central.");
-                            if(granjaFitoplacton != null && granjaLangostinos == null){
-                            System.out.println("3. Granja fitoplancton.");
-                            } else if (granjaFitoplacton == null && granjaLangostinos != null){
+                            if (granjaFitoplacton != null && granjaLangostinos == null) {
+                                System.out.println("3. Granja fitoplancton.");
+                            } else if (granjaFitoplacton == null && granjaLangostinos != null) {
                                 System.out.println("3. Granja langostinos.");
-                            } else if (granjaFitoplacton != null && granjaLangostinos != null){
+                            } else if (granjaFitoplacton != null && granjaLangostinos != null) {
                                 System.out.println("3. Granja fitoplancton.");
                                 System.out.println("4. Granja langostinos.");
                             }
@@ -858,20 +873,20 @@ public class Simulador {
                                 }
                                 break;
                             case 3:
-                                if(granjaFitoplacton != null){
-                                    if(Monedero.monedasSuficientes(2500)){
+                                if (granjaFitoplacton != null) {
+                                    if (Monedero.monedasSuficientes(2500)) {
                                         granjaFitoplacton.mejorar();
                                         registros.mejorarGranja(granjaFitoplacton, null);
                                     }
-                                } else if (granjaFitoplacton == null && granjaLangostinos != null){
-                                    if(Monedero.monedasSuficientes(1500)){
+                                } else if (granjaFitoplacton == null && granjaLangostinos != null) {
+                                    if (Monedero.monedasSuficientes(1500)) {
                                         granjaLangostinos.mejorar();
                                         registros.mejorarGranja(null, granjaLangostinos);
                                     }
                                 }
                                 break;
                             case 4:
-                                if(Monedero.monedasSuficientes(1500)){
+                                if (Monedero.monedasSuficientes(1500)) {
                                     granjaLangostinos.mejorar();
                                     registros.mejorarGranja(null, granjaLangostinos);
                                 }
@@ -883,7 +898,7 @@ public class Simulador {
                                 break;
                         }
                         break;
-                    
+
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Esta opción no es válida");
@@ -1255,26 +1270,27 @@ public class Simulador {
     }
 
     /**
-         * Método que devuelve el numero de peces de rio y de mar que hay en el sistema.
-         * @return Array con el numero de peces de rio[0] y de mar[1] 
-         */
-        public int[] pecesRioMarSist(){
-            int pecesRio=0;
-            int pecesMar=0;
-            int[] peces=new int[]{pecesRio,pecesMar};
-            for (Piscifactoria piscifactoria : piscifactorias) {
-                if (piscifactoria.getTipo()==CriaTipo.RIO){
-                    for (Tanque tank : piscifactoria.getTanques()) {
-                        peces[0]+=tank.getPeces().size();
-                    }
-                }else if(piscifactoria.getTipo()==CriaTipo.MAR){
-                    for (Tanque tank : piscifactoria.getTanques()) {
-                        peces[1]+=tank.getPeces().size();
-                    }
+     * Método que devuelve el numero de peces de rio y de mar que hay en el sistema.
+     * 
+     * @return Array con el numero de peces de rio[0] y de mar[1]
+     */
+    public int[] pecesRioMarSist() {
+        int pecesRio = 0;
+        int pecesMar = 0;
+        int[] peces = new int[] { pecesRio, pecesMar };
+        for (Piscifactoria piscifactoria : piscifactorias) {
+            if (piscifactoria.getTipo() == CriaTipo.RIO) {
+                for (Tanque tank : piscifactoria.getTanques()) {
+                    peces[0] += tank.getPeces().size();
+                }
+            } else if (piscifactoria.getTipo() == CriaTipo.MAR) {
+                for (Tanque tank : piscifactoria.getTanques()) {
+                    peces[1] += tank.getPeces().size();
                 }
             }
-            return peces;
         }
+        return peces;
+    }
 
     /**
      * Permite seleccionar una recompensa disponible, primero las lista y el usuario

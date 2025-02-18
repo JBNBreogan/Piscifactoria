@@ -1,6 +1,5 @@
 package granjas;
 
-import dtos.DTOAlmacen;
 import dtos.DTOGranjaFitoplancton;
 
 /**

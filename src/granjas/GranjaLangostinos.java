@@ -74,6 +74,7 @@ public class GranjaLangostinos {
             if (tanque.getComidaAlmacenada() < 150) { // Verificar que no exceda el límite
                 tanque.addComidaTanque(50); // Añadir 50 unidades de comida
                 comidaDisponible -= 50;
+                System.out.println("Comida en tanque: "+tanque.getComidaAlmacenada());
             } else {
                 System.out.println("Almacén del tanque de la granja de langostinos lleno.");
                 break;
