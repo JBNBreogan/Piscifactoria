@@ -500,15 +500,26 @@ public class Simulador {
             almacenCentral.addFood(granjaFitoplacton.avanzarDia(), "Vegetal");
         }
         if (granjaLangostinos != null) {
-            int comidaNecesaria = 50 * granjaLangostinos.getTanques().size(); 
-                if (almacenCentral.getComidaVegetal() >= comidaNecesaria) {
-                    int comidaObtenida = almacenCentral.cogerComidaVegetal(comidaNecesaria);
-                    granjaLangostinos.alimentarTanques(comidaObtenida);
-                if (dias >= 3) {
-                    int produccion = granjaLangostinos.producirAlimento();
-                    if (produccion > 0) {
-                        almacenCentral.addFood(produccion, "Animal"); // Añadir pienso para peces carnívoros/omnívoros
-                    }
+            // Calcular la comida necesaria para todos los tanques
+            int comidaNecesaria = 50 * granjaLangostinos.getTanques().size();
+        
+            // Verificar si hay suficiente comida en el almacén central
+            if (almacenCentral.getComidaVegetal() >= comidaNecesaria) {
+                // Coger la comida del almacén central
+                int comidaObtenida = almacenCentral.cogerComidaVegetal(comidaNecesaria);
+        
+                // Alimentar los tanques con la comida obtenida
+                granjaLangostinos.alimentarTanques(comidaObtenida);
+            }
+        
+            // Simular el consumo diario de comida en los tanques
+          //  granjaLangostinos.consumirComidaDiaria();
+        
+            // Producir alimento después de 3 días
+            if (dias >= 3) {
+                int produccion = granjaLangostinos.producirAlimento();
+                if (produccion > 0) {
+                    almacenCentral.addFood(produccion, "Animal"); // Añadir pienso para peces carnívoros/omnívoros
                 }
             }
         }
