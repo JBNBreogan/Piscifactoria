@@ -8,6 +8,7 @@ import dtos.DTOTanque;
 import peces.Pez;
 import propiedades.CriaTipo;
 import tanque.Tanque;
+import tanque.TanqueCria;
 import tanque.TanqueHuevos;
 import helpers.*;
 
@@ -36,6 +37,11 @@ public class Piscifactoria {
      * Tanques de huevos de la piscifactoría
      */
     private ArrayList<TanqueHuevos> tanquesHuevos;
+
+    /**
+     * Tanques de cria de la piscifactoría
+     */
+    private ArrayList<TanqueCria> tanquesCria;
 
     /**
      * Cantidad de comidad vegetal
@@ -75,7 +81,9 @@ public class Piscifactoria {
         this.maxComidaVegetal = 25;
         this.maxComidaAnimal = 25;
         this.comidaAnimal = 25;
-        this.comidaVegetal = 25; 
+        this.comidaVegetal = 25;
+        this.tanquesHuevos = new ArrayList<TanqueHuevos>(); 
+        this.tanquesCria =  new ArrayList<TanqueCria>();
     }
 
     /**
@@ -338,6 +346,18 @@ public class Piscifactoria {
     }
 
     /**
+     * Añade un tanque de cria a la piscifactoría si hay espacio
+     */
+    public void comprarTanqueCria(){
+        if (tanquesCria.size() < 3) {
+            this.tanquesCria.add(new TanqueCria());
+        } else {
+            System.out.println("No se pueden añadir mas tanques de cria, limite alcanzado");
+        }
+        
+    }
+
+    /**
      * Calcula el número total de peces en la piscifactoría.
      * @return El número total de peces.
      */
@@ -547,6 +567,13 @@ public class Piscifactoria {
             this.comidaVegetal++;
             repartoVegetal--;
         }
+    }
+
+    /**
+     * @return Arrayist de tanques de huevos
+     */
+    public ArrayList<TanqueHuevos> getTanquesHuevos() {
+        return tanquesHuevos;
     }
     
 }

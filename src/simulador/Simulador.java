@@ -681,7 +681,8 @@ public class Simulador {
                                 System.out.println("1. Comprar tanque.");
                                 System.out.println("2. Aumentar almacén comida.");
                                 System.out.println("3. Comprar tanque de huevos.");
-                                op3 = InputHelper.getIntRanges(2, 1);
+                                System.out.println("4. Comprar tanque de cria (3 maximo)");
+                                op3 = InputHelper.getIntRanges(4, 1);
                                 switch (op3) {
                                     case 1:
                                         System.out
@@ -713,6 +714,13 @@ public class Simulador {
                                         if (Monedero.monedasSuficientes(1500)){
                                             pisc3.comprarTanqueHuevos();
                                         }
+                                        if (pisc3.getTanquesHuevos().size() >= 1){
+                                            System.out.println("Total de tanques de huevos" +pisc3.getTanquesHuevos().size());
+                                        }
+                                        break;
+                                    case 4:
+                                        
+                                        break;
                                     default:
                                         System.out.println("Esa opción no es válida.");
                                         op = 0;

@@ -17,7 +17,6 @@ public class TanqueHuevos {
     }
 
 
-
     /**
      * Al pasar el día, comprueba todos los huevos del tanque, y los tanques de la piscifactoría, añadiendo
      * los peces a los posibles tanques.
@@ -64,6 +63,20 @@ public class TanqueHuevos {
         }
         System.out.println("No hay espacio en el tanque de huevos");
         return false;
+    }
+
+    /**
+     * @return Array de huevos
+     */
+    public Pez[] getHuevos() {
+        return huevos;
+    }
+
+    /**
+     * @param huevos Array de huevos
+     */
+    public void setHuevos(Pez[] huevos) {
+        this.huevos = huevos;
     }
 
     

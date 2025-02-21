@@ -1,8 +1,6 @@
 package tanque;
 
 import peces.Pez;
-import peces.propiedades.Carnivoro;
-import peces.propiedades.Filtrador;
 import piscifactoria.Piscifactoria;
 
 public class TanqueCria {
@@ -23,6 +21,7 @@ public class TanqueCria {
                 comidaConsumida+=2;
             }
         }
+        return comidaConsumida;
     }
 
     public void vaciar(){
