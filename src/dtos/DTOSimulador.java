@@ -68,9 +68,9 @@ public class DTOSimulador {
         this.monedas = sim.getMonedero().getMonedas();
         this.orca = stats.exportarDatos(nombres);
         this.edificios = new HashMap<String,DTOEdificios>();
-        this.edificios.put("Almacen", new DTOAlmacen(sim.getAlmacenCentral()));
-        this.edificios.put("Fitoplancton", new DTOGranjaFitoplancton(sim.getGranjaFitoplacton()));
-        this.edificios.put("Langostinos", new DTOGranjaLangostinos(sim.getGranjaLangostinos()));
+        this.edificios.put("almacen", new DTOAlmacen(sim.getAlmacenCentral()));
+        this.edificios.put("fitoplancton", new DTOGranjaFitoplancton(sim.getGranjaFitoplacton()));
+        this.edificios.put("langostinos", new DTOGranjaLangostinos(sim.getGranjaLangostinos()));
 
         
         this.piscifactorias = new ArrayList<DTOPiscifactoria>();

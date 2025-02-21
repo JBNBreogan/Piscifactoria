@@ -9,6 +9,7 @@ import comun.*;
 import dtos.DTOPez;
 import dtos.DTOTanque;
 import granjas.GranjaLangostinos;
+import granjas.TanqueLangostinos;
 import peces.Pez;
 import peces.doble.*;
 import peces.mar.*;
@@ -225,7 +226,11 @@ public class Tanque {
                     granjaLangostinos.setMuertos(granjaLangostinos.getMuertos()+1);
                     int comidaLangostinos = pez.generarComidaLangostinos();
                     if (comidaLangostinos > 0) {
-                        granjaLangostinos.alimentarTanques(AlmacenCentral.getInstance());
+                      //  granjaLangostinos.alimentarTanques(AlmacenCentral.getInstance());
+                      for (TanqueLangostinos tanque : granjaLangostinos.getTanques()) {
+                            tanque.setComidaAlmacenada(tanque.getComidaAlmacenada()+50);
+                            break;
+                      }
                     }
                     iterator.remove(); // Eliminar el pez muerto del tanque
                 //   stats.registrarMuerte(pez.getName()); // Registrar la muerte en las estadísticas

@@ -795,6 +795,15 @@ public class Recompensas {
             }
         }
 
+         /**
+         * Genera un archivo XML que representa una recompensa para la construcción de un edificio.
+         *
+         * @param nombre         Nombre del edificio.
+         * @param parte          Parte del edificio (A, B, C o D).
+         * @param codigoEdificio Código identificador del edificio.
+         * @param archivoSalida  Nombre del archivo donde se guardará el XML.
+         */
+
         public static void granjasXml(String nombre, String parte, String codigoEdificio, String archivoSalida) {
                 Document doc = DocumentHelper.createDocument();
                 Element root = doc.addElement("reward");

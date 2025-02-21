@@ -26,7 +26,7 @@ public class TanqueLangostinos {
     private int diasSinComer;
 
     /**
-     * Constructor de la clase {@code TanqueLangostinos}.
+     * Constructor de la clase.
      * Inicializa el tanque sin comida almacenada, sin días de descanso y sin días sin comer.
      */
     public TanqueLangostinos() {
@@ -127,5 +127,28 @@ public class TanqueLangostinos {
     public void load(DTOTanqueLangostinos tla) {
         this.comidaAlmacenada = tla.getComida();
         this.diasDescanso = tla.getDescanso();
+    }
+
+    /**
+     * Establece la comida almacenada del tanque
+     * @param comidaAlmacenada cantidad de comida
+     */
+    public void setComidaAlmacenada(int comidaAlmacenada) {
+        this.comidaAlmacenada = comidaAlmacenada;
+    }
+
+     /**
+     * Establece los días de descanso.
+     * @param diasDescanso los días de descanso
+     */
+    public void setDiasDescanso(int diasDescanso) {
+        this.diasDescanso = diasDescanso;
+    }
+    /**
+     * Establece los días sin comer
+     * @param diasDescanso los días sin comer.
+     */
+    public void setDiasSinComer(int diasSinComer) {
+        this.diasSinComer = diasSinComer;
     }
 }

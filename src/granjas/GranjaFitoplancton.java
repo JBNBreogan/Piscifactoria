@@ -6,6 +6,8 @@ import dtos.DTOGranjaFitoplancton;
  * La clase GranjaFitoplancton representa una granja que produce alimento vegetal (fitoplancton) en ciclos de producción.
  * Cada ciclo tiene una duración de 5 días, y al sexto día se produce una cantidad de alimento por cada tanque disponible.
  * La granja puede ser mejorada añadiendo tanques y reiniciando el ciclo de producción.
+ * 
+ * @author Nicolás
  */
 public class GranjaFitoplancton {
 

@@ -1,4 +1,5 @@
 package granjas;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,25 +8,28 @@ import dtos.DTOGranjaLangostinos;
 import dtos.DTOTanqueLangostinos;
 
 /**
- * La clase GranjaLangostinos representa una granja acuícola para la producción de langostinos.
- * Permite la gestión de tanques, alimentación de los langostinos y producción de alimento a partir de ellos.
+ * La clase GranjaLangostinos representa una granja acuícola para la producción
+ * de langostinos.
+ * Permite la gestión de tanques, alimentación de los langostinos y producción
+ * de alimento a partir de ellos.
  */
 public class GranjaLangostinos {
     /**
      * Indica si la granja está comprada o no.
      */
-    private boolean disponible; 
+    private boolean disponible;
     /**
      * Indica el número de peces muertos almacenados.
      */
-    private int muertos; 
+    private int muertos;
     /**
      * Lista de los tanques de la granja.
      */
     private List<TanqueLangostinos> tanques; // Lista de tanques de la granja
 
     /**
-     * Constructor de la GranjaLangostinos. Inicialmente, la granja no está disponible
+     * Constructor de la GranjaLangostinos. Inicialmente, la granja no está
+     * disponible
      * y no tiene tanques ni langostinos muertos almacenados.
      */
     public GranjaLangostinos() {
@@ -54,45 +58,43 @@ public class GranjaLangostinos {
         }
         TanqueLangostinos nuevoTanque = new TanqueLangostinos();
         this.tanques.add(nuevoTanque);
-        System.out.println("Mejorada la granja de langostinos añadiendo un tanque. Total de tanques: " + this.tanques.size());
+        System.out.println(
+                "Mejorada la granja de langostinos añadiendo un tanque. Total de tanques: " + this.tanques.size());
     }
 
     /**
-     * Método para alimentar los tanques de langostinos con la cantidad de comida disponible.
-     * Se distribuye la comida en lotes de 50 unidades por tanque, sin exceder el límite de almacenamiento de cada tanque.
-     * 
-     * @param comidaDisponible La cantidad total de comida disponible para distribuir.
+     * Alimenta los tanques con 50 unidades de comida por día, tomando la comida del
+     * almacén central.
+     * Solo se añade comida si hay suficiente en el almacén y el tanque no está
+     * lleno.
+     *
+     * @param almacenCentral El almacén central del que se toma la comida.
      */
-    /**
- * Alimenta los tanques con 50 unidades de comida por día, tomando la comida del almacén central.
- * Solo se añade comida si hay suficiente en el almacén y el tanque no está lleno.
- *
- * @param almacenCentral El almacén central del que se toma la comida.
- */
-public void alimentarTanques(AlmacenCentral almacenCentral) {
-    if (!this.disponible) {
-        System.out.println("La granja de langostinos no está disponible.");
-        return;
-    }
-
-    // Verificar si hay suficiente comida en el almacén central
-    if (almacenCentral.getComidaVegetal() >= 50) {
-        for (TanqueLangostinos tanque : this.tanques) {
-            if (tanque.getComidaAlmacenada() < 150) {
-                // Añadir 50 unidades de comida al tanque
-                tanque.addComidaTanque(50);
-                // Restar 50 unidades del almacén central
-                almacenCentral.cogerComidaVegetal(50);
-                System.out.println("Se añadieron 50 unidades de comida al tanque. Comida actual: " + tanque.getComidaAlmacenada());
-            } else {
-                System.out.println("El tanque está lleno. No se puede añadir más comida.");
-            }
+    public void alimentarTanques(AlmacenCentral almacenCentral) {
+        if (!this.disponible) {
+            System.out.println("La granja de langostinos no está disponible.");
+            return;
         }
-    } else {
-        System.out.println("No hay suficiente comida en el almacén central para alimentar los tanques.");
-        System.out.println("Comida en el tanque:" + tanques.get(0).getComidaAlmacenada());
+
+        // Verificar si hay suficiente comida en el almacén central
+        if (almacenCentral.getComidaVegetal() >= 50) {
+            for (TanqueLangostinos tanque : this.tanques) {
+                if (tanque.getComidaAlmacenada() < 150) {
+                    // Añadir 50 unidades de comida al tanque
+                    tanque.addComidaTanque(50);
+                    // Restar 50 unidades del almacén central
+                    almacenCentral.cogerComidaVegetal(50);
+                    System.out.println("Se añadieron 50 unidades de comida al tanque. Comida actual: "
+                            + tanque.getComidaAlmacenada());
+                } else {
+                    System.out.println("El tanque está lleno. No se puede añadir más comida.");
+                }
+            }
+        } else {
+            System.out.println("No hay suficiente comida en el almacén central para alimentar los tanques.");
+            System.out.println("Comida en el tanque:" + tanques.get(0).getComidaAlmacenada());
+        }
     }
-}
 
     /**
      * Método para producir alimento a partir de los tanques de langostinos.
@@ -137,7 +139,8 @@ public void alimentarTanques(AlmacenCentral almacenCentral) {
     /**
      * Establece la disponibilidad de la granja.
      * 
-     * @param disponible true si la granja está comprada y operativa, false en caso contrario.
+     * @param disponible true si la granja está comprada y operativa, false en caso
+     *                   contrario.
      */
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
@@ -163,9 +166,11 @@ public void alimentarTanques(AlmacenCentral almacenCentral) {
 
     /**
      * Carga los datos de la granja desde un objeto DTOGranjaLangostinos.
-     * Se actualiza la cantidad de langostinos muertos y se reconstruyen los tanques desde sus DTOs.
+     * Se actualiza la cantidad de langostinos muertos y se reconstruyen los tanques
+     * desde sus DTOs.
      * 
-     * @param granjal Objeto DTOGranjaLangostinos que contiene los datos de la granja a cargar.
+     * @param granjal Objeto DTOGranjaLangostinos que contiene los datos de la
+     *                granja a cargar.
      */
     public void load(DTOGranjaLangostinos granjal) {
         this.muertos = granjal.getMuertos();

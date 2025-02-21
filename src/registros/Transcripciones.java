@@ -292,18 +292,32 @@ public class Transcripciones {
         this.escribirArchivo("Pedido de " + nombrePez + " con referencia " + numRef + " enviado.\n");
     }
 
+    /**
+     * Metodo que escribe en el archivo la informacion de la compra de una granja de fitoplacton.
+     */
     public void comprarGranjaFitoplancton(){
         this.escribirArchivo("Comprada la granja de fitoplancton.\n");
     }
 
+    /**
+     * Metodo que escribe en el archivo la informacion de la compra de una granja de langostinos.
+     */
     public void comprarGranjaLagostinos(){
         this.escribirArchivo("Comprada la granja de langostinos.\n");
     }
 
+    /**
+     * Metodo que escribe en el archivo la informacion de la mejora de una granja de fitoplacton.
+     * @param tanque número de tanques
+     */
     public void mejorarGranjaFitoplancton(int tanque) {
         this.escribirArchivo("Mejorada la granja de fitoplancton añadiendo un tanque por un total de "+ tanque +"  tanques.\n");
     }
     
+    /**
+     * Metodo que escribe en el archivo la informacion de la mejora de una granja de langostinos.
+     * @param tanque número de tanques
+     */
     public void mejorarGranjaLagostinos(int tanque) {
         this.escribirArchivo("Mejorada la granja de fitoplancton añadiendo un tanque por un total de "+ tanque +"  tanques.\n");
     }

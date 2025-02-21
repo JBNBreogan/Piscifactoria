@@ -202,6 +202,11 @@ public class Registros {
         this.transcripciones.enviarPeces(nombrePez, numPeces, numRef);
     }
 
+    /**
+     * Método que llama a los metodos comprarGranjaFitoplancton o comprarGranjaLangostinos de la clase logs y transcripciones.
+     * @param granjaFitoplancton La granja de fitoplancton que se desea comprar. Puede ser nula.
+     * @param granjaLangostinos  La granja de langostinos que se desea comprar. Puede ser nula.
+     */
     public void comprarGranja(GranjaFitoplancton granjaFitoplancton, GranjaLangostinos granjaLangostinos){
         if(granjaFitoplancton != null && granjaLangostinos == null){
             this.transcripciones.comprarGranjaFitoplancton();
@@ -212,6 +217,11 @@ public class Registros {
         }
     }
 
+     /**
+     * Método que llama a los metodos mejorarGranjaFitoplancton o mejorarGranjaLangostinos de la clase logs y transcripciones.
+     * @param granjaFitoplancton La granja de fitoplancton que se desea comprar. Puede ser nula.
+     * @param granjaLangostinos  La granja de langostinos que se desea comprar. Puede ser nula.
+     */
     public void mejorarGranja(GranjaFitoplancton granjaFitoplancton, GranjaLangostinos granjaLangostinos){
         if(granjaFitoplancton != null && granjaLangostinos == null){
             this.transcripciones.mejorarGranjaFitoplancton(granjaFitoplancton.getTanques());
