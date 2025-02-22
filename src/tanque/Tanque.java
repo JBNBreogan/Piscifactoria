@@ -231,6 +231,7 @@ public class Tanque {
                             tanque.setComidaAlmacenada(tanque.getComidaAlmacenada()+50);
                             break;
                       }
+                      System.out.println("Ha muerto un pez, se han añadido 50 de alimento a la granja de langostinos.");
                     }
                     iterator.remove(); // Eliminar el pez muerto del tanque
                 //   stats.registrarMuerte(pez.getName()); // Registrar la muerte en las estadísticas

@@ -56,14 +56,12 @@ public class TanqueLangostinos {
      */
     public boolean consumirComida() {
         if (this.comidaAlmacenada >= 50) {
-            this.comidaAlmacenada -= 50; // Consumir 50 unidades
-            this.diasSinComer = 0; // Reiniciar días sin comer
+            this.comidaAlmacenada -= 50;
+            this.diasSinComer = 0;
             return true;
         } else {
-            this.diasSinComer++; // Incrementar días sin comer
-            if (this.diasSinComer > 3) {
-                this.diasDescanso = Math.min(this.diasSinComer - 3, 3); // Máximo 3 días de descanso
-            }
+            this.diasSinComer++;
+            this.diasDescanso = Math.min(this.diasSinComer, 3); // Corregido aquí
             return false;
         }
     }

@@ -64,6 +64,8 @@ public class Simulador {
 
     private GranjaLangostinos granjaLangostinos = null;
 
+    private int diaCompraGranjaLangostinos = -1; // -1 indica que no se ha comprado
+
     /**
      * Objeto Monedero que se encarga de gestionar las monedas generadas por la
      * piscifactoría.
@@ -517,7 +519,7 @@ public class Simulador {
 
 
             // Después de ciertos días, producir alimento
-            if (dias >= 3) {
+            if (diaCompraGranjaLangostinos != -1 && (dias - diaCompraGranjaLangostinos) >= 3) {
                 int produccion = granjaLangostinos.producirAlimento();
                 if (produccion > 0) {
                     int capacidadActual = almacenCentral.getComidaAnimal();
@@ -780,6 +782,7 @@ public class Simulador {
                                         if (Monedero.monedasSuficientes(3000)) {
                                             granjaLangostinos = new GranjaLangostinos();
                                             granjaLangostinos.comprar();
+                                            diaCompraGranjaLangostinos = dias;
                                             this.registros.comprarGranja(null, granjaLangostinos);
                                             monedero.setMonedas(monedero.getMonedas() - 3000);
                                         }
@@ -790,6 +793,7 @@ public class Simulador {
                                 if (Monedero.monedasSuficientes(3000)) {
                                     granjaLangostinos = new GranjaLangostinos();
                                     granjaLangostinos.comprar();
+                                    diaCompraGranjaLangostinos = dias;
                                     this.registros.comprarGranja(null, granjaLangostinos);
                                     monedero.setMonedas(monedero.getMonedas() - 3000);
                                 }

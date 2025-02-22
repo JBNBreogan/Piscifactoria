@@ -75,24 +75,23 @@ public class GranjaLangostinos {
             System.out.println("La granja de langostinos no está disponible.");
             return;
         }
-
-        // Verificar si hay suficiente comida en el almacén central
-        if (almacenCentral.getComidaVegetal() >= 50) {
-            for (TanqueLangostinos tanque : this.tanques) {
+    
+        for (TanqueLangostinos tanque : this.tanques) {
+            if (almacenCentral.getComidaVegetal() >= 50) { // Verificación por cada tanque
                 if (tanque.getComidaAlmacenada() < 150) {
-                    // Añadir 50 unidades de comida al tanque
                     tanque.addComidaTanque(50);
-                    // Restar 50 unidades del almacén central
                     almacenCentral.cogerComidaVegetal(50);
                     System.out.println("Se añadieron 50 unidades de comida al tanque. Comida actual: "
                             + tanque.getComidaAlmacenada());
                 } else {
                     System.out.println("El tanque está lleno. No se puede añadir más comida.");
+                    System.out.println("Comida en tanque: "+tanque.getComidaAlmacenada());
                 }
+            } else {
+                System.out.println("No hay suficiente comida en el almacén central para alimentar más tanques.");
+                System.out.println("Comida en tanque: "+tanque.getComidaAlmacenada());
+                break; // Detiene la alimentación si no hay suficiente comida
             }
-        } else {
-            System.out.println("No hay suficiente comida en el almacén central para alimentar los tanques.");
-            System.out.println("Comida en el tanque:" + tanques.get(0).getComidaAlmacenada());
         }
     }
 
