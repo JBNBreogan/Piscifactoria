@@ -3,8 +3,9 @@ package granjas;
 import dtos.DTOTanqueLangostinos;
 
 /**
- * La clase {@code TanqueLangostinos} representa un tanque de cría de langostinos.
+ * La clase TanqueLangostinos representa un tanque de cría de langostinos.
  * Maneja el almacenamiento de comida, los días de descanso y la producción de alimento.
+ * @author Nicolás
  */
 public class TanqueLangostinos {
     

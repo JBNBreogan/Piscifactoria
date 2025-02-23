@@ -219,7 +219,6 @@ public class Tanque {
                 pecesMachoFertiles++;
             }
 
-            // Verificar si el pez ha muerto
             if (!pez.isAlive()) {
                 GranjaLangostinos granjaLangostinos = sim.getGranjaLangostinos();
                 if (granjaLangostinos != null){
@@ -233,8 +232,7 @@ public class Tanque {
                       }
                       System.out.println("Ha muerto un pez, se han añadido 50 de alimento a la granja de langostinos.");
                     }
-                    iterator.remove(); // Eliminar el pez muerto del tanque
-                //   stats.registrarMuerte(pez.getName()); // Registrar la muerte en las estadísticas
+                    iterator.remove(); 
                 }
             }
         }
