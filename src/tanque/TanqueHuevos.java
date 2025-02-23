@@ -12,20 +12,21 @@ public class TanqueHuevos {
     /**
      * Constructor genérico
      */
-    public TanqueHuevos(){
+    public TanqueHuevos() {
         this.huevos = new Pez[25];
     }
 
-
     /**
-     * Al pasar el día, comprueba todos los huevos del tanque, y los tanques de la piscifactoría, añadiendo
+     * Al pasar el día, comprueba todos los huevos del tanque, y los tanques de la
+     * piscifactoría, añadiendo
      * los peces a los posibles tanques.
+     * 
      * @param tanques Los tanques de la piscifactoría;
      */
     public void nextDay(ArrayList<Tanque> tanques) {
         for (int i = 0; i < huevos.length; i++) {
             Pez huevo = huevos[i];
-            if (huevo != null) { 
+            if (huevo != null) {
                 boolean transferido = false;
                 for (Tanque tanque : tanques) {
                     if (!tanque.getPeces().isEmpty() && !tanque.isFull()) {
@@ -51,17 +52,31 @@ public class TanqueHuevos {
 
     /**
      * Añade un huevo al tanque de huevos si hay espacio
+     * 
      * @param webo El huevo de pez
      * @return Si ha sido añadido
      */
-    public boolean addWebo(Pez webo){
+    public boolean addWebo(Pez webo) {
         for (int i = 0; i < huevos.length; i++) {
-            if (huevos[i] == null){
+            if (huevos[i] == null) {
                 huevos[i] = webo;
                 return true;
             }
         }
         System.out.println("No hay espacio en el tanque de huevos");
+        return false;
+    }
+
+    /**
+     * Comprueba si hay al menos un espacio disponible en el tanque de huevos
+     * @return disponibilidad
+     */
+    public boolean tieneEspacio(){
+        for (int i = 0; i < huevos.length; i++) {
+            if (huevos[i] != null) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -79,5 +94,4 @@ public class TanqueHuevos {
         this.huevos = huevos;
     }
 
-    
 }
