@@ -5,6 +5,7 @@ import dtos.DTOTanqueLangostinos;
 /**
  * La clase TanqueLangostinos representa un tanque de cría de langostinos.
  * Maneja el almacenamiento de comida, los días de descanso y la producción de alimento.
+ * 
  * @author Nicolás
  */
 public class TanqueLangostinos {
