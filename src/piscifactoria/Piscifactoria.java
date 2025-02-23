@@ -405,9 +405,9 @@ public class Piscifactoria {
     /**
      * Añade un tanque de cria a la piscifactoría si hay espacio
      */
-    public void comprarTanqueCria(Pez pez) {
+    public void comprarTanqueCria() {
         if (tanquesCria.size() < 3) {
-            this.tanquesCria.add(new TanqueCria(pez));
+            this.tanquesCria.add(new TanqueCria(this));
         } else {
             System.out.println("No se pueden añadir mas tanques de cria, limite alcanzado");
         }

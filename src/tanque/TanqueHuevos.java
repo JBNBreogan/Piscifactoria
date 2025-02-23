@@ -7,7 +7,7 @@ import peces.Pez;
 public class TanqueHuevos {
 
     /** Huevos de peces */
-    Pez[] huevos;
+    private Pez[] huevos;
 
     /**
      * Constructor genérico
@@ -18,8 +18,7 @@ public class TanqueHuevos {
 
     /**
      * Al pasar el día, comprueba todos los huevos del tanque, y los tanques de la
-     * piscifactoría, añadiendo
-     * los peces a los posibles tanques.
+     * piscifactoría, añadiendo     los peces a los posibles tanques.
      * 
      * @param tanques Los tanques de la piscifactoría;
      */
